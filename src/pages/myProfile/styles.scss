@@ -1,0 +1,27 @@
+.main-layout-container {
+  &::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+  }
+
+  &::-webkit-scrollbar-track {
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    -webkit-border-radius: 1rem;
+    border-radius: 1rem;
+    background: #ccc;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #ccc;
+    outline: 1px solid transparent;
+    -webkit-border-radius: 1rem;
+    border-radius: 1rem;
+  }
+
+  // Moz Support
+  & {
+    scrollbar-color: #ccc transparent;
+    scrollbar-width: thin;
+  }
+}

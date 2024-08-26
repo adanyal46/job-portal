@@ -1,0 +1,68 @@
+.job-card-wrapper {
+  box-shadow: 0.2rem 0.2rem 1.6rem 0 #cfe6ee;
+  border: 0.1rem solid transparent;
+  background: linear-gradient(white, white) padding-box,
+    linear-gradient(287.99deg, #2f2c39 -20.42%, #2f2c39 62.87%) border-box;
+  padding: 1.2rem 1.6rem;
+  border-radius: 1.6rem;
+  cursor: pointer;
+  transition: all 0.3s linear;
+
+  position: relative;
+
+  &.active {
+    transition: all 0.3s linear;
+    background: linear-gradient(white, white) padding-box,
+      linear-gradient(287.99deg, #001f3f -20.42%, #009dd1 62.87%) border-box;
+  }
+
+  > svg {
+    position: absolute;
+
+    right: 1.6rem;
+    top: 1.2rem;
+  }
+
+  .job-company-container {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    .company-logo {
+      height: 5.6rem;
+      width: 5.5rem;
+    }
+
+    .job-company-details {
+      .name,
+      .location {
+        font-size: 1.6rem;
+        font-weight: 400;
+        color: #2f2c39;
+      }
+    }
+  }
+
+  .job-main-title {
+    font-weight: 600;
+    color: #2f2c39;
+    margin: 0.8rem 0;
+  }
+
+  .job-description-list {
+    padding-left: 2rem;
+    margin-top: 0.5rem;
+
+    .list-item {
+      font-size: 1.4rem;
+      font-weight: 400;
+    }
+  }
+
+  .activity-status {
+    margin-top: 1rem;
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: #2f2c39;
+  }
+}

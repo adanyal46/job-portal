@@ -1,0 +1,49 @@
+.location-wrapper {
+  padding: 1.6rem 0;
+  border-bottom: 1px solid #b5b5b5;
+
+  .location-container {
+    margin-top: 1rem;
+    margin-bottom: 1.6rem;
+
+    display: flex;
+    flex-direction: column;
+    row-gap: 1rem;
+
+    .location-list-container {
+      display: flex;
+      padding: 1.2rem 0rem;
+
+      @media (min-width: 768px) {
+        padding: 1.2rem 1.6rem;
+      }
+
+      .location-details-container {
+        flex-grow: 1;
+        display: flex;
+
+        .location-details {
+          margin-left: 1.2rem;
+
+          .location-name {
+            font-size: 1.6rem;
+            font-weight: 500;
+            color: #111112;
+            margin-bottom: 1rem;
+          }
+
+          .location-city {
+            font-size: 1.4rem;
+            color: #2f2c39;
+            margin-bottom: 0.8rem;
+          }
+
+          .location-id {
+            font-size: 1.4rem;
+            color: #2f2c39;
+          }
+        }
+      }
+    }
+  }
+}

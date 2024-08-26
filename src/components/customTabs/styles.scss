@@ -1,0 +1,51 @@
+.custom-tabs-wrapper {
+  &.ant-tabs {
+    .ant-tabs-nav {
+      &::before {
+        content: none;
+      }
+
+      .ant-tabs-nav-wrap {
+        .ant-tabs-nav-list {
+          .ant-tabs-tab {
+            padding: 1rem 2rem;
+            margin: 0;
+
+            .ant-tabs-tab-btn {
+              font-size: 1.5rem;
+              color: #52595c;
+              //   font-weight: 400;
+            }
+
+            &.ant-tabs-tab-active {
+              .ant-tabs-tab-btn {
+                background: -webkit-linear-gradient(
+                  287.99deg,
+                  #001f3f -20.42%,
+                  #009dd1 62.87%
+                );
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                text-shadow: none;
+              }
+            }
+          }
+
+          .ant-tabs-ink-bar {
+            height: 0.3rem;
+            background: #009dd1;
+          }
+        }
+      }
+    }
+
+    .ant-tabs-content-holder {
+      .ant-tabs-content {
+        .ant-tabs-tabpane {
+          &.ant-tabs-tabpane-active {
+          }
+        }
+      }
+    }
+  }
+}

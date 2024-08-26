@@ -1,0 +1,30 @@
+.ant-upload-wrapper {
+  &.custom-document-uploader-container {
+    width: 100%;
+
+    .ant-upload.ant-upload-select {
+      height: 3.8rem;
+      width: 100%;
+
+      > .ant-upload {
+        .custom-uploader-button {
+          height: 3.8rem;
+          width: 100%;
+          background-color: #697e85;
+          border: 0.1rem solid #697e85;
+
+          .ant-btn-icon {
+            > svg {
+            }
+          }
+
+          .uploader-button-title {
+            font-size: 1.6rem;
+            font-weight: 500;
+            color: #fff;
+          }
+        }
+      }
+    }
+  }
+}

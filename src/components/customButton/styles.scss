@@ -1,0 +1,103 @@
+.custom-button,
+.custom-button:where(.css-dev-only-do-not-override-1c0na6j).ant-btn-default:not(
+    :disabled
+  ):not(.ant-btn-disabled):hover {
+  width: 100%;
+  background: linear-gradient(white, white) padding-box,
+    linear-gradient(287.99deg, #001f3f -20.42%, #009dd1 62.87%) border-box;
+  border-radius: 0.8rem;
+  border: 0.1rem solid transparent;
+
+  height: 4.2rem;
+  font-size: 1.8rem;
+  font-weight: 600;
+
+  > span {
+    background: -webkit-linear-gradient(
+      287.99deg,
+      #001f3f -20.42%,
+      #009dd1 62.87%
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+}
+
+.ant-btn {
+  &.common-button-styles {
+    height: 3.9rem;
+    padding: 0rem 2rem;
+    border-radius: 0.8rem;
+
+    font-size: 1.5rem;
+    font-weight: 600;
+
+    &.custom-button-danger {
+      &.ant-btn-dangerous {
+        color: #a71515;
+
+        &:hover,
+        &:active {
+          color: #a71515;
+        }
+      }
+    }
+
+    &.custom-button-primary {
+      background: linear-gradient(287.99deg, #001f3f -20.42%, #009dd1 62.87%);
+      border: 0;
+      box-shadow: 0px 2px 4px 0px #a5a3ae4d;
+
+      &:hover,
+      &:active {
+        background: linear-gradient(287.99deg, #001f3f -20.42%, #009dd1 62.87%);
+        border: 0;
+        box-shadow: 0px 2px 4px 0px #a5a3ae4d;
+      }
+    }
+
+    &.custom-button-plain,
+    &.custom-button-plain:hover {
+      background-color: #a8aaae29;
+      border-color: #a8aaae29;
+      color: #4b465c;
+
+      &.custom-button-plain-disabled {
+        background-color: #eff3f4;
+        border-color: #eff3f4;
+        color: #ffffff;
+      }
+    }
+  }
+
+  &.ant-btn-default {
+    &.additional-button {
+      height: 4rem;
+      padding: 0rem 2rem;
+      border-radius: 0.8rem;
+      border: 0.1rem solid #a8aaae;
+
+      .additional-button-title {
+        display: flex;
+        align-items: center;
+
+        .name {
+          padding-left: 1rem;
+          font-size: 1.5rem;
+          font-weight: 500;
+          color: #4b465c;
+        }
+      }
+
+      &:hover,
+      &:active {
+        border-color: #a8aaae;
+        background: #ffffff;
+      }
+    }
+
+    &.custom-iconed-button {
+      border: 0;
+    }
+  }
+}

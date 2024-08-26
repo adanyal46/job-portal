@@ -1,0 +1,507 @@
+@import "./base", "./mixins", "./colors", "./breakpoints.scss";
+
+.main-layout-container {
+  @include hide-scrollbar();
+
+  justify-self: center;
+  width: 100%;
+  overflow-y: auto;
+
+  // @media (min-width: 1360px) {
+  //   max-width: 60%;
+  // }
+
+  .layout-main-heading {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    font-weight: 500;
+  }
+
+  .profile-main-wrapper {
+    background-color: #fff;
+    border-radius: 1rem;
+    padding: 2.5rem;
+  }
+}
+// .content-wrapper {
+//   width: 100%;
+//   height: 100%;
+// }
+
+// .inner-content-wrapper {
+//   min-height: calc(100vh - 6.2rem);
+//   padding: 2.7rem 2.3rem 1.1rem;
+// }
+
+// .inner-content-wrapper-scrollable {
+//   @include custom-scrollbar();
+
+//   border: 0.1rem solid $gallery;
+//   overflow: auto;
+//   height: calc(100vh - 11rem);
+//   max-height: calc(100vh - 11rem);
+//   background-color: white;
+
+//   .ant-card {
+//     &.ant-card-bordered {
+//       border: none;
+//     }
+//   }
+// }
+
+// .common-white-button {
+//   border-radius: 0.5rem;
+//   border: solid 0.1rem $primary-blue;
+//   padding: 0.6rem 1.2rem 0.5rem;
+//   font-size: 1.4rem;
+//   font-weight: 500;
+//   color: $primary-blue;
+//   cursor: pointer;
+// }
+
+// .common-primary-button {
+//   padding: 0.5rem 1.2rem;
+//   border-radius: 0.5rem;
+//   background-color: $primary-blue;
+//   border: 0.1rem solid $primary-blue;
+//   font-size: 1.4rem;
+//   font-weight: 500;
+//   color: $white-color;
+//   cursor: pointer;
+
+//   &:focus {
+//     outline: none;
+//   }
+// }
+
+// .divider-heading {
+//   width: 93%;
+//   border-bottom: 0.1rem solid $mercury;
+//   line-height: 0.1em;
+//   text-align: center;
+//   margin: 2rem auto 1.5rem;
+
+//   .divider-details {
+//     color: $darker-gray;
+//     background: $white-color;
+//     padding: 0 1rem;
+//     font-size: 1.8rem;
+//     position: relative;
+
+//     .label-asteric {
+//       position: absolute;
+//       right: 0;
+//       top: 0.5rem;
+//       color: $maroon-flush;
+//     }
+//   }
+// }
+
+// .ant-dropdown {
+//   &.custom-icons-dropdown {
+//     box-shadow: 0 0 0.6rem 0 $silver-shadow;
+//     background-color: $white-color;
+
+//     .ant-dropdown-menu {
+//       &.ant-dropdown-menu-root {
+//         padding: 0;
+
+//         .ant-dropdown-menu-item {
+//           @include flexBox(row, center);
+
+//           padding: 0;
+
+//           &:hover {
+//             background-color: none;
+//           }
+//           > span {
+//             width: 100%;
+//           }
+//           .actions-dropdown-title {
+//             @include flexBox(row, center);
+
+//             height: 3.5rem;
+//             padding: 0 1.4rem;
+//             width: 100%;
+//             font-size: 1.3rem;
+//             color: $primary-blue;
+
+//             &:hover {
+//               background-color: rgba($primary-blue, 0.1);
+//             }
+
+//             &.remove-button {
+//               color: $maroon-flush;
+
+//               &:hover {
+//                 background-color: rgba($maroon-flush, 0.1);
+//               }
+//             }
+
+//             &.disable-button {
+//               color: $sonic-silver;
+
+//               &:hover {
+//                 background-color: rgba($sonic-silver, 0.1);
+//               }
+//             }
+//           }
+//         }
+//       }
+//     }
+//   }
+
+//   opacity: 1 !important;
+//   pointer-events: unset !important;
+//   animation: showDropdown 0.2s linear forwards !important;
+
+//   &.slide-up-enter {
+//     animation: none !important;
+//   }
+// }
+
+// .add-edit-forms-container {
+//   max-height: calc(100vh - 10rem);
+
+//   .ant-card {
+//     max-height: calc(100vh - 10rem);
+
+//     .ant-card-body {
+//       display: grid;
+//       // grid-template-rows: 10rem 1fr;
+//       min-height: calc(100vh - 18rem);
+//       background: white;
+
+//       @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+//         display: block;
+//         padding-bottom: 100px;
+//       }
+
+//       &:before {
+//         content: none;
+//       }
+
+//       &:after {
+//         content: none;
+//       }
+
+//       .inner-form-wrapper {
+//         @include commonGrid(1fr, 0, 0, max-content);
+//         @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+//           display: block;
+//         }
+
+//         .generic-forms-wrapper {
+//           align-self: flex-start;
+//         }
+
+//         .form-actions {
+//           position: sticky;
+//           bottom: -0.1rem;
+
+//           @media all and (-ms-high-contrast: none),
+//             (-ms-high-contrast: active) {
+//             position: absolute;
+//             bottom: 0;
+//             width: 100%;
+//           }
+//         }
+//       }
+//     }
+//   }
+// }
+
+// .ant-select {
+//   height: 3.6rem;
+//   background-color: $white-color;
+//   width: 31rem;
+//   &.small-input {
+//     width: 15rem;
+//   }
+
+//   &.ant-tree-select {
+//     height: 100%;
+//   }
+
+//   &.ant-select-single,
+//   &.ant-select-multiple {
+//     &.common-select-field {
+//       width: 100%;
+
+//       .ant-select-selector {
+//         border-radius: 0.5rem;
+//         height: 3.6rem;
+//       }
+//     }
+
+//     &.ant-tree-select {
+//       .ant-select-selector {
+//         height: 100%;
+//         min-height: 3.6rem;
+//       }
+//     }
+//   }
+
+//   .ant-select-selector {
+//     @include flexBox(row, center);
+
+//     border-radius: 0.5rem;
+//     height: 3.6rem;
+
+//     .ant-select-selection-search {
+//       .ant-select-selection-search-input {
+//         font-size: 1.4rem;
+//         font-weight: normal;
+//         color: $darker-gray;
+//       }
+//     }
+
+//     .ant-select-selection-item {
+//       font-weight: normal;
+
+//       .dropdown-color-item {
+//         width: 100%;
+//         height: 2rem;
+//         position: relative;
+//         top: 1.5rem;
+//       }
+//     }
+
+//     .ant-select-selection-placeholder {
+//       font-size: 1.4rem;
+//       font-weight: normal;
+//       opacity: 0.3;
+//       color: $darker-gray;
+//     }
+//   }
+
+//   .ant-select-arrow {
+//     .anticon.anticon-down {
+//       > svg {
+//         transition: all 0.3s linear;
+//         transform: rotate(0deg);
+//       }
+//     }
+//   }
+
+//   &.ant-select-focused {
+//     box-shadow: none !important;
+//     border: none;
+
+//     .ant-select-selector {
+//       border: 0.1rem solid $primary-blue !important;
+//       box-shadow: none !important;
+//     }
+
+//     &:not(.ant-select-disabled):hover .ant-select-selector {
+//       box-shadow: none;
+//       border: 0.1rem solid $primary-blue !important;
+//     }
+//   }
+
+//   &.ant-select-open {
+//     .ant-select-dropdown {
+//       opacity: 1 !important;
+//       pointer-events: unset !important;
+//       animation: showDropdown 0.2s linear forwards !important;
+
+//       &.slide-up-enter {
+//         animation: none !important;
+//       }
+//     }
+//     .ant-select-arrow {
+//       .anticon.anticon-down {
+//         > svg {
+//           transition: all 0.3s linear;
+//           transform: rotate(180deg);
+//         }
+//       }
+//     }
+//   }
+
+//   &:not(.ant-select-disabled):hover .ant-select-selector {
+//     box-shadow: none;
+//     border: 0.1rem solid $alto !important;
+//   }
+
+//   &.error-box {
+//     &:not(.ant-select-disabled):hover .ant-select-selector {
+//       border-color: $maroon-flush !important;
+//     }
+
+//     .ant-select-selector {
+//       border-color: $maroon-flush !important;
+//     }
+//   }
+// }
+
+//for select dropdown
+// .ant-select-dropdown {
+//   padding: 1rem 0 !important;
+
+//   .rc-virtual-list {
+//     .rc-virtual-list-holder {
+//       .rc-virtual-list-holder-inner {
+//         .ant-select-item.ant-select-item-option {
+//           &:hover {
+//             background: rgba($primary-blue, 0.1);
+//           }
+
+//           &.ant-select-item-option-active {
+//             background: rgba($primary-blue, 0.1);
+//           }
+
+//           &.ant-select-item-option-selected {
+//             .ant-select-item-option-content {
+//               font-weight: normal;
+//             }
+//           }
+//           &.unclickable-option {
+//             pointer-events: none;
+//             cursor: default;
+//           }
+//         }
+//       }
+//     }
+//   }
+
+//   .ant-select-item {
+//     .ant-select-item-option-content {
+//       width: 100%;
+//       height: 100%;
+
+//       .dropdown-color-item {
+//         width: 28.6rem;
+//         height: 2.2rem;
+//       }
+//     }
+
+//     &.filters-dropdown {
+//       padding: 0.5rem 0 0.5rem 2rem;
+
+//       .ant-select-item-option-content {
+//         font-size: 1.3rem;
+//         color: $black-color;
+//       }
+//     }
+//   }
+// }
+
+// .ml-8 {
+//   margin-left: 0.8rem;
+// }
+
+// .mr-8 {
+//   margin-left: 0.8rem;
+// }
+
+// @keyframes showDropdown {
+//   from {
+//     opacity: 0 !important;
+//   }
+
+//   to {
+//     opacity: 1 !important;
+//   }
+// }
+
+// .ant-pagination.ant-table-pagination.ant-table-pagination-right {
+//   @include flexBox(row, center, flex-end);
+
+//   margin: 0;
+//   padding: 0 1.6rem;
+//   height: 4.9rem;
+//   font-size: 1.5rem;
+//   color: $sonic-silver;
+//   border-top: solid 0.1rem $gallery;
+
+//   .ant-pagination-next,
+//   .ant-pagination-prev {
+//     .ant-pagination-item-link {
+//       @include flexBox(row, center, center);
+
+//       border: none;
+//     }
+//   }
+
+//   .ant-pagination-item {
+//     @include flexBox(row, center, center);
+
+//     border: none;
+
+//     &:hover {
+//       color: $primary-blue;
+//     }
+
+//     &.ant-pagination-item-active {
+//       color: $primary-blue;
+//     }
+//   }
+// }
+
+// .ant-card {
+//   .ant-card-head {
+//     min-height: 6.4rem;
+//     border-bottom: none;
+
+//     .ant-card-head-wrapper {
+//       min-height: 6.4rem;
+
+//       .ant-card-head-title {
+//         @include flexBox(row, center);
+
+//         min-height: 6.4rem;
+//         height: 6.3rem;
+//         padding: 0;
+//         font-size: 2.4rem;
+//         font-weight: bold;
+//         color: $darker-gray;
+
+//         .card-custom-heading {
+//           font-size: 2.4rem;
+//           font-weight: bold;
+//           color: $darker-gray;
+//           margin: 0;
+//           margin-right: 2rem;
+//           position: relative;
+
+//           &:after {
+//             position: absolute;
+//             height: 2rem;
+//             top: 1rem;
+//             right: -1.2rem;
+//             border-right: 0.2rem solid $mercury;
+
+//             content: "";
+//           }
+//         }
+
+//         .card-custom-length {
+//           margin: 0;
+//         }
+//       }
+
+//       .ant-card-extra {
+//         padding: 0;
+//       }
+//     }
+//   }
+
+//   .ant-card-body {
+//     padding: 0;
+//   }
+// }
+
+// .dailog-lines-common-styles {
+//   position: relative;
+
+//   .custom-border {
+//     position: absolute;
+//     top: -3.2rem;
+//     left: 10rem;
+//     width: 42rem;
+//     height: 2.95rem;
+//     border-left: 0.1rem solid $silver-sand;
+//     border-top: 0.1rem solid $silver-sand;
+//   }
+// }

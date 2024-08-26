@@ -1,0 +1,58 @@
+.fuse-nav-container {
+  background-color: #fff;
+  border-radius: 1rem;
+  padding: 1rem 1.7rem;
+
+  .fuse-navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .navbar-branding {
+      .branding-logo {
+        height: 3.6rem;
+
+        .fuse-brand-logo {
+          height: 100%;
+        }
+      }
+    }
+
+    .navbar-links-wrapper {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      list-style: none;
+
+      .navbar-items {
+        margin-right: 5rem;
+
+        &:last-child {
+          margin-right: 0;
+        }
+      }
+
+      .notifications-icon {
+        .bell-icon {
+          margin-right: 5rem;
+          cursor: pointer;
+        }
+      }
+
+      .fuse-user-icon {
+        display: flex;
+        align-items: center;
+        flex-direction: row-reverse;
+
+        .user-icon {
+          height: 5.6rem;
+          border-radius: 50%;
+        }
+
+        .user-name {
+          margin-right: 1.2rem;
+        }
+      }
+    }
+  }
+}
