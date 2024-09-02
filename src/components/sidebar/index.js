@@ -1,4 +1,6 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+
+import useQuery from "../../hooks/useQuery";
 
 import CustomButton from "../customButton";
 import CustomCollapse from "../customCollapse";
@@ -13,6 +15,11 @@ import {
 import "./styles.scss";
 
 const Sidebar = () => {
+  let query = useQuery();
+  const location = useLocation();
+
+  const searchParams = query.get("type");
+
   const onChange = (key) => {
     console.log(key);
   };
@@ -29,15 +36,33 @@ const Sidebar = () => {
       children: (
         <ul className="collpase-items-list">
           <Link to="/jobs/search?type=search">
-            <li className="collpase-item">Search</li>
+            <li
+              className={`collpase-item ${
+                searchParams === "search" && "active"
+              }`}
+            >
+              Search
+            </li>
           </Link>
 
           <Link to="/jobs/search?type=applied">
-            <li className="collpase-item">Applied Jobs</li>
+            <li
+              className={`collpase-item ${
+                searchParams === "applied" && "active"
+              }`}
+            >
+              Applied Jobs
+            </li>
           </Link>
 
           <Link to="/jobs/search?type=saved">
-            <li className="collpase-item">Saved Jobs</li>
+            <li
+              className={`collpase-item ${
+                searchParams === "saved" && "active"
+              }`}
+            >
+              Saved Jobs
+            </li>
           </Link>
         </ul>
       ),
@@ -52,8 +77,25 @@ const Sidebar = () => {
       ),
       children: (
         <ul className="collpase-items-list">
-          <li className="collpase-item">My Mentor</li>
-          <li className="collpase-item">Bookings</li>
+          <Link to="/mentors?type=myMentors">
+            <li
+              className={`collpase-item ${
+                searchParams === "myMentors" && "active"
+              }`}
+            >
+              My Mentor
+            </li>
+          </Link>
+
+          <Link to="/bookings">
+            <li
+              className={`collpase-item ${
+                location.pathname === "/bookings" && "active"
+              }`}
+            >
+              Bookings
+            </li>
+          </Link>
         </ul>
       ),
     },

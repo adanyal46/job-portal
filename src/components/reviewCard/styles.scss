@@ -1,0 +1,36 @@
+.review-card-container {
+  padding: 2.4rem;
+  border: 0.1rem solid #dddce2;
+  border-radius: 1.6rem;
+
+  display: flex;
+  flex-direction: column;
+  gap: 1.6rem;
+
+  .review-card-header {
+    display: flex;
+    gap: 1.6rem;
+
+    .review-card-icon {
+      height: 9rem;
+      width: 9rem;
+
+      .review-card-user-icon {
+        height: 100%;
+        width: 100%;
+      }
+    }
+
+    .review-card-details {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-evenly;
+
+      .name {
+      }
+    }
+  }
+
+  .review-card-content {
+  }
+}

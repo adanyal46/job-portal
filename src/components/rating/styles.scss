@@ -1,0 +1,18 @@
+.rating-container {
+  display: flex;
+  align-items: center;
+
+  .rating {
+    color: #2f2c39;
+    font-weight: 500;
+  }
+
+  > svg {
+    margin-left: 0.5rem;
+  }
+
+  .reviews {
+    margin-left: 0.5rem;
+    color: #eecb16;
+  }
+}

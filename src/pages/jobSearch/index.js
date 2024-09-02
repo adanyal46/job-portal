@@ -1,5 +1,7 @@
 import { useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
+import useQuery from "../../hooks/useQuery";
 
 import CustomTabs from "../../components/customTabs";
 import CommonInput from "../../components/commonInput";
@@ -21,32 +23,33 @@ import {
 
 import "./styles.scss";
 
+const SearchFields = () => {
+  return (
+    <section className="search-jobs-fields">
+      <CommonInput placeholder="UI/UX Designer" prefix={<SearchFieldIcon />} />
+      <CustomSelect placeholder="Location" />
+      <CustomSelect placeholder="Job Type" />
+      <CustomSelect placeholder="Pay" />
+      <CustomSelect placeholder="Company" />
+      <CommonInput
+        category="date"
+        placeholder="Date Range"
+        styles={{
+          height: "100%",
+        }}
+      />
+    </section>
+  );
+};
+
 const Search = (props) => {
   const { jobApplied, jobSaved } = props;
 
   const [jobKey, setJobKey] = useState(null);
 
-  console.log("jobKey", jobKey);
-
   return (
     <section className="search-jobs-main-container">
-      <section className="search-jobs-fields">
-        <CommonInput
-          placeholder="UI/UX Designer"
-          prefix={<SearchFieldIcon />}
-        />
-        <CustomSelect placeholder="Location" />
-        <CustomSelect placeholder="Job Type" />
-        <CustomSelect placeholder="Pay" />
-        <CustomSelect placeholder="Company" />
-        <CommonInput
-          category="date"
-          placeholder="Date Range"
-          styles={{
-            height: "100%",
-          }}
-        />
-      </section>
+      <SearchFields />
 
       <section className="jobs-wrapper">
         <section className="jobs-list-container">
@@ -65,6 +68,7 @@ const Search = (props) => {
           <section className="listed-job-details-container">
             <figure>
               <img
+                loading="lazy"
                 src="/images/empty-jobs-screen.png"
                 alt="clickJobsForDetails"
               />
@@ -172,11 +176,13 @@ const Search = (props) => {
 };
 
 const JobSearch = () => {
-  const [searchParams] = useSearchParams();
-  const defaultKey = searchParams.get("type");
+  const navigate = useNavigate();
+
+  let query = useQuery();
+  const defaultKey = query.get("type");
 
   const handleTabChange = (key) => {
-    console.log(key);
+    navigate(`/jobs/search?type=${key}`);
   };
 
   return (

@@ -8,6 +8,9 @@ import "./App.scss";
 
 const MyProfile = lazy(() => import("./pages/myProfile"));
 const JobSearch = lazy(() => import("./pages/jobSearch"));
+const Mentors = lazy(() => import("./pages/mentors"));
+const Bookings = lazy(() => import("./pages/bookings"));
+const MentorDetails = lazy(() => import("./pages/mentorDetails"));
 const Notifications = lazy(() => import("./pages/notifications"));
 const Settings = lazy(() => import("./pages/settings"));
 
@@ -25,6 +28,13 @@ const App = () => {
               <Routes>
                 <Route path="/" exact element={<MyProfile />} />
                 <Route path="/jobs/search" exact element={<JobSearch />} />
+                <Route path="/mentors" exact element={<Mentors />} />
+                <Route path="/bookings" exact element={<Bookings />} />
+                <Route
+                  path="/mentorDetails"
+                  exact
+                  element={<MentorDetails />}
+                />
                 <Route
                   path="/notifications"
                   exact

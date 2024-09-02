@@ -50,13 +50,17 @@
         padding-top: 1rem;
         padding-bottom: 1rem;
 
-
         .collpase-items-list {
           //   list-style: none;
 
           .collpase-item {
             font-size: 1.5rem;
             margin-bottom: 0.5rem;
+
+            &.active {
+              font-weight: 600;
+              color: #1c1c1c;
+            }
           }
         }
       }

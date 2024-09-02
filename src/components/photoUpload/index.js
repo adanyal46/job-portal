@@ -61,6 +61,7 @@ const PhotoUpload = () => {
     >
       {imageUrl ? (
         <img
+          loading="lazy"
           src={imageUrl}
           alt="avatar"
           style={{

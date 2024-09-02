@@ -1,12 +1,22 @@
 .fuse-nav-container {
-  background-color: #fff;
-  border-radius: 1rem;
-  padding: 1rem 1.7rem;
+  @media (min-width: 768px) {
+    padding: 1.2rem 2.4rem 0 2.4rem;
+  }
 
   .fuse-navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
+
+    // max-width: 160rem;
+    width: 100%;
+
+    background-color: #fff;
+    padding: 1rem 1.7rem;
+
+    @media (min-width: 768px) {
+      border-radius: 1rem;
+    }
 
     .navbar-branding {
       .branding-logo {
@@ -18,14 +28,66 @@
       }
     }
 
+    .menu-toggle-button {
+      background: none;
+      border: 0;
+      margin: 0;
+      display: inline-flex;
+      flex-direction: column;
+      outline: none;
+
+      .toggle-menu-bar {
+        transition: all 300ms linear;
+        width: 2.2rem;
+        height: 0.2rem;
+        border-radius: 0.1rem;
+        margin-top: 0.4rem;
+        background: #000000;
+
+        &:first-child {
+          margin-top: 0;
+        }
+      }
+
+      @media (min-width: 768px) {
+        display: none;
+      }
+
+      &.show-nav {
+        .toggle-menu-bar {
+          transition: all 300ms linear;
+          &:first-child {
+            transform: translateY(0) rotate(45deg);
+          }
+
+          &:nth-child(2) {
+            display: none;
+          }
+
+          &:last-child {
+            transform: translateY(-0.55rem) rotate(-45deg);
+          }
+        }
+      }
+    }
+
     .navbar-links-wrapper {
-      display: flex;
+      display: none;
+
       justify-content: space-between;
       align-items: center;
       list-style: none;
 
+      @media (min-width: 768px) {
+        display: flex;
+      }
+
       .navbar-items {
-        margin-right: 5rem;
+        margin-right: 3rem;
+
+        @media (min-width: 1024px) {
+          margin-right: 5rem;
+        }
 
         &:last-child {
           margin-right: 0;
@@ -34,7 +96,6 @@
 
       .notifications-icon {
         .bell-icon {
-          margin-right: 5rem;
           cursor: pointer;
         }
       }
@@ -45,8 +106,12 @@
         flex-direction: row-reverse;
 
         .user-icon {
-          height: 5.6rem;
+          height: 4.6rem;
           border-radius: 50%;
+
+          @media (min-width: 1024px) {
+            height: 5.6rem;
+          }
         }
 
         .user-name {

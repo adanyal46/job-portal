@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 
 import "./styles.scss";
@@ -5,8 +6,14 @@ import "./styles.scss";
 const Navbar = () => {
   const navigate = useNavigate();
 
+  const [toggleNav, setToggleNav] = useState(false);
+
   const goToNotificationsPage = () => {
     navigate("/notifications");
+  };
+
+  const navbarHideAndShow = () => {
+    setToggleNav((st) => !st);
   };
 
   return (
@@ -18,10 +25,7 @@ const Navbar = () => {
             onClick={() => window.scrollTo(0, 0)}
             className="navbar-branding-link"
           >
-            <figure
-              className="branding-logo"
-              //   onClick={() => setNavToggle(false)}
-            >
+            <figure className="branding-logo">
               <img
                 loading="lazy"
                 className="fuse-brand-logo"
@@ -32,38 +36,44 @@ const Navbar = () => {
           </NavLink>
         </picture>
 
+        <button
+          className={`menu-toggle-button ${toggleNav && "show-nav"}`}
+          onClick={navbarHideAndShow}
+        >
+          <span className="toggle-menu-bar" />
+          <span className="toggle-menu-bar" />
+          <span className="toggle-menu-bar" />
+        </button>
+
         <ul className="navbar-links-wrapper">
-          {/* <Link
-            to={navItemsName.url}
-            key={`nav-item # ${index}`}
-            className={activePathName === "/" ? "highlight-parent" : ""}
-          >
-            <li className="navbar-items">{navItemsName.menu_item}</li>
-          </Link> */}
           <li className="navbar-items">Jobs</li>
           <li className="navbar-items">Mentors</li>
           <li className="navbar-items">Blogs</li>
 
-          <figure className="notifications-icon">
-            <img
-              loading="lazy"
-              className="bell-icon"
-              src="/images/bell-icon.png"
-              alt="fuseUser"
-              onClick={goToNotificationsPage}
-            />
-          </figure>
+          <li className="navbar-items">
+            <figure className="notifications-icon">
+              <img
+                loading="lazy"
+                className="bell-icon"
+                src="/images/bell-icon.png"
+                alt="fuseUser"
+                onClick={goToNotificationsPage}
+              />
+            </figure>
+          </li>
 
-          <figure className="fuse-user-icon">
-            <img
-              loading="lazy"
-              className="user-icon"
-              src="/images/user-icon.png"
-              alt="fuseUser"
-            />
+          <li className="navbar-items">
+            <figure className="fuse-user-icon">
+              <img
+                loading="lazy"
+                className="user-icon"
+                src="/images/user-icon.png"
+                alt="fuseUser"
+              />
 
-            <figcaption className="user-name">Alina Smith</figcaption>
-          </figure>
+              <figcaption className="user-name">Alina Smith</figcaption>
+            </figure>
+          </li>
         </ul>
       </nav>
     </header>

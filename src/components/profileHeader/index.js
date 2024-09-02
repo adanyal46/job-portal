@@ -25,6 +25,7 @@ const ProfileHeader = () => {
       <section className="profile-header-container">
         <figure className="user-profile-image-wrapper">
           <img
+            loading="lazy"
             className="user-profile-image"
             src="/images/user-profile-image.png"
             alt="UserProfileImage"

@@ -3,8 +3,9 @@
 .main-layout-container {
   @include hide-scrollbar();
 
-  justify-self: center;
+  // justify-self: center;
   width: 100%;
+  // max-width: 130.5rem;
   overflow-y: auto;
 
   // @media (min-width: 1360px) {
@@ -20,7 +21,11 @@
   .profile-main-wrapper {
     background-color: #fff;
     border-radius: 1rem;
-    padding: 2.5rem;
+    padding: 2.5rem 1.6rem;
+
+    @media (min-width: 768px) {
+      padding: 2.5rem;
+    }
   }
 }
 // .content-wrapper {

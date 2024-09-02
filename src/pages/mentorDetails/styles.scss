@@ -1,0 +1,170 @@
+.main-layout-container {
+  .page-main-heading {
+    margin: 1.6rem 0;
+    color: #52595c;
+    font-weight: 400;
+
+    .slash {
+      color: #4b465c;
+      font-weight: 600;
+      font-size: 2rem;
+    }
+
+    .highlighted {
+      color: #2f2c39;
+      font-weight: 500;
+    }
+  }
+
+  .mentor-details-page-wrapper {
+    display: grid;
+    grid-template-columns: 1.7fr 1fr;
+    grid-column-gap: 3.2rem;
+
+    .mentor-detail-container {
+      padding: 2.4rem;
+      border-radius: 1.2rem;
+      background: #fff;
+      box-shadow: 0 0.2rem 0.4rem 0 rgba(165, 163, 174, 0.3);
+
+      display: flex;
+      flex-direction: column;
+      gap: 1.6rem;
+
+      .mentor-card-container {
+        display: flex;
+        align-items: center;
+        gap: 1.6rem;
+
+        .mentor-card-image-wrapper {
+          width: 25rem;
+          height: 24.8rem;
+
+          .mentor-card-image {
+            width: 100%;
+            height: 100%;
+          }
+        }
+
+        .mentor-card-details-container {
+          display: flex;
+          flex-direction: column;
+          gap: 1.6rem;
+
+          .mentor-card-details {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+
+            .mentor-name {
+              color: #333;
+            }
+          }
+
+          .mentor-expertise {
+            color: #333;
+            font-weight: 500;
+          }
+
+          .mentor-verified {
+            padding: 0.6rem 1.1rem;
+            border-radius: 1.2rem;
+            background: #25b16e;
+            display: flex;
+            align-items: center;
+            max-width: fit-content;
+            color: #fff;
+            font-size: 1.6rem;
+            font-weight: 600;
+
+            > svg {
+              margin-right: 1rem;
+            }
+          }
+        }
+      }
+
+      .I-can-do-container {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+
+        .i-can-do-item {
+          line-height: 2rem;
+
+          > svg {
+            vertical-align: bottom;
+          }
+        }
+      }
+
+      .about-mentor-container {
+        .section-heading {
+          color: #333;
+          margin-bottom: 0.5rem;
+          font-weight: 600;
+        }
+
+        .section-content {
+          color: #2f2c39;
+        }
+
+        .review-cards-layout {
+          display: flex;
+          gap: 2.4rem;
+        }
+      }
+
+      .certifications-wrapper {
+        padding: 0;
+      }
+    }
+
+    .mentor-actions-container {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+
+      .mentor-video-container {
+        padding: 2.4rem;
+        border-radius: 1.2rem;
+        background: #fff;
+        box-shadow: 0 0.2rem 0.4rem 0 rgba(165, 163, 174, 0.3);
+
+        display: flex;
+        flex-direction: column;
+        gap: 1.6rem;
+      }
+
+      .mentor-get-started-container {
+        display: flex;
+        flex-direction: column;
+        gap: 1.6rem;
+
+        padding: 2.4rem;
+        border-radius: 1.2rem;
+        background: #fff;
+        box-shadow: 0 0.2rem 0.4rem 0 rgba(165, 163, 174, 0.3);
+
+        .mentor-services {
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+          font-weight: 500;
+        }
+
+        .info-content {
+          line-height: 2rem;
+
+          > svg {
+            vertical-align: bottom;
+          }
+        }
+      }
+    }
+  }
+
+  .mentor-detail-divider {
+    border-top: 0.1rem solid #b5b5b5;
+  }
+}

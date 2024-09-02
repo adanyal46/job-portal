@@ -1,0 +1,235 @@
+.schedule-modal-body-wrapper {
+  display: flex;
+  gap: 1.7rem;
+
+  .schedule-steps-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2.4rem;
+
+    .step-wrapper {
+      display: flex;
+      gap: 1.6rem;
+
+      &.active-step {
+        .icon-wrapper {
+          //   border-radius: 6px;
+          background: linear-gradient(288deg, #001f3f -20.42%, #009dd1 62.87%);
+          box-shadow: 0px 2px 4px 0px rgba(165, 163, 174, 0.3);
+
+          /* Light/Gray/Gray - SM */
+        }
+      }
+
+      .icon-wrapper {
+        height: 4rem;
+        width: 4rem;
+        border-radius: 0.6rem;
+        background: rgba(75, 70, 92, 0.08);
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        > svg {
+        }
+      }
+
+      .step-detail-wrapper {
+        display: flex;
+        flex-direction: column;
+
+        .step-title {
+          color: #4b465c;
+          font-size: 1.4rem;
+        }
+
+        .step-description {
+          color: #4b465c;
+          font-size: 1.4rem;
+        }
+      }
+    }
+  }
+
+  .schedule-form-container {
+    flex: 1;
+
+    .steps-buttons-container {
+      display: flex;
+
+      .step-button {
+        padding: 0.8rem 1rem;
+        color: #009dd1;
+        font-size: 1.4rem;
+        font-weight: 400;
+        border-radius: 0.6rem;
+
+        &.active {
+          color: #fff;
+          background: #009dd1;
+          box-shadow: 0 0.2rem 0.4rem 0 rgba(165, 163, 174, 0.3);
+        }
+      }
+    }
+
+    .schedule-step-container {
+      display: flex;
+      flex-direction: column;
+      gap: 2.4rem;
+    }
+
+    .review-step-container {
+      display: flex;
+      flex-direction: column;
+      gap: 1.6rem;
+    }
+
+    .billing-step-container {
+      display: flex;
+      flex-direction: column;
+      gap: 1.6rem;
+    }
+
+    .submit-step-container {
+      display: flex;
+      flex-direction: column;
+      gap: 1.6rem;
+    }
+
+    .schedule-fields-container {
+      display: flex;
+      align-items: center;
+      gap: 2.4rem;
+    }
+
+    .time-slots-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.2rem;
+
+      .time-slot-time {
+        padding: 0.4rem 0.8rem;
+        border-radius: 0.6rem;
+        background: #eaf7fd;
+        color: #3f98b5;
+      }
+    }
+
+    .review-content-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .review-label {
+        color: #4b465c;
+        letter-spacing: 0.43px;
+      }
+
+      .review-value {
+        color: #4b465c;
+        font-weight: 600;
+        letter-spacing: 0.43px;
+      }
+
+      .total-label {
+        color: #4b465c;
+        font-weight: 600;
+      }
+
+      .total-value {
+        color: #3f98b5;
+      }
+    }
+
+    .voucher-field-container {
+      .voucher-code-label {
+        color: #4b465c;
+        font-size: 1.3rem;
+      }
+
+      .voucher-field-with-button {
+        display: flex;
+        gap: 0.8rem;
+
+        .ant-btn.apply-voucher-button {
+          height: 3.5rem;
+          border-color: #a8aaae;
+          background-color: #fff;
+        }
+      }
+    }
+
+    .credit-card-picture-container {
+      height: 17rem;
+      padding: 1rem 0;
+
+      display: flex;
+      justify-content: center;
+
+      .credit-card-picture {
+        height: 100%;
+      }
+    }
+
+    .billing-fields-group-container {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 2.6rem;
+    }
+
+    .billing-field-wrapper {
+      display: flex;
+      flex-direction: column;
+
+      .billing-field-label {
+        color: #4b465c;
+        font-size: 1.3rem;
+      }
+    }
+
+    .submit-icon-container {
+      height: 26.5rem;
+      padding: 1rem 0;
+
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      .submit-icon {
+        height: 100%;
+      }
+
+      .submit-caption {
+        color: #4b465c;
+        font-size: 1.5rem;
+        margin-top: 1rem;
+      }
+    }
+
+    .schedule-fields-buttons {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 1.2rem;
+
+      .ant-btn.schedule-modal-button {
+        &.active {
+          background: #28c76f;
+          box-shadow: 0px 2px 4px 0px rgba(165, 163, 174, 0.3);
+        }
+
+        &.custom-button-plain-disabled {
+          .icon-with-title {
+            color: #a8aaae;
+          }
+        }
+
+        .icon-with-title {
+          display: flex;
+          align-items: center;
+          gap: 0.8rem;
+        }
+      }
+    }
+  }
+}

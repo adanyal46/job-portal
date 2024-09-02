@@ -11,6 +11,7 @@ const Certifications = () => {
         <section className="certification-detail-wrapper">
           <figure className="certification-icon">
             <img
+              loading="lazy"
               src="/images/user-icon.png"
               className="icon"
               alt="CertificationIcon"
@@ -27,6 +28,7 @@ const Certifications = () => {
         <section className="certification-detail-wrapper">
           <figure className="certification-icon">
             <img
+              loading="lazy"
               src="/images/user-icon.png"
               className="icon"
               alt="CertificationIcon"
@@ -43,6 +45,7 @@ const Certifications = () => {
         <section className="certification-detail-wrapper">
           <figure className="certification-icon">
             <img
+              loading="lazy"
               src="/images/user-icon.png"
               className="icon"
               alt="CertificationIcon"

@@ -5,8 +5,15 @@ import CustomButton from "../customButton";
 import "./styles.scss";
 
 const CommonModal = (props) => {
-  const { title, description, isModalOpen, handleClose, footer, children } =
-    props;
+  const {
+    classes,
+    title,
+    description,
+    isModalOpen,
+    handleClose,
+    footer,
+    children,
+  } = props;
 
   const handleOk = () => {
     console.log("ok");
@@ -23,7 +30,7 @@ const CommonModal = (props) => {
 
   return (
     <Modal
-      className="common-modal-container"
+      className={`common-modal-container ${classes}`}
       title={<ModalHeader />}
       open={isModalOpen}
       onOk={handleOk}

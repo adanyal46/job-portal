@@ -23,6 +23,10 @@
 
     padding: 0 1.6rem;
 
+    @media (max-width: 767px) {
+      flex-direction: column;
+    }
+
     .form-field-with-label-group {
       display: flex;
       flex-direction: column;
@@ -32,6 +36,11 @@
       &.half-size-field {
         width: 50%;
         padding-right: 0.8rem;
+
+        @media (max-width: 767px) {
+          width: 100%;
+          padding-right: 0;
+        }
       }
 
       .field-label {
@@ -46,7 +55,11 @@
     display: flex;
     gap: 1.6rem;
 
-    padding: 0.2rem 1.2rem;
+    padding: 0.2rem 0;
+
+    @media (min-width: 768px) {
+      padding: 0.2rem 1.2rem;
+    }
 
     .ant-btn {
       &.deactivate {

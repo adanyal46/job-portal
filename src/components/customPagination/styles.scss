@@ -1,0 +1,31 @@
+.ant-pagination.custom-pagination {
+  margin-top: 1.2rem;
+  gap: 0.6rem;
+  justify-content: center;
+
+  .ant-pagination-prev,
+  .ant-pagination-next,
+  .ant-pagination-item {
+    margin: 0;
+    border-radius: 0.4rem;
+    background: #eff3f4;
+
+    > a {
+      color: #4b465c;
+      font-size: 1.3rem;
+      font-weight: 600;
+    }
+
+    &.ant-pagination-disabled {
+    }
+
+    &.ant-pagination-item-active {
+      background: #009dd1;
+      border-color: #009dd1;
+
+      > a {
+        color: #fff;
+      }
+    }
+  }
+}

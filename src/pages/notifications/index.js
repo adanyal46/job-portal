@@ -46,6 +46,7 @@ const NotificationEmptyScreen = () => (
   <section className="empty-notifications-container">
     <figure className="no-notification-container">
       <img
+        loading="lazy"
         src="/images/empty-notifications.png"
         className="no-notification-image"
         alt="NoNotifications"
@@ -133,6 +134,7 @@ const Notifications = () => {
           <section className="form-with-avatar-wrapper">
             <figure className="review-avatar-container">
               <img
+                loading="lazy"
                 src="/images/review-write-icon.png"
                 alt="writeReviewIcon"
                 className="avatar"

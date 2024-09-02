@@ -1,0 +1,111 @@
+.custom-checkbox-group {
+  &.ant-checkbox-group {
+    .custom-mentor-collapse {
+      &.ant-collapse {
+        width: 100%;
+        background-color: #fff;
+        display: flex;
+        flex-direction: column;
+        gap: 1.6rem;
+
+        .ant-collapse-item {
+          border-bottom: none;
+
+          &.ant-collapse-item-active {
+            .ant-collapse-header {
+              background-color: #fff;
+
+              .ant-collapse-expand-icon {
+                .ant-collapse-arrow {
+                  > svg {
+                    transform: rotate(180deg);
+                  }
+                }
+              }
+            }
+          }
+
+          .ant-collapse-header {
+            position: relative;
+
+            padding: 1.2rem 5rem 1.2rem 1.2rem;
+            align-items: center;
+            border-radius: 1.2rem;
+            border: 0.1rem solid #aeacb4;
+
+            .ant-collapse-expand-icon {
+              border-radius: 0.8rem;
+              border: 0.13rem solid #aeacb4;
+              padding-inline-start: 0;
+              margin-inline-start: 1.2rem;
+              padding: 0.4rem 1.2rem;
+              height: 2.9rem;
+
+              .ant-collapse-arrow {
+                color: #52595c;
+                font-size: 1.4rem;
+              }
+            }
+
+            .ant-collapse-header-text {
+              .header-text {
+                color: #2f2c39;
+              }
+
+              .ant-checkbox-wrapper {
+                position: absolute;
+                top: 1.2rem;
+                right: 1.2rem;
+
+                &.ant-checkbox-wrapper-checked {
+                  .ant-checkbox {
+                    .ant-checkbox-inner {
+                      background-color: #fff;
+
+                      &:after {
+                        border-color: #1bbb62;
+                        width: 0.7rem;
+                        height: 1.5rem;
+                        left: 0.9rem;
+                        top: 1.3rem;
+                      }
+                    }
+                  }
+                }
+
+                .ant-checkbox {
+                  &:hover {
+                    .ant-checkbox-inner {
+                      border-color: #aeacb4;
+                    }
+                  }
+                  .ant-checkbox-input {
+                  }
+
+                  .ant-checkbox-inner {
+                    width: 3rem;
+                    height: 2.9rem;
+                    border-color: #aeacb4;
+                  }
+                }
+              }
+            }
+          }
+
+          .ant-collapse-content {
+            .ant-collapse-content-box {
+              padding: 1.2rem;
+              border-radius: 1.2rem;
+              border: 0.1rem solid #aeacb4;
+              margin-top: 1.2rem;
+
+              display: flex;
+              flex-direction: column;
+              gap: 1rem;
+            }
+          }
+        }
+      }
+    }
+  }
+}
