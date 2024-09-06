@@ -46,9 +46,17 @@ const Navbar = () => {
         </button>
 
         <ul className="navbar-links-wrapper">
-          <li className="navbar-items">Jobs</li>
-          <li className="navbar-items">Mentors</li>
-          <li className="navbar-items">Blogs</li>
+          <NavLink className="navbar-items" to="/jobs/search?type=search">
+            <li className="item-name">Jobs</li>
+          </NavLink>
+
+          <NavLink className="navbar-items" to="/mentors?type=myMentors">
+            <li className="item-name">Mentors</li>
+          </NavLink>
+
+          <NavLink className="navbar-items" to="/blogs">
+            <li className="item-name">Blogs</li>
+          </NavLink>
 
           <li className="navbar-items">
             <figure className="notifications-icon">

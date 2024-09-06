@@ -11,6 +11,8 @@ const JobSearch = lazy(() => import("./pages/jobSearch"));
 const Mentors = lazy(() => import("./pages/mentors"));
 const Bookings = lazy(() => import("./pages/bookings"));
 const MentorDetails = lazy(() => import("./pages/mentorDetails"));
+const Blogs = lazy(() => import("./pages/blogs"));
+const BlogDetail = lazy(() => import("./pages/blogDetail"));
 const Notifications = lazy(() => import("./pages/notifications"));
 const Settings = lazy(() => import("./pages/settings"));
 
@@ -35,6 +37,8 @@ const App = () => {
                   exact
                   element={<MentorDetails />}
                 />
+                <Route path="/blogs" exact element={<Blogs />} />
+                <Route path="/blogDetails" exact element={<BlogDetail />} />
                 <Route
                   path="/notifications"
                   exact
