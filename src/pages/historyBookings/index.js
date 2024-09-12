@@ -2,22 +2,16 @@ import BookingCard from "../../components/bookingCard";
 import CustomPagination from "../../components/customPagination";
 import CustomTabs from "../../components/customTabs";
 
-import "./styles.scss";
-
 const BookingsListing = () => {
   return (
     <section className="booking-listing-wrapper">
-      <BookingCard />
-      <BookingCard />
-      <BookingCard />
+      <BookingCard mentor progress="Completed" />
+      <BookingCard mentor progress="In Progress" />
+      <BookingCard mentor progress="Completed" />
 
-      <BookingCard />
-      <BookingCard />
-      <BookingCard />
-
-      <BookingCard />
-      <BookingCard />
-      <BookingCard />
+      <BookingCard mentor progress="In Progress" />
+      <BookingCard mentor progress="Completed" />
+      <BookingCard mentor progress="In Progress" />
 
       <CustomPagination />
     </section>
@@ -34,32 +28,32 @@ const NoBooking = () => {
   );
 };
 
-const Bookings = () => {
+const HistoryBookings = () => {
   const handleTabChange = (key) => {
     console.log(key);
   };
 
   return (
     <section className="main-layout-container">
-      <h3 className="layout-main-heading">Bookings</h3>
+      <h3 className="layout-main-heading">Bookings History/Past Bookings</h3>
 
       <CustomTabs
         handleChange={handleTabChange}
-        defaultActiveKey="today"
+        defaultActiveKey="last-3-Days"
         items={[
           {
-            key: "today",
-            label: "Today",
+            key: "last-3-Days",
+            label: "Last 3 Days",
             children: <BookingsListing />,
           },
           {
-            key: "upcoming",
-            label: "Up Coming",
+            key: "last-Week",
+            label: "Last Week",
             children: <NoBooking />,
           },
           {
-            key: "previous",
-            label: "Previous",
+            key: "last-Month",
+            label: "Last Month",
             children: <NoBooking />,
           },
           {
@@ -73,4 +67,4 @@ const Bookings = () => {
   );
 };
 
-export default Bookings;
+export default HistoryBookings;

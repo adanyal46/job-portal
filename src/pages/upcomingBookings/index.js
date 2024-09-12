@@ -2,22 +2,20 @@ import BookingCard from "../../components/bookingCard";
 import CustomPagination from "../../components/customPagination";
 import CustomTabs from "../../components/customTabs";
 
-import "./styles.scss";
-
 const BookingsListing = () => {
   return (
     <section className="booking-listing-wrapper">
-      <BookingCard />
-      <BookingCard />
-      <BookingCard />
+      <BookingCard mentor progress="Completed" />
+      <BookingCard mentor progress="In Progress" />
+      <BookingCard mentor progress="Completed" />
 
-      <BookingCard />
-      <BookingCard />
-      <BookingCard />
+      <BookingCard mentor progress="In Progress" />
+      <BookingCard mentor progress="Completed" />
+      <BookingCard mentor progress="In Progress" />
 
-      <BookingCard />
-      <BookingCard />
-      <BookingCard />
+      <BookingCard mentor progress="Completed" />
+      <BookingCard mentor progress="In Progress" />
+      <BookingCard mentor progress="Completed" />
 
       <CustomPagination />
     </section>
@@ -34,14 +32,14 @@ const NoBooking = () => {
   );
 };
 
-const Bookings = () => {
+const UpcomingBookings = () => {
   const handleTabChange = (key) => {
     console.log(key);
   };
 
   return (
     <section className="main-layout-container">
-      <h3 className="layout-main-heading">Bookings</h3>
+      <h3 className="layout-main-heading">Upcoming Bookings</h3>
 
       <CustomTabs
         handleChange={handleTabChange}
@@ -73,4 +71,4 @@ const Bookings = () => {
   );
 };
 
-export default Bookings;
+export default UpcomingBookings;

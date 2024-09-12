@@ -10,6 +10,8 @@ import {
   MentorsIcon,
   SettingIcon,
   ContactFuseIcon,
+  BookingsIcon,
+  EarningsIcon,
 } from "../../assets/svg";
 
 import "./styles.scss";
@@ -27,6 +29,38 @@ const Sidebar = () => {
   const items = [
     {
       key: "1",
+      label: (
+        <section className="collapse-header-wrapper">
+          <BookingsIcon />
+          <h5 className="collapse-heading">Bookings</h5>
+        </section>
+      ),
+      children: (
+        <ul className="collpase-items-list">
+          <Link to="/upcomingBookings">
+            <li
+              className={`collpase-item ${
+                location.pathname === "/upcomingBookings" && "active"
+              }`}
+            >
+              Upcoming Bookings
+            </li>
+          </Link>
+
+          <Link to="/historyBookings">
+            <li
+              className={`collpase-item ${
+                location.pathname === "/historyBookings" && "active"
+              }`}
+            >
+              Booking History
+            </li>
+          </Link>
+        </ul>
+      ),
+    },
+    {
+      key: "2",
       label: (
         <section className="collapse-header-wrapper">
           <JobsIcon />
@@ -68,7 +102,7 @@ const Sidebar = () => {
       ),
     },
     {
-      key: "2",
+      key: "3",
       label: (
         <section className="collapse-header-wrapper">
           <MentorsIcon />
@@ -100,7 +134,20 @@ const Sidebar = () => {
       ),
     },
     {
-      key: "3",
+      key: "4",
+      showArrow: false,
+      collapsible: "header",
+      label: (
+        <Link to="/earnings">
+          <section className="collapse-header-wrapper">
+            <EarningsIcon />
+            <h5 className="collapse-heading">Earnings</h5>
+          </section>
+        </Link>
+      ),
+    },
+    {
+      key: "5",
       showArrow: false,
       collapsible: "header",
       label: (

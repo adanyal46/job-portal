@@ -1,0 +1,62 @@
+.earnings-main-layout-container {
+  padding: 3.6rem 0;
+  border-radius: 0.6rem;
+  background-color: #ffffff;
+  overflow-y: auto;
+
+  .download-buttons-wrapper {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1.6rem;
+    padding: 0 1.6rem;
+    margin-bottom: 1.6rem;
+
+    .ant-btn.custom-button {
+      &.download-button {
+        width: max-content;
+        height: 4rem;
+        border-radius: 0.8rem;
+        background: #e9f0f3;
+        padding: 0 2rem;
+
+        .button-title {
+          display: flex;
+          align-items: center;
+          gap: 0.4rem;
+
+          .title {
+            color: #2f2c39;
+            font-weight: 500;
+          }
+        }
+      }
+    }
+  }
+
+  .earning-detail-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1.6rem;
+
+    .grand-total {
+      color: #1c1c1c;
+    }
+
+    .earning-detail {
+      color: #2f2c39;
+      font-weight: 400;
+
+      .amount {
+        color: #2f2c39;
+        font-weight: 600;
+      }
+    }
+  }
+
+  .ant-input-affix-wrapper.earnings-search-field {
+    margin: 1.6rem;
+    height: 4.8rem;
+    width: 41rem;
+  }
+}

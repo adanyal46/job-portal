@@ -1,0 +1,64 @@
+.booking-card-container {
+  padding: 2.4rem;
+  border-radius: 1.6rem;
+  border: 0.1rem solid #b5b5b5;
+  background: #fff;
+
+  display: flex;
+  flex-direction: column;
+  gap: 1.6rem;
+
+  .booking-card-heading {
+    color: #1c1c1c;
+    font-size: 2.2rem;
+
+    .mentor-name {
+      background: linear-gradient(288deg, #001f3f -20.42%, #009dd1 62.87%);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+  }
+
+  .booking-tag-content {
+    padding: 0.5rem 1rem;
+    border-radius: 0.4rem;
+    font-size: 1.4rem;
+    width: max-content;
+
+    &.completed {
+      color: #1bbb62;
+      background: #daf9e8;
+    }
+
+    &.in-progress {
+      color: #f9912e;
+      background: #faf4ee;
+    }
+  }
+
+  .booking-time-slot-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .slot-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.5rem;
+
+      .slot-info {
+        color: #1c1c1c;
+        font-size: 1.8rem;
+      }
+    }
+  }
+
+  .ant-btn.reschedule-button {
+    height: 3.9rem;
+    width: 13rem;
+    border-color: #a8aaae;
+    background-color: #fff;
+  }
+}
