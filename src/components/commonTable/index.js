@@ -74,7 +74,9 @@ import "./styles.scss";
 //     tags: ["cool", "teacher"],
 //   },
 // ];
-const CommonTable = ({ columns, tableData }) => (
-  <Table columns={columns} dataSource={tableData} />
-);
+const CommonTable = (props) => {
+  const { columns, data, pagination = false } = props;
+
+  return <Table columns={columns} dataSource={data} pagination={pagination} />;
+};
 export default CommonTable;

@@ -140,11 +140,35 @@
         background: #fff;
         box-shadow: 0 0.2rem 0.4rem 0 rgba(165, 163, 174, 0.3);
 
-        .mentor-services {
+        .mentor-services-wrapper {
           display: flex;
           align-items: center;
-          gap: 0.5rem;
-          font-weight: 500;
+          justify-content: space-between;
+
+          .mentor-services {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 500;
+          }
+        }
+
+        .ant-btn.custom-edit-profile-button {
+          border-radius: 0.8rem;
+          border: 0.13rem solid #aeacb4;
+          padding-inline-start: 0;
+          margin-inline-start: 1.2rem;
+          padding: 0 1.2rem;
+          height: 2.9rem;
+          width: max-content;
+
+          .edit-profile-button-title {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            color: #52595c;
+            font-size: 1.4rem;
+          }
         }
 
         .info-content {

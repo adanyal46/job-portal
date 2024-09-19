@@ -9,9 +9,9 @@ import CommonTable from "../../components/commonTable";
 const columns = [
   {
     title: "ID",
-    dateIndex: "id",
+    dataIndex: "id",
     key: "id",
-    render: (text) => <a>{text}</a>,
+    // render: (id) => <a>{id}</a>,
   },
   {
     title: "DATE",
@@ -98,7 +98,7 @@ const tableData = [
   },
 ];
 
-const LifeTimeEarnings = () => {
+const LifeTimeEarnings = ({ monthly, weekly, custom }) => {
   return (
     <section className="earnings-main-layout-container">
       <section className="download-buttons-wrapper">
@@ -141,11 +141,49 @@ const LifeTimeEarnings = () => {
 
       <hr className="form-divider" />
 
-      <CommonInput
-        classes="earnings-search-field"
-        placeholder="Search ID"
-        prefix={<SearchFieldIcon />}
-      />
+      <section className="earnings-search-fields-wrapper">
+        <CommonInput
+          classes="earnings-search-field"
+          placeholder="Search ID"
+          prefix={<SearchFieldIcon />}
+        />
+
+        {monthly && (
+          <CommonInput
+            category="date"
+            classes="earnings-select-field"
+            placeholder="Select Month"
+            prefix={<SearchFieldIcon />}
+          />
+        )}
+
+        {weekly && (
+          <CommonInput
+            category="date"
+            classes="earnings-select-field"
+            placeholder="This Week"
+            prefix={<SearchFieldIcon />}
+          />
+        )}
+
+        {custom && (
+          <>
+            <CommonInput
+              category="date"
+              classes="earnings-select-field"
+              placeholder="Select From"
+              prefix={<SearchFieldIcon />}
+            />
+
+            <CommonInput
+              category="date"
+              classes="earnings-select-field"
+              placeholder="Select To"
+              prefix={<SearchFieldIcon />}
+            />
+          </>
+        )}
+      </section>
 
       <hr className="form-divider" />
 
@@ -177,17 +215,17 @@ const Earnings = () => {
           {
             key: "monthlyEarnings",
             label: "Monthly Earnings",
-            children: <LifeTimeEarnings />,
+            children: <LifeTimeEarnings monthly />,
           },
           {
             key: "weeklyEarnings",
             label: "Weekly Earnings",
-            children: <LifeTimeEarnings />,
+            children: <LifeTimeEarnings weekly />,
           },
           {
             key: "customRange",
             label: "Custom Range",
-            children: <LifeTimeEarnings />,
+            children: <LifeTimeEarnings custom />,
           },
         ]}
       />

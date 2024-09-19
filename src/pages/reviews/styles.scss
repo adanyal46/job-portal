@@ -1,0 +1,16 @@
+.reviews-main-layout-container {
+  padding: 2.4rem 3.2rem;
+  border-radius: 0.6rem;
+  background-color: #ffffff;
+  overflow-y: auto;
+
+  display: flex;
+  flex-direction: column;
+  gap: 3.2rem;
+
+  .review-cards-list-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 2.4rem;
+  }
+}

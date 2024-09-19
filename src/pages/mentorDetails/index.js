@@ -15,6 +15,7 @@ import {
   MentorTranslateIcon,
   VerifiedIcon,
   InfoIcon,
+  PlusIcon,
 } from "../../assets/svg";
 import "./styles.scss";
 
@@ -136,9 +137,20 @@ const MentorDetails = () => {
             </figure>
           </article>
           <section className="mentor-get-started-container">
-            <h6 className="mentor-services">
-              <BriefcaseIcon /> Services
-            </h6>
+            <section className="mentor-services-wrapper">
+              <h6 className="mentor-services">
+                <BriefcaseIcon /> Services
+              </h6>
+
+              {/* <CustomButton
+                classes="custom-edit-profile-button"
+                name={
+                  <section className="edit-profile-button-title">
+                    Add <PlusIcon />
+                  </section>
+                }
+              /> */}
+            </section>
 
             <p className="info-content">
               <InfoIcon /> Please click on the check boxes to select a service

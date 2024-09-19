@@ -14,9 +14,13 @@ const UpcomingBookings = lazy(() => import("./pages/upcomingBookings"));
 const HistoryBookings = lazy(() => import("./pages/historyBookings"));
 const MentorDetails = lazy(() => import("./pages/mentorDetails"));
 const Earnings = lazy(() => import("./pages/earnings"));
+const Reviews = lazy(() => import("./pages/reviews"));
 const Blogs = lazy(() => import("./pages/blogs"));
 const BlogDetail = lazy(() => import("./pages/blogDetail"));
 const WriteBlog = lazy(() => import("./pages/writeBlog"));
+const Timesheet = lazy(() => import("./pages/timesheet"));
+const AddTimesheet = lazy(() => import("./pages/timesheet/addTimesheet"));
+const ViewTimesheet = lazy(() => import("./pages/timesheet/viewTimesheet"));
 const Notifications = lazy(() => import("./pages/notifications"));
 const Settings = lazy(() => import("./pages/settings"));
 
@@ -52,9 +56,17 @@ const App = () => {
                   element={<MentorDetails />}
                 />
                 <Route path="/earnings" exact element={<Earnings />} />
+                <Route path="/reviews" exact element={<Reviews />} />
                 <Route path="/blogs" exact element={<Blogs />} />
                 <Route path="/blogDetails" exact element={<BlogDetail />} />
                 <Route path="/writeBlog" exact element={<WriteBlog />} />
+                <Route path="/timesheet" exact element={<Timesheet />} />
+                <Route path="/add-timesheet" exact element={<AddTimesheet />} />
+                <Route
+                  path="/view-timesheet"
+                  exact
+                  element={<ViewTimesheet />}
+                />
                 <Route
                   path="/notifications"
                   exact

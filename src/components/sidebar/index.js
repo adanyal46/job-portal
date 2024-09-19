@@ -12,6 +12,8 @@ import {
   ContactFuseIcon,
   BookingsIcon,
   EarningsIcon,
+  ReviewIcon,
+  TimeSheetIcon,
 } from "../../assets/svg";
 
 import "./styles.scss";
@@ -148,6 +150,66 @@ const Sidebar = () => {
     },
     {
       key: "5",
+      showArrow: false,
+      collapsible: "header",
+      label: (
+        <Link to="/reviews">
+          <section className="collapse-header-wrapper">
+            <ReviewIcon />
+            <h5 className="collapse-heading">Reviews</h5>
+          </section>
+        </Link>
+      ),
+    },
+    // {
+    //   key: "6",
+    //   showArrow: false,
+    //   collapsible: "header",
+    //   label: (
+    //     <Link to="/timesheet">
+    //       <section className="collapse-header-wrapper">
+    //         <TimeSheetIcon />
+    //         <h5 className="collapse-heading">Timesheet</h5>
+    //       </section>
+    //     </Link>
+    //   ),
+    // },
+    {
+      key: "6",
+      label: (
+        <Link to="/timesheet">
+          <section className="collapse-header-wrapper">
+            <MentorsIcon />
+            <h5 className="collapse-heading">Timesheet</h5>
+          </section>
+        </Link>
+      ),
+      children: (
+        <ul className="collpase-items-list">
+          <Link to="/add-timesheet">
+            <li
+              className={`collpase-item ${
+                location.pathname === "/add-timesheet" && "active"
+              }`}
+            >
+              Add Timesheet
+            </li>
+          </Link>
+
+          <Link to="/view-timesheet">
+            <li
+              className={`collpase-item ${
+                location.pathname === "/view-timesheet" && "active"
+              }`}
+            >
+              View Timesheet
+            </li>
+          </Link>
+        </ul>
+      ),
+    },
+    {
+      key: "7",
       showArrow: false,
       collapsible: "header",
       label: (

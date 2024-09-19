@@ -1,0 +1,138 @@
+.time-sheet-main-container {
+  padding: 1.2rem 0;
+  border-radius: 0.6rem;
+  background-color: #ffffff;
+  overflow-y: auto;
+
+  .time-total-calculation-wrapper {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 3.5rem;
+    margin-bottom: 5.5rem;
+
+    .total-content-wrapper {
+      display: flex;
+      justify-content: space-between;
+
+      .total-amount {
+        padding-right: 18rem;
+      }
+    }
+  }
+
+  .role-details-wrapper {
+    padding: 0 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+
+    &.inside-addtimesheet {
+      padding: 0;
+      margin: 3rem 0;
+    }
+
+    .role-heading {
+      margin-bottom: 1.2rem;
+      color: #1c1c1c;
+    }
+
+    .role-detail-row {
+      display: grid;
+      grid-template-columns: 3fr 1fr 1fr;
+      margin-bottom: 1.2rem;
+
+      .label,
+      .value {
+        color: #2f2c39;
+        font-size: 1.4rem;
+      }
+    }
+  }
+
+  .add-time-sheet-form-wrapper {
+    padding: 0 1.6rem;
+
+    .timesheet-form-header {
+      padding: 1.2rem 0;
+      display: grid;
+      grid-template-columns: repeat(8, 1fr) 0.5fr;
+      gap: 0.8rem;
+    }
+
+    .time-sheet-form-row-container {
+      margin-top: 1.2rem;
+      display: grid;
+      grid-template-columns: repeat(8, 1fr) 0.5fr;
+      gap: 0.8rem;
+
+      .ant-input.time-sheet-row-input {
+        height: 3.5rem;
+      }
+    }
+
+    .time-sheet-total-row-container {
+      display: flex;
+      flex-direction: column;
+      gap: 2.4rem;
+      margin-top: 2.4rem;
+
+      .customized-total-rows {
+        display: grid;
+        grid-template-columns: 3fr 1fr;
+
+        &.half {
+          grid-template-columns: 1.5fr 1.5fr 1fr;
+        }
+
+        .total-label {
+          color: #2f2c39;
+          font-weight: 600;
+        }
+      }
+    }
+  }
+
+  .select-boxes-heading {
+    color: #2f2c39;
+    font-weight: 600;
+    margin-bottom: 2.4rem;
+  }
+
+  .ant-checkbox-group.custom-checkbox-group {
+    display: flex;
+    flex-direction: column;
+    gap: 2.4rem;
+  }
+
+  .field-group-wrapper {
+    margin: 2.4rem 0;
+    display: flex;
+    flex-direction: column;
+
+    .select-label {
+      color: #2f2c39;
+      font-size: 1.3rem;
+      font-weight: 400;
+    }
+  }
+
+  .timesheet-footer-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1.6rem;
+  }
+}
+
+.common-view-timesheet-container {
+  padding: 2.4rem 0 1.6rem;
+  border-radius: 1.2rem;
+  background: #fff;
+  box-shadow: 0px 2px 4px 0px rgba(165, 163, 174, 0.3);
+
+  .ant-input.view-timesheet-search {
+    margin: 0 1.6rem;
+    height: 4.8rem;
+    width: 41rem;
+  }
+}

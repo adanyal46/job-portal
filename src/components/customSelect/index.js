@@ -7,7 +7,7 @@ const handleChange = (value) => {
 };
 
 const CustomSelect = (props) => {
-  const { placeholder } = props;
+  const { placeholder, height, width } = props;
 
   return (
     <Select
@@ -15,7 +15,8 @@ const CustomSelect = (props) => {
       placeholder={placeholder}
       style={{
         width: "100%",
-        height: 48,
+        height: height || 48,
+        width: width,
       }}
       onChange={handleChange}
       options={[

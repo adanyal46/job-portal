@@ -54,9 +54,19 @@
     }
   }
 
-  .ant-input-affix-wrapper.earnings-search-field {
-    margin: 1.6rem;
-    height: 4.8rem;
-    width: 41rem;
+  .earnings-search-fields-wrapper {
+    display: flex;
+    gap: 1.6rem;
+    padding: 1.6rem;
+
+    .ant-input-affix-wrapper.earnings-search-field {
+      height: 4.8rem;
+      width: 41rem;
+    }
+
+    .ant-picker.earnings-select-field {
+      height: 4.8rem;
+      width: 22rem;
+    }
   }
 }
