@@ -1,5 +1,4 @@
 import { useState } from "react";
-
 import CommonHeading from "../commonHeading";
 import CustomButton from "../customButton";
 import CommonModal from "../commonModal";
@@ -14,15 +13,19 @@ import {
 } from "../../assets/svg";
 
 import "./styles.scss";
+import { useDispatch } from "react-redux";
+import { message } from "antd";
+import { profileDocument } from "../../features/profile/profileSlice";
 
-const Documents = () => {
+const Documents = ({ document }) => {
+  console.log(document);
   return (
     <section className="documents-list-container">
       <section className="documents-details-container">
         <EducationIcon />
 
         <article className="documents-details">
-          <p className="file-name">Resume_Alina_Smith</p>
+          <p className="file-name">{document?.portfolioLink}</p>
           <p className="file-date">Added 20 Jan, 2024</p>
         </article>
       </section>
@@ -32,14 +35,14 @@ const Documents = () => {
   );
 };
 
-const Links = () => {
+const Links = ({ document }) => {
   return (
     <section className="documents-list-container">
       <section className="documents-details-container">
         <CertificationsIcon />
 
         <article className="documents-details">
-          <p className="file-name">alinasmith.com</p>
+          <p className="file-name">{document?.websiteLink}</p>
           <p className="file-date">Website link</p>
         </article>
       </section>
@@ -49,8 +52,20 @@ const Links = () => {
   );
 };
 
-const DocumentAndLink = () => {
-  const [showDocumentsModal, setShowDocumentsModal] = useState(false);
+const DocumentAndLink = ({
+  showDocumentsModal,
+  setShowDocumentsModal,
+  document,
+}) => {
+  const dispatch = useDispatch();
+  const [documentData, setDocumentData] = useState({
+    resume: "",
+    portfolio: "",
+    websiteLink: "",
+    additionalLink: "",
+  });
+
+  console.log(documentData);
 
   const handleShowDocumentsModal = () => {
     setShowDocumentsModal(() => true);
@@ -60,13 +75,41 @@ const DocumentAndLink = () => {
     setShowDocumentsModal(() => false);
   };
 
+  const handleChange = (name, value) => {
+    setDocumentData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = () => {
+    if (
+      !documentData.resume ||
+      !documentData.portfolio ||
+      !documentData.additionalLink ||
+      !documentData.websiteLink
+    ) {
+      message.open({
+        type: "error",
+        content: "Please fill all fields",
+      });
+      return;
+    }
+    const formData = new FormData();
+    Object.keys(documentData).forEach((key) => {
+      formData.append(key, documentData[key]);
+    });
+    dispatch(profileDocument(formData));
+  };
+
   return (
     <section className="document-and-links-wrapper">
       <CommonHeading heading="Documents and Links" />
 
       <section className="document-links-wrapper">
-        <Documents />
-        <Documents />
+        {document?.map((item) => (
+          <Documents document={item} />
+        ))}
       </section>
 
       <CustomButton
@@ -77,8 +120,9 @@ const DocumentAndLink = () => {
       />
 
       <section className="document-links-wrapper">
-        <Links />
-        <Links />
+        {document?.map((item) => (
+          <Links document={item} />
+        ))}
       </section>
 
       {/* <CustomButton
@@ -94,20 +138,38 @@ const DocumentAndLink = () => {
           description="Enter your Documents Information"
           isModalOpen={showDocumentsModal}
           handleClose={handleCloseDocumentsModal}
+          handleOk={handleSubmit}
         >
           <section className="basic-info-form-wrapper">
             <section className="button-layout-row">
-              <DocumentUploader title="Resume/CV" />
-              <DocumentUploader title="Portfolio/Certificates" />
+              <DocumentUploader
+                title="Resume/CV"
+                onChange={handleChange}
+                name="resume"
+              />
+              <DocumentUploader
+                title="Portfolio/Certificates"
+                onChange={handleChange}
+                name="portfolio"
+              />
             </section>
             <section className="field-container">
               <span className="label">Website Link</span>
-              <CommonInput placeholder="Enter Website Link" />
+              <CommonInput
+                value={documentData.websiteLink}
+                onChange={(val) => handleChange("websiteLink", val)}
+                placeholder="Enter Website Link"
+              />
             </section>
 
             <section className="field-container">
               <span className="label">Additional Links</span>
-              <CommonInput placeholder="Enter Additional Links" />
+              <CommonInput
+                placeholder="Enter Additional Links"
+                value={documentData.additionalLink}
+                required={true}
+                onChange={(val) => handleChange("additionalLink", val)}
+              />
             </section>
           </section>
         </CommonModal>

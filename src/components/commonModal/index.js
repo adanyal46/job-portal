@@ -1,4 +1,4 @@
-import { Modal } from "antd";
+import { Modal, Popconfirm } from "antd";
 
 import CustomButton from "../customButton";
 
@@ -11,13 +11,11 @@ const CommonModal = (props) => {
     description,
     isModalOpen,
     handleClose,
+    handleOk,
     footer,
     children,
+    onDelete,
   } = props;
-
-  const handleOk = () => {
-    console.log("ok");
-  };
 
   const ModalHeader = () => {
     return (
@@ -33,18 +31,34 @@ const CommonModal = (props) => {
       className={`common-modal-container ${classes}`}
       title={<ModalHeader />}
       open={isModalOpen}
-      onOk={handleOk}
       onCancel={handleClose}
       footer={
         footer || [
-          <CustomButton key="deleteButton" category="danger" name="Delete" />,
+          <Popconfirm
+            placement="top"
+            key="deleteButton"
+            title={"Are you sure to delete this item?"}
+            okText="Yes"
+            onConfirm={onDelete}
+            cancelText="No"
+            okButtonProps={{
+              danger: true,
+            }}
+          >
+            <CustomButton category="danger" name="Delete" />
+          </Popconfirm>,
           <CustomButton
             key="cancelButton"
             category="plain"
             name="Cancel"
             handleClick={handleClose}
           />,
-          <CustomButton key="saveButton" category="primary" name="Save" />,
+          <CustomButton
+            key="saveButton"
+            category="primary"
+            name="Save"
+            handleClick={handleOk}
+          />,
         ]
       }
     >

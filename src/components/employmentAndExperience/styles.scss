@@ -1,6 +1,7 @@
 .employment-and-experience-wrapper {
   padding: 1.6rem 0;
   border-bottom: 1px solid #b5b5b5;
+  width: 100%;
 
   .experience-wrapper {
     margin-top: 1rem;
@@ -8,10 +9,13 @@
     display: flex;
     flex-direction: column;
     row-gap: 1rem;
+    width: 100%;
 
     .experience-list-container {
-      display: flex;
+      display: flex; // No need for !important unless debugging
+      width: 100%;
       padding: 1.2rem 0rem;
+      flex: 1; // Allow it to grow
 
       @media (min-width: 768px) {
         padding: 1.2rem 1.6rem;
@@ -23,11 +27,13 @@
 
       .experience-details-wrapper {
         margin-left: 1.2rem;
+        flex: 1; // Allow this to grow
 
         .experience-designation {
           display: flex;
           justify-content: space-between;
           margin-bottom: 1rem;
+          width: 100%;
 
           .position-name {
             font-size: 1.6rem;
@@ -60,6 +66,12 @@
             font-size: 1.3rem;
             color: #475569;
             margin-bottom: 0.5rem;
+            max-width: 1400px; // Restrict max-width
+
+            @media (max-width: 768px) { // Optional: Adjust for smaller screens
+              width: 95%;  // Allow it to fill more on small screens
+              max-width: none; // Remove max-width for small screens
+            }
 
             &:last-child {
               margin-bottom: 0rem;

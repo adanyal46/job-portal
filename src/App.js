@@ -1,11 +1,21 @@
-import { lazy, Suspense } from "react";
-import { BrowserRouter as MainRouter, Routes, Route } from "react-router-dom";
+import { lazy, Suspense, useEffect } from "react";
+import {
+  createBrowserRouter,
+  RouterProvider,
+  Outlet,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
 
 import Navbar from "./components/navbar";
 import Sidebar from "./components/sidebar";
+import Loader from "./components/Loader";
 
 import "./App.scss";
+import { useDispatch, useSelector } from "react-redux";
+import { profile } from "./features/profile/profileSlice";
 
+// Lazy-loaded components
 const MyProfile = lazy(() => import("./pages/myProfile"));
 const JobSearch = lazy(() => import("./pages/jobSearch"));
 const Mentors = lazy(() => import("./pages/mentors"));
@@ -23,63 +33,104 @@ const AddTimesheet = lazy(() => import("./pages/timesheet/addTimesheet"));
 const ViewTimesheet = lazy(() => import("./pages/timesheet/viewTimesheet"));
 const Notifications = lazy(() => import("./pages/notifications"));
 const Settings = lazy(() => import("./pages/settings"));
+const SignUp = lazy(() => import("./pages/signUp"));
+const LoginForm = lazy(() => import("./pages/login"));
 
-const App = () => {
+// Layout component that conditionally shows Navbar and Sidebar
+const Layout = () => {
+  const location = useLocation();
+  const hideNavbarSidebar = ["/signup", "/login"]; // Paths to hide Navbar and Sidebar
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { user, loading } = useSelector((state) => state.profile);
+  let profileData = user?.Profile[0];
+  const token = localStorage.getItem("token");
+  console.log(user);
+
+  useEffect(() => {
+    if (!token) {
+      navigate("/login");
+    }
+  }, [token]);
+
+  useEffect(() => {
+    dispatch(profile());
+  }, []);
+
+  if (loading) {
+    return <Loader />;
+  }
+
   return (
-    <Suspense fallback={<p>Error</p>}>
-      <div className="app-wrapper">
-        <section className="fuse-main-wrapper">
-          <MainRouter>
-            <Navbar />
+    <div className="app-wrapper">
+      <section className="fuse-main-wrapper">
+        {!hideNavbarSidebar.includes(location.pathname) && (
+          <Navbar profileData={profileData} />
+        )}
+        <main className="fuse-main-body">
+          {!hideNavbarSidebar.includes(location.pathname) && (
+            <Sidebar user={user} />
+          )}
+          <Outlet /> {/* Outlet for rendering child routes */}
+        </main>
+      </section>
+    </div>
+  );
+};
 
-            <main className="fuse-main-body">
-              <Sidebar />
-
-              <Routes>
-                <Route path="/" exact element={<MyProfile />} />
-                <Route path="/jobs/search" exact element={<JobSearch />} />
-                <Route path="/mentors" exact element={<Mentors />} />
-                <Route path="/bookings" exact element={<Bookings />} />
-                <Route
-                  path="/upcomingBookings"
-                  exact
-                  element={<UpcomingBookings />}
-                />
-                <Route
-                  path="/historyBookings"
-                  exact
-                  element={<HistoryBookings />}
-                />
-                <Route
-                  path="/mentorDetails"
-                  exact
-                  element={<MentorDetails />}
-                />
-                <Route path="/earnings" exact element={<Earnings />} />
-                <Route path="/reviews" exact element={<Reviews />} />
-                <Route path="/blogs" exact element={<Blogs />} />
-                <Route path="/blogDetails" exact element={<BlogDetail />} />
-                <Route path="/writeBlog" exact element={<WriteBlog />} />
-                <Route path="/timesheet" exact element={<Timesheet />} />
-                <Route path="/add-timesheet" exact element={<AddTimesheet />} />
-                <Route
-                  path="/view-timesheet"
-                  exact
-                  element={<ViewTimesheet />}
-                />
-                <Route
-                  path="/notifications"
-                  exact
-                  element={<Notifications />}
-                />
-                <Route path="/settings" exact element={<Settings />} />
-              </Routes>
-            </main>
-          </MainRouter>
-        </section>
-      </div>
+// Root component to be used as the main layout
+const Root = () => {
+  return (
+    <Suspense fallback={<Loader />}>
+      <Layout />
     </Suspense>
   );
+};
+
+const MyProfileWrapper = () => {
+  const { user } = useSelector((state) => state.profile); // Get user from Redux state
+
+  return <MyProfile user={user} />; // Pass user as a prop
+};
+
+// Define the routes using createBrowserRouter
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Root />, // Main layout component
+    children: [
+      { path: "/", element: <MyProfileWrapper /> },
+      { path: "jobs/search", element: <JobSearch /> },
+      { path: "mentors", element: <Mentors /> },
+      { path: "bookings", element: <Bookings /> },
+      { path: "upcomingBookings", element: <UpcomingBookings /> },
+      { path: "historyBookings", element: <HistoryBookings /> },
+      { path: "mentorDetails", element: <MentorDetails /> },
+      { path: "earnings", element: <Earnings /> },
+      { path: "reviews", element: <Reviews /> },
+      { path: "blogs", element: <Blogs /> },
+      { path: "blogDetails", element: <BlogDetail /> },
+      { path: "writeBlog", element: <WriteBlog /> },
+      { path: "timesheet", element: <Timesheet /> },
+      { path: "add-timesheet", element: <AddTimesheet /> },
+      { path: "view-timesheet", element: <ViewTimesheet /> },
+      { path: "notifications", element: <Notifications /> },
+      { path: "settings", element: <Settings /> },
+    ],
+  },
+  {
+    path: "/signup",
+    element: <SignUp />, // Separate route for signup (no Navbar/Sidebar)
+  },
+
+  {
+    path: "/login",
+    element: <LoginForm />, // Separate route for signup (no Navbar/Sidebar)
+  },
+]);
+
+const App = () => {
+  return <RouterProvider router={router} />;
 };
 
 export default App;

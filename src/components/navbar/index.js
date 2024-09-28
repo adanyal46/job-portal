@@ -2,11 +2,19 @@ import { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 
 import "./styles.scss";
+import { Avatar, Image } from "antd";
 
-const Navbar = () => {
+const Navbar = ({ profileData }) => {
   const navigate = useNavigate();
 
   const [toggleNav, setToggleNav] = useState(false);
+
+  const serverUrl = "http://54.144.76.160:5000";
+
+  // Replace placeholder with actual server URL
+  let profileImage =
+    profileData?.avatarUrl &&
+    profileData?.avatarUrl.replace("http://your-server-url", serverUrl);
 
   const goToNotificationsPage = () => {
     navigate("/notifications");
@@ -26,7 +34,7 @@ const Navbar = () => {
             className="navbar-branding-link"
           >
             <figure className="branding-logo">
-              <img
+              <Image
                 loading="lazy"
                 className="fuse-brand-logo"
                 src="/images/fuse-nav-icon.png"
@@ -72,14 +80,22 @@ const Navbar = () => {
 
           <li className="navbar-items">
             <figure className="fuse-user-icon">
-              <img
-                loading="lazy"
-                className="user-icon"
-                src="/images/user-icon.png"
-                alt="fuseUser"
+              <Avatar
+                size={70}
+                src={
+                  <Image
+                    loading="lazy"
+                    className="user-icon"
+                    src={profileImage || "/images/user-icon.png"}
+                    alt="fuseUser"
+                    preview={false}
+                  />
+                }
               />
 
-              <figcaption className="user-name">Alina Smith</figcaption>
+              <figcaption className="user-name">
+                {profileData?.fullname || "Guest"}
+              </figcaption>
             </figure>
           </li>
         </ul>

@@ -1,81 +1,230 @@
-import { useState } from "react";
+import { act, useState } from "react";
 
 import CommonHeading from "../commonHeading";
 import CustomButton from "../customButton";
-import CommonModal from "../commonModal";
-import CommonInput from "../commonInput";
-
-import {
-  DetailsIcon,
-  EducationIcon,
-  CertificationsIcon,
-  AddCircleIcon,
-} from "../../assets/svg";
-
+import { AddCircleIcon } from "../../assets/svg";
 import "./styles.scss";
+import {
+  deleteCertificate,
+  deleteEducation,
+  profileCertificate,
+  profileEducation,
+} from "../../features/profile/profileSlice";
+import { useDispatch } from "react-redux";
+import { message } from "antd";
+import dayjs from "dayjs";
+import "dayjs/plugin/advancedFormat";
+import Certifications from "./Certificate";
+import Education from "./Education";
+import EducationModal from "./EducationModal";
+import CertificateModal from "./CertificateModal";
 
-const Education = () => {
-  return (
-    <section className="education-list-container">
-      <section className="education-details-container">
-        <EducationIcon />
-
-        <article className="education-details">
-          <p className="program-name">
-            Bachelors of Science in Computer Science
-          </p>
-          <p className="institute-name">
-            The University of North Carolina at Chapel Hill
-          </p>
-          <p className="duration">2010 - 2014</p>
-        </article>
-      </section>
-
-      <DetailsIcon />
-    </section>
-  );
-};
-
-const Certifications = () => {
-  return (
-    <section className="education-list-container">
-      <section className="education-details-container">
-        <CertificationsIcon />
-
-        <article className="education-details">
-          <p className="program-name">
-            Bachelors of Science in Computer Science
-          </p>
-          <p className="institute-name">
-            The University of North Carolina at Chapel Hill
-          </p>
-          <p className="duration">2010 - 2014</p>
-        </article>
-      </section>
-
-      <DetailsIcon />
-    </section>
-  );
-};
-
-const EducationAndCertification = () => {
-  const [showEducationModal, setShowEducationModal] = useState(false);
-  const [showCertificationModal, setShowCertificationModal] = useState(false);
+const EducationAndCertification = ({
+  showEducationModal,
+  setShowEducationModal,
+  showCertificationModal,
+  setShowCertificationModal,
+  education,
+  certificates,
+}) => {
+  const dispatch = useDispatch();
+  const [educationData, setEducationData] = useState({
+    degree: "",
+    institution: "",
+    description: "",
+    from: null,
+    to: null,
+  });
+  const [certificateData, setCertificateData] = useState({
+    certName: "",
+    orgName: "",
+    description: "",
+    from: null,
+    to: null,
+  });
+  const [educationId, setEducationId] = useState(null);
+  const [certificateId, setCertificateId] = useState(null);
 
   const handleShowEducationModal = () => {
+    setEducationId(null);
+    setEducationData({
+      degree: "",
+      institution: "",
+      description: "",
+      from: null,
+      to: null,
+    });
     setShowEducationModal(() => true);
   };
 
   const handleCloseEducationModal = () => {
     setShowEducationModal(() => false);
+    setEducationData({
+      degree: "",
+      institution: "",
+      description: "",
+      from: null,
+      to: null,
+    });
+    setEducationId(null);
   };
 
   const handleShowCertificationModal = () => {
-    setShowCertificationModal(() => true);
+    setShowCertificationModal(true);
   };
 
   const handleCloseCertificationModal = () => {
     setShowCertificationModal(() => false);
+    setCertificateData({
+      certName: "",
+      orgName: "",
+      description: "",
+      from: null,
+      to: null,
+    });
+    setCertificateId(null);
+  };
+
+  const handleChange = (name, value) => {
+    setEducationData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const handleActionMenu = (action, id) => {
+    if (action === "edit") {
+      const data = education.find((item) => item.id === id);
+      setEducationId(data.id);
+      setEducationData({
+        degree: data.degreName,
+        institution: data.universityName,
+        description: data.description,
+        from: dayjs(data.startFrom),
+        to: dayjs(data.endIn),
+      });
+      if (data) {
+        setShowEducationModal(true);
+      }
+    } else {
+      console.log(action, id);
+    }
+  };
+  const confirmDelete = async (id) => {
+    const response = await dispatch(deleteEducation({ educationId: id }));
+    console.log(response);
+  };
+
+  const handleEducationSubmit = () => {
+    if (
+      !educationData.degree ||
+      !educationData.description ||
+      !educationData.institution ||
+      !educationData.from ||
+      !educationData.to
+    ) {
+      message.open({
+        type: "error",
+        content: "Please fill all fields.",
+      });
+      return;
+    }
+    let formData = {
+      ...educationData,
+      from: new Date(educationData.from)
+        .toLocaleDateString()
+        .replace(/\//g, "-"),
+      to: new Date(educationData.to).toLocaleDateString().replace(/\//g, "-"),
+    };
+
+    if (formData.from === formData.to) {
+      message.open({
+        type: "error",
+        content: "Start date and end date cannot be the same.",
+      });
+      return; // Exit the function early to prevent submission
+    }
+
+    if (educationId) {
+      dispatch(profileEducation({ ...formData, educationId }));
+    } else {
+      dispatch(profileEducation(formData));
+    }
+  };
+
+  const handleChangeCer = (name, value) => {
+    setCertificateData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+  const handleCertificateSubmit = async () => {
+    if (
+      !certificateData.certName ||
+      !certificateData.orgName ||
+      !certificateData.description ||
+      !certificateData.from ||
+      !certificateData.to
+    ) {
+      message.open({
+        type: "error",
+        content: "Please fill all fields.",
+      });
+      return;
+    }
+    let formData = {
+      ...certificateData,
+      from: new Date(certificateData.from)
+        .toLocaleDateString()
+        .replace(/\//g, "-"),
+      to: new Date(certificateData.to).toLocaleDateString().replace(/\//g, "-"),
+    };
+    if (formData.from === formData.to) {
+      message.open({
+        type: "error",
+        content: "Start date and end date cannot be the same.",
+      });
+      return; // Exit the function early to prevent submission
+    }
+    let response;
+
+    if (certificateId) {
+      response = dispatch(profileCertificate({ ...formData, certificateId }));
+    } else {
+      response = dispatch(profileCertificate(formData));
+    }
+    if (response.success) {
+      handleCloseCertificationModal();
+    }
+  };
+
+  const handleCerAction = (action, id) => {
+    if (action === "edit") {
+      const data = certificates.find((item) => item.id === id);
+      setCertificateId(data.id);
+      setCertificateData({
+        certName: data.certName,
+        orgName: data.orgName,
+        description: data.description,
+        from: dayjs(data.startedOn),
+        to: dayjs(data.completedOn),
+      });
+      if (data) {
+        setShowCertificationModal(true);
+      }
+    } else {
+    }
+  };
+  const onDeleteCertificate = async (id) => {
+    try {
+      const response = await dispatch(
+        deleteCertificate({ certificateId: id || certificateData.id })
+      );
+      console.log(response);
+      // Close modal or update state based on response if needed
+    } catch (error) {
+      console.error("Failed to delete certificate:", error);
+    }
   };
 
   return (
@@ -83,8 +232,18 @@ const EducationAndCertification = () => {
       <CommonHeading heading="Education and Certifications" />
 
       <section className="education-wrapper">
-        <Education />
-        <Education />
+        {education?.map((item) => (
+          <Education
+            degreName={item.degreName}
+            endIn={item.endIn}
+            startFrom={item.startFrom}
+            universityName={item.universityName}
+            key={item.id}
+            id={item.id}
+            handleActionMenu={handleActionMenu}
+            confirmDelete={confirmDelete}
+          />
+        ))}
       </section>
 
       <CustomButton
@@ -95,8 +254,14 @@ const EducationAndCertification = () => {
       />
 
       <section className="education-wrapper">
-        <Certifications />
-        <Certifications />
+        {certificates?.map((certificate) => (
+          <Certifications
+            certificate={certificate}
+            key={certificate?.id}
+            onDeleteCertificate={onDeleteCertificate}
+            handleCerAction={handleCerAction}
+          />
+        ))}
       </section>
 
       <CustomButton
@@ -107,85 +272,24 @@ const EducationAndCertification = () => {
       />
 
       {showEducationModal && (
-        <CommonModal
-          title="Education"
-          description="Enter your Education Information"
-          isModalOpen={showEducationModal}
-          handleClose={handleCloseEducationModal}
-        >
-          <section className="basic-info-form-wrapper">
-            <section className="field-container">
-              <span className="label">Degree/Qualification Name</span>
-              <CommonInput placeholder="Enter Degree/Qualification Name" />
-            </section>
-
-            <section className="field-container">
-              <span className="label">Academic Institution</span>
-              <CommonInput placeholder="Enter Academic Institution" />
-            </section>
-
-            <section className="field-container">
-              <span className="label">Description</span>
-              <CommonInput
-                category="textarea"
-                placeholder="Enter Description"
-              />
-            </section>
-
-            <section className="range-field-wrapper">
-              <section className="range-field-container">
-                <span className="label">From</span>
-                <CommonInput category="date" placeholder="Date Range" />
-              </section>
-
-              <section className="range-field-container">
-                <span className="label">To</span>
-                <CommonInput category="date" placeholder="Date Range" />
-              </section>
-            </section>
-          </section>
-        </CommonModal>
+        <EducationModal
+          educationData={educationData}
+          handleChange={handleChange}
+          handleCloseEducationModal={handleCloseEducationModal}
+          handleEducationSubmit={handleEducationSubmit}
+          showEducationModal={showEducationModal}
+        />
       )}
 
       {showCertificationModal && (
-        <CommonModal
-          title="Certification"
-          description="Enter your Certification Information"
-          isModalOpen={showCertificationModal}
-          handleClose={handleCloseCertificationModal}
-        >
-          <section className="basic-info-form-wrapper">
-            <section className="field-container">
-              <span className="label">Certificate Title</span>
-              <CommonInput placeholder="Enter Certificate Title" />
-            </section>
-
-            <section className="field-container">
-              <span className="label">Institution Name</span>
-              <CommonInput placeholder="Enter Institution Name" />
-            </section>
-
-            <section className="range-field-wrapper">
-              <section className="range-field-container">
-                <span className="label">From</span>
-                <CommonInput category="date" placeholder="Date Range" />
-              </section>
-
-              <section className="range-field-container">
-                <span className="label">To</span>
-                <CommonInput category="date" placeholder="Date Range" />
-              </section>
-            </section>
-
-            <section className="field-container">
-              <span className="label">Description</span>
-              <CommonInput
-                category="textarea"
-                placeholder="Enter Description"
-              />
-            </section>
-          </section>
-        </CommonModal>
+        <CertificateModal
+          certificateData={certificateData}
+          handleCertificateSubmit={handleCertificateSubmit}
+          handleChangeCer={handleChangeCer}
+          handleCloseCertificationModal={handleCloseCertificationModal}
+          showCertificationModal={showCertificationModal}
+          handleDelete={onDeleteCertificate}
+        />
       )}
     </section>
   );

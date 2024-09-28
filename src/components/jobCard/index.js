@@ -3,12 +3,16 @@ import Tag from "../tag";
 import { DetailsIcon } from "../../assets/svg";
 
 import "./styles.scss";
+import { getDaysAgo } from "../../utils";
 
 const JobCard = (props) => {
-  const { classes, handleClick } = props;
+  const { classes, handleClick, job } = props;
 
   return (
-    <section onClick={handleClick} className={`job-card-wrapper ${classes}`}>
+    <section
+      onClick={() => handleClick(job?.id)}
+      className={`job-card-wrapper ${classes}`}
+    >
       <DetailsIcon />
 
       <section className="job-company-container">
@@ -17,23 +21,20 @@ const JobCard = (props) => {
         </figure>
 
         <article className="job-company-details">
-          <p className="name">Kosmic AI</p>
-          <p className="location">Surat</p>
+          <p className="name">{job?.companyName ?? "N/A"}</p>
+          <p className="location">{job?.location ?? "N/A"}</p>
         </article>
       </section>
 
-      <h5 className="job-main-title">UI/UX Designer</h5>
+      <h5 className="job-main-title">{job?.jobTitle ?? "N/A"}</h5>
 
-      <Tag label="$60,000-$80,000" />
+      <Tag label={job?.salary ?? "N/A"} />
 
       <ul className="job-description-list">
-        <li className="list-item">
-          Create visually stunning and intuitive web pages and landing pages
-          that enhance user experience and drive conversions.
-        </li>
+        <li className="list-item">{job?.description ?? "N/A"}</li>
       </ul>
 
-      <p className="activity-status">Active 2 days ago</p>
+      <p className="activity-status">{getDaysAgo(job?.createdAt)}</p>
     </section>
   );
 };

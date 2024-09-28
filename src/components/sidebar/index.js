@@ -17,10 +17,18 @@ import {
 } from "../../assets/svg";
 
 import "./styles.scss";
+import { Image } from "antd";
 
-const Sidebar = () => {
+const Sidebar = ({ user }) => {
   let query = useQuery();
   const location = useLocation();
+  const profile = user?.Profile[0];
+  const serverUrl = "http://54.144.76.160:5000";
+
+  // Replace placeholder with actual server URL
+  let profileImage =
+    profile?.avatarUrl &&
+    profile?.avatarUrl.replace("http://your-server-url", serverUrl);
 
   const searchParams = query.get("type");
 
@@ -240,17 +248,23 @@ const Sidebar = () => {
 
       <section className="fuse-main-container">
         <figure className="fuse-user-sidebar-icon">
-          <img
+          <Image
             loading="lazy"
             className="sidebar-user-icon"
-            src="/images/sidebar-user-icon.png"
+            src={profileImage || "/images/sidebar-user-icon.png"}
             alt="fuseUser"
+            style={{ borderRadius: "100px" }}
+            preview={false}
           />
 
-          <figcaption className="sidebar-user-name">Alina Smith</figcaption>
+          <figcaption className="sidebar-user-name">
+            {profile?.fullname || "Guest"}
+          </figcaption>
         </figure>
 
-        <CustomButton name="My Profile" />
+        <Link to={"/"}>
+          <CustomButton name="My Profile" />
+        </Link>
 
         <CustomCollapse items={items} onChange={onChange} />
       </section>
