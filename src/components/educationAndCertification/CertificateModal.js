@@ -1,7 +1,8 @@
 import React from "react";
 import CommonModal from "../commonModal";
 import CommonInput from "../commonInput";
-
+import { Modal } from "antd";
+const { confirm } = Modal;
 const CertificateModal = ({
   showCertificationModal,
   handleCloseCertificationModal,
@@ -9,10 +10,22 @@ const CertificateModal = ({
   certificateData,
   handleChangeCer,
   handleDelete,
+  certificateId,
 }) => {
-  const deleteOk = () => {
-    console.log("click");
-    handleDelete(certificateData?.id);
+  const handleRemove = () => {
+    confirm({
+      title: "Are you sure you want to delete this certificate?",
+      content: "This action cannot be undone.",
+      okText: "Yes",
+      okType: "danger",
+      cancelText: "No",
+      onOk() {
+        handleDelete(certificateId);
+      },
+      onCancel() {
+        console.log("Cancelled deletion");
+      },
+    });
   };
 
   return (
@@ -22,7 +35,7 @@ const CertificateModal = ({
       isModalOpen={showCertificationModal}
       handleClose={handleCloseCertificationModal}
       handleOk={handleCertificateSubmit}
-      onDelete={deleteOk}
+      handleDelete={handleRemove}
     >
       <section className="basic-info-form-wrapper">
         <section className="field-container">

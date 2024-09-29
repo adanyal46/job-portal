@@ -8,7 +8,6 @@ export const login = createAsyncThunk(
   async (credentials, { rejectWithValue }) => {
     try {
       const data = await loginUser(credentials);
-      console.log(data);
       localStorage.setItem("token", data.token);
       return { token: data.token, user: data.data };
     } catch (error) {

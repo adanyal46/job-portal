@@ -1,4 +1,4 @@
-import { Dropdown, Popconfirm, Typography } from "antd";
+import { Dropdown, Typography } from "antd";
 import { DetailsIcon, EducationIcon } from "../../assets/svg";
 
 const Education = ({
@@ -9,29 +9,11 @@ const Education = ({
   startFrom,
   endIn,
   handleActionMenu,
-  confirmDelete,
 }) => {
   const educationItem = [
     {
       key: "edit",
       label: <Typography.Text>Edit</Typography.Text>,
-    },
-    {
-      key: "delete",
-      label: (
-        <Popconfirm
-          placement="top"
-          title={"Are you sure to delete this item?"}
-          okText="Yes"
-          onConfirm={() => confirmDelete(id)}
-          cancelText="No"
-          okButtonProps={{
-            danger: true,
-          }}
-        >
-          <Typography.Text type="danger">Delete</Typography.Text>
-        </Popconfirm>
-      ),
     },
   ];
   const handleClick = (event) => {

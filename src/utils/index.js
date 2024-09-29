@@ -1,3 +1,5 @@
+import { jwtDecode } from "jwt-decode";
+
 export function getDaysAgo(createdAt) {
   const createdDate = new Date(createdAt);
   const today = new Date();
@@ -43,3 +45,23 @@ export function getDaysAgo(createdAt) {
     return `Active just now`;
   }
 }
+
+export const isTokenValid = (token) => {
+  if (!token) return false;
+  const decodedToken = jwtDecode(token);
+  const currentTime = Date.now() / 1000;
+  return decodedToken.exp > currentTime;
+};
+
+export const buildQueryParams = (params) => {
+  const { jobTitle, location, jobType, pay, dateRange } = params;
+  const query = new URLSearchParams();
+
+  if (jobTitle) query.append("jobTitle", jobTitle);
+  if (location) query.append("location", location);
+  if (jobType) query.append("jobType", jobType);
+  if (pay) query.append("pay", pay);
+  if (dateRange) query.append("dateRange", dateRange);
+
+  return query.toString();
+};

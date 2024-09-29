@@ -14,7 +14,8 @@ const CommonModal = (props) => {
     handleOk,
     footer,
     children,
-    onDelete,
+    handleDelete,
+    isDelete = true,
   } = props;
 
   const ModalHeader = () => {
@@ -34,19 +35,14 @@ const CommonModal = (props) => {
       onCancel={handleClose}
       footer={
         footer || [
-          <Popconfirm
-            placement="top"
-            key="deleteButton"
-            title={"Are you sure to delete this item?"}
-            okText="Yes"
-            onConfirm={onDelete}
-            cancelText="No"
-            okButtonProps={{
-              danger: true,
-            }}
-          >
-            <CustomButton category="danger" name="Delete" />
-          </Popconfirm>,
+          isDelete && (
+            <CustomButton
+              category="danger"
+              name="Delete"
+              key="deleteBtn"
+              handleClick={handleDelete}
+            />
+          ),
           <CustomButton
             key="cancelButton"
             category="plain"

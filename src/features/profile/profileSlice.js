@@ -3,6 +3,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import {
   deleteCertificateApi,
   deleteEducationApi,
+  deleteEmploymentHisApi,
   profileApi,
   profileApiPost,
   profileCertificateApi,
@@ -22,8 +23,8 @@ export const profile = createAsyncThunk(
     try {
       const data = await profileApi();
       return data;
-      //   return { token: data.token, user: data.data };
     } catch (error) {
+      console.log(error);
       return rejectWithValue(error.message);
     }
   }
@@ -57,8 +58,6 @@ export const profileEducation = createAsyncThunk(
     try {
       const currentUser = getState().profile.user;
       const { educationId } = formData;
-
-      // Helper function to create an updated user object
       const createUpdatedUser = (education) => ({
         ...currentUser,
         Education: education,
@@ -66,7 +65,6 @@ export const profileEducation = createAsyncThunk(
       });
 
       if (educationId) {
-        // Update existing education entry
         const updatedData = await updateEducationApi(formData);
         const updatedEducation = currentUser?.Education.map((edu) =>
           edu.id === educationId
@@ -135,7 +133,6 @@ export const profileDocument = createAsyncThunk(
   async (formData, { getState, rejectWithValue }) => {
     try {
       const data = await profileDocumentApi(formData);
-      console.log(data);
       const currentUser = getState().profile.user;
       const updatedUser = {
         ...currentUser,
@@ -221,7 +218,6 @@ export const profileCertificate = createAsyncThunk(
 
       if (certificateId) {
         const updatedData = await updateCertificateApi(formData);
-        console.log(updatedData);
         const updateCertificateHistory = currentUser?.Certificate.map((cert) =>
           cert.id === certificateId
             ? {
@@ -262,19 +258,14 @@ export const deleteEducation = createAsyncThunk(
     try {
       const response = await deleteEducationApi(formData);
 
-      // Assuming the response contains the ID of the education to be deleted
       const deletedEducationId = response.data.id;
-
-      // Access the current user from the state
       const currentUser = getState().profile.user;
-
-      // Filter out the education entry with the matching ID
       const updatedEducation = currentUser.Education.filter(
         (edu) => edu.id !== deletedEducationId
       );
 
-      // Return the updated user data with filtered education entries
       return {
+        success: response.success,
         ...currentUser,
         Education: updatedEducation,
       };
@@ -294,8 +285,29 @@ export const deleteCertificate = createAsyncThunk(
         (cer) => cer.id !== deleteId
       );
       return {
+        success: response.success,
         ...currentUser,
         Certificate: updatedCertificate,
+      };
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+export const deleteEmployHis = createAsyncThunk(
+  "profile/employment/delete",
+  async (formData, { getState, rejectWithValue }) => {
+    try {
+      const response = await deleteEmploymentHisApi(formData);
+      const deleteId = response.data.id;
+      const currentUser = getState().profile.user;
+      const updatedEmpHisyory = currentUser.EmpolymentHistory.filter(
+        (emp) => emp.id !== deleteId
+      );
+      return {
+        success: response.success,
+        ...currentUser,
+        EmpolymentHistory: updatedEmpHisyory,
       };
     } catch (error) {
       return rejectWithValue(error.message);
@@ -323,7 +335,7 @@ const profileSlice = createSlice({
       })
       .addCase(profile.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload; // Store error
+        state.error = action.payload;
       })
       .addCase(profileUpdate.pending, (state) => {
         state.loading = true;
@@ -335,7 +347,7 @@ const profileSlice = createSlice({
       })
       .addCase(profileUpdate.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload; // Store error
+        state.error = action.payload;
       })
       .addCase(profileEducation.pending, (state) => {
         state.loading = true;
@@ -347,7 +359,7 @@ const profileSlice = createSlice({
       })
       .addCase(profileEducation.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload; // Store error
+        state.error = action.payload;
       })
       .addCase(profileLocation.pending, (state) => {
         state.loading = true;
@@ -359,7 +371,7 @@ const profileSlice = createSlice({
       })
       .addCase(profileLocation.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload; // Store error
+        state.error = action.payload;
       })
       .addCase(profileDocument.pending, (state) => {
         state.loading = true;
@@ -371,7 +383,7 @@ const profileSlice = createSlice({
       })
       .addCase(profileDocument.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload; // Store error
+        state.error = action.payload;
       })
       .addCase(profileEmploymentHistory.pending, (state) => {
         state.loading = true;
@@ -383,7 +395,7 @@ const profileSlice = createSlice({
       })
       .addCase(profileEmploymentHistory.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload; // Store error
+        state.error = action.payload;
       })
       .addCase(profileCertificate.pending, (state) => {
         state.loading = true;
@@ -395,7 +407,7 @@ const profileSlice = createSlice({
       })
       .addCase(profileCertificate.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload; // Store error
+        state.error = action.payload;
       })
       .addCase(deleteEducation.pending, (state) => {
         state.loading = true;
@@ -407,7 +419,7 @@ const profileSlice = createSlice({
       })
       .addCase(deleteEducation.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload; // Store error
+        state.error = action.payload;
       })
       .addCase(deleteCertificate.pending, (state) => {
         state.loading = true;
@@ -419,7 +431,19 @@ const profileSlice = createSlice({
       })
       .addCase(deleteCertificate.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload; // Store error
+        state.error = action.payload;
+      })
+      .addCase(deleteEmployHis.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(deleteEmployHis.fulfilled, (state, action) => {
+        state.loading = false;
+        state.user = action.payload;
+      })
+      .addCase(deleteEmployHis.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
       });
   },
 });

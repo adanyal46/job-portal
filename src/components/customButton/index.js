@@ -24,6 +24,7 @@ const CustomButton = (props) => {
           danger
           type="text"
           className={`common-button-styles custom-button-danger ${classes}`}
+          onClick={handleClick} // Pass onClick properly
         >
           {name}
         </Button>

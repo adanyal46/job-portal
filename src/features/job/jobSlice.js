@@ -1,6 +1,6 @@
 // src/features/auth/authSlice.js
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { getJobList } from "./jobApi";
+import { applyJobApi, getJobList } from "./jobApi";
 
 // Thunk to handle fetching job list
 export const jobList = createAsyncThunk(
@@ -9,6 +9,19 @@ export const jobList = createAsyncThunk(
     try {
       const data = await getJobList(formData);
       return data.data; // Assuming data.data holds the job list
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+export const jobApplied = createAsyncThunk(
+  "job/apply",
+  async (formData, { getState, rejectWithValue }) => {
+    try {
+      // const data = await applyJobApi(formData);
+      const currenJobList = getState().job.jobs;
+      console.log(currenJobList);
+      // return data.data;
     } catch (error) {
       return rejectWithValue(error.message);
     }

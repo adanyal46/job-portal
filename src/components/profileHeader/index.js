@@ -69,15 +69,13 @@ const ProfileHeader = ({
 
     try {
       const resultAction = await dispatch(profileUpdate(formData)).unwrap();
-      if (resultAction.success && resultAction.Education.length === 0) {
-        setShowEducationModal(true);
-      } else if (
-        resultAction.success &&
-        resultAction.Certificate.length === 0
-      ) {
-        setShowCertificationModal(true);
-      } else {
-        return false;
+      console.log(resultAction);
+      if (resultAction.success) {
+        message.open({
+          type: "success",
+          content: "Porfile save successfully!",
+        });
+        handleCloseInfoModal();
       }
     } catch (error) {
       console.error("Failed to update profile:", error);

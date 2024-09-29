@@ -10,6 +10,7 @@ import { DetailsIcon, EducationIcon, AddCircleIcon } from "../../assets/svg";
 import "./styles.scss";
 import { useDispatch } from "react-redux";
 import { profileLocation } from "../../features/profile/profileSlice";
+import { message } from "antd";
 
 const Location = ({ showLocationModal, setShowLocationModal, location }) => {
   const dispatch = useDispatch();
@@ -35,13 +36,21 @@ const Location = ({ showLocationModal, setShowLocationModal, location }) => {
     }));
   };
 
-  const handleSubmit = () => {
-    dispatch(
-      profileLocation({
-        ...locationData,
-        postalCode: parseInt(locationData.postalCode),
-      })
-    );
+  const handleSubmit = async () => {
+    try {
+      const response = await dispatch(
+        profileLocation({
+          ...locationData,
+          postalCode: parseInt(locationData.postalCode),
+        })
+      ).unwrap();
+      if (response.success) {
+        message.open({
+          type: "success",
+          content: "Location save successfully",
+        });
+      }
+    } catch (error) {}
   };
 
   return (
@@ -80,6 +89,7 @@ const Location = ({ showLocationModal, setShowLocationModal, location }) => {
           isModalOpen={showLocationModal}
           handleClose={handleCloseLocationModal}
           handleOk={handleSubmit}
+          isDelete={false}
         >
           <section className="basic-info-form-wrapper">
             <section className="field-container">

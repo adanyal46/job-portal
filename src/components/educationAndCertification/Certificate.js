@@ -1,32 +1,11 @@
-import { Dropdown, Popconfirm, Typography } from "antd";
+import { Dropdown, Typography } from "antd";
 import { CertificationsIcon, DetailsIcon } from "../../assets/svg";
 
-const Certifications = ({
-  certificate,
-  handleCerAction,
-  onDeleteCertificate,
-}) => {
+const Certifications = ({ certificate, handleCerAction }) => {
   const certificateItems = [
     {
       key: "edit",
       label: <Typography.Text>Edit</Typography.Text>,
-    },
-    {
-      key: "delete",
-      label: (
-        <Popconfirm
-          placement="top"
-          title={"Are you sure to delete this item?"}
-          okText="Yes"
-          onConfirm={() => onDeleteCertificate(certificate?.id)}
-          cancelText="No"
-          okButtonProps={{
-            danger: true,
-          }}
-        >
-          <Typography.Text type="danger">Delete</Typography.Text>
-        </Popconfirm>
-      ),
     },
   ];
   const handleClick = (event) => {

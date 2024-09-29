@@ -107,15 +107,22 @@ const EducationAndCertification = ({
         setShowEducationModal(true);
       }
     } else {
-      console.log(action, id);
     }
   };
   const confirmDelete = async (id) => {
-    const response = await dispatch(deleteEducation({ educationId: id }));
-    console.log(response);
+    const response = await dispatch(
+      deleteEducation({ educationId: id })
+    ).unwrap();
+    if (response.success) {
+      message.open({
+        type: "success",
+        content: "Education Deleted Successfully!",
+      });
+      return;
+    }
   };
 
-  const handleEducationSubmit = () => {
+  const handleEducationSubmit = async () => {
     if (
       !educationData.degree ||
       !educationData.description ||
@@ -144,11 +151,23 @@ const EducationAndCertification = ({
       });
       return; // Exit the function early to prevent submission
     }
-
+    let response;
     if (educationId) {
-      dispatch(profileEducation({ ...formData, educationId }));
+      response = await dispatch(
+        profileEducation({ ...formData, educationId })
+      ).unwrap();
     } else {
-      dispatch(profileEducation(formData));
+      response = await dispatch(profileEducation(formData)).unwrap();
+    }
+
+    if (response.success) {
+      message.open({
+        type: "success",
+        content: educationId
+          ? "Education Update successfully!"
+          : "Education Save successfully!",
+      });
+      handleCloseEducationModal();
     }
   };
 
@@ -189,11 +208,19 @@ const EducationAndCertification = ({
     let response;
 
     if (certificateId) {
-      response = dispatch(profileCertificate({ ...formData, certificateId }));
+      response = await dispatch(
+        profileCertificate({ ...formData, certificateId })
+      ).unwrap();
     } else {
-      response = dispatch(profileCertificate(formData));
+      response = await dispatch(profileCertificate(formData)).unwrap();
     }
     if (response.success) {
+      message.open({
+        type: "success",
+        content: certificateId
+          ? "Certificate Update successfully!"
+          : "Certificate Save successfully!",
+      });
       handleCloseCertificationModal();
     }
   };
@@ -219,8 +246,15 @@ const EducationAndCertification = ({
     try {
       const response = await dispatch(
         deleteCertificate({ certificateId: id || certificateData.id })
-      );
+      ).unwrap();
       console.log(response);
+      if (response.success) {
+        message.open({
+          type: "success",
+          content: "Certificate Deleted Successfully!",
+        });
+        return;
+      }
       // Close modal or update state based on response if needed
     } catch (error) {
       console.error("Failed to delete certificate:", error);
@@ -241,7 +275,6 @@ const EducationAndCertification = ({
             key={item.id}
             id={item.id}
             handleActionMenu={handleActionMenu}
-            confirmDelete={confirmDelete}
           />
         ))}
       </section>
@@ -258,7 +291,6 @@ const EducationAndCertification = ({
           <Certifications
             certificate={certificate}
             key={certificate?.id}
-            onDeleteCertificate={onDeleteCertificate}
             handleCerAction={handleCerAction}
           />
         ))}
@@ -278,6 +310,8 @@ const EducationAndCertification = ({
           handleCloseEducationModal={handleCloseEducationModal}
           handleEducationSubmit={handleEducationSubmit}
           showEducationModal={showEducationModal}
+          educationId={educationId}
+          handleDelete={confirmDelete}
         />
       )}
 
@@ -289,6 +323,7 @@ const EducationAndCertification = ({
           handleCloseCertificationModal={handleCloseCertificationModal}
           showCertificationModal={showCertificationModal}
           handleDelete={onDeleteCertificate}
+          certificateId={certificateId}
         />
       )}
     </section>

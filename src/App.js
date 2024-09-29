@@ -14,6 +14,7 @@ import Loader from "./components/Loader";
 import "./App.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { profile } from "./features/profile/profileSlice";
+import { isTokenValid } from "./utils";
 
 // Lazy-loaded components
 const MyProfile = lazy(() => import("./pages/myProfile"));
@@ -44,14 +45,32 @@ const Layout = () => {
   const navigate = useNavigate();
   const { user, loading } = useSelector((state) => state.profile);
   let profileData = user?.Profile[0];
-  const token = localStorage.getItem("token");
-  console.log(user);
 
   useEffect(() => {
-    if (!token) {
+    userExistAndTokenExist();
+  }, []);
+
+  const userExistAndTokenExist = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token || !isTokenValid(token)) {
+        navigate("/login");
+        return;
+      }
+
+      const response = await dispatch(profile()).unwrap();
+      if (response.success) {
+        // Only navigate to jobs if you are not already there
+        if (location.pathname !== "/jobs/search?type=search") {
+          navigate("/jobs/search?type=search");
+        }
+      } else {
+        navigate("/login");
+      }
+    } catch (error) {
       navigate("/login");
     }
-  }, [token]);
+  };
 
   useEffect(() => {
     dispatch(profile());
@@ -90,7 +109,7 @@ const Root = () => {
 const MyProfileWrapper = () => {
   const { user } = useSelector((state) => state.profile); // Get user from Redux state
 
-  return <MyProfile user={user} />; // Pass user as a prop
+  return <MyProfile user={user} />;
 };
 
 // Define the routes using createBrowserRouter

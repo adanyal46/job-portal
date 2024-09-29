@@ -24,6 +24,7 @@ import { jobList } from "../../features/job/jobSlice";
 import { FaSync } from "react-icons/fa";
 import { message } from "antd";
 import Loader from "../../components/Loader";
+import { buildQueryParams } from "../../utils";
 
 const EmptyStateCard = () => {
   return (
@@ -40,7 +41,33 @@ const EmptyStateCard = () => {
   );
 };
 
-const SearchFields = ({ searchText, setSearchText, handleEnter }) => {
+const SearchFields = ({
+  searchText,
+  setSearchText,
+  handleEnter,
+  locations,
+  selectedLocation,
+  setSelectedLocation,
+  navigate,
+}) => {
+  const handleLocationChange = (value) => {
+    console.log(value);
+    setSelectedLocation(value);
+
+    // Construct the new query parameters
+    const params = {
+      jobTitle: searchText.toLowerCase(),
+      location: value || "", // Use selected location
+      jobType: "", // Add other fields if needed
+      pay: "",
+      dateRange: "",
+    };
+
+    const queryString = new URLSearchParams(params).toString();
+
+    // Navigate to the new URL
+    navigate(`/jobs/search?${queryString}`);
+  };
   return (
     <section className="search-jobs-fields">
       <CommonInput
@@ -50,7 +77,11 @@ const SearchFields = ({ searchText, setSearchText, handleEnter }) => {
         onChange={(val) => setSearchText(val)}
         onEnter={handleEnter}
       />
-      <CustomSelect placeholder="Location" />
+      <CustomSelect
+        placeholder="Location"
+        options={locations}
+        onChange={handleLocationChange}
+      />
       <CustomSelect placeholder="Job Type" />
       <CustomSelect placeholder="Pay" />
       <CustomSelect placeholder="Company" />
@@ -70,8 +101,11 @@ const Search = ({
   jobs,
   searchText,
   setSearchText,
-  jobApplied = false,
-  jobSaved = false,
+  loading,
+  locations,
+  navigate,
+  selectedLocation,
+  setSelectedLocation,
 }) => {
   const [jobKey, setJobKey] = useState(null);
   const [jobData, setJobData] = useState(null);
@@ -85,123 +119,167 @@ const Search = ({
     setJobKey(null);
     setJobData(null);
   };
+
+  const handleApplyNow = async () => {
+    // Call your API to save the application here
+    // Example:
+    try {
+      const response = await fetch("YOUR_API_ENDPOINT_HERE", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          // Include any necessary authorization headers
+        },
+        body: JSON.stringify({
+          jobId: jobData.id,
+          // Any other necessary data
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      // Handle success (optional: update local state or notify user)
+    } catch (error) {
+      console.error("Error saving job application:", error);
+      // Handle error (optional: notify user)
+    }
+  };
+
   return (
     <section className="search-jobs-main-container">
       <SearchFields
         setSearchText={setSearchText}
         searchText={searchText}
         handleEnter={handleEnter}
+        locations={locations}
+        navigate={navigate}
+        selectedLocation={selectedLocation}
+        setSelectedLocation={setSelectedLocation}
       />
-      <section className="jobs-wrapper">
-        <section className="jobs-list-container">
-          {jobs?.length > 0 ? (
-            jobs.map((job) => (
-              <JobCard
-                key={job?.id}
-                job={job}
-                handleClick={handleCardClick}
-                classes={job?.id === jobKey ? "active" : ""}
-              />
-            ))
+      {loading ? (
+        <Loader />
+      ) : (
+        <section className="jobs-wrapper">
+          <section className="jobs-list-container">
+            {jobs?.length > 0 ? (
+              jobs.map((job) => (
+                <JobCard
+                  key={job?.id}
+                  job={job}
+                  handleClick={handleCardClick}
+                  classes={job?.id === jobKey ? "active" : ""}
+                />
+              ))
+            ) : (
+              <EmptyStateCard />
+            )}
+          </section>
+
+          {!jobKey && !jobData ? (
+            <section className="listed-job-details-container">
+              <figure>
+                <img
+                  loading="lazy"
+                  src="/images/empty-jobs-screen.png"
+                  alt="clickJobsForDetails"
+                />
+              </figure>
+            </section>
           ) : (
-            <EmptyStateCard />
+            <section className="current-template-main-wrapper">
+              <section className="current-job-header-container">
+                <CustomButton
+                  category="iconed"
+                  icon={<CloseIcon />}
+                  handleClick={handleCloseCard}
+                  classes="close-job-details-button"
+                />
+                <article className="current-job-header">
+                  <figure className="company-logo">
+                    <img
+                      loading="lazy"
+                      src="/images/job-icon.png"
+                      alt="JobCompanyIcon"
+                    />
+                  </figure>
+                  <h4 className="name">{jobData?.companyName || "N/A"}</h4>
+                </article>
+                <article className="current-job-company-link">
+                  <p className="name">{jobData?.companyName || "N/A"}</p>
+                  <ExternalLinkIcon />
+                </article>
+                <p className="current-job-location">
+                  {jobData?.location ?? "N/A"}
+                </p>
+                <Tag label={jobData?.salary ?? "N/A"} />
+                {jobData?.applied ? (
+                  <section className="current-job-applied">
+                    <JobAppliedIcon />
+                    <p className="applied-time">Applied 2 days ago</p>
+                  </section>
+                ) : (
+                  <section className="current-job-actions">
+                    <a
+                      href={jobData.applicationLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={handleApplyNow}
+                    >
+                      <CustomButton
+                        category="primary"
+                        name="Apply Now"
+                        classes="apply-now-button"
+                      />
+                    </a>
+                    {jobData?.saved ? (
+                      <p className="saved-job-text">Job Saved</p> // Display text if saved
+                    ) : (
+                      <CustomButton
+                        category="iconed"
+                        icon={<BookmarkIcon />}
+                        classes="bookmark-job-button"
+                      />
+                    )}
+                  </section>
+                )}
+              </section>
+              <section className="current-job-details-container">
+                <h4 className="section-heading">Job Details</h4>
+                <section className="details-fields-container">
+                  <section className="detail-field-wrapper">
+                    <article className="detail-label-wrapper">
+                      <MoneyIcon />
+                      <p className="detail-label">Pay</p>
+                    </article>
+                    <article className="detail-tags-container">
+                      <Tag label={jobData?.salary ?? "N/A"} />
+                    </article>
+                  </section>
+                  <section className="detail-field-wrapper">
+                    <article className="detail-label-wrapper">
+                      <BriefcaseIcon />
+                      <p className="detail-label">Job Type</p>
+                    </article>
+                    <article className="detail-tags-container">
+                      <Tag label={jobData?.time} />
+                    </article>
+                  </section>
+                </section>
+              </section>
+              <section className="current-job-location-container">
+                <h4 className="section-heading">Location</h4>
+                <section className="detail-field-wrapper">
+                  <article className="detail-label-wrapper">
+                    <LocationIcon />
+                    <p className="detail-label">{jobData?.location ?? "N/A"}</p>
+                  </article>
+                </section>
+              </section>
+            </section>
           )}
         </section>
-
-        {!jobKey && !jobData ? (
-          <section className="listed-job-details-container">
-            <figure>
-              <img
-                loading="lazy"
-                src="/images/empty-jobs-screen.png"
-                alt="clickJobsForDetails"
-              />
-            </figure>
-          </section>
-        ) : (
-          <section className="current-template-main-wrapper">
-            <section className="current-job-header-container">
-              <CustomButton
-                category="iconed"
-                icon={<CloseIcon />}
-                handleClick={handleCloseCard}
-                classes="close-job-details-button"
-              />
-              <article className="current-job-header">
-                <figure className="company-logo">
-                  <img
-                    loading="lazy"
-                    src="/images/job-icon.png"
-                    alt="JobCompanyIcon"
-                  />
-                </figure>
-                <h4 className="name">{jobData?.companyName || "N/A"}</h4>
-              </article>
-              <article className="current-job-company-link">
-                <p className="name">{jobData?.companyName || "N/A"}</p>
-                <ExternalLinkIcon />
-              </article>
-              <p className="current-job-location">
-                {jobData?.location ?? "N/A"}
-              </p>
-              <Tag label={jobData?.salary ?? "N/A"} />
-              {jobApplied ? (
-                <section className="current-job-applied">
-                  <JobAppliedIcon />
-                  <p className="applied-time">Applied 2 days ago</p>
-                </section>
-              ) : (
-                <section className="current-job-actions">
-                  <CustomButton
-                    category="primary"
-                    name="Apply Now"
-                    classes="apply-now-button"
-                  />
-                  <CustomButton
-                    category="iconed"
-                    icon={<BookmarkIcon />}
-                    classes={`bookmark-job-button ${
-                      jobSaved ? "saved-job" : ""
-                    }`}
-                  />
-                </section>
-              )}
-            </section>
-            <section className="current-job-details-container">
-              <h4 className="section-heading">Job Details</h4>
-              <section className="details-fields-container">
-                <section className="detail-field-wrapper">
-                  <article className="detail-label-wrapper">
-                    <MoneyIcon />
-                    <p className="detail-label">Pay</p>
-                  </article>
-                  <article className="detail-tags-container">
-                    <Tag label={jobData?.salary ?? "N/A"} />
-                  </article>
-                </section>
-                <section className="detail-field-wrapper">
-                  <article className="detail-label-wrapper">
-                    <BriefcaseIcon />
-                    <p className="detail-label">Job Type</p>
-                  </article>
-                  <article className="detail-tags-container">
-                    <Tag label={jobData?.time} />
-                  </article>
-                </section>
-              </section>
-            </section>
-            <section className="current-job-location-container">
-              <h4 className="section-heading">Location</h4>
-              <section className="detail-field-wrapper">
-                <article className="detail-label-wrapper">
-                  <LocationIcon />
-                  <p className="detail-label">{jobData?.location ?? "N/A"}</p>
-                </article>
-              </section>
-            </section>
-          </section>
-        )}
-      </section>
+      )}
     </section>
   );
 };
@@ -209,46 +287,82 @@ const Search = ({
 const JobSearch = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  let apiCall = useRef(true);
   const { jobs, loading } = useSelector((state) => state.job);
   const [searchText, setSearchText] = useState("");
-
-  console.log(jobs);
+  const [saveJobList, setSaveJobList] = useState([]);
+  const [appliedJobList, setAppliedJobList] = useState([]);
+  const [selectedLocation, setSelectedLocation] = useState("");
 
   useEffect(() => {
-    if (apiCall) {
-      dispatch(jobList({ jobTitle: "" }));
-      apiCall.current = false;
-    }
-  }, [dispatch, apiCall]);
+    const params = {
+      jobTitle: searchText,
+      location: "",
+      jobType: "",
+      pay: "",
+      dateRange: "",
+    };
+    dispatch(jobList(params));
+    getSaveJobsData();
+    getAppliedJobsData();
+  }, [searchText, dispatch]);
 
-  const handleEnter = () => {
-    if (searchText.length > 3) {
-      dispatch(jobList({ jobTitle: searchText.toLowerCase() }));
-    } else {
-      message.open({
-        type: "error",
-        content: "Search text is too short",
-      });
+  useEffect(() => {
+    if (searchText.length === 0) {
+      dispatch(
+        jobList({
+          jobTitle: "",
+          location: "",
+          jobType: "",
+          pay: "",
+          dateRange: "",
+        })
+      );
+      setAppliedJobList([]);
+      setSaveJobList([]);
     }
+  }, [searchText, dispatch]);
+
+  const getSaveJobsData = () => {
+    const savedJobsDetails = jobs?.reduce((acc, job) => {
+      if (job?.saveJobpost?.length) {
+        job.saveJobpost.forEach((saveJob) => {
+          if (saveJob.jobId === job.id) acc.push(job);
+        });
+      }
+      return acc;
+    }, []);
+    setSaveJobList(savedJobsDetails);
   };
 
-  let query = useQuery();
-  const defaultKey = query.get("type");
+  const getAppliedJobsData = () => {
+    const appliedJobArray = jobs?.flatMap((job) => job?.JobApplied || []);
+    const saveAppliedJobDetails = jobs?.filter((item) =>
+      appliedJobArray.some((applyJob) => applyJob.jobId === item.id)
+    );
+    setAppliedJobList(saveAppliedJobDetails);
+  };
+
+  const handleEnter = async () => {
+    const params = {
+      jobTitle: searchText.toLowerCase(),
+      location: "",
+      jobType: "",
+      pay: "",
+      dateRange: "",
+    };
+    await dispatch(jobList(params)).unwrap();
+    navigate(`/jobs/search?${new URLSearchParams(params).toString()}`);
+  };
 
   const handleTabChange = (key) => {
     navigate(`/jobs/search?type=${key}`);
   };
 
-  if (loading) {
-    return <Loader />;
-  }
-
   return (
     <section className="main-layout-container">
       <CustomTabs
         handleChange={handleTabChange}
-        defaultActiveKey={defaultKey}
+        defaultActiveKey="search"
         items={[
           {
             key: "search",
@@ -256,9 +370,17 @@ const JobSearch = () => {
             children: (
               <Search
                 handleEnter={handleEnter}
-                jobs={jobs} // Pass the jobs directly here
+                jobs={jobs}
                 searchText={searchText}
                 setSearchText={setSearchText}
+                loading={loading}
+                locations={jobs?.map((job) => ({
+                  label: job.location,
+                  value: job.location,
+                }))}
+                selectedLocation={selectedLocation}
+                setSelectedLocation={setSelectedLocation}
+                navigate={navigate}
               />
             ),
           },
@@ -268,10 +390,17 @@ const JobSearch = () => {
             children: (
               <Search
                 handleEnter={handleEnter}
-                jobApplied
-                jobs={jobs} // Pass the jobs to applied jobs as well
+                jobs={appliedJobList}
                 searchText={searchText}
                 setSearchText={setSearchText}
+                loading={loading}
+                locations={jobs?.map((job) => ({
+                  label: job.location,
+                  value: job.location,
+                }))}
+                selectedLocation={selectedLocation}
+                setSelectedLocation={setSelectedLocation}
+                navigate={navigate}
               />
             ),
           },
@@ -281,10 +410,19 @@ const JobSearch = () => {
             children: (
               <Search
                 handleEnter={handleEnter}
-                jobSaved
-                jobs={jobs} // Pass the jobs to saved jobs as well
+                jobs={saveJobList}
                 searchText={searchText}
                 setSearchText={setSearchText}
+                loading={loading}
+                locations={Array.from(
+                  new Set(jobs?.map((job) => job.location))
+                ).map((location) => ({
+                  label: location,
+                  value: location,
+                }))}
+                selectedLocation={selectedLocation}
+                setSelectedLocation={setSelectedLocation}
+                navigate={navigate}
               />
             ),
           },

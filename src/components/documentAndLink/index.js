@@ -18,7 +18,6 @@ import { message } from "antd";
 import { profileDocument } from "../../features/profile/profileSlice";
 
 const Documents = ({ document }) => {
-  console.log(document);
   return (
     <section className="documents-list-container">
       <section className="documents-details-container">
@@ -64,8 +63,6 @@ const DocumentAndLink = ({
     websiteLink: "",
     additionalLink: "",
   });
-
-  console.log(documentData);
 
   const handleShowDocumentsModal = () => {
     setShowDocumentsModal(() => true);

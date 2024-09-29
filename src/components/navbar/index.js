@@ -1,11 +1,14 @@
 import { useState } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 
 import "./styles.scss";
-import { Avatar, Image } from "antd";
+import { Avatar, Dropdown, Image } from "antd";
+import { useDispatch } from "react-redux";
+import { logout } from "../../features/auth/authSlice";
 
 const Navbar = ({ profileData }) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [toggleNav, setToggleNav] = useState(false);
 
@@ -24,6 +27,28 @@ const Navbar = ({ profileData }) => {
     setToggleNav((st) => !st);
   };
 
+  const items = [
+    {
+      label: <Link to={"/"}>Profile</Link>,
+      key: "0",
+    },
+
+    {
+      type: "divider",
+    },
+    {
+      label: "Logout",
+      key: "logout",
+      danger: true,
+    },
+  ];
+
+  const handleClick = (event) => {
+    if (event.key === "logout") {
+      dispatch(logout());
+      navigate("/login");
+    }
+  };
   return (
     <header className="fuse-nav-container">
       <nav className="fuse-navbar">
@@ -80,18 +105,29 @@ const Navbar = ({ profileData }) => {
 
           <li className="navbar-items">
             <figure className="fuse-user-icon">
-              <Avatar
-                size={70}
-                src={
-                  <Image
-                    loading="lazy"
-                    className="user-icon"
-                    src={profileImage || "/images/user-icon.png"}
-                    alt="fuseUser"
-                    preview={false}
-                  />
-                }
-              />
+              <Dropdown
+                menu={{
+                  items,
+                  onClick: handleClick,
+                }}
+                trigger={["click"]}
+                overlayStyle={{
+                  width: "200px",
+                }}
+              >
+                <Avatar
+                  size={70}
+                  src={
+                    <Image
+                      loading="lazy"
+                      className="user-icon"
+                      src={profileImage || "/images/user-icon.png"}
+                      alt="fuseUser"
+                      preview={false}
+                    />
+                  }
+                />
+              </Dropdown>
 
               <figcaption className="user-name">
                 {profileData?.fullname || "Guest"}

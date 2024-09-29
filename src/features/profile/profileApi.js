@@ -21,7 +21,6 @@ export const updateEducationApi = async (formData) => {
 };
 
 export const deleteEducationApi = async (formData) => {
-  console.log(formData);
   const response = await axiosInstance.delete("/user/education", {
     data: formData,
   });
@@ -62,6 +61,13 @@ export const updateCertificateApi = async (formData) => {
 
 export const deleteCertificateApi = async (formData) => {
   const response = await axiosInstance.delete("/user/certificate", {
+    data: formData,
+  });
+  return response.data;
+};
+
+export const deleteEmploymentHisApi = async (formData) => {
+  const response = await axiosInstance.delete("/user/employment-history", {
     data: formData,
   });
   return response.data;

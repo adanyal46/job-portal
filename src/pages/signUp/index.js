@@ -17,7 +17,6 @@ let formStyles = {
 const SignupForm = () => {
   const handleSubmit = (values) => {
     values["role"] = "JOB_SEEKER";
-    console.log(values);
   };
   return (
     <Row justify="center" align="middle" style={{ minHeight: "100vh" }}>

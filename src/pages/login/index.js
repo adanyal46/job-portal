@@ -3,14 +3,46 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { clearMessage, login } from "../../features/auth/authSlice";
 import { Form, Input, Button, Typography, Alert, Card, message } from "antd";
+import { useNavigate } from "react-router-dom";
+import { isTokenValid } from "../../utils";
+import { profile } from "../../features/profile/profileSlice";
+import Loader from "../../components/Loader";
 
 const { Title } = Typography;
 
 const LoginForm = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { loading, error } = useSelector((state) => state.auth);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
+  const checkTokenAndNavigate = async () => {
+    setIsLoading(true);
+    const token = localStorage.getItem("token");
+
+    if (token && isTokenValid(token)) {
+      try {
+        const response = await dispatch(profile()).unwrap();
+        if (response.success) {
+          navigate("/jobs/search?type=search");
+        } else {
+          navigate("/login");
+        }
+      } catch (error) {
+        console.error("Error fetching profile:", error);
+        navigate("/login");
+      }
+    } else {
+      navigate("/login");
+    }
+    setIsLoading(false);
+  };
+
+  useEffect(() => {
+    checkTokenAndNavigate();
+  }, [navigate]);
 
   useEffect(() => {
     if (error) {
@@ -24,9 +56,21 @@ const LoginForm = () => {
     }
   }, [error]);
 
-  const handleSubmit = (values) => {
-    dispatch(login({ email: values.email, password: values.password })); // Dispatch login action with email and password
+  const handleSubmit = async (values) => {
+    try {
+      const response = await dispatch(
+        login({ email: values.email, password: values.password })
+      ).unwrap();
+      if (response.token) {
+        navigate("/");
+        return;
+      }
+    } catch (error) {}
   };
+
+  if (isLoading) {
+    return <Loader />;
+  }
 
   return (
     <div
@@ -37,12 +81,12 @@ const LoginForm = () => {
         height: "100vh",
       }}
     >
-      <Card style={{ width: 400, padding: 20 }} bordered>
+      <Card style={{ width: 600, padding: 20 }} bordered>
         <Title level={2} style={{ textAlign: "center" }}>
           Login
         </Title>
 
-        <Form onFinish={handleSubmit} layout="vertical">
+        <Form onFinish={handleSubmit} layout="vertical" size="large">
           <Form.Item
             label="Email"
             name="email"

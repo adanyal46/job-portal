@@ -1,63 +1,36 @@
 import CommonHeading from "../../components/commonHeading";
-
 import "./styles.scss";
 
-const Certifications = () => {
+const Certifications = ({ certificates }) => {
   return (
     <section className="certifications-wrapper">
       <CommonHeading heading="Certifications" />
 
       <section className="certifications-container">
-        <section className="certification-detail-wrapper">
-          <figure className="certification-icon">
-            <img
-              loading="lazy"
-              src="/images/user-icon.png"
-              className="icon"
-              alt="CertificationIcon"
-            />
-          </figure>
+        {certificates?.map((cert) => (
+          <section className="certification-detail-wrapper" key={cert.id}>
+            <figure className="certification-icon">
+              <img
+                loading="lazy"
+                src="/images/user-icon.png"
+                className="icon"
+                alt="CertificationIcon"
+              />
+            </figure>
 
-          <article className="certification-details">
-            <p className="name">Certification in UX Design</p>
-            <p className="platform">Google</p>
-            <p className="date">Issued Dec 2023</p>
-          </article>
-        </section>
-
-        <section className="certification-detail-wrapper">
-          <figure className="certification-icon">
-            <img
-              loading="lazy"
-              src="/images/user-icon.png"
-              className="icon"
-              alt="CertificationIcon"
-            />
-          </figure>
-
-          <article className="certification-details">
-            <p className="name">Certification in UX Design</p>
-            <p className="platform">Google</p>
-            <p className="date">Issued Dec 2023</p>
-          </article>
-        </section>
-
-        <section className="certification-detail-wrapper">
-          <figure className="certification-icon">
-            <img
-              loading="lazy"
-              src="/images/user-icon.png"
-              className="icon"
-              alt="CertificationIcon"
-            />
-          </figure>
-
-          <article className="certification-details">
-            <p className="name">Certification in UX Design</p>
-            <p className="platform">Google</p>
-            <p className="date">Issued Dec 2023</p>
-          </article>
-        </section>
+            <article className="certification-details">
+              <p className="name">Certification in {cert.certName}</p>
+              <p className="platform">{cert.orgName}</p>
+              <p className="date">
+                Issued on{" "}
+                {new Date(cert.completedOn).toLocaleString("default", {
+                  month: "long",
+                  year: "numeric",
+                })}
+              </p>
+            </article>
+          </section>
+        ))}
       </section>
     </section>
   );

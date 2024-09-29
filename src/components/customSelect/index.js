@@ -7,7 +7,7 @@ const handleChange = (value) => {
 };
 
 const CustomSelect = (props) => {
-  const { placeholder, height, width } = props;
+  const { placeholder, height, width, options } = props;
 
   return (
     <Select
@@ -19,20 +19,7 @@ const CustomSelect = (props) => {
         width: width,
       }}
       onChange={handleChange}
-      options={[
-        {
-          value: "jack",
-          label: "Jack",
-        },
-        {
-          value: "lucy",
-          label: "Lucy",
-        },
-        {
-          value: "Yiminghe",
-          label: "yiminghe",
-        },
-      ]}
+      options={options}
     />
   );
 };

@@ -21,7 +21,6 @@ const MyProfile = ({ user }) => {
   const location = user?.Location;
   const document = user?.Documents;
   const employmentHistorys = user?.EmpolymentHistory;
-  console.log(user);
 
   return (
     <section className="main-layout-container">
