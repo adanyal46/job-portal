@@ -47,30 +47,21 @@ const Layout = () => {
   let profileData = user?.Profile[0];
 
   useEffect(() => {
-    userExistAndTokenExist();
-  }, []);
-
-  const userExistAndTokenExist = async () => {
-    try {
-      const token = localStorage.getItem("token");
-      if (!token || !isTokenValid(token)) {
-        navigate("/login");
-        return;
-      }
-
-      const response = await dispatch(profile()).unwrap();
-      if (response.success) {
-        // Only navigate to jobs if you are not already there
-        if (location.pathname !== "/jobs/search?type=search") {
-          navigate("/jobs/search?type=search");
+    const userExistAndTokenExist = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        if (!token || !isTokenValid(token)) {
+          localStorage.removeItem("token");
+          navigate("/login");
+          return;
         }
-      } else {
+      } catch (error) {
         navigate("/login");
       }
-    } catch (error) {
-      navigate("/login");
-    }
-  };
+    };
+
+    userExistAndTokenExist();
+  }, [dispatch, location.pathname, navigate]);
 
   useEffect(() => {
     dispatch(profile());

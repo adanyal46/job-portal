@@ -1,4 +1,4 @@
-import { Input, DatePicker } from "antd";
+import { Input, DatePicker, TimePicker } from "antd";
 import { Switch, Case, Default } from "react-if";
 
 import "./styles.scss";
@@ -19,6 +19,9 @@ const CommonInput = (props) => {
   } = props;
 
   const handleDateChange = (date, dateString) => {
+    if (onChange) onChange(date, dateString);
+  };
+  const handleTimeChange = (date, dateString) => {
     if (onChange) onChange(date, dateString);
   };
 
@@ -44,6 +47,16 @@ const CommonInput = (props) => {
           value={value} // Assuming the value is a moment object for DatePicker
           style={styles}
           format={"YYYY-MM-DD"}
+        />
+      </Case>
+
+      <Case condition={category === "time"}>
+        <TimePicker
+          className={`common-datepicker-field ${classes}`}
+          placeholder={placeholder}
+          onChange={handleTimeChange}
+          value={value}
+          style={styles}
         />
       </Case>
 

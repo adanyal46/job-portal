@@ -65,3 +65,24 @@ export const buildQueryParams = (params) => {
 
   return query.toString();
 };
+
+export const formatDateTime = (selectedDateTime) => {
+  const [datePart, timePart] = selectedDateTime.split(":").map(Number);
+
+  const date = new Date(datePart);
+  const time = new Date(timePart);
+
+  const formattedDate = date.toLocaleDateString("en-US", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+  });
+
+  const formattedTime = time.toLocaleTimeString("en-US", {
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: true,
+  });
+
+  return { formattedDate, formattedTime };
+};

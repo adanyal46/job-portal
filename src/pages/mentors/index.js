@@ -11,6 +11,10 @@ import { SearchFieldIcon } from "../../assets/svg";
 
 import "./styles.scss";
 import CustomPagination from "../../components/customPagination";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { fetchMentorList } from "../../features/mentor/mentorSlice";
+import Loader from "../../components/Loader";
 
 const mentorCardList = [
   {
@@ -76,27 +80,35 @@ const SearchFields = () => {
 };
 
 const MentorsListing = () => {
+  const dispatch = useDispatch();
+  const { mentors, loading, error } = useSelector((state) => state.mentor);
+  useEffect(() => {
+    dispatch(fetchMentorList());
+  }, [dispatch]);
+
+  if (loading) return <Loader />;
+  if (error) return <p>Error: {error}</p>;
+
   return (
     <section className="mentors-main-container">
       <SearchFields />
-
       <section className="mentors-wrapper">
         <section className="mentors-cards-container">
-          {mentorCardList.map((cardData, index) => (
+          {mentors.map((cardData, index) => (
             <MentorCard key={`mentor-card-${index}`} {...cardData} />
           ))}
         </section>
-
         <CustomPagination />
       </section>
     </section>
   );
 };
-
 const Mentors = () => {
-  const navigate = useNavigate();
-
   let query = useQuery();
+
+  const navigate = useNavigate();
+  const { mentors, loading, error } = useSelector((state) => state.mentor);
+
   const defaultKey = query.get("type");
 
   const handleTabChange = (key) => {

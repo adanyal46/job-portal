@@ -18,9 +18,28 @@ import {
   PlusIcon,
 } from "../../assets/svg";
 import "./styles.scss";
+import { useLocation } from "react-router-dom";
 
 const MentorDetails = () => {
+  const location = useLocation();
+  const {
+    id,
+    icon,
+    rating,
+    totalReview,
+    name,
+    location: mentorLocation,
+    services,
+    about,
+    languages,
+    tagline,
+  } = location.state || {};
   const [showScheduleModal, setShowScheduleModal] = useState(false);
+  const [selectedServiceId, setSelectedServiceId] = useState(null);
+  const [selectedDate, setSelectedDate] = useState(null);
+  const [selectedTime, setSelectedTime] = useState(null);
+
+  console.log("selectedServiceId", selectedServiceId);
 
   const handleShowScheduleModal = () => {
     setShowScheduleModal(() => true);
@@ -28,6 +47,11 @@ const MentorDetails = () => {
 
   const handleCloseScheduleModal = () => {
     setShowScheduleModal(() => false);
+  };
+
+  const handleServiceClick = (serviceId) => {
+    setSelectedServiceId(serviceId);
+    handleShowScheduleModal();
   };
 
   return (
@@ -52,12 +76,12 @@ const MentorDetails = () => {
 
             <article className="mentor-card-details-container">
               <article className="mentor-card-details">
-                <h2 className="mentor-name">Olivia Roy</h2>
-                <Rating rating="4.6" reviews="32" />
-                <LocationWithIcon location="US" />
+                <h2 className="mentor-name">{name}</h2>
+                <Rating rating={rating} reviews={totalReview} />
+                <LocationWithIcon location={mentorLocation} />
               </article>
 
-              <p className="mentor-expertise">UX Designer at Atos</p>
+              <p className="mentor-expertise">{tagline}</p>
 
               <p className="mentor-verified">
                 <VerifiedIcon />
@@ -70,7 +94,7 @@ const MentorDetails = () => {
 
           <article className="I-can-do-container">
             <p className="i-can-do-item">
-              <MentorTranslateIcon /> I can Speak <strong>Spanish</strong>{" "}
+              <MentorTranslateIcon /> I can Speak <strong>{languages}</strong>{" "}
               (Conversational)
             </p>
 
@@ -87,27 +111,7 @@ const MentorDetails = () => {
 
           <article className="about-mentor-container">
             <h4 className="section-heading">About</h4>
-            <p className="section-content">
-              The power of design is nothing unless you can turn it into
-              influence, this is the reason why I am here. My passion is for
-              understanding human behavior, needs, and desires. I leverage a
-              human-centered approach to help organizations identify business
-              opportunities and design breakthrough products, services, and
-              experience solutions. The power of design is nothing unless you
-              can turn it into influence, this is the reason why I am here. My
-              passion is for understanding human behavior, needs, and desires. I
-              leverage a human-centered approach to help organizations identify
-              business opportunities and design breakthrough products, services,
-              and experience solutions. The power of design is nothing unless
-              you can turn it into influence, this is the reason why I am here.
-              My passion is for understanding human behavior, needs, and
-              desires. I leverage a human-centered approach to help
-              organizations identify business opportunities and design
-              breakthrough products, services, and experience solutions. The
-              power of design is nothing unless you can turn it into influence,
-              this is the reason why I am here. My passion is for understanding
-              human behavior, needs, and desires.
-            </p>
+            <p className="section-content">{about}</p>
           </article>
 
           <hr className="mentor-detail-divider" />
@@ -156,13 +160,16 @@ const MentorDetails = () => {
               <InfoIcon /> Please click on the check boxes to select a service
             </p>
 
-            <MentorServiceCollapse handleClick={handleShowScheduleModal} />
+            <MentorServiceCollapse
+              handleClick={handleServiceClick}
+              services={services}
+            />
 
-            <p className="info-content">
+            {/* <p className="info-content">
               <InfoIcon /> You're on the way!
-            </p>
+            </p> */}
 
-            <p className="info-content">
+            {/* <p className="info-content">
               After placing your order, you'll be taken to the booking page so
               you can schedule time with your mentor
             </p>
@@ -171,7 +178,7 @@ const MentorDetails = () => {
               category="primary"
               name="Let's Get Started"
               handleClick={handleShowScheduleModal}
-            />
+            /> */}
           </section>
         </section>
       </section>
@@ -180,6 +187,13 @@ const MentorDetails = () => {
         <ScheduleModal
           showScheduleModal={showScheduleModal}
           closeScheduleModal={handleCloseScheduleModal}
+          selectedServiceId={selectedServiceId}
+          selectedDate={selectedDate}
+          setSelectedDate={setSelectedDate}
+          selectedTime={selectedTime}
+          setSelectedTime={setSelectedTime}
+          mentorId={location.state.id}
+          services={services}
         />
       )}
     </section>

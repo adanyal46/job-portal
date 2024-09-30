@@ -1,10 +1,14 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import CustomButton from "../../components/customButton";
 import CommonModal from "../../components/commonModal";
 import CommonInput from "../../components/commonInput";
 
 import "./styles.scss";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchNotificationList } from "../../features/notification/notificationSlice";
+import { getDaysAgo } from "../../utils";
+import Loader from "../../components/Loader";
 
 const notificationsList = [
   {
@@ -56,7 +60,7 @@ const NotificationEmptyScreen = () => (
 );
 
 const NotificationCard = ({ notificationData, handleShowReviewModal }) => {
-  const { title, name, description, time, action } = notificationData;
+  const { title, name, message, createdAt, reviewPending } = notificationData;
 
   return (
     <section className="notification-container">
@@ -65,9 +69,9 @@ const NotificationCard = ({ notificationData, handleShowReviewModal }) => {
         <h4 className="name">{name}</h4>
       </article>
 
-      <p className="notification-content">{description}</p>
+      <p className="notification-content">{message}</p>
 
-      {action && (
+      {reviewPending && (
         <section className="notification-actions">
           <CustomButton
             category="primary"
@@ -77,13 +81,21 @@ const NotificationCard = ({ notificationData, handleShowReviewModal }) => {
         </section>
       )}
 
-      <p className="time-span">{time}</p>
+      <p className="time-span">{getDaysAgo(createdAt)}</p>
     </section>
   );
 };
 
 const Notifications = () => {
+  const dispatch = useDispatch();
+  const { notifications, loading, error } = useSelector(
+    (state) => state.notifications
+  );
   const [showReviewModal, setShowReviewModal] = useState(false);
+
+  useEffect(() => {
+    dispatch(fetchNotificationList());
+  }, [dispatch]);
 
   const handleShowReviewModal = () => {
     setShowReviewModal(() => true);
@@ -93,6 +105,10 @@ const Notifications = () => {
     setShowReviewModal(() => false);
   };
 
+  if (loading) {
+    return <Loader />;
+  }
+
   return (
     <section className="main-layout-container">
       <h3 className="layout-main-heading">Notifications</h3>
@@ -101,7 +117,7 @@ const Notifications = () => {
         <NotificationEmptyScreen />
       ) : (
         <section className="notifications-cards-wrapper">
-          {notificationsList?.map((notificationData, index) => (
+          {notifications?.map((notificationData, index) => (
             <NotificationCard
               notificationData={notificationData}
               handleShowReviewModal={handleShowReviewModal}

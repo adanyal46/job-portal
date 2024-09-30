@@ -9,32 +9,37 @@ const getClassName = (progress) => {
   return "in-progress";
 };
 
-const BookingCard = ({ mentor, progress }) => {
+const BookingCard = ({ mentorName, progress, selectedDateTime }) => {
   return (
     <section className="booking-card-container">
       <h5 className="booking-card-heading">
-        Resume Review with <span className="mentor-name">Olivia Roy</span>
+        Resume Review with <span className="mentor-name">{mentorName}</span>
       </h5>
 
-      <p className={`booking-tag-content ${getClassName(progress)}`}>
+      {/* <p className={`booking-tag-content ${getClassName(progress)}`}>
         {progress}
-      </p>
+      </p> */}
 
       <section className="booking-time-slot-container">
         <section className="slot-content">
           <CalendarIcon />
 
-          <p className="slot-info">20 Jan, 2024</p>
+          <p className="slot-info">
+            {new Date(selectedDateTime).toDateString()}
+          </p>
         </section>
 
         <section className="slot-content">
           <ClockIcon />
 
-          <p className="slot-info">02:40 PM</p>
+          <p className="slot-info">
+            {" "}
+            {new Date(selectedDateTime).toLocaleTimeString()}
+          </p>
         </section>
       </section>
 
-      {!mentor && (
+      {!mentorName && (
         <CustomButton
           category="plain"
           classes="reschedule-button"

@@ -2,9 +2,7 @@ import { Select } from "antd";
 
 import "./styles.scss";
 
-const handleChange = (value) => {
-  console.log(`selected ${value}`);
-};
+const handleChange = (value) => {};
 
 const CustomSelect = (props) => {
   const { placeholder, height, width, options } = props;

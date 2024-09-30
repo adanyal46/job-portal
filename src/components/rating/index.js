@@ -1,18 +1,22 @@
-import { RatingFilledIcon } from "../../assets/svg";
-
+import { Rate } from "antd"; // Import Rate from Ant Design
 import "./styles.scss";
 
-const Rating = (props) => {
-  const { rating, reviews } = props;
+const Rating = ({ rating = 0, reviews = 0 }) => {
+  // Ensure rating is a number
+  const numericRating = Number(rating);
 
   return (
     <article className="rating-container">
-      <h6 className="rating">{rating}</h6>
-      {Array(5)
-        .fill()
-        .map((_, index) => (
-          <RatingFilledIcon key={`rating-star-${index}`} />
-        ))}
+      <h6 className="rating">{numericRating.toFixed(1)}</h6>
+
+      {/* Use Ant Design Rate component */}
+      <Rate
+        allowHalf
+        disabled
+        value={numericRating} // Use value instead of defaultValue for controlled component
+        style={{ fontSize: 16 }} // Customize the size of the stars if needed
+      />
+
       <p className="reviews">({reviews})</p>
     </article>
   );

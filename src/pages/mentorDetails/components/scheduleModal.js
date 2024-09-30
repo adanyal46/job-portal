@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { Checkbox } from "antd";
+import { Checkbox, message } from "antd";
 
 import CustomButton from "../../../components/customButton";
 import CommonModal from "../../../components/commonModal";
@@ -20,6 +20,8 @@ import {
 } from "../../../assets/svg";
 
 import "./scheduleModal.scss";
+import { useDispatch } from "react-redux";
+import { bookSession } from "../../../features/booking/bookingSlice";
 
 const ModalStep = (props) => {
   const { active, ActiveIcon, Icon, title, description } = props;
@@ -88,13 +90,48 @@ const ScheduleButtons = (props) => {
 };
 
 const ScheduleModal = (props) => {
-  const { showScheduleModal, closeScheduleModal } = props;
-
+  const {
+    showScheduleModal,
+    closeScheduleModal,
+    selectedServiceId,
+    selectedDate,
+    setSelectedDate,
+    selectedTime,
+    setSelectedTime,
+    services,
+  } = props;
+  const dispatch = useDispatch();
   const [currentStep, setCurrentStep] = useState(1);
+  const findServ = services?.find((item) => item.id === selectedServiceId);
 
-  const handleNextStep = () => {
+  const handleNextStep = async () => {
+    if (!selectedDate || !selectedTime) {
+      message.open({
+        type: "error",
+        content: "Select date or time",
+      });
+      return;
+    }
     if (currentStep === 4) {
-      closeScheduleModal();
+      const formattedDate = selectedDate
+        ? selectedDate.format("YYYY-MM-DD")
+        : "";
+      const formattedTime = selectedTime ? selectedTime.format("HH:mm:ss") : "";
+
+      let values = {
+        selectedService: selectedServiceId,
+        selectedDateTime: `${formattedDate}:${formattedTime}`,
+        mentorId: findServ?.mentorProfileId,
+      };
+
+      const response = await dispatch(bookSession(values)).unwrap();
+      if (response.success) {
+        closeScheduleModal();
+        message.open({
+          type: "success",
+          content: "Booking save successfully!F",
+        });
+      }
     }
 
     setCurrentStep((st) => st + 1);
@@ -183,8 +220,20 @@ const ScheduleModal = (props) => {
               <StepButtons />
 
               <section className="schedule-fields-container">
-                <CommonInput category="date" placeholder="Select Date" />
-                <CommonInput category="date" placeholder="Select Time" />
+                <CommonInput
+                  category="date"
+                  placeholder="Select Date"
+                  value={selectedDate}
+                  onChange={(e) => {
+                    setSelectedDate(e);
+                  }}
+                />
+                <CommonInput
+                  category="time"
+                  placeholder="Select Time"
+                  value={selectedTime}
+                  onChange={(e) => setSelectedTime(e)}
+                />
               </section>
 
               <section className="time-slots-container">
@@ -212,7 +261,7 @@ const ScheduleModal = (props) => {
 
               <article className="review-content-container">
                 <p className="review-label">Subtotal</p>
-                <p className="review-value">$80</p>
+                <p className="review-value">${findServ?.pricing}</p>
               </article>
 
               <article className="review-content-container">
@@ -239,7 +288,7 @@ const ScheduleModal = (props) => {
 
               <article className="review-content-container">
                 <p className="total-label">Total</p>
-                <h4 className="total-value">$70</h4>
+                <h4 className="total-value">${findServ?.pricing - 10}</h4>
               </article>
 
               <ScheduleButtons

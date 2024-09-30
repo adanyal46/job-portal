@@ -20,7 +20,6 @@ export const jobApplied = createAsyncThunk(
     try {
       // const data = await applyJobApi(formData);
       const currenJobList = getState().job.jobs;
-      console.log(currenJobList);
       // return data.data;
     } catch (error) {
       return rejectWithValue(error.message);

@@ -23,18 +23,9 @@ const LoginForm = () => {
     const token = localStorage.getItem("token");
 
     if (token && isTokenValid(token)) {
-      try {
-        const response = await dispatch(profile()).unwrap();
-        if (response.success) {
-          navigate("/jobs/search?type=search");
-        } else {
-          navigate("/login");
-        }
-      } catch (error) {
-        console.error("Error fetching profile:", error);
-        navigate("/login");
-      }
+      navigate("/jobs/search?type=search");
     } else {
+      localStorage.removeItem("token");
       navigate("/login");
     }
     setIsLoading(false);
@@ -62,7 +53,7 @@ const LoginForm = () => {
         login({ email: values.email, password: values.password })
       ).unwrap();
       if (response.token) {
-        navigate("/");
+        navigate("/jobs/search?type=search");
         return;
       }
     } catch (error) {}

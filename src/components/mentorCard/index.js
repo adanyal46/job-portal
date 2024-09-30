@@ -8,27 +8,57 @@ import Tag from "../tag";
 import "./styles.scss";
 
 const MentorCard = (props) => {
-  const { icon, rating, reviews, name, location, expertise } = props;
-
+  const {
+    icon,
+    rating,
+    totalReview,
+    name,
+    location,
+    services,
+    about,
+    languages,
+    tagline,
+  } = props;
   const navigate = useNavigate();
+
+  const handleDetailsClick = () => {
+    navigate("/mentorDetails", {
+      state: {
+        icon,
+        rating,
+        totalReview,
+        name,
+        location,
+        services,
+        about,
+        languages,
+        tagline,
+      },
+    });
+  };
 
   return (
     <section className="mentor-card-wrapper">
       <figure className="mentor-icon-container">
-        <img loading="lazy" src={icon} alt={name} className="mentor-icon" />
+        <img
+          loading="lazy"
+          src={"/images/mentors/mentor-1.png"}
+          alt={name}
+          className="mentor-icon"
+        />
       </figure>
 
       <article className="mentor-details-container">
-        <Rating rating={rating} reviews={reviews} />
+        <Rating rating={rating} reviews={totalReview} />
 
         <h5 className="mentor-name">{name}</h5>
 
         <LocationWithIcon location={location} />
 
-        {expertise && (
+        {services && (
           <article className="mentor-card-tags-container">
-            {expertise.map((experty, index) => (
-              <Tag key={`mentor-card-tag-${index}`} label={experty} />
+            {services.map((experty, index) => (
+              <Tag key={`mentor-card-tag-${index}`} label={experty.name} />
             ))}
           </article>
         )}
@@ -38,7 +68,7 @@ const MentorCard = (props) => {
             category="primary"
             name="Details"
             classes="mentor-details-button"
-            handleClick={() => navigate("/mentorDetails")}
+            handleClick={handleDetailsClick}
           />
         </section>
       </article>

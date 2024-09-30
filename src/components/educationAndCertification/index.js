@@ -247,7 +247,6 @@ const EducationAndCertification = ({
       const response = await dispatch(
         deleteCertificate({ certificateId: id || certificateData.id })
       ).unwrap();
-      console.log(response);
       if (response.success) {
         message.open({
           type: "success",

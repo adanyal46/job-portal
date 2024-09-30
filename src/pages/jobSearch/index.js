@@ -294,14 +294,7 @@ const JobSearch = () => {
   const [selectedLocation, setSelectedLocation] = useState("");
 
   useEffect(() => {
-    const params = {
-      jobTitle: searchText,
-      location: "",
-      jobType: "",
-      pay: "",
-      dateRange: "",
-    };
-    dispatch(jobList(params));
+    dispatch(jobList());
     getSaveJobsData();
     getAppliedJobsData();
   }, [searchText, dispatch]);
@@ -311,14 +304,14 @@ const JobSearch = () => {
       dispatch(
         jobList({
           jobTitle: "",
-          location: "",
-          jobType: "",
-          pay: "",
-          dateRange: "",
         })
       );
       setAppliedJobList([]);
       setSaveJobList([]);
+    } else {
+      dispatch(jobList());
+      getSaveJobsData();
+      getAppliedJobsData();
     }
   }, [searchText, dispatch]);
 

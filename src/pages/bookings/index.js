@@ -1,25 +1,32 @@
+import { useDispatch, useSelector } from "react-redux";
 import BookingCard from "../../components/bookingCard";
 import CustomPagination from "../../components/customPagination";
 import CustomTabs from "../../components/customTabs";
 
 import "./styles.scss";
+import { useEffect } from "react";
+import { getBookingSession } from "../../features/booking/bookingSlice";
+import Loader from "../../components/Loader";
 
 const BookingsListing = () => {
+  const dispatch = useDispatch();
+
+  const { bookings, loading, error } = useSelector((state) => state.bookings);
+
+  useEffect(() => {
+    dispatch(getBookingSession());
+  }, [dispatch]);
+
+  if (loading) {
+    return <Loader />;
+  }
+
   return (
     <section className="booking-listing-wrapper">
-      <BookingCard />
-      <BookingCard />
-      <BookingCard />
-
-      <BookingCard />
-      <BookingCard />
-      <BookingCard />
-
-      <BookingCard />
-      <BookingCard />
-      <BookingCard />
-
-      <CustomPagination />
+      {bookings?.map((book, index) => (
+        <BookingCard {...book} key={index} />
+      ))}
+      {/* <CustomPagination /> */}
     </section>
   );
 };
