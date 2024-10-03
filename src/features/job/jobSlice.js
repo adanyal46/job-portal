@@ -1,37 +1,74 @@
 // src/features/auth/authSlice.js
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { applyJobApi, getJobList } from "./jobApi";
+import { applyJobApi, getJobList, saveJobApi } from "./jobApi";
 
 // Thunk to handle fetching job list
-export const jobList = createAsyncThunk(
-  "job/list",
-  async (formData, { rejectWithValue }) => {
-    try {
-      const data = await getJobList(formData);
-      return data.data; // Assuming data.data holds the job list
-    } catch (error) {
-      return rejectWithValue(error.message);
-    }
+export const jobList = createAsyncThunk("job/list", async (formData, { rejectWithValue }) => {
+  try {
+    const data = await getJobList(formData);
+    return data.data; // Assuming data.data holds the job list
+  } catch (error) {
+    return rejectWithValue(error.message);
   }
-);
-export const jobApplied = createAsyncThunk(
-  "job/apply",
-  async (formData, { getState, rejectWithValue }) => {
-    try {
-      // const data = await applyJobApi(formData);
-      const currenJobList = getState().job.jobs;
-      // return data.data;
-    } catch (error) {
-      return rejectWithValue(error.message);
-    }
+});
+export const jobApplied = createAsyncThunk("job/apply", async (formData, { getState, rejectWithValue }) => {
+  try {
+    const response = await applyJobApi(formData);
+    const appliedJobData = response.data; 
+    const currentJobList = getState().job.jobs || []; 
+
+    const updatedJobList = currentJobList.map((job) => {
+      const isApplied = job.JobApplied.some(appliedJob => appliedJob.jobId === appliedJobData.jobId);
+
+      return {
+        ...job,
+        applied: true,
+        JobApplied: isApplied 
+          ? job.JobApplied // Keep existing JobApplied array if already applied
+          : [...job.JobApplied, appliedJobData], // Add the new applied job data if not already applied
+      };
+    });
+
+    console.log(updatedJobList); 
+
+    return updatedJobList; 
+  } catch (error) {
+    return rejectWithValue(error.message); // Handle errors
   }
-);
+});
+export const saveJob = createAsyncThunk("job/save", async (formData, { getState, rejectWithValue }) => {
+  try {
+    const response = await saveJobApi(formData);
+    const appliedJobData = response.data; 
+    const currentJobList = getState().job.jobs || []; 
+
+    const updatedJobList = currentJobList.map((job) => {
+      const isApplied = job.saveJobpost.some(appliedJob => appliedJob.jobId === appliedJobData.jobId);
+
+      return {
+        ...job,
+        saved: true,
+        saveJobpost: isApplied 
+          ? job.saveJobpost 
+          : [...job.saveJobpost, appliedJobData], 
+      };
+    });
+
+    console.log(updatedJobList); 
+
+    return updatedJobList; 
+  } catch (error) {
+    return rejectWithValue(error.message); // Handle errors
+  }
+});
+
 
 const jobSlice = createSlice({
   name: "job",
   initialState: {
     jobs: null,
     loading: false,
+    appliedLoading: false,
     error: null,
   },
   reducers: {},
@@ -47,7 +84,31 @@ const jobSlice = createSlice({
       })
       .addCase(jobList.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload; // Store error
+        state.error = action.payload;
+      })
+      .addCase(jobApplied.pending, (state) => {
+        state.appliedLoading = true;
+        state.error = null;
+      })
+      .addCase(jobApplied.fulfilled, (state, action) => {
+        state.appliedLoading = false;
+        state.jobs = action.payload;
+      })
+      .addCase(jobApplied.rejected, (state, action) => {
+        state.appliedLoading = false;
+        state.error = action.payload;
+      })
+      .addCase(saveJob.pending, (state) => {
+        state.appliedLoading = true;
+        state.error = null;
+      })
+      .addCase(saveJob.fulfilled, (state, action) => {
+        state.appliedLoading = false;
+        state.jobs = action.payload;
+      })
+      .addCase(saveJob.rejected, (state, action) => {
+        state.appliedLoading = false;
+        state.error = action.payload;
       });
   },
 });

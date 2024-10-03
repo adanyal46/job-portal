@@ -253,7 +253,7 @@ const Sidebar = ({ user }) => {
             className="sidebar-user-icon"
             src={profileImage || "/images/sidebar-user-icon.png"}
             alt="fuseUser"
-            style={{ borderRadius: "100px" }}
+            style={{ borderRadius: "100px", maxHeight:"150px", objectFit:'cover' }}
             preview={false}
           />
 

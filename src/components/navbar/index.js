@@ -15,9 +15,7 @@ const Navbar = ({ profileData }) => {
   const serverUrl = "http://54.144.76.160:5000";
 
   // Replace placeholder with actual server URL
-  let profileImage =
-    profileData?.avatarUrl &&
-    profileData?.avatarUrl.replace("http://your-server-url", serverUrl);
+  let profileImage = profileData?.avatarUrl && profileData?.avatarUrl.replace("http://your-server-url", serverUrl);
 
   const goToNotificationsPage = () => {
     navigate("/notifications");
@@ -53,26 +51,14 @@ const Navbar = ({ profileData }) => {
     <header className="fuse-nav-container">
       <nav className="fuse-navbar">
         <picture className="navbar-branding">
-          <NavLink
-            to="/"
-            onClick={() => window.scrollTo(0, 0)}
-            className="navbar-branding-link"
-          >
+          <NavLink to="/" onClick={() => window.scrollTo(0, 0)} className="navbar-branding-link">
             <figure className="branding-logo">
-              <Image
-                loading="lazy"
-                className="fuse-brand-logo"
-                src="/images/fuse-nav-icon.png"
-                alt="FuseWW"
-              />
+              <Image loading="lazy" className="fuse-brand-logo" src="/images/fuse-nav-icon.png" alt="FuseWW" />
             </figure>
           </NavLink>
         </picture>
 
-        <button
-          className={`menu-toggle-button ${toggleNav && "show-nav"}`}
-          onClick={navbarHideAndShow}
-        >
+        <button className={`menu-toggle-button ${toggleNav && "show-nav"}`} onClick={navbarHideAndShow}>
           <span className="toggle-menu-bar" />
           <span className="toggle-menu-bar" />
           <span className="toggle-menu-bar" />
@@ -93,13 +79,7 @@ const Navbar = ({ profileData }) => {
 
           <li className="navbar-items">
             <figure className="notifications-icon">
-              <img
-                loading="lazy"
-                className="bell-icon"
-                src="/images/bell-icon.png"
-                alt="fuseUser"
-                onClick={goToNotificationsPage}
-              />
+              <img loading="lazy" className="bell-icon" src="/images/bell-icon.png" alt="fuseUser" onClick={goToNotificationsPage} />
             </figure>
           </li>
 
@@ -115,23 +95,17 @@ const Navbar = ({ profileData }) => {
                   width: "200px",
                 }}
               >
-                <Avatar
-                  size={70}
-                  src={
-                    <Image
-                      loading="lazy"
-                      className="user-icon"
-                      src={profileImage || "/images/user-icon.png"}
-                      alt="fuseUser"
-                      preview={false}
-                    />
-                  }
+                <Image
+                  loading="lazy"
+                  style={{ width: "40px", height: "40px", objectFit: "cover" }}
+                  className="user-icon"
+                  src={profileImage || "/images/user-icon.png"}
+                  alt="fuseUser"
+                  preview={false}
                 />
               </Dropdown>
 
-              <figcaption className="user-name">
-                {profileData?.fullname || "Guest"}
-              </figcaption>
+              <figcaption className="user-name">{profileData?.fullname || "Guest"}</figcaption>
             </figure>
           </li>
         </ul>

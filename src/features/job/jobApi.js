@@ -6,6 +6,11 @@ export const getJobList = async (formData) => {
 };
 
 export const applyJobApi = async (formData) => {
-  const response = await axiosInstance.get(`/job/save`, formData);
+  const response = await axiosInstance.post(`/job/apply`, formData);
+  return response.data;
+};
+
+export const saveJobApi = async (formData) => {
+  const response = await axiosInstance.post(`/job/save`, formData);
   return response.data;
 };
