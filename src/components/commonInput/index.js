@@ -16,6 +16,8 @@ const CommonInput = (props) => {
     onChange,
     required = false,
     onEnter,
+    name,
+    handleClear,
   } = props;
 
   const handleDateChange = (date, dateString) => {
@@ -80,6 +82,9 @@ const CommonInput = (props) => {
           onChange={handleInputChange}
           value={value}
           style={styles}
+          allowClear
+          onClear={handleClear}
+          name={name || ""}
           onKeyPress={handleKeyPress}
         />
       </Default>

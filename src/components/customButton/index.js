@@ -4,12 +4,27 @@ import { Button } from "antd";
 import "./styles.scss";
 
 const CustomButton = (props) => {
-  const { category, type, name, disabled, handleClick, icon, shape, classes, loading = false } = props;
-
+  const {
+    category,
+    type,
+    name,
+    disabled,
+    handleClick,
+    icon,
+    shape,
+    classes,
+    loading = false,
+  } = props;
+  const onClick = typeof handleClick === "function" ? handleClick : () => {};
   return (
     <Switch>
       <Case condition={category === "primary"}>
-        <Button loading={loading} type="primary" className={`common-button-styles custom-button-primary ${classes}`} onClick={handleClick}>
+        <Button
+          loading={loading}
+          type="primary"
+          className={`common-button-styles custom-button-primary ${classes}`}
+          onClick={onClick}
+        >
           {name}
         </Button>
       </Case>
@@ -19,7 +34,7 @@ const CustomButton = (props) => {
           danger
           type="text"
           className={`common-button-styles custom-button-danger ${classes}`}
-          onClick={handleClick} // Pass onClick properly
+          onClick={onClick}
         >
           {name}
         </Button>
@@ -27,16 +42,24 @@ const CustomButton = (props) => {
 
       <Case condition={category === "plain"}>
         <Button
-          className={`common-button-styles custom-button-plain ${classes} ${disabled && "custom-button-plain-disabled"}`}
+          className={`common-button-styles custom-button-plain ${classes} ${
+            disabled && "custom-button-plain-disabled"
+          }`}
           disabled={disabled}
-          onClick={handleClick}
+          onClick={onClick}
         >
           {name}
         </Button>
       </Case>
 
       <Case condition={category === "additional"}>
-        <Button className={`additional-button ${classes} ${disabled && "additional-button-disabled"}`} disabled={disabled} onClick={handleClick}>
+        <Button
+          className={`additional-button ${classes} ${
+            disabled && "additional-button-disabled"
+          }`}
+          disabled={disabled}
+          onClick={onClick}
+        >
           <section className="additional-button-title">
             {icon}
             <p className="name">{name}</p>
@@ -45,11 +68,21 @@ const CustomButton = (props) => {
       </Case>
 
       <Case condition={category === "iconed"}>
-        <Button className={`custom-iconed-button ${classes}`} shape={shape} icon={icon} onClick={handleClick} disabled={disabled} />
+        <Button
+          className={`custom-iconed-button ${classes}`}
+          shape={shape}
+          icon={icon}
+          onClick={onClick}
+          disabled={disabled}
+        />
       </Case>
 
       <Default>
-        <Button type={type} className={`custom-button ${classes}`}>
+        <Button
+          type={type}
+          className={`custom-button ${classes}`}
+          onClick={onClick}
+        >
           {name}
         </Button>
       </Default>

@@ -1,6 +1,6 @@
 // src/features/auth/authSlice.js
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { loginUser } from "./authApi";
+import { loginUser, registerUserApi } from "./authApi";
 
 // Thunk to handle login
 export const login = createAsyncThunk(
@@ -10,6 +10,17 @@ export const login = createAsyncThunk(
       const data = await loginUser(credentials);
       localStorage.setItem("token", data.token);
       return { token: data.token, user: data.data };
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+export const register = createAsyncThunk(
+  "auth/register",
+  async (credentials, { rejectWithValue }) => {
+    try {
+      const data = await registerUserApi(credentials);
+      return data;
     } catch (error) {
       return rejectWithValue(error.message);
     }
@@ -48,6 +59,17 @@ const authSlice = createSlice({
       .addCase(login.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload; // Store error
+      })
+      .addCase(register.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(register.fulfilled, (state, action) => {
+        state.loading = false;
+      })
+      .addCase(register.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
       });
   },
 });

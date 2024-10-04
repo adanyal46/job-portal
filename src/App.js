@@ -1,5 +1,11 @@
 import { lazy, Suspense, useEffect } from "react";
-import { createBrowserRouter, RouterProvider, Outlet, useLocation, useNavigate } from "react-router-dom";
+import {
+  createBrowserRouter,
+  RouterProvider,
+  Outlet,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
 
 import Navbar from "./components/navbar";
 import Sidebar from "./components/sidebar";
@@ -58,20 +64,26 @@ const Layout = () => {
   }, [dispatch, location.pathname, navigate]);
 
   useEffect(() => {
-    dispatch(profile());  // Fetch user data and store in Redux
-  }, [dispatch]);
+    if (!user && !loading) {
+      dispatch(profile());
+    }
+  }, [dispatch, user, loading]);
 
   if (loading) {
     return <Loader />;
   }
-
   return (
     <div className="app-wrapper">
       <section className="fuse-main-wrapper">
-        {!hideNavbarSidebar.includes(location.pathname) && <Navbar profileData={profileData} />}
+        {!hideNavbarSidebar.includes(location.pathname) && (
+          <Navbar profileData={profileData} />
+        )}
         <main className="fuse-main-body">
-          {!hideNavbarSidebar.includes(location.pathname) && <Sidebar user={user} />}
-          <Outlet context={{ user }} /> {/* Outlet for rendering child routes */}
+          {!hideNavbarSidebar.includes(location.pathname) && (
+            <Sidebar user={user} />
+          )}
+          <Outlet context={{ user }} />{" "}
+          {/* Outlet for rendering child routes */}
         </main>
       </section>
     </div>
@@ -88,15 +100,20 @@ const Root = () => {
 };
 
 const MyProfileWrapper = () => {
-  const { user } = useSelector((state) => state.profile); 
+  const { user } = useSelector((state) => state.profile);
 
   return <MyProfile user={user} />;
 };
 
 const NotificationsWrapper = () => {
-  const { user } = useSelector((state) => state.profile); 
-  return <Notifications user={user} />; 
-}
+  const { user } = useSelector((state) => state.profile);
+  return <Notifications user={user} />;
+};
+
+const SettingWrapper = () => {
+  const { user } = useSelector((state) => state.profile);
+  return <Settings user={user} />;
+};
 
 // Define the routes using createBrowserRouter
 const router = createBrowserRouter([
@@ -120,7 +137,7 @@ const router = createBrowserRouter([
       { path: "add-timesheet", element: <AddTimesheet /> },
       { path: "view-timesheet", element: <ViewTimesheet /> },
       { path: "notifications", element: <NotificationsWrapper /> }, // Use wrapper to pass user data
-      { path: "settings", element: <Settings /> },
+      { path: "settings", element: <SettingWrapper /> },
     ],
   },
   {

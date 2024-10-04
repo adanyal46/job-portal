@@ -3,65 +3,77 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { applyJobApi, getJobList, saveJobApi } from "./jobApi";
 
 // Thunk to handle fetching job list
-export const jobList = createAsyncThunk("job/list", async (formData, { rejectWithValue }) => {
-  try {
-    const data = await getJobList(formData);
-    return data.data; // Assuming data.data holds the job list
-  } catch (error) {
-    return rejectWithValue(error.message);
+export const jobList = createAsyncThunk(
+  "job/list",
+  async (formData, { rejectWithValue }) => {
+    try {
+      const data = await getJobList(formData);
+      return data.data; // Assuming data.data holds the job list
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
   }
-});
-export const jobApplied = createAsyncThunk("job/apply", async (formData, { getState, rejectWithValue }) => {
-  try {
-    const response = await applyJobApi(formData);
-    const appliedJobData = response.data; 
-    const currentJobList = getState().job.jobs || []; 
+);
+export const jobApplied = createAsyncThunk(
+  "job/apply",
+  async (formData, { getState, rejectWithValue }) => {
+    try {
+      const response = await applyJobApi(formData);
+      const appliedJobData = response.data;
+      const currentJobList = getState().job.jobs || [];
 
-    const updatedJobList = currentJobList.map((job) => {
-      const isApplied = job.JobApplied.some(appliedJob => appliedJob.jobId === appliedJobData.jobId);
+      const updatedJobList = currentJobList.map((job) => {
+        const isApplied = job.JobApplied.some(
+          (appliedJob) => appliedJob.jobId === appliedJobData.jobId
+        );
 
-      return {
-        ...job,
-        applied: true,
-        JobApplied: isApplied 
-          ? job.JobApplied // Keep existing JobApplied array if already applied
-          : [...job.JobApplied, appliedJobData], // Add the new applied job data if not already applied
-      };
-    });
+        return {
+          ...job,
+          applied: true,
+          JobApplied: isApplied
+            ? job.JobApplied
+            : [...job.JobApplied, appliedJobData],
+        };
+      });
 
-    console.log(updatedJobList); 
+      console.log(updatedJobList);
 
-    return updatedJobList; 
-  } catch (error) {
-    return rejectWithValue(error.message); // Handle errors
+      return updatedJobList;
+    } catch (error) {
+      return rejectWithValue(error.message); // Handle errors
+    }
   }
-});
-export const saveJob = createAsyncThunk("job/save", async (formData, { getState, rejectWithValue }) => {
-  try {
-    const response = await saveJobApi(formData);
-    const appliedJobData = response.data; 
-    const currentJobList = getState().job.jobs || []; 
+);
+export const saveJob = createAsyncThunk(
+  "job/save",
+  async (formData, { getState, rejectWithValue }) => {
+    try {
+      const response = await saveJobApi(formData);
+      const appliedJobData = response.data;
+      const currentJobList = getState().job.jobs || [];
 
-    const updatedJobList = currentJobList.map((job) => {
-      const isApplied = job.saveJobpost.some(appliedJob => appliedJob.jobId === appliedJobData.jobId);
+      const updatedJobList = currentJobList.map((job) => {
+        const isSaved = job.saveJobpost.some(
+          (savedJob) => savedJob.jobId === appliedJobData.jobId
+        );
 
-      return {
-        ...job,
-        saved: true,
-        saveJobpost: isApplied 
-          ? job.saveJobpost 
-          : [...job.saveJobpost, appliedJobData], 
-      };
-    });
+        return {
+          ...job,
+          saved: true, // Set saved to true for all jobs
+          saveJobpost: isSaved
+            ? job.saveJobpost // If jobId exists, do not modify saveJobpost
+            : [...job.saveJobpost, appliedJobData], // If jobId doesn't exist, add it to saveJobpost
+        };
+      });
 
-    console.log(updatedJobList); 
+      console.log(updatedJobList);
 
-    return updatedJobList; 
-  } catch (error) {
-    return rejectWithValue(error.message); // Handle errors
+      return updatedJobList;
+    } catch (error) {
+      return rejectWithValue(error.message); // Handle errors
+    }
   }
-});
-
+);
 
 const jobSlice = createSlice({
   name: "job",

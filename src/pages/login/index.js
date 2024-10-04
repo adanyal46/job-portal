@@ -1,9 +1,18 @@
 // src/components/Login.js
-import React, { useEffect, useState } from "react";
+import React, { startTransition, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { clearMessage, login } from "../../features/auth/authSlice";
-import { Form, Input, Button, Typography, Alert, Card, message } from "antd";
-import { useNavigate } from "react-router-dom";
+import {
+  Form,
+  Input,
+  Button,
+  Typography,
+  Alert,
+  Card,
+  message,
+  Flex,
+} from "antd";
+import { Link, useNavigate } from "react-router-dom";
 import { isTokenValid } from "../../utils";
 import { profile } from "../../features/profile/profileSlice";
 import Loader from "../../components/Loader";
@@ -54,6 +63,10 @@ const LoginForm = () => {
       ).unwrap();
       if (response.token) {
         navigate("/jobs/search?type=search");
+        message.open({
+          type: "success",
+          content: "Login Successfully!",
+        });
         return;
       }
     } catch (error) {}
@@ -113,6 +126,12 @@ const LoginForm = () => {
               {loading ? "Logging in..." : "Login"}
             </Button>
           </Form.Item>
+          <Flex justify="center" gap={"small"}>
+            <Typography.Text style={{ fontSize: "16px" }}>
+              Not an account?{" "}
+            </Typography.Text>
+            <Typography.Link href="/signUp">Register</Typography.Link>
+          </Flex>
         </Form>
       </Card>
     </div>
