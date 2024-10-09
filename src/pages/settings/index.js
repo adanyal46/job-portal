@@ -4,8 +4,10 @@ import CustomButton from "../../components/customButton";
 import "./styles.scss";
 import { updateEmail, updatePassword } from "../../features/user/userApi";
 import { message } from "antd";
+import { useSelector } from "react-redux";
 
-const Settings = ({ user }) => {
+const Settings = () => {
+  const { user } = useSelector((state) => state.profile);
   const [primaryEmail, setPrimaryEmail] = useState(user?.email || "");
   const [secondaryEmail, setSecondaryEmail] = useState(
     user?.secondaryEmail || ""

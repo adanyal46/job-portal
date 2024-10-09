@@ -40,6 +40,7 @@ const authSlice = createSlice({
       state.user = null;
       state.token = null;
       localStorage.removeItem("token"); // Remove token on logout
+      localStorage.removeItem("lastRoute"); 
     },
     clearMessage: (state) => {
       state.error = null;

@@ -1,26 +1,30 @@
 import { useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
-
 import "./styles.scss";
 import { Avatar, Dropdown, Image, message } from "antd";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../features/auth/authSlice";
 
-const Navbar = ({ profileData }) => {
+const Navbar = () => {
+  const { user } = useSelector((state) => state.profile);
+  const profileData = user?.Profile[0]
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
   const [toggleNav, setToggleNav] = useState(false);
-
   const serverUrl = "http://54.144.76.160:5000";
 
-  // Replace placeholder with actual server URL
   let profileImage =
     profileData?.avatarUrl &&
     profileData?.avatarUrl.replace("http://your-server-url", serverUrl);
 
+  const saveRouteToLocalStorage = (route) => {
+    localStorage.setItem("lastRoute", route);
+  };
+
   const goToNotificationsPage = () => {
-    navigate("/notifications");
+    const route = "/notifications"; // Set the route to save
+    saveRouteToLocalStorage(route); // Save the route in local storage
+    navigate(route); // Navigate to the notifications page
   };
 
   const navbarHideAndShow = () => {
@@ -32,7 +36,6 @@ const Navbar = ({ profileData }) => {
       label: <Link to={"/"}>Profile</Link>,
       key: "0",
     },
-
     {
       type: "divider",
     },
@@ -53,6 +56,7 @@ const Navbar = ({ profileData }) => {
       });
     }
   };
+
   return (
     <header className="fuse-nav-container">
       <nav className="fuse-navbar">
@@ -83,15 +87,23 @@ const Navbar = ({ profileData }) => {
         </button>
 
         <ul className="navbar-links-wrapper">
-          <NavLink className="navbar-items" to="/jobs/search?type=search">
+          <NavLink
+            className="navbar-items"
+            to="/jobs/search?type=search"
+            onClick={() => saveRouteToLocalStorage("/jobs/search?type=search")}
+          >
             <li className="item-name">Jobs</li>
           </NavLink>
 
-          <NavLink className="navbar-items" to="/mentors?type=myMentors">
+          <NavLink
+            className="navbar-items"
+            to="/mentors?type=myMentors"
+            onClick={() => saveRouteToLocalStorage("/mentors?type=myMentors")}
+          >
             <li className="item-name">Mentors</li>
           </NavLink>
 
-          <NavLink className="navbar-items" to="/blogs">
+          <NavLink className="navbar-items" to="/blogs" onClick={() => saveRouteToLocalStorage("/blogs")}>
             <li className="item-name">Blogs</li>
           </NavLink>
 

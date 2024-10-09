@@ -7,8 +7,10 @@ import Certifications from "../../components/certifications";
 
 import "./styles.scss";
 import { useState } from "react";
+import { useSelector } from "react-redux";
 
-const MyProfile = ({ user }) => {
+const MyProfile = () => {
+  const { user } = useSelector((state) => state.profile);
   const [showInfoModal, setShowInfoModal] = useState(false);
   const [showEducationModal, setShowEducationModal] = useState(false);
   const [showCertificationModal, setShowCertificationModal] = useState(false);

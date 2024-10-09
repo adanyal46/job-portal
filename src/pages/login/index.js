@@ -32,10 +32,13 @@ const LoginForm = () => {
     const token = localStorage.getItem("token");
 
     if (token && isTokenValid(token)) {
-      navigate("/jobs/search?type=search");
+      // If the token is valid, navigate to the current page
+      const currentPath = window.location.pathname;
+      if (currentPath === "/login") {
+        navigate("/jobs/search?type=search");
+      }
     } else {
       localStorage.removeItem("token");
-      navigate("/login");
     }
     setIsLoading(false);
   };
