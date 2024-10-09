@@ -36,64 +36,81 @@ const Sidebar = () => {
 
   // Determine user role
   const isMentor = user?.role === "MENTOR";
+  const isSeeker = user?.role === "JOB_SEEKER";
 
   const items = [
-    {
-      key: "2",
-      label: (
-        <section className="collapse-header-wrapper">
-          <JobsIcon />
-          <h5 className="collapse-heading">Jobs</h5>
-        </section>
-      ),
-      children: (
-        <ul className="collpase-items-list">
-          <Link to="/jobs/search?type=search" onClick={() => localStorage.setItem("lastRoute", "/jobs/search?type=search")}>
-            <li className={`collpase-item ${searchParams === "search" && "active"}`}>
-              Search
-            </li>
-          </Link>
-
-          <Link to="/jobs/search?type=applied" onClick={() => localStorage.setItem("lastRoute", "/jobs/search?type=applied")}>
-            <li className={`collpase-item ${searchParams === "applied" && "active"}`}>
-              Applied Jobs
-            </li>
-          </Link>
-
-          <Link to="/jobs/search?type=saved" onClick={() => localStorage.setItem("lastRoute", "/jobs/search?type=saved")}>
-            <li className={`collpase-item ${searchParams === "saved" && "active"}`}>
-              Saved Jobs
-            </li>
-          </Link>
-        </ul>
-      ),
-    },
-    {
-      key: "3",
-      label: (
-        <section className="collapse-header-wrapper">
-          <MentorsIcon />
-          <h5 className="collapse-heading">Mentors</h5>
-        </section>
-      ),
-      children: (
-        <ul className="collpase-items-list">
-          <Link to="/mentors?type=myMentors" onClick={() => localStorage.setItem("lastRoute", "/mentors?type=myMentors")}>
-            <li className={`collpase-item ${searchParams === "myMentors" && "active"}`}>
-              My Mentor
-            </li>
-          </Link>
-
-          <Link to="/bookings" onClick={() => localStorage.setItem("lastRoute", "/bookings")}>
-            <li className={`collpase-item ${location.pathname === "/bookings" && "active"}`}>
-              Bookings
-            </li>
-          </Link>
-        </ul>
-      ),
-    },
+    // Jobs section shown only for non-mentors
+    ...(!isMentor
+      ? [
+          {
+            key: "2",
+            label: (
+              <section className="collapse-header-wrapper">
+                <JobsIcon />
+                <h5 className="collapse-heading">Jobs</h5>
+              </section>
+            ),
+            children: (
+              <ul className="collpase-items-list">
+                <Link
+                  to="/jobs/search?type=search"
+                  onClick={() => localStorage.setItem("lastRoute", "/jobs/search?type=search")}
+                >
+                  <li className={`collpase-item ${searchParams === "search" && "active"}`}>
+                    Search
+                  </li>
+                </Link>
+  
+                <Link
+                  to="/jobs/search?type=applied"
+                  onClick={() => localStorage.setItem("lastRoute", "/jobs/search?type=applied")}
+                >
+                  <li className={`collpase-item ${searchParams === "applied" && "active"}`}>
+                    Applied Jobs
+                  </li>
+                </Link>
+  
+                <Link
+                  to="/jobs/search?type=saved"
+                  onClick={() => localStorage.setItem("lastRoute", "/jobs/search?type=saved")}
+                >
+                  <li className={`collpase-item ${searchParams === "saved" && "active"}`}>
+                    Saved Jobs
+                  </li>
+                </Link>
+              </ul>
+            ),
+          },
+        ]
+      : []),
+  
+    // Bookings and additional sections shown only for mentors
     ...(isMentor
       ? [
+          {
+            key: "1",
+            label: (
+              <section className="collapse-header-wrapper">
+                <BookingsIcon />
+                <h5 className="collapse-heading">Bookings</h5>
+              </section>
+            ),
+            children: (
+              <ul className="collpase-items-list">
+                <Link to="/upcomingBookings" onClick={() => localStorage.setItem("lastRoute", "/upcomingBookings")}>
+                  <li className={`collpase-item ${location.pathname === "/upcomingBookings" && "active"}`}>
+                    Upcoming Bookings
+                  </li>
+                </Link>
+  
+                <Link to="/historyBookings" onClick={() => localStorage.setItem("lastRoute", "/historyBookings")}>
+                  <li className={`collpase-item ${location.pathname === "/historyBookings" && "active"}`}>
+                    Booking History
+                  </li>
+                </Link>
+              </ul>
+            ),
+          },
           {
             key: "4",
             showArrow: false,
@@ -122,6 +139,8 @@ const Sidebar = () => {
           },
         ]
       : []),
+  
+    // Always show Settings
     {
       key: "7",
       showArrow: false,
@@ -136,6 +155,7 @@ const Sidebar = () => {
       ),
     },
   ];
+  
 
   return (
     <aside className="fuse-main-sidebar-wrapper">

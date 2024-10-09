@@ -2,16 +2,7 @@
 import React, { startTransition, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { clearMessage, login } from "../../features/auth/authSlice";
-import {
-  Form,
-  Input,
-  Button,
-  Typography,
-  Alert,
-  Card,
-  message,
-  Flex,
-} from "antd";
+import { Form, Input, Button, Typography, Alert, Card, message, Flex } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import { isTokenValid } from "../../utils";
 import { profile } from "../../features/profile/profileSlice";
@@ -31,15 +22,16 @@ const LoginForm = () => {
     setIsLoading(true);
     const token = localStorage.getItem("token");
 
+    let currentPath;
     if (token && isTokenValid(token)) {
-      // If the token is valid, navigate to the current page
-      const currentPath = window.location.pathname;
-      if (currentPath === "/login") {
-        navigate("/jobs/search?type=search");
-      }
+      navigate("/", { replace: true }); 
     } else {
       localStorage.removeItem("token");
+      if (currentPath !== "/login") {
+        navigate("/login", { replace: true });
+      }
     }
+
     setIsLoading(false);
   };
 
@@ -61,11 +53,14 @@ const LoginForm = () => {
 
   const handleSubmit = async (values) => {
     try {
-      const response = await dispatch(
-        login({ email: values.email, password: values.password })
-      ).unwrap();
+      const response = await dispatch(login({ email: values.email, password: values.password })).unwrap();
       if (response.token) {
-        navigate("/jobs/search?type=search");
+        if(response.data.role !== 'JOB_SEEKER'){
+          navigate("/");
+        }else{
+          navigate('/jobs/search?type=search')
+        }
+     
         message.open({
           type: "success",
           content: "Login Successfully!",
@@ -94,45 +89,21 @@ const LoginForm = () => {
         </Title>
 
         <Form onFinish={handleSubmit} layout="vertical" size="large">
-          <Form.Item
-            label="Email"
-            name="email"
-            rules={[{ required: true, message: "Please input your email!" }]}
-          >
-            <Input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="Enter your email"
-            />
+          <Form.Item label="Email" name="email" rules={[{ required: true, message: "Please input your email!" }]}>
+            <Input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Enter your email" />
           </Form.Item>
 
-          <Form.Item
-            label="Password"
-            name="password"
-            rules={[{ required: true, message: "Please input your password!" }]}
-          >
-            <Input.Password
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="Enter your password"
-            />
+          <Form.Item label="Password" name="password" rules={[{ required: true, message: "Please input your password!" }]}>
+            <Input.Password value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Enter your password" />
           </Form.Item>
 
           <Form.Item>
-            <Button
-              type="primary"
-              htmlType="submit"
-              loading={loading}
-              style={{ width: "100%" }}
-            >
+            <Button type="primary" htmlType="submit" loading={loading} style={{ width: "100%" }}>
               {loading ? "Logging in..." : "Login"}
             </Button>
           </Form.Item>
           <Flex justify="center" gap={"small"}>
-            <Typography.Text style={{ fontSize: "16px" }}>
-              Not an account?{" "}
-            </Typography.Text>
+            <Typography.Text style={{ fontSize: "16px" }}>Not an account? </Typography.Text>
             <Typography.Link href="/signUp">Register</Typography.Link>
           </Flex>
         </Form>

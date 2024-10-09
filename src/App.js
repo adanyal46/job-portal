@@ -11,6 +11,8 @@ import useAuth from "./hooks/useAuth";
 
 // Lazy-loaded components
 const MyProfile = lazy(() => import("./pages/myProfile"));
+const UpcomingBookings = lazy(() => import("./pages/upcomingBookings"));
+const Reviews = lazy(() => import("./pages/reviews"));
 const JobSearch = lazy(() => import("./pages/jobSearch"));
 const Mentors = lazy(() => import("./pages/mentors"));
 const Bookings = lazy(() => import("./pages/bookings"));
@@ -56,7 +58,14 @@ const createRoutes = (user) => {
       element: <Layout />,
       children: [
         { path: "/", element: <MyProfile /> }, // Accessible by all
-        { path: "jobs/search", element: <JobSearch /> }, // Accessible by all
+        {
+          path: "jobs/search",
+          element: (
+            <ProtectedRoute allowedRoles={["JOB_SEEKER"]} user={user}>
+              <JobSearch />
+            </ProtectedRoute>
+          ),
+        },
         {
           path: "bookings",
           element: (
@@ -84,8 +93,17 @@ const createRoutes = (user) => {
         {
           path: "settings",
           element: (
-            <ProtectedRoute allowedRoles={["JOB_SEEKER"]} user={user}>
+            <ProtectedRoute allowedRoles={["JOB_SEEKER", "MENTOR"]} user={user}>
               <Settings />
+            </ProtectedRoute>
+          ),
+        },
+
+        {
+          path: "upcomingBookings",
+          element: (
+            <ProtectedRoute allowedRoles={["MENTOR", "RECRUITER"]} user={user}>
+              <UpcomingBookings />
             </ProtectedRoute>
           ),
         },
@@ -94,6 +112,14 @@ const createRoutes = (user) => {
           element: (
             <ProtectedRoute allowedRoles={["MENTOR", "RECRUITER"]} user={user}>
               <Earnings />
+            </ProtectedRoute>
+          ),
+        },
+        {
+          path: "reviews",
+          element: (
+            <ProtectedRoute allowedRoles={["MENTOR", "RECRUITER"]} user={user}>
+              <Reviews />
             </ProtectedRoute>
           ),
         },
@@ -119,7 +145,8 @@ const App = () => {
   const { user, loading } = useSelector((state) => state.profile);
   
   useEffect(() => {
-    if (!user && !loading) {
+    const token = localStorage.getItem('token')
+    if (!user && !loading && token) {
       dispatch(profile());
     }
   }, [dispatch, user, loading]);
