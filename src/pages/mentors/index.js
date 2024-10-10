@@ -12,15 +12,7 @@ import { useEffect, useState } from "react"; // Import useState
 import { fetchMentorList } from "../../features/mentor/mentorSlice";
 import Loader from "../../components/Loader";
 
-const SearchFields = ({
-  locationOptions,
-  disciplineOptions,
-  industryOptions,
-  experienceOptions,
-  searchFields,
-  setSearchFields,
-  onSearch,
-}) => {
+const SearchFields = ({ locationOptions, disciplineOptions, industryOptions, experienceOptions, searchFields, setSearchFields, onSearch }) => {
   const handleInputChange = (value) => {
     setSearchFields((prev) => ({
       ...prev,
@@ -144,14 +136,15 @@ const MentorsListing = () => {
             <Loader />
           ) : error ? (
             <p>Error: {error}</p>
-          ) : mentors.length === 0 ? ( // Check if mentors array is empty
+          ) : !Array.isArray(mentors) ? ( // Check if mentors is an array
+            <p>Data format error</p>
+          ) : mentors.length === 0 ? ( // Check if the array is empty
             <p>Not Found</p>
           ) : (
-            mentors.map((cardData, index) => (
-              <MentorCard key={`mentor-card-${index}`} {...cardData} />
-            ))
+            mentors.map((cardData, index) => <MentorCard key={`mentor-card-${index}`} {...cardData} />)
           )}
         </section>
+
         {/* <CustomPagination /> */}
       </section>
     </section>
@@ -173,7 +166,7 @@ const Mentors = () => {
   };
 
   return (
-    <section className="main-layout-container">
+    <section >
       <CustomTabs
         handleChange={handleTabChange}
         defaultActiveKey={defaultKey}

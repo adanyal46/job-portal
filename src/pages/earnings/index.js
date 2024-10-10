@@ -5,6 +5,7 @@ import "./styles.scss";
 import CustomButton from "../../components/customButton";
 import CommonInput from "../../components/commonInput";
 import CommonTable from "../../components/commonTable";
+import { Typography } from "antd";
 
 const columns = [
   {
@@ -200,8 +201,8 @@ const Earnings = () => {
   };
 
   return (
-    <section className="main-layout-container">
-      <h3 className="layout-main-heading">Earnings</h3>
+    <section >
+      <Typography.Title level={3}>Earnings</Typography.Title>
 
       <CustomTabs
         handleChange={handleTabChange}

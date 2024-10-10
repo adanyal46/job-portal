@@ -24,7 +24,7 @@ const LoginForm = () => {
 
     let currentPath;
     if (token && isTokenValid(token)) {
-      navigate("/", { replace: true }); 
+      navigate("/", { replace: true });
     } else {
       localStorage.removeItem("token");
       if (currentPath !== "/login") {
@@ -55,12 +55,14 @@ const LoginForm = () => {
     try {
       const response = await dispatch(login({ email: values.email, password: values.password })).unwrap();
       if (response.token) {
-        if(response.data.role !== 'JOB_SEEKER'){
-          navigate("/");
-        }else{
-          navigate('/jobs/search?type=search')
+        if (response.user.role !== "JOB_SEEKER") {
+          localStorage.setItem("lastRoute", "/mentor");
+          navigate("/mentor");
+        } else {
+          localStorage.setItem("lastRoute", "/jobs/search?type=search");
+          navigate("/jobs/search?type=search");
         }
-     
+
         message.open({
           type: "success",
           content: "Login Successfully!",

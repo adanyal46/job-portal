@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchNotificationList } from "../../features/notification/notificationSlice";
 import { getDaysAgo } from "../../utils";
 import Loader from "../../components/Loader";
+import { Typography } from "antd";
 
 const NotificationEmptyScreen = () => (
   <section className="empty-notifications-container">
@@ -48,10 +49,8 @@ const Notifications = ({ user }) => {
   const profile = user?.Profile[0];
 
   useEffect(() => {
-    if (!notifications.length && !loading) {
-      dispatch(fetchNotificationList());
-    }
-  }, [dispatch, notifications.length, loading]);
+    dispatch(fetchNotificationList());
+  }, [dispatch]);
 
   const handleShowReviewModal = () => {
     setShowReviewModal(() => true);
@@ -66,8 +65,8 @@ const Notifications = ({ user }) => {
   }
 
   return (
-    <section className="main-layout-container">
-      <h3 className="layout-main-heading">Notifications</h3>
+    <section>
+      <Typography.Title level={3}>Notifications</Typography.Title>
 
       {notifications.length < 0 || notifications.length === 0 ? (
         <NotificationEmptyScreen />
@@ -94,7 +93,7 @@ const Notifications = ({ user }) => {
             <figure className="review-avatar-container">
               <img
                 loading="lazy"
-                style={{ maxHeight: "140px", objectFit: "cover", borderRadius:'100%' }}
+                style={{ maxHeight: "140px", objectFit: "cover", borderRadius: "100%" }}
                 src={profile?.avatarId || "/images/review-write-icon.png"}
                 alt="writeReviewIcon"
                 className="avatar"

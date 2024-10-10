@@ -3,15 +3,17 @@ import { createBrowserRouter, RouterProvider, Outlet, useLocation, useNavigate }
 import { useDispatch, useSelector } from "react-redux";
 import { profile } from "./features/profile/profileSlice";
 import Loader from "./components/Loader";
-import ProtectedRoute from "./components/ProtectedRoute "
+import ProtectedRoute from "./components/ProtectedRoute ";
 import Navbar from "./components/navbar";
 import Sidebar from "./components/sidebar";
 import "./App.scss";
 import useAuth from "./hooks/useAuth";
+import MentorProfile from "./components/mentorProfile";
 
 // Lazy-loaded components
 const MyProfile = lazy(() => import("./pages/myProfile"));
 const UpcomingBookings = lazy(() => import("./pages/upcomingBookings"));
+const HistoryBookings = lazy(() => import("./pages/historyBookings"));
 const Reviews = lazy(() => import("./pages/reviews"));
 const JobSearch = lazy(() => import("./pages/jobSearch"));
 const Mentors = lazy(() => import("./pages/mentors"));
@@ -57,7 +59,22 @@ const createRoutes = (user) => {
       path: "/",
       element: <Layout />,
       children: [
-        { path: "/", element: <MyProfile /> }, // Accessible by all
+        {
+          path: "/",
+          element: (
+            <ProtectedRoute allowedRoles={["JOB_SEEKER"]} user={user}>
+              <MyProfile />
+            </ProtectedRoute>
+          ),
+        },
+        {
+          path: "/mentor",
+          element: (
+            <ProtectedRoute allowedRoles={["MENTOR"]} user={user}>
+              <MentorProfile />
+            </ProtectedRoute>
+          ),
+        }, // Accessible by all
         {
           path: "jobs/search",
           element: (
@@ -77,7 +94,7 @@ const createRoutes = (user) => {
         {
           path: "notifications",
           element: (
-            <ProtectedRoute allowedRoles={["JOB_SEEKER"]} user={user}>
+            <ProtectedRoute allowedRoles={["JOB_SEEKER", "MENTOR"]} user={user}>
               <Notifications />
             </ProtectedRoute>
           ),
@@ -108,6 +125,14 @@ const createRoutes = (user) => {
           ),
         },
         {
+          path: "historyBookings",
+          element: (
+            <ProtectedRoute allowedRoles={["MENTOR", "RECRUITER"]} user={user}>
+              <HistoryBookings />
+            </ProtectedRoute>
+          ),
+        },
+        {
           path: "earnings",
           element: (
             <ProtectedRoute allowedRoles={["MENTOR", "RECRUITER"]} user={user}>
@@ -126,7 +151,7 @@ const createRoutes = (user) => {
         {
           path: "blogs",
           element: (
-            <ProtectedRoute allowedRoles={["MENTOR", "RECRUITER"]} user={user}>
+            <ProtectedRoute allowedRoles={["JOB_SEEKER", "MENTOR", "RECRUITER"]} user={user}>
               <Blogs />
             </ProtectedRoute>
           ),
@@ -143,9 +168,9 @@ const createRoutes = (user) => {
 const App = () => {
   const dispatch = useDispatch();
   const { user, loading } = useSelector((state) => state.profile);
-  
+
   useEffect(() => {
-    const token = localStorage.getItem('token')
+    const token = localStorage.getItem("token");
     if (!user && !loading && token) {
       dispatch(profile());
     }

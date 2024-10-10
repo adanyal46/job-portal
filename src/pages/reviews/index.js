@@ -1,3 +1,4 @@
+import { Typography } from "antd";
 import CustomPagination from "../../components/customPagination";
 import CustomTabs from "../../components/customTabs";
 import ReviewCard from "../../components/reviewCard";
@@ -26,8 +27,8 @@ const Reviews = () => {
   };
 
   return (
-    <section className="main-layout-container">
-      <h3 className="layout-main-heading">Reviews</h3>
+    <section>
+      <Typography.Title level={3}>Reviews</Typography.Title>
 
       <CustomTabs
         handleChange={handleTabChange}

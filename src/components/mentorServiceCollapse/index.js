@@ -12,7 +12,7 @@ const MentorServiceCollapse = (props) => {
   const { handleClick, services } = props;
 
   // Create items for Collapse
-  const items = services.map((service) => ({
+  const items = services?.map((service) => ({
     key: service.id,
     label: (
       <>

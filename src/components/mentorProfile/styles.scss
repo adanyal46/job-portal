@@ -1,0 +1,72 @@
+.main-layout-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 2rem;
+  
+    &::-webkit-scrollbar {
+      width: 0;
+      height: 0;
+    }
+  
+    &::-webkit-scrollbar-track {
+      -webkit-box-shadow: none;
+      box-shadow: none;
+      border-radius: 1rem;
+      background: #ccc;
+    }
+  
+    &::-webkit-scrollbar-thumb {
+      background-color: #ccc;
+      outline: 1px solid transparent;
+      border-radius: 1rem;
+    }
+  
+    // Firefox support
+    scrollbar-color: #ccc transparent;
+    scrollbar-width: thin;
+  
+    .profile-main-wrapper {
+      width: 65%; // Left section taking 70% of the container
+      display: flex;
+      flex-direction: column;
+      gap: 2rem; // Gap between profile sections
+      height: auto;
+    }
+  
+    .mentor-actions-container {
+      width: 35%; // Right section taking 30% of the container
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+  
+      .mentor-video-container,
+      .mentor-get-started-container {
+        padding: 2.4rem;
+        border-radius: 1.2rem;
+        background: #fff;
+        box-shadow: 0 0.2rem 0.4rem rgba(165, 163, 174, 0.3);
+      }
+  
+      .mentor-services-wrapper {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+  
+        .mentor-services {
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+          font-weight: 500;
+        }
+      }
+  
+      .info-content {
+        line-height: 2rem;
+  
+        > svg {
+          vertical-align: bottom;
+        }
+      }
+    }
+  }
+  

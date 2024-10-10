@@ -1,3 +1,4 @@
+import { Typography } from "antd";
 import BookingCard from "../../components/bookingCard";
 import CustomPagination from "../../components/customPagination";
 import CustomTabs from "../../components/customTabs";
@@ -38,8 +39,8 @@ const UpcomingBookings = () => {
   };
 
   return (
-    <section className="main-layout-container">
-      <h3 className="layout-main-heading">Upcoming Bookings</h3>
+    <section >
+      <Typography.Title level={3}>Upcoming Bookings</Typography.Title>
 
       <CustomTabs
         handleChange={handleTabChange}

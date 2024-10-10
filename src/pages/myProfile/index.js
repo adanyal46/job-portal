@@ -8,6 +8,7 @@ import Certifications from "../../components/certifications";
 import "./styles.scss";
 import { useState } from "react";
 import { useSelector } from "react-redux";
+import { Card, Typography } from "antd";
 
 const MyProfile = () => {
   const { user } = useSelector((state) => state.profile);
@@ -25,8 +26,8 @@ const MyProfile = () => {
   const employmentHistorys = user?.EmpolymentHistory;
 
   return (
-    <section className="main-layout-container">
-      <h3 className="layout-main-heading">My Profile</h3>
+    <Card>
+      <Typography.Title level={3}>My Profile</Typography.Title>
 
       <section className="profile-main-wrapper">
         <ProfileHeader
@@ -66,7 +67,7 @@ const MyProfile = () => {
 
         <Certifications certificates={certificates} />
       </section>
-    </section>
+    </Card>
   );
 };
 

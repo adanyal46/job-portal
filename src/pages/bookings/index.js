@@ -7,6 +7,16 @@ import "./styles.scss";
 import { useEffect } from "react";
 import { getBookingSession } from "../../features/booking/bookingSlice";
 import Loader from "../../components/Loader";
+import { Typography } from "antd";
+const NoBooking = () => {
+  return (
+    <section className="no-booking-empty-wrapper">
+      <figure className="no-bookings-picture">
+        <img loading="lazy" src="/images/no-bookings.png" alt="" className="" />
+      </figure>
+    </section>
+  );
+};
 
 const BookingsListing = () => {
   const dispatch = useDispatch();
@@ -22,22 +32,16 @@ const BookingsListing = () => {
   }
 
   return (
-    <section className="booking-listing-wrapper">
-      {bookings?.map((book, index) => (
-        <BookingCard {...book} key={index} />
-      ))}
-      {/* <CustomPagination /> */}
-    </section>
-  );
-};
-
-const NoBooking = () => {
-  return (
-    <section className="no-booking-empty-wrapper">
-      <figure className="no-bookings-picture">
-        <img loading="lazy" src="/images/no-bookings.png" alt="" className="" />
-      </figure>
-    </section>
+    <>
+      {Array.isArray(bookings) && bookings.length === 0 ? (
+        <NoBooking />
+      ) : (
+        <section className="booking-listing-wrapper">
+          {Array.isArray(bookings) && bookings.length > 0 && bookings?.map((book, index) => <BookingCard {...book} key={index} />)}
+          {/* <CustomPagination /> */}
+        </section>
+      )}
+    </>
   );
 };
 
@@ -47,8 +51,8 @@ const Bookings = () => {
   };
 
   return (
-    <section className="main-layout-container">
-      <h3 className="layout-main-heading">Bookings</h3>
+    <section>
+      <Typography.Title level={3}>Bookings</Typography.Title>
 
       <CustomTabs
         handleChange={handleTabChange}
