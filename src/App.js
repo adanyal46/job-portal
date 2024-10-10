@@ -1,5 +1,11 @@
 import { lazy, Suspense, useEffect } from "react";
-import { createBrowserRouter, RouterProvider, Outlet, useLocation, useNavigate } from "react-router-dom";
+import {
+  createBrowserRouter,
+  RouterProvider,
+  Outlet,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { profile } from "./features/profile/profileSlice";
 import Loader from "./components/Loader";
@@ -9,6 +15,7 @@ import Sidebar from "./components/sidebar";
 import "./App.scss";
 import useAuth from "./hooks/useAuth";
 import MentorProfile from "./components/mentorProfile";
+import MentorDetails from "./pages/mentorDetails";
 
 // Lazy-loaded components
 const MyProfile = lazy(() => import("./pages/myProfile"));
@@ -92,6 +99,14 @@ const createRoutes = (user) => {
           ),
         },
         {
+          path: "mentorDetails",
+          element: (
+            <ProtectedRoute allowedRoles={["JOB_SEEKER"]} user={user}>
+              <MentorDetails />
+            </ProtectedRoute>
+          ),
+        },
+        {
           path: "notifications",
           element: (
             <ProtectedRoute allowedRoles={["JOB_SEEKER", "MENTOR"]} user={user}>
@@ -151,7 +166,10 @@ const createRoutes = (user) => {
         {
           path: "blogs",
           element: (
-            <ProtectedRoute allowedRoles={["JOB_SEEKER", "MENTOR", "RECRUITER"]} user={user}>
+            <ProtectedRoute
+              allowedRoles={["JOB_SEEKER", "MENTOR", "RECRUITER"]}
+              user={user}
+            >
               <Blogs />
             </ProtectedRoute>
           ),
