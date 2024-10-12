@@ -22,24 +22,11 @@ import { useLocation } from "react-router-dom";
 
 const MentorDetails = () => {
   const location = useLocation();
-  const {
-    id,
-    icon,
-    rating,
-    totalReview,
-    name,
-    location: mentorLocation,
-    services,
-    about,
-    languages,
-    tagline,
-  } = location.state || {};
+  const { services, profile, certificate, mentorId } = location.state || {};
   const [showScheduleModal, setShowScheduleModal] = useState(false);
   const [selectedServiceId, setSelectedServiceId] = useState(null);
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedTime, setSelectedTime] = useState(null);
-
-  console.log("selectedServiceId", selectedServiceId);
 
   const handleShowScheduleModal = () => {
     setShowScheduleModal(() => true);
@@ -55,15 +42,15 @@ const MentorDetails = () => {
   };
 
   return (
-    <section className="main-layout-container">
-      <p className="page-main-heading">
-        Mentors
-        <span className="slash"> / </span>
-        <span className="highlighted">Mentors Details</span>
-      </p>
-
+    <section className="mentor-detail-layout-container">
       <section className="mentor-details-page-wrapper">
-        <section className="mentor-detail-container">
+        <section className="mentor-detail-container" style={{ width: "100%" }}>
+          <p className="page-main-heading">
+            Mentors
+            <span className="slash"> / </span>
+            <span className="highlighted">Mentors Details</span>
+          </p>
+
           <section className="mentor-card-container">
             <figure className="mentor-card-image-wrapper">
               <img
@@ -76,12 +63,12 @@ const MentorDetails = () => {
 
             <article className="mentor-card-details-container">
               <article className="mentor-card-details">
-                <h2 className="mentor-name">{name}</h2>
-                <Rating rating={rating} reviews={totalReview} />
-                <LocationWithIcon location={mentorLocation} />
+                <h2 className="mentor-name">{profile?.fullname || "Guest"}</h2>
+                <Rating rating={0} reviews={0} />
+                <LocationWithIcon location={profile?.location ?? "-"} />
               </article>
 
-              <p className="mentor-expertise">{tagline}</p>
+              <p className="mentor-expertise">{profile?.tagline ?? "-"}</p>
 
               <p className="mentor-verified">
                 <VerifiedIcon />
@@ -94,8 +81,8 @@ const MentorDetails = () => {
 
           <article className="I-can-do-container">
             <p className="i-can-do-item">
-              <MentorTranslateIcon /> I can Speak <strong>{languages}</strong>{" "}
-              (Conversational)
+              <MentorTranslateIcon /> I can Speak{" "}
+              <strong>{profile?.language ?? "-"}</strong> (Conversational)
             </p>
 
             <p className="i-can-do-item">
@@ -111,25 +98,25 @@ const MentorDetails = () => {
 
           <article className="about-mentor-container">
             <h4 className="section-heading">About</h4>
-            <p className="section-content">{about}</p>
+            <p className="section-content">{profile?.about ?? "-"}</p>
           </article>
 
           <hr className="mentor-detail-divider" />
 
-          <Certifications />
+          <Certifications certificates={certificate} />
 
           <hr className="mentor-detail-divider" />
 
           <article className="about-mentor-container">
             <h4 className="section-heading">Reviews</h4>
 
-            <section className="review-cards-layout">
+            {/* <section className="review-cards-layout">
               <ReviewCard />
               <ReviewCard />
-            </section>
+            </section> */}
           </article>
 
-          <CustomPagination />
+          {/* <CustomPagination /> */}
         </section>
 
         <section className="mentor-actions-container">
@@ -192,7 +179,7 @@ const MentorDetails = () => {
           setSelectedDate={setSelectedDate}
           selectedTime={selectedTime}
           setSelectedTime={setSelectedTime}
-          mentorId={location.state.id}
+          mentorId={mentorId}
           services={services}
         />
       )}

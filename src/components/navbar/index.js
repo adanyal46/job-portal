@@ -7,13 +7,16 @@ import { logout } from "../../features/auth/authSlice";
 
 const Navbar = () => {
   const { user } = useSelector((state) => state.profile);
-  const profileData = user?.Profile[0];
+  const profileData =
+    user && user.Profile && user.Profile.length > 0 ? user.Profile[0] : null;
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [toggleNav, setToggleNav] = useState(false);
   const serverUrl = "http://54.144.76.160:5000";
 
-  let profileImage = profileData?.avatarUrl && profileData?.avatarUrl.replace("http://your-server-url", serverUrl);
+  let profileImage =
+    profileData?.avatarUrl &&
+    profileData?.avatarUrl.replace("http://your-server-url", serverUrl);
 
   const saveRouteToLocalStorage = (route) => {
     localStorage.setItem("lastRoute", route);
@@ -31,7 +34,9 @@ const Navbar = () => {
 
   const items = [
     {
-      label: <Link to={user?.role === "JOB_SEEKER" ? "/" : "/mentor"}>Profile</Link>,
+      label: (
+        <Link to={user?.role === "JOB_SEEKER" ? "/" : "/mentor"}>Profile</Link>
+      ),
       key: "0",
     },
     {
@@ -59,14 +64,26 @@ const Navbar = () => {
     <header className="fuse-nav-container">
       <nav className="fuse-navbar">
         <picture className="navbar-branding">
-          <NavLink to="/" onClick={() => window.scrollTo(0, 0)} className="navbar-branding-link">
+          <NavLink
+            to="/"
+            onClick={() => window.scrollTo(0, 0)}
+            className="navbar-branding-link"
+          >
             <figure className="branding-logo">
-              <Image loading="lazy" className="fuse-brand-logo" src="/images/fuse-nav-icon.png" alt="FuseWW" />
+              <Image
+                loading="lazy"
+                className="fuse-brand-logo"
+                src="/images/fuse-nav-icon.png"
+                alt="FuseWW"
+              />
             </figure>
           </NavLink>
         </picture>
 
-        <button className={`menu-toggle-button ${toggleNav && "show-nav"}`} onClick={navbarHideAndShow}>
+        <button
+          className={`menu-toggle-button ${toggleNav && "show-nav"}`}
+          onClick={navbarHideAndShow}
+        >
           <span className="toggle-menu-bar" />
           <span className="toggle-menu-bar" />
           <span className="toggle-menu-bar" />
@@ -74,24 +91,44 @@ const Navbar = () => {
 
         <ul className="navbar-links-wrapper">
           {user?.role === "JOB_SEEKER" && (
-            <NavLink className="navbar-items" to="/jobs/search?type=search" onClick={() => saveRouteToLocalStorage("/jobs/search?type=search")}>
+            <NavLink
+              className="navbar-items"
+              to="/jobs/search?type=search"
+              onClick={() =>
+                saveRouteToLocalStorage("/jobs/search?type=search")
+              }
+            >
               <li className="item-name">Jobs</li>
             </NavLink>
           )}
 
           {user?.role === "JOB_SEEKER" && (
-            <NavLink className="navbar-items" to="/mentors?type=myMentors" onClick={() => saveRouteToLocalStorage("/mentors?type=myMentors")}>
+            <NavLink
+              className="navbar-items"
+              to="/mentors?type=myMentors"
+              onClick={() => saveRouteToLocalStorage("/mentors?type=myMentors")}
+            >
               <li className="item-name">Mentors</li>
             </NavLink>
           )}
 
-          <NavLink className="navbar-items" to="/blogs" onClick={() => saveRouteToLocalStorage("/blogs")}>
+          <NavLink
+            className="navbar-items"
+            to="/blogs"
+            onClick={() => saveRouteToLocalStorage("/blogs")}
+          >
             <li className="item-name">Blogs</li>
           </NavLink>
 
           <li className="navbar-items">
             <figure className="notifications-icon">
-              <img loading="lazy" className="bell-icon" src="/images/bell-icon.png" alt="fuseUser" onClick={goToNotificationsPage} />
+              <img
+                loading="lazy"
+                className="bell-icon"
+                src="/images/bell-icon.png"
+                alt="fuseUser"
+                onClick={goToNotificationsPage}
+              />
             </figure>
           </li>
 
@@ -117,7 +154,9 @@ const Navbar = () => {
                 />
               </Dropdown>
 
-              <figcaption className="user-name">{profileData?.fullname || "Guest"}</figcaption>
+              <figcaption className="user-name">
+                {profileData?.fullname || "Guest"}
+              </figcaption>
             </figure>
           </li>
         </ul>

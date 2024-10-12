@@ -16,6 +16,7 @@ const CommonModal = (props) => {
     children,
     handleDelete,
     isDelete = true,
+    loading = false,
   } = props;
 
   const ModalHeader = () => {
@@ -41,6 +42,7 @@ const CommonModal = (props) => {
               name="Delete"
               key="deleteBtn"
               handleClick={handleDelete}
+              loading={loading}
             />
           ),
           <CustomButton
@@ -54,6 +56,7 @@ const CommonModal = (props) => {
             category="primary"
             name="Save"
             handleClick={handleOk}
+            loading={loading}
           />,
         ]
       }

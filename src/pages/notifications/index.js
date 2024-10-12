@@ -1,26 +1,33 @@
 import { useEffect, useState } from "react";
-
+import { Flex, Rate, Typography, message as antdMessage } from "antd"; // Import Ant Design Rate and message for notifications
 import CustomButton from "../../components/customButton";
 import CommonModal from "../../components/commonModal";
 import CommonInput from "../../components/commonInput";
-
 import "./styles.scss";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchNotificationList } from "../../features/notification/notificationSlice";
+import {
+  fetchNotificationList,
+  createNotificationReview,
+} from "../../features/notification/notificationSlice";
 import { getDaysAgo } from "../../utils";
 import Loader from "../../components/Loader";
-import { Typography } from "antd";
 
 const NotificationEmptyScreen = () => (
   <section className="empty-notifications-container">
     <figure className="no-notification-container">
-      <img loading="lazy" src="/images/empty-notifications.png" className="no-notification-image" alt="NoNotifications" />
+      <img
+        loading="lazy"
+        src="/images/empty-notifications.png"
+        className="no-notification-image"
+        alt="NoNotifications"
+      />
     </figure>
   </section>
 );
 
 const NotificationCard = ({ notificationData, handleShowReviewModal }) => {
-  const { title, name, message, createdAt, reviewPending } = notificationData;
+  const { title, name, message, createdAt, reviewPending, id } =
+    notificationData;
 
   return (
     <section className="notification-container">
@@ -33,7 +40,11 @@ const NotificationCard = ({ notificationData, handleShowReviewModal }) => {
 
       {reviewPending && (
         <section className="notification-actions">
-          <CustomButton category="primary" name="Write a Review" handleClick={handleShowReviewModal} />
+          <CustomButton
+            category="primary"
+            name="Write a Review"
+            handleClick={() => handleShowReviewModal(id)} // Pass notification ID
+          />
         </section>
       )}
 
@@ -42,22 +53,59 @@ const NotificationCard = ({ notificationData, handleShowReviewModal }) => {
   );
 };
 
-const Notifications = ({ user }) => {
+const Notifications = () => {
   const dispatch = useDispatch();
-  const { notifications, loading, error } = useSelector((state) => state.notifications);
-  const [showReviewModal, setShowReviewModal] = useState(false);
+  const { notifications, loading, reviewLoading } = useSelector(
+    (state) => state.notifications
+  );
+  const { user } = useSelector((state) => state.profile);
   const profile = user?.Profile[0];
+
+  const [showReviewModal, setShowReviewModal] = useState(false);
+  const [currentNotificationId, setCurrentNotificationId] = useState(null);
+  const [rating, setRating] = useState(0); // Store rating
+  const [comment, setComment] = useState(""); // Store comment
 
   useEffect(() => {
     dispatch(fetchNotificationList());
   }, [dispatch]);
 
-  const handleShowReviewModal = () => {
-    setShowReviewModal(() => true);
+  const handleShowReviewModal = (id) => {
+    setCurrentNotificationId(id); // Set notification ID
+    setShowReviewModal(true);
   };
 
   const handleCloseReviewModal = () => {
-    setShowReviewModal(() => false);
+    setShowReviewModal(false);
+    setRating(0); // Reset rating
+    setComment(""); // Reset comment
+  };
+
+  const handleSubmitReview = () => {
+    // Handle form submission with rating, notification ID, and comment
+    if (!rating || !comment) {
+      antdMessage.error("Please provide a rating and comments.");
+      return;
+    }
+
+    const reviewData = {
+      notificationId: currentNotificationId,
+      rating,
+      message: comment,
+    };
+
+    dispatch(createNotificationReview(reviewData))
+      .unwrap()
+      .then(() => {
+        antdMessage.success("Review submitted successfully!");
+        handleCloseReviewModal();
+      })
+      .catch((error) => {
+        antdMessage.error(`Failed to submit review: ${error.message}`);
+      });
+    // Success notification and close modal
+    antdMessage.success("Review submitted successfully!");
+    handleCloseReviewModal();
   };
 
   if (loading) {
@@ -68,12 +116,16 @@ const Notifications = ({ user }) => {
     <section>
       <Typography.Title level={3}>Notifications</Typography.Title>
 
-      {notifications.length < 0 || notifications.length === 0 ? (
+      {notifications.length === 0 ? (
         <NotificationEmptyScreen />
       ) : (
         <section className="notifications-cards-wrapper">
           {notifications?.map((notificationData, index) => (
-            <NotificationCard notificationData={notificationData} handleShowReviewModal={handleShowReviewModal} key={index} />
+            <NotificationCard
+              notificationData={notificationData}
+              handleShowReviewModal={handleShowReviewModal}
+              key={index}
+            />
           ))}
         </section>
       )}
@@ -85,33 +137,67 @@ const Notifications = ({ user }) => {
           isModalOpen={showReviewModal}
           handleClose={handleCloseReviewModal}
           footer={[
-            <CustomButton key="cancelButton" category="plain" name="Cancel" handleClick={handleCloseReviewModal} />,
-            <CustomButton key="submitReviewButton" category="primary" name="Submit Review" />,
+            <CustomButton
+              key="cancelButton"
+              category="plain"
+              name="Cancel"
+              handleClick={handleCloseReviewModal}
+            />,
+            <CustomButton
+              key="submitReviewButton"
+              category="primary"
+              name="Submit Review"
+              handleClick={handleSubmitReview} // Handle submit
+              loading={reviewLoading}
+            />,
           ]}
         >
           <section className="form-with-avatar-wrapper">
             <figure className="review-avatar-container">
               <img
                 loading="lazy"
-                style={{ maxHeight: "140px", objectFit: "cover", borderRadius: "100%" }}
-                src={profile?.avatarId || "/images/review-write-icon.png"}
+                style={{
+                  maxHeight: "140px",
+                  objectFit: "cover",
+                  borderRadius: "100%",
+                }}
+                src={
+                  profile?.avatarId.startsWith("https")
+                    ? profile?.avatarId
+                    : profile?.avatarUrl || "/images/review-write-icon.png"
+                }
                 alt="writeReviewIcon"
                 className="avatar"
               />
 
-              <figcaption className="avatar-name" style={{ lineHeight: "20px" }}>
+              <figcaption
+                className="avatar-name"
+                style={{ lineHeight: "20px" }}
+              >
                 {profile?.fullname || "Guest"}
               </figcaption>
             </figure>
 
             <section className="basic-info-form-wrapper">
-              <h4 className="main-heading">Resume Review</h4>
-
-              <p>4.6</p>
-
+              <h4 className="main-heading">Rate Your Experience</h4>
+              <Flex gap={"small"}>
+                <Rate onChange={setRating} value={rating} />
+                <Typography.Text
+                  strong
+                  type={rating < 2 ? "danger" : "success"}
+                >
+                  {rating}
+                </Typography.Text>
+              </Flex>
+              {/* Rating component */}
               <section className="field-container">
                 <span className="label">Your Comments</span>
-                <CommonInput category="textarea" placeholder="Enter Your Comments" />
+                <CommonInput
+                  category="textarea"
+                  placeholder="Enter Your Comments"
+                  value={comment}
+                  onChange={(val) => setComment(val)} // Capture comment
+                />
               </section>
             </section>
           </section>

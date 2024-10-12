@@ -8,31 +8,17 @@ import Tag from "../tag";
 import "./styles.scss";
 
 const MentorCard = (props) => {
-  const {
-    icon,
-    rating,
-    totalReview,
-    name,
-    location,
-    services,
-    about,
-    languages,
-    tagline,
-  } = props;
+  const { icon, services, profile, certificate, mentorId } = props;
   const navigate = useNavigate();
 
   const handleDetailsClick = () => {
+    localStorage.setItem("lastRoute", "/mentorDetails");
     navigate("/mentorDetails", {
       state: {
-        icon,
-        rating,
-        totalReview,
-        name,
-        location,
         services,
-        about,
-        languages,
-        tagline,
+        profile,
+        certificate,
+        mentorId,
       },
     });
   };
@@ -43,17 +29,17 @@ const MentorCard = (props) => {
         <img
           loading="lazy"
           src={"/images/mentors/mentor-1.png"}
-          alt={name}
+          alt={profile?.fullname || "Guest"}
           className="mentor-icon"
         />
       </figure>
 
       <article className="mentor-details-container">
-        <Rating rating={rating} reviews={totalReview} />
+        <Rating rating={0} reviews={0} />
 
-        <h5 className="mentor-name">{name}</h5>
+        <h5 className="mentor-name">{profile?.fullname || "Guest"}</h5>
 
-        <LocationWithIcon location={location} />
+        <LocationWithIcon location={profile?.location} />
 
         {services && (
           <article className="mentor-card-tags-container">

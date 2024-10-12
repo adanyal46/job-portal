@@ -9,28 +9,36 @@ import { EditProfileIcon, VerifiedIcon } from "../../assets/svg";
 
 import "./styles.scss";
 import { useDispatch } from "react-redux";
-import { profileUpdate } from "../../features/profile/profileSlice";
-import { Image, message } from "antd";
+import {
+  updateOtherInfoMentor,
+  profile as profileRefresh,
+} from "../../features/profile/profileSlice";
+import { Image, message, Input } from "antd";
 import Rating from "../rating";
 import LocationWithIcon from "../locationWithIcon";
 
-const MentorProfileHeader = ({ user, showInfoModal, setShowInfoModal, setShowEducationModal, setShowCertificationModal }) => {
+const MentorProfileHeader = ({ user, showInfoModal, setShowInfoModal }) => {
   const dispatch = useDispatch();
-  const profile = user?.Profile[0];
+  const profile = user && user?.Profile[0];
   const serverUrl = "http://54.144.76.160:5000";
 
-  // Replace placeholder with actual server URL
-  let profileImage = profile?.avatarUrl && profile?.avatarUrl.replace("http://your-server-url", serverUrl);
+  let profileImage =
+    profile?.avatarUrl &&
+    profile?.avatarUrl.replace("http://your-server-url", serverUrl);
 
   const [profileData, setProfileData] = useState({
     fullname: profile?.fullname || "",
     email: user?.email || "",
     phnumber: profile?.phnumber || "",
     profilePic: profileImage || "",
+    location: profile?.location || "",
+    companyName: profile?.companyName || "",
+    description: profile?.about || "",
+    tagline: profile?.tagline || "",
+    speak: profile?.language || "",
   });
 
   const [imageUrl, setImageUrl] = useState(profileImage); // State for image URL
-  // Update the imageUrl when the profile changes
   useEffect(() => {
     if (profileImage) {
       setImageUrl(profileImage);
@@ -57,25 +65,29 @@ const MentorProfileHeader = ({ user, showInfoModal, setShowInfoModal, setShowEdu
     formData.append("fullname", profileData.fullname);
     formData.append("email", profileData.email);
     formData.append("phnumber", profileData.phnumber);
-    if (profileData.avatarUrl && profileData.avatarUrl instanceof File) {
-      formData.append("profilePic", profileData.avatarUrl);
+    formData.append("location", profileData.location);
+    formData.append("companyName", profileData.companyName);
+    formData.append("about", profileData.description);
+    formData.append("tagline", profileData.tagline);
+    formData.append("language", profileData.speak);
+    if (profileData.profilePic && profileData.profilePic instanceof File) {
+      formData.append("profilePic", profileData.profilePic);
     }
 
     try {
-      const resultAction = await dispatch(profileUpdate(formData)).unwrap();
-      console.log(resultAction);
+      const resultAction = await dispatch(
+        updateOtherInfoMentor(formData)
+      ).unwrap();
       if (resultAction.success) {
-        message.open({
-          type: "success",
-          content: "Porfile save successfully!",
-        });
+        message.success("Profile updated successfully!");
+        window.location.replace("/mentor");
         handleCloseInfoModal();
       }
     } catch (error) {
-      console.error("Failed to update profile:", error);
-      message.error(error);
+      message.error("Failed to update profile.");
     }
   };
+
   return (
     <>
       <section style={{ display: "flex", gap: "2rem" }}>
@@ -85,64 +97,118 @@ const MentorProfileHeader = ({ user, showInfoModal, setShowInfoModal, setShowEdu
             width={200}
             height={200}
             className="user-profile-image"
-            src={imageUrl || "/images/user-profile-image.png"} // Use imageUrl state
+            src={imageUrl || "/images/user-profile-image.png"}
             alt="UserProfileImage"
             style={{ objectFit: "cover" }}
           />
         </figure>
 
-        {/* <article className="profile-user-details">
-          <section className="edit-profile-button">
-            <CustomButton
-              category="iconed"
-              shape="circle"
-              icon={<EditProfileIcon />}
-              handleClick={handleShowInfoModal}
-            />
-          </section>
-
-          <h2 className="profile-user-name">{profile?.fullname || "Guest"}</h2>
-          <p className="profile-email">{user?.email || "N/A"}</p>
-          <p className="profile-phone-number">{profile?.phnumber || "N/A"}</p>
-          <p className="profile-id">ID: #{profile?.id || "0"}</p>
-        </article> */}
         <article className="mentor-card-details-container">
           <article className="mentor-card-details">
             <h2 className="mentor-name">{profile?.fullname || "Guest"}</h2>
             <Rating rating={4} reviews={7} />
-            <div style={{ marginBlock: "7px" }}></div>
-            <LocationWithIcon location={"US"} />
+            <LocationWithIcon location={profile?.location || "N/A"} />
+            <p className="mentor-expertise">{profile?.companyName || "N/A"}</p>
+            <p className="mentor-tagline">
+              {profile?.tagline || "No tagline available"}
+            </p>
           </article>
-
-          <p className="mentor-expertise">{"Ux Designer At Atos"}</p>
         </article>
+        <CustomButton
+          category="iconed"
+          shape="circle"
+          icon={<EditProfileIcon />}
+          handleClick={handleShowInfoModal}
+        />
       </section>
 
       {showInfoModal && (
         <CommonModal
-          title="Basic Information"
-          description="Enter your Basic Information"
+          title="Edit Profile"
+          description="Update your information"
           isModalOpen={showInfoModal}
           handleClose={handleCloseInfoModal}
           handleOk={handleOk}
         >
           <section className="basic-info-inner-wrapper">
-            <PhotoUpload initialImageUrl={imageUrl} onChange={handleChange} />
+            <PhotoUpload
+              initialImageUrl={imageUrl}
+              onChange={handleChange}
+              name="profilePic"
+            />
 
             <section className="basic-info-form-wrapper">
               <section className="field-container">
                 <span className="label">Full Name</span>
-                <CommonInput placeholder="Enter Full Name" value={profileData.fullname} onChange={(val) => handleChange("fullname", val)} />
+                <CommonInput
+                  placeholder="Enter Full Name"
+                  value={profileData.fullname}
+                  onChange={(val) => handleChange("fullname", val)}
+                />
               </section>
 
               <section className="field-container">
                 <span className="label">Email</span>
-                <CommonInput placeholder="Enter Email" value={profileData.email} onChange={(val) => handleChange("email", val)} />
+                <CommonInput
+                  placeholder="Enter Email"
+                  value={profileData.email}
+                  onChange={(val) => handleChange("email", val)}
+                />
               </section>
 
               <section className="field-container">
                 <span className="label">Contact Number</span>
-                <CommonInput placeholder="Enter Contact Number" value={profileData.phnumber} onChange={(val) => handleChange("phnumber", val)} />
+                <CommonInput
+                  placeholder="Enter Contact Number"
+                  value={profileData.phnumber}
+                  onChange={(val) => handleChange("phnumber", val)}
+                />
+              </section>
+
+              <section className="field-container">
+                <span className="label">Location</span>
+                <CommonInput
+                  placeholder="Enter Location"
+                  value={profileData.location}
+                  onChange={(val) => handleChange("location", val)}
+                />
+              </section>
+
+              <section className="field-container">
+                <span className="label">Company Name</span>
+                <CommonInput
+                  placeholder="Enter Company Name"
+                  value={profileData.companyName}
+                  onChange={(val) => handleChange("companyName", val)}
+                />
+              </section>
+
+              <section className="field-container">
+                <span className="label">Tagline</span>
+                <CommonInput
+                  placeholder="Enter Tagline"
+                  value={profileData.tagline}
+                  onChange={(val) => handleChange("tagline", val)}
+                />
+              </section>
+
+              <section className="field-container">
+                <span className="label">Description</span>
+                <CommonInput
+                  category="textarea"
+                  placeholder="Enter Description"
+                  value={profileData.description}
+                  onChange={(val) => handleChange("description", val)}
+                />
+              </section>
+
+              <section className="field-container">
+                <span className="label">Speak Input</span>
+                <Input.TextArea
+                  value={profileData.speak}
+                  onChange={(e) => handleChange("speak", e.target.value)}
+                  placeholder="Enter Speak Input"
+                />
               </section>
             </section>
           </section>

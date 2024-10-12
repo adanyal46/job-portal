@@ -5,12 +5,19 @@ import Location from "../../components/location";
 import DocumentAndLink from "../../components/documentAndLink";
 import Certifications from "../../components/certifications";
 import MentorServiceCollapse from "../mentorServiceCollapse";
-import { BriefcaseIcon, InfoIcon, MentorBriefcaseIcon, MentorTranslateIcon } from "../../assets/svg";
+import {
+  BriefcaseIcon,
+  InfoIcon,
+  MentorBriefcaseIcon,
+  MentorTranslateIcon,
+} from "../../assets/svg";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import "./styles.scss";
 import { Typography } from "antd";
 import MentorProfileHeader from "../mentorProfileHeader";
+import MentorProfileService from "../mentorProfileService";
+import CustomButton from "../customButton";
 
 const MentorProfile = () => {
   const { user } = useSelector((state) => state.profile);
@@ -20,16 +27,27 @@ const MentorProfile = () => {
   const [showLocationModal, setShowLocationModal] = useState(false);
   const [showDocumentsModal, setShowDocumentsModal] = useState(false);
   const [showEmployementModal, setShowEmployementModal] = useState(false);
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
   const education = user?.Education;
   const certificates = user?.Certificate;
   const location = user?.Location;
   const document = user?.Documents;
   const employmentHistorys = user?.EmpolymentHistory;
+  const services = user?.services;
+  const profile = user?.Profile[0];
+  const serviceNames = services?.map((item) => item.name);
+
+  const showModal = () => {
+    setIsModalVisible(true);
+  };
 
   return (
     <section className="main-layout-container">
-      <section className="profile-main-wrapper" style={{ minHeight: "auto", maxHeight: "auto", overflow: "auto" }}>
+      <section
+        className="profile-main-wrapper"
+        style={{ minHeight: "auto", maxHeight: "auto", overflow: "auto" }}
+      >
         <Typography.Title level={3} style={{ marginBottom: "0px" }}>
           My Profile
         </Typography.Title>
@@ -43,25 +61,42 @@ const MentorProfile = () => {
 
         <article className="I-can-do-container">
           <p className="i-can-do-item">
-            <span style={{ position: "relative", top: "7px", marginRight: "10px" }}>
+            <span
+              style={{ position: "relative", top: "7px", marginRight: "10px" }}
+            >
               <MentorTranslateIcon />
             </span>
-            I can Speak <strong>English</strong> (Conversational)
+            I can Speak <strong>{profile?.language ?? "English"}</strong>{" "}
+            (Conversational)
           </p>
 
-          <p className="i-can-do-item">
-            <span style={{ position: "relative", top: "7px", marginRight: "10px" }}>
-              <MentorBriefcaseIcon />
-            </span>
-            I can help you <strong>Interview prep, Resume Review, Job Search Strategy,</strong> and more
-          </p>
+          {services && Array.isArray(services) && services.length > 0 && (
+            <p className="i-can-do-item">
+              <span
+                style={{
+                  position: "relative",
+                  top: "7px",
+                  marginRight: "10px",
+                }}
+              >
+                <MentorBriefcaseIcon />
+              </span>
+              I can help you{" "}
+              <>
+                {serviceNames?.map((name) => (
+                  <strong>{name},</strong>
+                ))}
+              </>
+              and more
+            </p>
+          )}
         </article>
 
         <hr className="mentor-detail-divider" />
 
         <article className="about-mentor-container">
           <h4 className="section-heading">About</h4>
-          <p className="section-content">The power of desing</p>
+          <p className="section-content">{profile?.about ?? "-"}</p>
         </article>
 
         <hr className="mentor-detail-divider" />
@@ -81,9 +116,17 @@ const MentorProfile = () => {
           employmentHistorys={employmentHistorys}
         />
 
-        <Location showLocationModal={showLocationModal} setShowLocationModal={setShowLocationModal} location={location} />
+        <Location
+          showLocationModal={showLocationModal}
+          setShowLocationModal={setShowLocationModal}
+          location={location}
+        />
 
-        <DocumentAndLink showDocumentsModal={showDocumentsModal} setShowDocumentsModal={setShowDocumentsModal} document={document} />
+        <DocumentAndLink
+          showDocumentsModal={showDocumentsModal}
+          setShowDocumentsModal={setShowDocumentsModal}
+          document={document}
+        />
 
         <Certifications certificates={certificates} />
       </section>
@@ -96,7 +139,13 @@ const MentorProfile = () => {
             <img
               src="/images/mentors/mentor-1.png"
               alt="mentor icon"
-              style={{ width: "100%", height: "280px", objectFit: "cover", borderRadius: "20px", marginBlock: "20px" }}
+              style={{
+                width: "100%",
+                height: "280px",
+                objectFit: "cover",
+                borderRadius: "20px",
+                marginBlock: "20px",
+              }}
             />
           </figure>
         </article>
@@ -105,13 +154,23 @@ const MentorProfile = () => {
             <h6 className="mentor-services">
               <BriefcaseIcon /> Services
             </h6>
+            <CustomButton
+              category="primary"
+              name="Add Service"
+              handleClick={showModal}
+            />
           </section>
 
-          <p className="info-content">
+          <p className="info-content" style={{ marginTop: "10px" }}>
             <InfoIcon /> Please click on the checkboxes to select a service
           </p>
 
-          <MentorServiceCollapse />
+          <MentorProfileService
+            services={services}
+            isModalVisible={isModalVisible}
+            setIsModalVisible={setIsModalVisible}
+            mentorId={user?.id}
+          />
         </section>
       </section>
     </section>

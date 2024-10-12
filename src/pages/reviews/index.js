@@ -4,19 +4,34 @@ import CustomTabs from "../../components/customTabs";
 import ReviewCard from "../../components/reviewCard";
 
 import "./styles.scss";
-
+import { useDispatch, useSelector } from "react-redux";
+import { fetchMentorReviews } from "../../features/mentorReviews/mentorReviewSlice";
+import { useEffect } from "react";
 const ReviewsList = () => {
+  const dispatch = useDispatch();
+  const { reviews, loading, error } = useSelector(
+    (state) => state.mentorReviews
+  );
+
+  useEffect(() => {
+    dispatch(fetchMentorReviews());
+  }, [dispatch]);
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error}</p>;
+
   return (
     <section className="reviews-main-layout-container">
       <section className="review-cards-list-wrapper">
-        <ReviewCard />
-        <ReviewCard />
-        <ReviewCard />
-        <ReviewCard />
-        <ReviewCard />
-        <ReviewCard />
+        {reviews.length > 0 ? (
+          reviews.map((review) => (
+            <ReviewCard key={review.id} review={review} />
+          ))
+        ) : (
+          <p>No reviews found.</p>
+        )}
       </section>
-      <CustomPagination />
+      {/* <CustomPagination /> */}
     </section>
   );
 };

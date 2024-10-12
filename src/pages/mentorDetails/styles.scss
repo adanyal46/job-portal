@@ -1,4 +1,5 @@
-.main-layout-container {
+.mentor-detail-layout-container {
+  overflow: auto;
   .page-main-heading {
     margin: 1.6rem 0;
     color: #52595c;
@@ -143,7 +144,6 @@
         .mentor-services-wrapper {
           display: flex;
           align-items: center;
-          justify-content: space-between;
 
           .mentor-services {
             display: flex;

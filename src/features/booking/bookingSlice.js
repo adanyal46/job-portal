@@ -1,5 +1,9 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { bookSessionApi, getBookingSessionApi } from "./bookingApi";
+import {
+  bookSessionApi,
+  getBookingSessionApi,
+  upcomingBookingSessionApi,
+} from "./bookingApi";
 
 // Async thunk for booking a session (optional)
 export const bookSession = createAsyncThunk(
@@ -24,12 +28,25 @@ export const getBookingSession = createAsyncThunk(
     }
   }
 );
+export const upcomingBookingSession = createAsyncThunk(
+  "mentor/booking/session",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await upcomingBookingSessionApi();
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
 
 const bookSlice = createSlice({
   name: "book",
   initialState: {
     session: null,
     bookings: [],
+    bookingSession: [],
+    sessionLoading: false,
     loading: false,
     error: null,
   },
@@ -63,6 +80,17 @@ const bookSlice = createSlice({
       })
       .addCase(getBookingSession.rejected, (state, action) => {
         state.loading = false;
+        state.error = action.payload;
+      })
+      .addCase(upcomingBookingSession.pending, (state) => {
+        state.sessionLoading = true;
+      })
+      .addCase(upcomingBookingSession.fulfilled, (state, action) => {
+        state.sessionLoading = false;
+        state.bookingSession = action.payload; // Assuming response contains session data
+      })
+      .addCase(upcomingBookingSession.rejected, (state, action) => {
+        state.sessionLoading = false;
         state.error = action.payload;
       });
   },

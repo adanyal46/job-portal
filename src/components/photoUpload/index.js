@@ -10,7 +10,7 @@ const getBase64 = (img, callback) => {
   reader.readAsDataURL(img);
 };
 
-const PhotoUpload = ({ initialImageUrl, onChange }) => {
+const PhotoUpload = ({ initialImageUrl, onChange, name = "avatarUrl" }) => {
   const [loading, setLoading] = useState(false);
   const [imageUrl, setImageUrl] = useState(initialImageUrl);
 
@@ -23,7 +23,7 @@ const PhotoUpload = ({ initialImageUrl, onChange }) => {
     getBase64(info.fileList[0].originFileObj, (url) => {
       setLoading(false);
       setImageUrl(url); // Set the image URL directly from the selected file
-      onChange("avatarUrl", info.fileList[0].originFileObj);
+      onChange(name, info.fileList[0].originFileObj);
     });
   };
 

@@ -12,7 +12,15 @@ import { useEffect, useState } from "react"; // Import useState
 import { fetchMentorList } from "../../features/mentor/mentorSlice";
 import Loader from "../../components/Loader";
 
-const SearchFields = ({ locationOptions, disciplineOptions, industryOptions, experienceOptions, searchFields, setSearchFields, onSearch }) => {
+const SearchFields = ({
+  locationOptions,
+  disciplineOptions,
+  industryOptions,
+  experienceOptions,
+  searchFields,
+  setSearchFields,
+  onSearch,
+}) => {
   const handleInputChange = (value) => {
     setSearchFields((prev) => ({
       ...prev,
@@ -104,7 +112,6 @@ const MentorsListing = () => {
   if (error) return <p>Error: {error}</p>;
 
   return (
-    
     <section className="mentors-main-container">
       <SearchFields
         locationOptions={[
@@ -142,7 +149,21 @@ const MentorsListing = () => {
           ) : mentors.length === 0 ? ( // Check if the array is empty
             <p>Not Found</p>
           ) : (
-            mentors.map((cardData, index) => <MentorCard key={`mentor-card-${index}`} {...cardData} />)
+            mentors.map((cardData, index) => {
+              const profile = cardData?.Profile[0];
+              const services = cardData?.services;
+              const certificate = cardData?.Certificate;
+              const mentorId = cardData?.id;
+              return (
+                <MentorCard
+                  key={`mentor-card-${index}`}
+                  profile={profile}
+                  services={services}
+                  certificate={certificate}
+                  mentorId={mentorId}
+                />
+              );
+            })
           )}
         </section>
 
@@ -167,7 +188,7 @@ const Mentors = () => {
   };
 
   return (
-    <section >
+    <section>
       <CustomTabs
         handleChange={handleTabChange}
         defaultActiveKey={defaultKey}

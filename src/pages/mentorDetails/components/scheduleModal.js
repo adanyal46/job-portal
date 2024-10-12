@@ -99,9 +99,11 @@ const ScheduleModal = (props) => {
     selectedTime,
     setSelectedTime,
     services,
+    mentorId,
   } = props;
   const dispatch = useDispatch();
   const [currentStep, setCurrentStep] = useState(1);
+  console.log(selectedServiceId);
   const findServ = services?.find((item) => item.id === selectedServiceId);
 
   const handleNextStep = async () => {
@@ -119,9 +121,9 @@ const ScheduleModal = (props) => {
       const formattedTime = selectedTime ? selectedTime.format("HH:mm:ss") : "";
 
       let values = {
-        selectedService: selectedServiceId,
+        selectedService: 1,
         selectedDateTime: `${formattedDate}:${formattedTime}`,
-        mentorId: findServ?.mentorProfileId,
+        mentorId: mentorId,
       };
 
       const response = await dispatch(bookSession(values)).unwrap();

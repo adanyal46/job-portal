@@ -1,9 +1,11 @@
-// src/features/auth/authSlice.js
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import {
+  createMentorServiceApi,
   deleteCertificateApi,
   deleteEducationApi,
   deleteEmploymentHisApi,
+  deleteMentorServiceApi,
+  mentorProfileApi,
   profileApi,
   profileApiPost,
   profileCertificateApi,
@@ -14,15 +16,33 @@ import {
   updateCertificateApi,
   updateEducationApi,
   updateEmploymentApi,
+  updateMentorServiceApi,
+  updateOtherInfoMentorApi,
 } from "./profileApi";
+import { jwtDecode } from "jwt-decode";
 
-// Thunk to handle login
+let USER_ROLE = "JOB_SEEKER"; // Default role
+
+// Thunk to handle profile fetching
 export const profile = createAsyncThunk(
   "profile/getInfo",
   async (_, { rejectWithValue }) => {
     try {
-      const data = await profileApi();
-      return data;
+      const token = localStorage.getItem("token");
+      if (token) {
+        const decodedToken = jwtDecode(token); // Correct function call
+        USER_ROLE = decodedToken.role || "JOB_SEEKER"; // Extract role from token
+      }
+
+      // Choose API route based on role
+      let apiRoute;
+      if (USER_ROLE === "JOB_SEEKER") {
+        apiRoute = await profileApi();
+      } else {
+        apiRoute = await mentorProfileApi();
+      }
+
+      return apiRoute; // Return the API response based on the role
     } catch (error) {
       console.log(error);
       return rejectWithValue(error.message);
@@ -315,12 +335,108 @@ export const deleteEmployHis = createAsyncThunk(
   }
 );
 
+export const createServiceMentor = createAsyncThunk(
+  "create/service/mentor",
+  async (formData, { getState, rejectWithValue }) => {
+    try {
+      const response = await createMentorServiceApi(formData);
+      const currentUser = getState().profile.user;
+
+      const currentServices = currentUser?.services || [];
+      const updatedServices = [...currentServices, response.data];
+      const updatedUser = {
+        ...currentUser,
+        services: updatedServices,
+        success: true,
+      };
+
+      return {
+        success: true,
+        user: updatedUser,
+      };
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+export const updateServiceApiMentor = createAsyncThunk(
+  "update/service/mentor",
+  async ({ serviceId, formData }, { getState, rejectWithValue }) => {
+    // Destructure from an object
+    try {
+      const response = await updateMentorServiceApi(serviceId, formData);
+      const currentUser = getState().profile.user;
+
+      const currentServices = currentUser?.services || [];
+
+      const updatedServices = currentServices.map((serv) =>
+        serv.id === serviceId
+          ? {
+              ...response.data,
+            }
+          : serv
+      );
+      const updatedUser = {
+        ...currentUser,
+        services: updatedServices,
+        success: true,
+      };
+
+      return {
+        success: true,
+        user: updatedUser,
+      };
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
+export const deleteServiceMentor = createAsyncThunk(
+  "delete/service/mentor",
+  async (serviceId, { getState, rejectWithValue }) => {
+    try {
+      console.log(serviceId);
+      const response = await deleteMentorServiceApi(serviceId);
+      const currentUser = getState().profile.user;
+
+      const updatedServices = currentUser.services.filter(
+        (serv) => serv.id !== serviceId
+      );
+      const updatedUser = {
+        ...currentUser,
+        services: updatedServices,
+        success: true,
+      };
+
+      return {
+        success: true,
+        user: updatedUser,
+      };
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+export const updateOtherInfoMentor = createAsyncThunk(
+  "profile/update/mentor",
+  async (formData, { getState, rejectWithValue }) => {
+    try {
+      const response = await updateOtherInfoMentorApi(formData);
+      return response;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
 const profileSlice = createSlice({
   name: "profile",
   initialState: {
     user: null,
     loading: false,
     error: null,
+    mentorServiceLoading: false,
   },
   reducers: {},
   extraReducers: (builder) => {
@@ -443,6 +559,49 @@ const profileSlice = createSlice({
       })
       .addCase(deleteEmployHis.rejected, (state, action) => {
         state.loading = false;
+        state.error = action.payload;
+      })
+      .addCase(createServiceMentor.pending, (state) => {
+        state.mentorServiceLoading = true;
+        state.error = null;
+      })
+      .addCase(createServiceMentor.fulfilled, (state, action) => {
+        state.mentorServiceLoading = false;
+        state.user = action.payload.user;
+      })
+      .addCase(createServiceMentor.rejected, (state, action) => {
+        state.mentorServiceLoading = false;
+        state.error = action.payload;
+      })
+      .addCase(deleteServiceMentor.pending, (state) => {
+        state.mentorServiceLoading = true;
+        state.error = null;
+      })
+      .addCase(deleteServiceMentor.fulfilled, (state, action) => {
+        state.mentorServiceLoading = false;
+        state.user = action.payload.user;
+      })
+      .addCase(deleteServiceMentor.rejected, (state, action) => {
+        state.mentorServiceLoading = false;
+        state.error = action.payload;
+      })
+      .addCase(updateServiceApiMentor.pending, (state) => {
+        state.mentorServiceLoading = true;
+        state.error = null;
+      })
+      .addCase(updateServiceApiMentor.fulfilled, (state, action) => {
+        state.mentorServiceLoading = false;
+        state.user = action.payload.user;
+      })
+      .addCase(updateServiceApiMentor.rejected, (state, action) => {
+        state.mentorServiceLoading = false;
+        state.error = action.payload;
+      })
+      .addCase(updateOtherInfoMentor.pending, (state) => {
+        state.error = null;
+      })
+      .addCase(updateOtherInfoMentor.fulfilled, (state, action) => {})
+      .addCase(updateOtherInfoMentor.rejected, (state, action) => {
         state.error = action.payload;
       });
   },

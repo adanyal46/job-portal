@@ -5,6 +5,11 @@ export const profileApi = async () => {
   return response.data; // Return the full response data
 };
 
+export const mentorProfileApi = async () => {
+  const response = await axiosInstance.get("/mentor/profile");
+  return response.data; // Return the full response data
+};
+
 export const profileApiPost = async (formData) => {
   const response = await axiosInstance.post("/user/profile", formData);
   return response.data; // Return the full response data
@@ -70,5 +75,34 @@ export const deleteEmploymentHisApi = async (formData) => {
   const response = await axiosInstance.delete("/user/employment-history", {
     data: formData,
   });
+  return response.data;
+};
+
+// service api
+
+export const createMentorServiceApi = async (formData) => {
+  const response = await axiosInstance.post("/mentor/service", formData);
+  return response.data;
+};
+export const updateMentorServiceApi = async (serviceId, formData) => {
+  const response = await axiosInstance.put("/mentor/service", formData, {
+    params: {
+      serviceId,
+    },
+  });
+  return response.data;
+};
+
+export const deleteMentorServiceApi = async (serviceId) => {
+  const response = await axiosInstance.delete("/mentor/service", {
+    params: {
+      serviceId: serviceId,
+    },
+  });
+  return response.data;
+};
+
+export const updateOtherInfoMentorApi = async (formData) => {
+  const response = await axiosInstance.post("/mentor/profile", formData);
   return response.data;
 };

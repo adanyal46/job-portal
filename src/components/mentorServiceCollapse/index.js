@@ -12,27 +12,31 @@ const MentorServiceCollapse = (props) => {
   const { handleClick, services } = props;
 
   // Create items for Collapse
-  const items = services?.map((service) => ({
-    key: service.id,
-    label: (
-      <>
-        <p className="header-text">{`${
-          service.name.charAt(0).toUpperCase() + service.name.slice(1)
-        } $${service.pricing}`}</p>
-        <Checkbox value={service.id.toString()}></Checkbox>
-      </>
-    ),
-    children: (
-      <>
-        <p>{service.description}</p>
-        <CustomButton
-          category="primary"
-          name="Let's Get Started"
-          handleClick={() => handleClick(service.id)}
-        />
-      </>
-    ),
-  }));
+  const items =
+    services &&
+    Array.isArray(services) &&
+    services.length > 0 &&
+    services?.map((service) => ({
+      key: service.id,
+      label: (
+        <>
+          <p className="header-text">{`${
+            service?.name.charAt(0).toUpperCase() + service?.name.slice(1)
+          } $${service?.pricing}`}</p>
+          <Checkbox value={service?.id?.toString()}></Checkbox>
+        </>
+      ),
+      children: (
+        <>
+          <p>{service.description}</p>
+          <CustomButton
+            category="primary"
+            name="Let's Get Started"
+            handleClick={() => handleClick(service.id)}
+          />
+        </>
+      ),
+    }));
 
   return (
     <Checkbox.Group onChange={onChange} className="custom-checkbox-group">
