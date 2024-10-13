@@ -196,12 +196,10 @@ const LifeTimeEarnings = ({ monthly, weekly, custom }) => {
 };
 
 const Earnings = () => {
-  const handleTabChange = (key) => {
-    console.log(key);
-  };
+  const handleTabChange = (key) => {};
 
   return (
-    <section >
+    <section>
       <Typography.Title level={3}>Earnings</Typography.Title>
 
       <CustomTabs

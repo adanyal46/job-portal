@@ -7,11 +7,12 @@ import Certifications from "../../components/certifications";
 
 import "./styles.scss";
 import { useState } from "react";
-import { useSelector } from "react-redux";
 import { Card, Typography } from "antd";
+import { useOutletContext } from "react-router-dom";
 
 const MyProfile = () => {
-  const { user } = useSelector((state) => state.profile);
+  const user = useOutletContext();
+
   const [showInfoModal, setShowInfoModal] = useState(false);
   const [showEducationModal, setShowEducationModal] = useState(false);
   const [showCertificationModal, setShowCertificationModal] = useState(false);

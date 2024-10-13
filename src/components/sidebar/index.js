@@ -10,37 +10,29 @@ import {
   BookingsIcon,
   EarningsIcon,
   ReviewIcon,
-  TimeSheetIcon,
 } from "../../assets/svg";
 import "./styles.scss";
 import { Image } from "antd";
-import { useSelector } from "react-redux";
 
-const Sidebar = () => {
-  const { user } = useSelector((state) => state.profile);
+const Sidebar = ({ user }) => {
   let query = useQuery();
   const location = useLocation();
   const profile =
     user && user.Profile && user.Profile.length > 0 ? user.Profile[0] : null;
   const serverUrl = "http://54.144.76.160:5000";
 
-  // Replace placeholder with actual server URL
   let profileImage =
     profile?.avatarUrl &&
     profile?.avatarUrl.replace("http://your-server-url", serverUrl);
 
   const searchParams = query.get("type");
 
-  const onChange = (key) => {
-    console.log(key);
-  };
-
-  // Determine user role
+  // Role-based URL prefixes
   const isMentor = user?.role === "MENTOR";
-  const isSeeker = user?.role === "JOB_SEEKER";
+  const routePrefix = isMentor ? "/mentor" : "/job-seeker";
 
   const items = [
-    // Jobs section shown only for non-mentors
+    // Jobs section only for job seekers
     ...(!isMentor
       ? [
           {
@@ -53,15 +45,7 @@ const Sidebar = () => {
             ),
             children: (
               <ul className="collpase-items-list">
-                <Link
-                  to="/jobs/search?type=search"
-                  onClick={() =>
-                    localStorage.setItem(
-                      "lastRoute",
-                      "/jobs/search?type=search"
-                    )
-                  }
-                >
+                <Link to={`${routePrefix}/jobs/search?type=search`}>
                   <li
                     className={`collpase-item ${
                       searchParams === "search" && "active"
@@ -71,15 +55,7 @@ const Sidebar = () => {
                   </li>
                 </Link>
 
-                <Link
-                  to="/jobs/search?type=applied"
-                  onClick={() =>
-                    localStorage.setItem(
-                      "lastRoute",
-                      "/jobs/search?type=applied"
-                    )
-                  }
-                >
+                <Link to={`${routePrefix}/jobs/search?type=applied`}>
                   <li
                     className={`collpase-item ${
                       searchParams === "applied" && "active"
@@ -89,12 +65,7 @@ const Sidebar = () => {
                   </li>
                 </Link>
 
-                <Link
-                  to="/jobs/search?type=saved"
-                  onClick={() =>
-                    localStorage.setItem("lastRoute", "/jobs/search?type=saved")
-                  }
-                >
+                <Link to={`${routePrefix}/jobs/search?type=saved`}>
                   <li
                     className={`collpase-item ${
                       searchParams === "saved" && "active"
@@ -116,12 +87,7 @@ const Sidebar = () => {
             ),
             children: (
               <ul className="collpase-items-list">
-                <Link
-                  to="/mentors?type=myMentors"
-                  onClick={() =>
-                    localStorage.setItem("lastRoute", "/mentors?type=myMentors")
-                  }
-                >
+                <Link to={`${routePrefix}/mentors?type=myMentors`}>
                   <li
                     className={`collpase-item ${
                       searchParams === "myMentors" && "active"
@@ -131,13 +97,11 @@ const Sidebar = () => {
                   </li>
                 </Link>
 
-                <Link
-                  to="/bookings"
-                  onClick={() => localStorage.setItem("lastRoute", "/bookings")}
-                >
+                <Link to={`${routePrefix}/bookings`}>
                   <li
                     className={`collpase-item ${
-                      location.pathname === "/bookings" && "active"
+                      location.pathname === `${routePrefix}/bookings` &&
+                      "active"
                     }`}
                   >
                     Bookings
@@ -149,7 +113,7 @@ const Sidebar = () => {
         ]
       : []),
 
-    // Bookings and additional sections shown only for mentors
+    // Mentor-only sections
     ...(isMentor
       ? [
           {
@@ -162,30 +126,22 @@ const Sidebar = () => {
             ),
             children: (
               <ul className="collpase-items-list">
-                <Link
-                  to="/upcomingBookings"
-                  onClick={() =>
-                    localStorage.setItem("lastRoute", "/upcomingBookings")
-                  }
-                >
+                <Link to={`${routePrefix}/upcoming-bookings`}>
                   <li
                     className={`collpase-item ${
-                      location.pathname === "/upcomingBookings" && "active"
+                      location.pathname ===
+                        `${routePrefix}/upcoming-bookings` && "active"
                     }`}
                   >
                     Upcoming Bookings
                   </li>
                 </Link>
 
-                <Link
-                  to="/historyBookings"
-                  onClick={() =>
-                    localStorage.setItem("lastRoute", "/historyBookings")
-                  }
-                >
+                <Link to={`${routePrefix}/history-bookings`}>
                   <li
                     className={`collpase-item ${
-                      location.pathname === "/historyBookings" && "active"
+                      location.pathname === `${routePrefix}/history-bookings` &&
+                      "active"
                     }`}
                   >
                     Booking History
@@ -199,10 +155,7 @@ const Sidebar = () => {
             showArrow: false,
             collapsible: "header",
             label: (
-              <Link
-                to="/earnings"
-                onClick={() => localStorage.setItem("lastRoute", "/earnings")}
-              >
+              <Link to={`${routePrefix}/earnings`}>
                 <section className="collapse-header-wrapper">
                   <EarningsIcon />
                   <h5 className="collapse-heading">Earnings</h5>
@@ -216,8 +169,10 @@ const Sidebar = () => {
             collapsible: "header",
             label: (
               <Link
-                to="/reviews"
-                onClick={() => localStorage.setItem("lastRoute", "/reviews")}
+                to={`${routePrefix}/reviews`}
+                onClick={() =>
+                  localStorage.setItem("lastRoute", `${routePrefix}/reviews`)
+                }
               >
                 <section className="collapse-header-wrapper">
                   <ReviewIcon />
@@ -229,15 +184,17 @@ const Sidebar = () => {
         ]
       : []),
 
-    // Always show Settings
+    // Settings section for both roles
     {
       key: "7",
       showArrow: false,
       collapsible: "header",
       label: (
         <Link
-          to="/settings"
-          onClick={() => localStorage.setItem("lastRoute", "/settings")}
+          to={`${routePrefix}/settings`}
+          onClick={() =>
+            localStorage.setItem("lastRoute", `${routePrefix}/settings`)
+          }
         >
           <section className="collapse-header-wrapper">
             <SettingIcon />
@@ -247,6 +204,8 @@ const Sidebar = () => {
       ),
     },
   ];
+
+  const onChange = (key) => {};
 
   return (
     <aside className="fuse-main-sidebar-wrapper">
@@ -276,12 +235,7 @@ const Sidebar = () => {
           </figcaption>
         </figure>
 
-        <Link
-          to={isSeeker ? "/" : "/mentor"}
-          onClick={() =>
-            localStorage.setItem("lastRoute", isSeeker ? "/" : "/mentor")
-          }
-        >
+        <Link to={`${routePrefix}/profile`}>
           <CustomButton name="My Profile" />
         </Link>
 

@@ -12,8 +12,7 @@ const MentorCard = (props) => {
   const navigate = useNavigate();
 
   const handleDetailsClick = () => {
-    localStorage.setItem("lastRoute", "/mentorDetails");
-    navigate("/mentorDetails", {
+    navigate("/job-seeker/mentor/mentorDetail", {
       state: {
         services,
         profile,

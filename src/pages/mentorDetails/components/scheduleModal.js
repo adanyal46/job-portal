@@ -103,7 +103,6 @@ const ScheduleModal = (props) => {
   } = props;
   const dispatch = useDispatch();
   const [currentStep, setCurrentStep] = useState(1);
-  console.log(selectedServiceId);
   const findServ = services?.find((item) => item.id === selectedServiceId);
 
   const handleNextStep = async () => {

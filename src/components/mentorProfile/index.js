@@ -1,10 +1,8 @@
-import ProfileHeader from "../../components/profileHeader";
 import EducationAndCertification from "../../components/educationAndCertification";
 import EmploymentAndExperience from "../../components/employmentAndExperience";
 import Location from "../../components/location";
 import DocumentAndLink from "../../components/documentAndLink";
 import Certifications from "../../components/certifications";
-import MentorServiceCollapse from "../mentorServiceCollapse";
 import {
   BriefcaseIcon,
   InfoIcon,
@@ -12,15 +10,15 @@ import {
   MentorTranslateIcon,
 } from "../../assets/svg";
 import { useState } from "react";
-import { useSelector } from "react-redux";
 import "./styles.scss";
 import { Typography } from "antd";
 import MentorProfileHeader from "../mentorProfileHeader";
 import MentorProfileService from "../mentorProfileService";
 import CustomButton from "../customButton";
+import { useOutletContext } from "react-router-dom";
 
 const MentorProfile = () => {
-  const { user } = useSelector((state) => state.profile);
+  const user = useOutletContext();
   const [showInfoModal, setShowInfoModal] = useState(false);
   const [showEducationModal, setShowEducationModal] = useState(false);
   const [showCertificationModal, setShowCertificationModal] = useState(false);
@@ -35,7 +33,7 @@ const MentorProfile = () => {
   const document = user?.Documents;
   const employmentHistorys = user?.EmpolymentHistory;
   const services = user?.services;
-  const profile = user?.Profile[0];
+  const profile = user?.Profile?.[0];
   const serviceNames = services?.map((item) => item.name);
 
   const showModal = () => {
@@ -44,10 +42,7 @@ const MentorProfile = () => {
 
   return (
     <section className="main-layout-container">
-      <section
-        className="profile-main-wrapper"
-        style={{ minHeight: "auto", maxHeight: "auto", overflow: "auto" }}
-      >
+      <section className="profile-main-wrapper" style={{ overflow: "auto" }}>
         <Typography.Title level={3} style={{ marginBottom: "0px" }}>
           My Profile
         </Typography.Title>

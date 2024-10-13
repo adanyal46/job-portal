@@ -1,6 +1,6 @@
 import { Typography } from "antd";
 import BookingCard from "../../components/bookingCard";
-import CustomPagination from "../../components/customPagination";
+// import CustomPagination from "../../components/customPagination";
 import CustomTabs from "../../components/customTabs";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
@@ -42,18 +42,14 @@ const BookingsListing = ({ bookingSession }) => {
 };
 
 const UpcomingBookings = () => {
-  const { bookingSession, sessionLoading } = useSelector(
-    (state) => state.bookings
-  );
+  const { bookingSession } = useSelector((state) => state.bookings);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(upcomingBookingSession());
   }, [dispatch]);
 
-  const handleTabChange = (key) => {
-    console.log(key);
-  };
+  const handleTabChange = (key) => {};
 
   return (
     <section>

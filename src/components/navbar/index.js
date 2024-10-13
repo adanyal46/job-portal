@@ -5,8 +5,7 @@ import { Avatar, Dropdown, Image, message } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../features/auth/authSlice";
 
-const Navbar = () => {
-  const { user } = useSelector((state) => state.profile);
+const Navbar = ({ user }) => {
   const profileData =
     user && user.Profile && user.Profile.length > 0 ? user.Profile[0] : null;
   const navigate = useNavigate();
@@ -14,17 +13,16 @@ const Navbar = () => {
   const [toggleNav, setToggleNav] = useState(false);
   const serverUrl = "http://54.144.76.160:5000";
 
+  const isMentor = user?.role === "MENTOR";
+  const isSeeker = user?.role === "JOB_SEEKER";
+  const routePrefix = isMentor ? "/mentor" : "/job-seeker";
+
   let profileImage =
     profileData?.avatarUrl &&
     profileData?.avatarUrl.replace("http://your-server-url", serverUrl);
 
-  const saveRouteToLocalStorage = (route) => {
-    localStorage.setItem("lastRoute", route);
-  };
-
   const goToNotificationsPage = () => {
-    const route = "/notifications"; // Set the route to save
-    saveRouteToLocalStorage(route); // Save the route in local storage
+    const route = routePrefix + "/notifications"; // Set the route to save
     navigate(route); // Navigate to the notifications page
   };
 
@@ -34,9 +32,7 @@ const Navbar = () => {
 
   const items = [
     {
-      label: (
-        <Link to={user?.role === "JOB_SEEKER" ? "/" : "/mentor"}>Profile</Link>
-      ),
+      label: <Link to={routePrefix + "/profile"}>Profile</Link>,
       key: "0",
     },
     {
@@ -93,10 +89,7 @@ const Navbar = () => {
           {user?.role === "JOB_SEEKER" && (
             <NavLink
               className="navbar-items"
-              to="/jobs/search?type=search"
-              onClick={() =>
-                saveRouteToLocalStorage("/jobs/search?type=search")
-              }
+              to="/job-seeker/jobs/search?type=search"
             >
               <li className="item-name">Jobs</li>
             </NavLink>
@@ -105,18 +98,13 @@ const Navbar = () => {
           {user?.role === "JOB_SEEKER" && (
             <NavLink
               className="navbar-items"
-              to="/mentors?type=myMentors"
-              onClick={() => saveRouteToLocalStorage("/mentors?type=myMentors")}
+              to="/job-seeker/mentors?type=myMentors"
             >
               <li className="item-name">Mentors</li>
             </NavLink>
           )}
 
-          <NavLink
-            className="navbar-items"
-            to="/blogs"
-            onClick={() => saveRouteToLocalStorage("/blogs")}
-          >
+          <NavLink className="navbar-items" to={routePrefix + "/blogs"}>
             <li className="item-name">Blogs</li>
           </NavLink>
 

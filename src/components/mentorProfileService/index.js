@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Collapse, Checkbox, Form, Input, message } from "antd";
+import { Collapse, Checkbox, Form, Input, message, Empty, Flex } from "antd";
 import CustomButton from "../customButton";
 import "./styles.scss";
 import CommonModal from "../commonModal";
@@ -10,25 +10,23 @@ import {
 } from "../../features/profile/profileSlice";
 import { useDispatch, useSelector } from "react-redux";
 
-const onChange = (checkedValues) => {
-  console.log("checked = ", checkedValues);
-};
+const onChange = (checkedValues) => {};
 
 const MentorProfileService = (props) => {
   const dispatch = useDispatch();
-  const { services, mentorId, isModalVisible, setIsModalVisible } = props; // Receive mentorId from props
+  const { services, mentorId, isModalVisible, setIsModalVisible } = props;
   const [form] = Form.useForm();
   const { mentorServiceLoading } = useSelector((state) => state.profile);
   const [service, setService] = useState(null);
 
   // Create items for Collapse
-  const items = services?.map((service) => ({
-    key: service.id,
+  const items = services?.map((service, index) => ({
+    key: service.id || index,
     label: (
       <div className="service-header">
-        <p className="header-text">{`${
-          service.name.charAt(0).toUpperCase() + service.name.slice(1)
-        } $${service.pricing}`}</p>
+        <p className="header-text">{`${service.name
+          .charAt(0)
+          .toUpperCase()}${service.name.slice(1)} $${service.pricing}`}</p>
         <Checkbox value={service.id.toString()}></Checkbox>
       </div>
     ),
@@ -60,7 +58,7 @@ const MentorProfileService = (props) => {
         content: "Service Created!",
       });
       setIsModalVisible(false);
-      form.resetFields(); // Reset form fields after submission
+      form.resetFields();
     }
   };
   const handleUpdateService = async () => {
@@ -78,7 +76,7 @@ const MentorProfileService = (props) => {
           content: "Service Updated!",
         });
         setIsModalVisible(false);
-        form.resetFields(); // Reset form fields after submission
+        form.resetFields();
       }
     } catch (error) {
       console.log(error);
@@ -107,28 +105,29 @@ const MentorProfileService = (props) => {
 
   return (
     <div className="mentor-profile-service">
-      {/* <div className="action-buttons">
-        <CustomButton
-          category="primary"
-          name="Add Service"
-          handleClick={() => setIsModalVisible(true)}
-        />
-      </div> */}
       <Checkbox.Group
         onChange={onChange}
         className="custom-checkbox-group"
-        style={{ height: "260px", overflow: "auto", marginTop: "20px" }}
+        style={{ height: "200px", overflow: "auto", marginTop: "20px" }}
       >
-        <Collapse
-          accordion
-          collapsible="icon"
-          ghost
-          className="custom-mentor-collapse"
-          expandIconPosition="end"
-          items={items} // Pass the items here
-        />
+        {services?.length > 0 ? (
+          <Collapse
+            accordion
+            collapsible="icon"
+            ghost
+            className="custom-mentor-collapse"
+            expandIconPosition="end"
+            items={items}
+          />
+        ) : (
+          <Flex justify="center" style={{ width: "100%" }}>
+            <Empty
+              image="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
+              description="No Services Found"
+            />
+          </Flex>
+        )}
       </Checkbox.Group>
-      {/* Use CommonModal for Adding Service */}
       <CommonModal
         title={service ? "Update New Service" : "Add New Service"}
         description="Please fill in the details below to add a new service."

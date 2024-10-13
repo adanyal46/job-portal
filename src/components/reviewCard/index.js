@@ -3,7 +3,6 @@ import Rating from "../rating";
 import "./styles.scss";
 
 const ReviewCard = ({ review }) => {
-  console.log(review);
   return (
     <section className="review-card-container">
       <section className="review-card-header">

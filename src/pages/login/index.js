@@ -1,10 +1,9 @@
-// src/components/Login.js
-import React, { startTransition, useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { clearMessage, login } from "../../features/auth/authSlice";
-import { Form, Input, Button, Typography, Alert, Card, message, Flex } from "antd";
+import { Form, Input, Button, Typography, message, Card } from "antd";
 import { Link, useNavigate } from "react-router-dom";
-import { isTokenValid } from "../../utils";
+import { isTokenValid } from "../../utils"; // Utility function to check if token is valid
 import { profile } from "../../features/profile/profileSlice";
 import Loader from "../../components/Loader";
 
@@ -17,28 +16,29 @@ const LoginForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [isNavigating, setIsNavigating] = useState(false);
 
+  // Function to check token and navigate to appropriate page if valid
   const checkTokenAndNavigate = async () => {
     setIsLoading(true);
     const token = localStorage.getItem("token");
 
-    let currentPath;
     if (token && isTokenValid(token)) {
+      // If token is valid, navigate to the main page
       navigate("/", { replace: true });
     } else {
+      // If token is not valid, clear it and stay on the login page
       localStorage.removeItem("token");
-      if (currentPath !== "/login") {
-        navigate("/login", { replace: true });
-      }
     }
-
     setIsLoading(false);
   };
 
+  // Check token on component mount
   useEffect(() => {
     checkTokenAndNavigate();
-  }, [navigate]);
+  }, []);
 
+  // Display error message if login fails
   useEffect(() => {
     if (error) {
       message.open({
@@ -46,33 +46,54 @@ const LoginForm = () => {
         content: error,
       });
       setTimeout(() => {
-        clearMessage();
+        dispatch(clearMessage());
       }, 3000);
     }
-  }, [error]);
+  }, [error, dispatch]);
 
+  // Handle login submission
   const handleSubmit = async (values) => {
+    setIsLoading(true);
     try {
-      const response = await dispatch(login({ email: values.email, password: values.password })).unwrap();
+      const response = await dispatch(
+        login({ email: values.email, password: values.password })
+      ).unwrap();
+
       if (response.token) {
-        if (response.user.role !== "JOB_SEEKER") {
-          localStorage.setItem("lastRoute", "/mentor");
-          navigate("/mentor");
-        } else {
-          localStorage.setItem("lastRoute", "/jobs/search?type=search");
-          navigate("/jobs/search?type=search");
-        }
+        const { token, user } = response;
+
+        // Store token in localStorage
+        localStorage.setItem("token", token);
+
+        const role = user.role;
+        setIsNavigating(true);
+
+        // Navigate based on user role after successful login
+        setTimeout(() => {
+          if (role !== "JOB_SEEKER") {
+            window.location.replace("/mentor/profile");
+          } else {
+            window.location.replace("/job-seeker/jobs/search?type=search");
+          }
+          setIsNavigating(false);
+        }, 500); // Delay navigation by 500ms
 
         message.open({
           type: "success",
           content: "Login Successfully!",
         });
-        return;
       }
-    } catch (error) {}
+    } catch (error) {
+      message.open({
+        type: "error",
+        content: "Login failed. Please try again.",
+      });
+      setIsLoading(false);
+    }
   };
 
-  if (isLoading) {
+  // Show loader while processing login or navigating
+  if (isLoading || isNavigating) {
     return <Loader />;
   }
 
@@ -91,23 +112,45 @@ const LoginForm = () => {
         </Title>
 
         <Form onFinish={handleSubmit} layout="vertical" size="large">
-          <Form.Item label="Email" name="email" rules={[{ required: true, message: "Please input your email!" }]}>
-            <Input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Enter your email" />
+          <Form.Item
+            label="Email"
+            name="email"
+            rules={[{ required: true, message: "Please input your email!" }]}
+          >
+            <Input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Enter your email"
+            />
           </Form.Item>
 
-          <Form.Item label="Password" name="password" rules={[{ required: true, message: "Please input your password!" }]}>
-            <Input.Password value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Enter your password" />
+          <Form.Item
+            label="Password"
+            name="password"
+            rules={[{ required: true, message: "Please input your password!" }]}
+          >
+            <Input.Password
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Enter your password"
+            />
           </Form.Item>
 
           <Form.Item>
-            <Button type="primary" htmlType="submit" loading={loading} style={{ width: "100%" }}>
+            <Button
+              type="primary"
+              htmlType="submit"
+              loading={loading}
+              style={{ width: "100%" }}
+            >
               {loading ? "Logging in..." : "Login"}
             </Button>
           </Form.Item>
-          <Flex justify="center" gap={"small"}>
-            <Typography.Text style={{ fontSize: "16px" }}>Not an account? </Typography.Text>
-            <Typography.Link href="/signUp">Register</Typography.Link>
-          </Flex>
+
+          <Typography.Text style={{ fontSize: "16px", textAlign: "center" }}>
+            Not registered yet? <Link to="/signUp">Sign Up</Link>
+          </Typography.Text>
         </Form>
       </Card>
     </div>

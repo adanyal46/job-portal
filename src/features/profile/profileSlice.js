@@ -24,8 +24,8 @@ import { jwtDecode } from "jwt-decode";
 let USER_ROLE = "JOB_SEEKER"; // Default role
 
 // Thunk to handle profile fetching
-export const profile = createAsyncThunk(
-  "profile/getInfo",
+export const getProfile = createAsyncThunk(
+  "profile/getProfile",
   async (_, { rejectWithValue }) => {
     try {
       const token = localStorage.getItem("token");
@@ -396,7 +396,6 @@ export const deleteServiceMentor = createAsyncThunk(
   "delete/service/mentor",
   async (serviceId, { getState, rejectWithValue }) => {
     try {
-      console.log(serviceId);
       const response = await deleteMentorServiceApi(serviceId);
       const currentUser = getState().profile.user;
 
@@ -441,15 +440,15 @@ const profileSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(profile.pending, (state) => {
+      .addCase(getProfile.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-      .addCase(profile.fulfilled, (state, action) => {
+      .addCase(getProfile.fulfilled, (state, action) => {
         state.loading = false;
         state.user = action.payload.data;
       })
-      .addCase(profile.rejected, (state, action) => {
+      .addCase(getProfile.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       })

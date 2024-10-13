@@ -36,8 +36,6 @@ export const jobApplied = createAsyncThunk(
         };
       });
 
-      console.log(updatedJobList);
-
       return updatedJobList;
     } catch (error) {
       return rejectWithValue(error.message); // Handle errors
@@ -65,8 +63,6 @@ export const saveJob = createAsyncThunk(
             : [...job.saveJobpost, appliedJobData], // If jobId doesn't exist, add it to saveJobpost
         };
       });
-
-      console.log(updatedJobList);
 
       return updatedJobList;
     } catch (error) {

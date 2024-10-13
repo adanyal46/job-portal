@@ -4,9 +4,7 @@ import { ChevronUpIcon } from "../../assets/svg";
 import "./styles.scss";
 import CustomButton from "../customButton";
 
-const onChange = (checkedValues) => {
-  console.log("checked = ", checkedValues);
-};
+const onChange = (checkedValues) => {};
 
 const MentorServiceCollapse = (props) => {
   const { handleClick, services } = props;

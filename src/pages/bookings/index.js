@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import BookingCard from "../../components/bookingCard";
-import CustomPagination from "../../components/customPagination";
+// import CustomPagination from "../../components/customPagination";
 import CustomTabs from "../../components/customTabs";
 
 import "./styles.scss";
@@ -37,7 +37,11 @@ const BookingsListing = () => {
         <NoBooking />
       ) : (
         <section className="booking-listing-wrapper">
-          {Array.isArray(bookings) && bookings.length > 0 && bookings?.map((book, index) => <BookingCard {...book} key={index} />)}
+          {Array.isArray(bookings) &&
+            bookings.length > 0 &&
+            bookings?.map((book, index) => (
+              <BookingCard {...book} key={index} />
+            ))}
           {/* <CustomPagination /> */}
         </section>
       )}
@@ -46,9 +50,7 @@ const BookingsListing = () => {
 };
 
 const Bookings = () => {
-  const handleTabChange = (key) => {
-    console.log(key);
-  };
+  const handleTabChange = (key) => {};
 
   return (
     <section>

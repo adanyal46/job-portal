@@ -6,7 +6,7 @@ import CustomSelect from "../../components/customSelect";
 import MentorCard from "../../components/mentorCard";
 import { SearchFieldIcon } from "../../assets/svg";
 import "./styles.scss";
-import CustomPagination from "../../components/customPagination";
+// import CustomPagination from "../../components/customPagination";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react"; // Import useState
 import { fetchMentorList } from "../../features/mentor/mentorSlice";
@@ -181,9 +181,9 @@ const Mentors = () => {
 
   const handleTabChange = (key) => {
     if (key === "bookings") {
-      navigate("/bookings");
+      navigate("/job-seeker/bookings");
     } else {
-      navigate(`/mentors?type=${key}`);
+      navigate(`/job-seeker/mentors?type=${key}`);
     }
   };
 

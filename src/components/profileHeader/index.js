@@ -69,7 +69,6 @@ const ProfileHeader = ({
 
     try {
       const resultAction = await dispatch(profileUpdate(formData)).unwrap();
-      console.log(resultAction);
       if (resultAction.success) {
         message.open({
           type: "success",

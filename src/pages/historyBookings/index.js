@@ -30,13 +30,13 @@ const NoBooking = () => {
 };
 
 const HistoryBookings = () => {
-  const handleTabChange = (key) => {
-    console.log(key);
-  };
+  const handleTabChange = (key) => {};
 
   return (
-    <section >
-      <Typography.Title level={3}>Bookings History/Past Bookings</Typography.Title>
+    <section>
+      <Typography.Title level={3}>
+        Bookings History/Past Bookings
+      </Typography.Title>
 
       <CustomTabs
         handleChange={handleTabChange}
