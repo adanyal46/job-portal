@@ -75,8 +75,15 @@ import "./styles.scss";
 //   },
 // ];
 const CommonTable = (props) => {
-  const { columns, data, pagination = false } = props;
+  const { columns, data, pagination = false, loading = false } = props;
 
-  return <Table columns={columns} dataSource={data} pagination={pagination} />;
+  return (
+    <Table
+      columns={columns}
+      dataSource={data}
+      pagination={pagination}
+      loading={loading}
+    />
+  );
 };
 export default CommonTable;

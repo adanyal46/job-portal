@@ -1,105 +1,79 @@
+// src/components/Earnings.js
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Typography } from "antd";
 import CustomTabs from "../../components/customTabs";
-import { DownloadIcon, SearchFieldIcon } from "../../assets/svg";
-
-import "./styles.scss";
 import CustomButton from "../../components/customButton";
 import CommonInput from "../../components/commonInput";
 import CommonTable from "../../components/commonTable";
-import { Typography } from "antd";
-
-const columns = [
-  {
-    title: "ID",
-    dataIndex: "id",
-    key: "id",
-    // render: (id) => <a>{id}</a>,
-  },
-  {
-    title: "DATE",
-    dataIndex: "date",
-    key: "date",
-  },
-  {
-    title: "Time",
-    dataIndex: "time",
-    key: "time",
-  },
-  {
-    title: "Name",
-    dataIndex: "name",
-    key: "name",
-  },
-  {
-    title: "Service",
-    dataIndex: "service",
-    key: "service",
-  },
-  {
-    title: "Earning",
-    dataIndex: "earning",
-    key: "earning",
-  },
-  {
-    title: "Status",
-    dataIndex: "status",
-    key: "status",
-  },
-];
-
-const tableData = [
-  {
-    key: "1",
-    id: "1",
-    date: "11 May 2024",
-    time: "11:00AM-12:00 noon",
-    name: "Pablo Martinez",
-    service: "Resume Review",
-    earning: "$69.60",
-    status: "Paid",
-  },
-  {
-    key: "2",
-    id: "2",
-    date: "11 May 2024",
-    time: "11:00AM-12:00 noon",
-    name: "Pablo Martinez",
-    service: "Resume Review",
-    earning: "$69.60",
-    status: "Pending",
-  },
-  {
-    key: "3",
-    id: "3",
-    date: "11 May 2024",
-    time: "11:00AM-12:00 noon",
-    name: "Pablo Martinez",
-    service: "Resume Review",
-    earning: "$69.60",
-    status: "Paid",
-  },
-  {
-    key: "4",
-    id: "4",
-    date: "11 May 2024",
-    time: "11:00AM-12:00 noon",
-    name: "Pablo Martinez",
-    service: "Resume Review",
-    earning: "$69.60",
-    status: "Pending",
-  },
-  {
-    key: "5",
-    id: "5",
-    date: "11 May 2024",
-    time: "11:00AM-12:00 noon",
-    name: "Pablo Martinez",
-    service: "Resume Review",
-    earning: "$69.60",
-    status: "Paid",
-  },
-];
+import { DownloadIcon, SearchFieldIcon } from "../../assets/svg";
+import "./styles.scss";
+import {
+  fetchEarningList,
+  setDateRange,
+} from "../../features/earning/earningSlice";
 
 const LifeTimeEarnings = ({ monthly, weekly, custom }) => {
+  const dispatch = useDispatch();
+  const { earningList, loading, error, dateRange } = useSelector(
+    (state) => state.earning
+  );
+  const [fromDate, setFromDate] = useState(dateRange.from);
+  const [toDate, setToDate] = useState(dateRange.to);
+  const [searchQuery, setSearchQuery] = useState("");
+
+  useEffect(() => {
+    dispatch(fetchEarningList({ startDate: fromDate, endDate: toDate }));
+  }, [dispatch, fromDate, toDate]);
+
+  const filteredEarningList = earningList.filter((item) => {
+    const searchLower = searchQuery.toLowerCase();
+    return (
+      item.jobseekerName.toLowerCase().includes(searchLower) ||
+      item.servicename.toLowerCase().includes(searchLower) ||
+      item.status.toLowerCase().includes(searchLower) ||
+      item.earningPrice.toString().includes(searchLower)
+    );
+  });
+
+  const columns = [
+    {
+      title: "ID",
+      dataIndex: "id",
+      key: "id",
+    },
+    {
+      title: "DATE",
+      dataIndex: "date",
+      key: "date",
+    },
+    {
+      title: "Time",
+      dataIndex: "time",
+      key: "time",
+    },
+    {
+      title: "Name",
+      dataIndex: "jobseekerName",
+      key: "jobseekerName",
+    },
+    {
+      title: "Service",
+      dataIndex: "servicename",
+      key: "servicename",
+    },
+    {
+      title: "Earning",
+      dataIndex: "earningPrice",
+      key: "earningPrice",
+    },
+    {
+      title: "Status",
+      dataIndex: "status",
+      key: "status",
+    },
+  ];
+
   return (
     <section className="earnings-main-layout-container">
       <section className="download-buttons-wrapper">
@@ -126,13 +100,28 @@ const LifeTimeEarnings = ({ monthly, weekly, custom }) => {
       <hr className="form-divider" />
 
       <section className="earning-detail-container">
-        <h4 className="grand-total">$190</h4>
+        <h4 className="grand-total">
+          $
+          {earningList
+            .reduce((total, item) => {
+              const earning = parseFloat(item.earningPrice);
+              return total + (isNaN(earning) ? 0 : earning);
+            }, 0)
+            .toFixed(2)}
+        </h4>
         <p className="earning-detail">
           Your earnings after FuseWW platform commission
         </p>
 
         <p className="earning-detail">
-          Total Billed <span className="amount">$200</span>
+          Total Billed{" "}
+          <span className="amount">
+            $
+            {earningList.reduce((total, item) => {
+              const earning = parseFloat(item.earningPrice) || 0; // Handle "N/A" cases
+              return total + earning;
+            }, 0) - (10).toFixed(2)}
+          </span>
         </p>
 
         <p className="earning-detail">
@@ -147,21 +136,30 @@ const LifeTimeEarnings = ({ monthly, weekly, custom }) => {
           classes="earnings-search-field"
           placeholder="Search ID"
           prefix={<SearchFieldIcon />}
+          onChange={(val) => setSearchQuery(val)}
         />
 
         {monthly && (
           <CommonInput
-            category="date"
+            category="month"
             classes="earnings-select-field"
             placeholder="Select Month"
             prefix={<SearchFieldIcon />}
+            onChange={(startDate, endDate) => {
+              setFromDate(startDate);
+              setToDate(endDate);
+            }}
           />
         )}
 
         {weekly && (
           <CommonInput
-            category="date"
+            category="week"
             classes="earnings-select-field"
+            onChange={(startDate, endDate) => {
+              setFromDate(startDate);
+              setToDate(endDate);
+            }}
             placeholder="This Week"
             prefix={<SearchFieldIcon />}
           />
@@ -170,17 +168,14 @@ const LifeTimeEarnings = ({ monthly, weekly, custom }) => {
         {custom && (
           <>
             <CommonInput
-              category="date"
+              category="customDateRange"
               classes="earnings-select-field"
               placeholder="Select From"
               prefix={<SearchFieldIcon />}
-            />
-
-            <CommonInput
-              category="date"
-              classes="earnings-select-field"
-              placeholder="Select To"
-              prefix={<SearchFieldIcon />}
+              onChange={(dateStrings) => {
+                setFromDate(dateStrings[0]);
+                setToDate(dateStrings[1]);
+              }}
             />
           </>
         )}
@@ -189,7 +184,11 @@ const LifeTimeEarnings = ({ monthly, weekly, custom }) => {
       <hr className="form-divider" />
 
       <section className="earnings-table-wrapper">
-        <CommonTable columns={columns} data={tableData} />
+        <CommonTable
+          columns={columns}
+          data={filteredEarningList}
+          loading={loading}
+        />
       </section>
     </section>
   );

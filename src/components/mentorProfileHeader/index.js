@@ -19,6 +19,7 @@ import LocationWithIcon from "../locationWithIcon";
 
 const MentorProfileHeader = ({ user, showInfoModal, setShowInfoModal }) => {
   const dispatch = useDispatch();
+  const [loading, setLoading] = useState(false);
   const profile = user && user?.Profile[0];
   const serverUrl = "http://54.144.76.160:5000";
 
@@ -75,16 +76,19 @@ const MentorProfileHeader = ({ user, showInfoModal, setShowInfoModal }) => {
     }
 
     try {
+      setLoading(true);
       const resultAction = await dispatch(
         updateOtherInfoMentor(formData)
       ).unwrap();
       if (resultAction.success) {
         message.success("Profile updated successfully!");
-        window.location.replace("/mentor");
+        window.location.replace("/mentor/profile");
         handleCloseInfoModal();
       }
     } catch (error) {
       message.error("Failed to update profile.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -129,6 +133,7 @@ const MentorProfileHeader = ({ user, showInfoModal, setShowInfoModal }) => {
           isModalOpen={showInfoModal}
           handleClose={handleCloseInfoModal}
           handleOk={handleOk}
+          loading={loading}
         >
           <section className="basic-info-inner-wrapper">
             <PhotoUpload

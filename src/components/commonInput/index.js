@@ -1,7 +1,7 @@
 import { Input, DatePicker, TimePicker } from "antd";
 import { Switch, Case, Default } from "react-if";
-
 import "./styles.scss";
+import dayjs from "dayjs"; // Import Day.js
 
 const { TextArea } = Input;
 
@@ -23,8 +23,30 @@ const CommonInput = (props) => {
   const handleDateChange = (date, dateString) => {
     if (onChange) onChange(date, dateString);
   };
-  const handleTimeChange = (date, dateString) => {
-    if (onChange) onChange(date, dateString);
+
+  const handleMonthChange = (date) => {
+    if (!date) {
+      if (onChange) onChange(null);
+    } else {
+      const startDate = dayjs(date).startOf("month").format("YYYY-MM-DD");
+      const endDate = dayjs(date).endOf("month").format("YYYY-MM-DD");
+      if (onChange) onChange(startDate, endDate);
+    }
+  };
+
+  const handleWeekChange = (date) => {
+    if (!date) {
+      // Clear action
+      if (onChange) onChange(null); // or onChange(""); based on your API requirement
+    } else {
+      const startDate = dayjs(date).startOf("week").format("YYYY-MM-DD");
+      const endDate = dayjs(date).endOf("week").format("YYYY-MM-DD");
+      if (onChange) onChange(startDate, endDate);
+    }
+  };
+
+  const handleTimeChange = (time, timeString) => {
+    if (onChange) onChange(time, timeString);
   };
 
   const handleInputChange = (e) => {
@@ -39,6 +61,13 @@ const CommonInput = (props) => {
       onEnter(); // Call the onEnter function when Enter is pressed
     }
   };
+
+  // Handle the clear action for the input field
+  const handleClearInput = () => {
+    if (onChange) onChange("");
+    if (handleClear) handleClear();
+  };
+
   return (
     <Switch>
       <Case condition={category === "date"}>
@@ -52,11 +81,46 @@ const CommonInput = (props) => {
         />
       </Case>
 
+      <Case condition={category === "month"}>
+        <DatePicker
+          className={`common-datepicker-field ${classes}`}
+          placeholder={placeholder}
+          onChange={handleMonthChange}
+          picker="month" // Use month picker
+          value={value}
+          style={styles}
+        />
+      </Case>
+
+      <Case condition={category === "week"}>
+        <DatePicker
+          className={`common-datepicker-field ${classes}`}
+          placeholder={placeholder}
+          onChange={handleWeekChange}
+          picker="week" // Use week picker
+          value={value}
+          style={styles}
+        />
+      </Case>
+
+      <Case condition={category === "customDateRange"}>
+        <DatePicker.RangePicker
+          className={`common-datepicker-field ${classes}`}
+          placeholder={placeholder}
+          onChange={(dates, dateStrings) => {
+            if (onChange) onChange(dateStrings);
+          }}
+          value={value} // Assuming value is an array of moment objects
+          style={styles}
+          format={"YYYY-MM-DD"}
+        />
+      </Case>
+
       <Case condition={category === "time"}>
         <TimePicker
           className={`common-datepicker-field ${classes}`}
           placeholder={placeholder}
-          onChange={handleTimeChange}
+          onChange={handleTimeChange} // Use handleTimeChange here
           value={value}
           style={styles}
         />
@@ -82,8 +146,8 @@ const CommonInput = (props) => {
           onChange={handleInputChange}
           value={value}
           style={styles}
-          allowClear
-          onClear={handleClear}
+          allowClear // Enable clear option
+          onClear={handleClearInput} // Set the clear handler
           name={name || ""}
           onKeyPress={handleKeyPress}
         />

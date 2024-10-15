@@ -6,7 +6,8 @@ import jobReducer from "../features/job/jobSlice";
 import mentorReducer from "../features/mentor/mentorSlice";
 import notificationReducer from "../features/notification/notificationSlice";
 import bookingReducer from "../features/booking/bookingSlice";
-import mentorReviewReducer from "../features/mentorReviews/mentorReviewSlice"; // Adjust the path as needed
+import mentorReviewReducer from "../features/mentorReviews/mentorReviewSlice";
+import earningReducer from "../features/earning/earningSlice";
 
 export const store = configureStore({
   reducer: {
@@ -17,5 +18,6 @@ export const store = configureStore({
     notifications: notificationReducer,
     bookings: bookingReducer,
     mentorReviews: mentorReviewReducer,
+    earning: earningReducer,
   },
 });

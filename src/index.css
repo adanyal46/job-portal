@@ -6,3 +6,82 @@
   box-sizing: border-box;
   font-family: "Poppins", sans-serif !important;
 }
+
+.mentor-video-container {
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  background-color: #fefefe;
+  max-width: 600px; /* Limit width for better readability */
+  padding: 20px; /* Add padding for better layout */
+}
+
+.title {
+  font-size: 20px;
+  font-weight: 700;
+  color: #1a1a1a;
+}
+
+.description {
+  color: #7d7d7d;
+  margin-bottom: 10px;
+  font-size: 15px;
+}
+
+.upload-container {
+  width: 100%;
+  height: 300px;
+  border: 2px dashed #40a9ff;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  background-color: #f9f9f9;
+  transition: border-color 0.3s;
+  text-align: center;
+}
+
+.video-container {
+  border-radius: 10px;
+  overflow: hidden;
+  height: 300px;
+}
+
+.video {
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+.upload-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.upload-icon {
+  font-size: 50px;
+  color: #40a9ff;
+}
+
+.upload-text {
+  margin-top: 8px;
+  font-size: 18px;
+  color: #7d7d7d;
+}
+
+.more-options {
+  cursor: pointer;
+  margin-left: 10px;
+  color: #40a9ff;
+  font-size: 20px;
+}
+
+.more-icon {
+  font-size: 26px;
+}
+
+.upload-button {
+  margin-top: 10px; /* Add some space above the button */
+}
