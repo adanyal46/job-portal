@@ -1,7 +1,7 @@
 import CommonHeading from "../../components/commonHeading";
 import "./styles.scss";
 
-const Certifications = ({ certificates }) => {
+const Certifications = ({ certificates, profile }) => {
   return (
     <section className="certifications-wrapper">
       <CommonHeading heading="Certifications" />
@@ -12,7 +12,13 @@ const Certifications = ({ certificates }) => {
             <figure className="certification-icon">
               <img
                 loading="lazy"
-                src="/images/user-icon.png"
+                src={profile?.avatarUrl || "/images/user-icon.png"}
+                style={{
+                  width: "50px",
+                  height: "50px",
+                  objectFit: "cover",
+                  borderRadius: "100px",
+                }}
                 className="icon"
                 alt="CertificationIcon"
               />

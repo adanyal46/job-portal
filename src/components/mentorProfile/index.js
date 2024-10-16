@@ -124,7 +124,7 @@ const MentorProfile = () => {
           document={document}
         />
 
-        <Certifications certificates={certificates} />
+        <Certifications certificates={certificates} profile={profile} />
       </section>
 
       <section className="mentor-actions-container">

@@ -25,6 +25,7 @@ const MyProfile = () => {
   const location = user?.Location;
   const document = user?.Documents;
   const employmentHistorys = user?.EmpolymentHistory;
+  const profile = user?.Profile?.[0];
 
   return (
     <Card>
@@ -66,7 +67,7 @@ const MyProfile = () => {
           document={document}
         />
 
-        <Certifications certificates={certificates} />
+        <Certifications certificates={certificates} profile={profile} />
       </section>
     </Card>
   );

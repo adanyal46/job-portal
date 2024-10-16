@@ -56,7 +56,9 @@ const MentorDetails = () => {
             <figure className="mentor-card-image-wrapper">
               <img
                 loading="lazy"
-                src="/images/mentors/mentor-detail-card.png"
+                src={
+                  profile?.avatarUrl || "/images/mentors/mentor-detail-card.png"
+                }
                 className="mentor-card-image"
                 alt="mentor-detail-card-icon"
               />
@@ -104,7 +106,7 @@ const MentorDetails = () => {
 
           <hr className="mentor-detail-divider" />
 
-          <Certifications certificates={certificate} />
+          <Certifications certificates={certificate} profile={profile} />
 
           <hr className="mentor-detail-divider" />
 
