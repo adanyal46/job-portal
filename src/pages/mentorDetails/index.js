@@ -19,6 +19,7 @@ import {
 } from "../../assets/svg";
 import "./styles.scss";
 import { useLocation } from "react-router-dom";
+import MentorVideoContainer from "../../components/MentorVideoContainer";
 
 const MentorDetails = () => {
   const location = useLocation();
@@ -120,13 +121,7 @@ const MentorDetails = () => {
         </section>
 
         <section className="mentor-actions-container">
-          <article className="mentor-video-container">
-            <p>Olivia Introductory video clip</p>
-            <p>Get to know Olivia in a better way</p>
-            <figure>
-              <img src="/images/mentors/mentor-1.png" alt="mentor icon" />
-            </figure>
-          </article>
+          <MentorVideoContainer mentorvideolink={profile?.mentorvideolink} />
           <section className="mentor-get-started-container">
             <section className="mentor-services-wrapper">
               <h6 className="mentor-services">

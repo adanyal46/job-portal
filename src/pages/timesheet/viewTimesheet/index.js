@@ -164,9 +164,7 @@ const AllRoles = (props) => {
 };
 
 const ViewTimesheet = () => {
-  const handleTabChange = (key) => {
-    console.log(key);
-  };
+  const handleTabChange = (key) => {};
 
   return (
     <section className="main-layout-container">

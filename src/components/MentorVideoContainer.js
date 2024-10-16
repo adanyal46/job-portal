@@ -1,11 +1,14 @@
 import { Upload, Modal, Button, message, Flex } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { uploadMentorVideo } from "../features/profile/profileSlice";
 
-const MentorVideoContainer = () => {
+const MentorVideoContainer = ({ mentorvideolink, canUpload = false }) => {
+  const dispatch = useDispatch();
+  const { videoLoading } = useSelector((state) => state.profile);
   const [videoFile, setVideoFile] = useState(null);
   const [isUploadModalVisible, setIsUploadModalVisible] = useState(false);
-  const [loading, setLoading] = useState(false);
 
   const handleVideoChange = (info) => {
     if (info.fileList) {
@@ -15,13 +18,28 @@ const MentorVideoContainer = () => {
     }
   };
 
-  const handleConfirmUpload = () => {
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-      setIsUploadModalVisible(false);
-      message.success("Video uploaded successfully!");
-    }, 2000);
+  const handleConfirmUpload = async () => {
+    if (!videoFile)
+      return message.open({
+        type: "error",
+        content: "Please upload video to upload",
+      });
+    try {
+      const formData = new FormData();
+      formData.append("mentorVideo", videoFile);
+      const response = await dispatch(uploadMentorVideo(formData)).unwrap();
+      if (response && response.message && response.profile) {
+        setIsUploadModalVisible(false);
+        window.location.replace("/mentor/profile");
+      }
+    } catch (error) {
+      console.log("error");
+    }
+    // setTimeout(() => {
+    //   setLoading(false);
+    //   // setIsUploadModalVisible(false);
+    //   message.success("Video uploaded successfully!");
+    // }, 2000);
   };
 
   return (
@@ -38,13 +56,15 @@ const MentorVideoContainer = () => {
         beforeUpload={() => false} // Prevent auto upload
         onChange={handleVideoChange}
         maxCount={1}
+        disabled={!canUpload}
       >
         <div className={videoFile ? "video-container" : "upload-container"}>
-          {videoFile ? (
+          {videoFile || mentorvideolink ? (
             <video
-              src={URL.createObjectURL(videoFile)}
+              src={videoFile ? URL.createObjectURL(videoFile) : mentorvideolink}
               controls
               className="video"
+              autoPlay={false}
             />
           ) : (
             <div className="upload-content">
@@ -82,7 +102,7 @@ const MentorVideoContainer = () => {
           <Button
             key="submit"
             type="primary"
-            loading={loading}
+            loading={videoLoading}
             onClick={handleConfirmUpload}
           >
             Confirm Upload

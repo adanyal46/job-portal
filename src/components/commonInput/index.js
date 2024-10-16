@@ -118,6 +118,7 @@ const CommonInput = (props) => {
 
       <Case condition={category === "time"}>
         <TimePicker
+          format={"h:m"}
           className={`common-datepicker-field ${classes}`}
           placeholder={placeholder}
           onChange={handleTimeChange} // Use handleTimeChange here

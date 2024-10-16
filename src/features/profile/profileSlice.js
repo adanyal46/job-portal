@@ -18,6 +18,7 @@ import {
   updateEmploymentApi,
   updateMentorServiceApi,
   updateOtherInfoMentorApi,
+  uploadMentorVideoApi,
 } from "./profileApi";
 import { jwtDecode } from "jwt-decode";
 
@@ -428,6 +429,17 @@ export const updateOtherInfoMentor = createAsyncThunk(
     }
   }
 );
+export const uploadMentorVideo = createAsyncThunk(
+  "profile/update/mentor/video",
+  async (formData, { getState, rejectWithValue }) => {
+    try {
+      const response = await uploadMentorVideoApi(formData);
+      return response;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
 
 const profileSlice = createSlice({
   name: "profile",
@@ -436,6 +448,7 @@ const profileSlice = createSlice({
     loading: false,
     error: null,
     mentorServiceLoading: false,
+    videoLoading: false,
   },
   reducers: {},
   extraReducers: (builder) => {
@@ -602,6 +615,17 @@ const profileSlice = createSlice({
       .addCase(updateOtherInfoMentor.fulfilled, (state, action) => {})
       .addCase(updateOtherInfoMentor.rejected, (state, action) => {
         state.error = action.payload;
+      })
+      .addCase(uploadMentorVideo.pending, (state) => {
+        state.error = null;
+        state.videoLoading = true;
+      })
+      .addCase(uploadMentorVideo.fulfilled, (state, action) => {
+        state.videoLoading = false;
+      })
+      .addCase(uploadMentorVideo.rejected, (state, action) => {
+        state.error = action.payload;
+        state.videoLoading = false;
       });
   },
 });

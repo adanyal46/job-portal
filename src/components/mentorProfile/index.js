@@ -11,12 +11,11 @@ import {
 } from "../../assets/svg";
 import { useState } from "react";
 import "./styles.scss";
-import { Typography, Upload } from "antd";
+import { Typography } from "antd";
 import MentorProfileHeader from "../mentorProfileHeader";
 import MentorProfileService from "../mentorProfileService";
 import CustomButton from "../customButton";
 import { useOutletContext } from "react-router-dom";
-import CommonModal from "../../components/commonModal"; // Import the modal component
 import MentorVideoContainer from "../MentorVideoContainer";
 
 const MentorProfile = () => {
@@ -28,7 +27,6 @@ const MentorProfile = () => {
   const [showDocumentsModal, setShowDocumentsModal] = useState(false);
   const [showEmployementModal, setShowEmployementModal] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [isUploadModalVisible, setIsUploadModalVisible] = useState(false);
 
   const education = user?.Education;
   const certificates = user?.Certificate;
@@ -41,24 +39,6 @@ const MentorProfile = () => {
 
   const showModal = () => {
     setIsModalVisible(true);
-  };
-
-  const handleUploadVideo = async (file) => {
-    const formData = new FormData();
-    formData.append("video", file); // Append the video file
-
-    try {
-      const response = await fetch("YOUR_API_ENDPOINT", {
-        method: "POST",
-        body: formData,
-      });
-      const data = await response.json();
-      console.log(data); // Handle the response as needed
-      // Close the modal after successful upload
-      setIsUploadModalVisible(false);
-    } catch (error) {
-      console.error("Error uploading video:", error);
-    }
   };
 
   return (
@@ -148,7 +128,10 @@ const MentorProfile = () => {
       </section>
 
       <section className="mentor-actions-container">
-        <MentorVideoContainer />
+        <MentorVideoContainer
+          mentorvideolink={profile?.mentorvideolink}
+          canUpload={true}
+        />
         {/* <article className="mentor-video-container">
           <p>Olivia Introductory video clip</p>
           <p>Get to know Olivia in a better way</p>
@@ -191,25 +174,6 @@ const MentorProfile = () => {
           />
         </section>
       </section>
-
-      {/* Video Upload Modal */}
-      <CommonModal
-        title="Upload Video"
-        isModalOpen={isUploadModalVisible}
-        handleClose={() => setIsUploadModalVisible(false)}
-        handleOk={() => {}} // Optional: handle the Ok button action
-      >
-        <Upload
-          accept="video/*"
-          showUploadList={false}
-          beforeUpload={(file) => {
-            handleUploadVideo(file); // Call the upload function
-            return false; // Prevent automatic upload
-          }}
-        >
-          <CustomButton category="primary" name="Select Video" />
-        </Upload>
-      </CommonModal>
     </section>
   );
 };

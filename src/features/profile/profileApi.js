@@ -106,3 +106,8 @@ export const updateOtherInfoMentorApi = async (formData) => {
   const response = await axiosInstance.post("/mentor/profile", formData);
   return response.data;
 };
+
+export const uploadMentorVideoApi = async (formData) => {
+  const response = await axiosInstance.post("/mentor/upload-video", formData);
+  return response.data;
+};

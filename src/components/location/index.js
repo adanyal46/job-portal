@@ -66,7 +66,7 @@ const Location = ({ showLocationModal, setShowLocationModal, location }) => {
               <article className="location-details">
                 <p className="location-name">{item.city}</p>
                 <p className="location-city">{item.country}</p>
-                <p className="location-id">{item.id}</p>
+                <p className="location-id">{item.postalCode}</p>
               </article>
             </section>
 

@@ -37,9 +37,7 @@ const ReviewsList = () => {
 };
 
 const Reviews = () => {
-  const handleTabChange = (key) => {
-    console.log(key);
-  };
+  const handleTabChange = (key) => {};
 
   return (
     <section>

@@ -42,7 +42,7 @@ const MentorCard = (props) => {
 
         {services && (
           <article className="mentor-card-tags-container">
-            {services.map((experty, index) => (
+            {services.slice(0, 3).map((experty, index) => (
               <Tag key={`mentor-card-tag-${index}`} label={experty.name} />
             ))}
           </article>

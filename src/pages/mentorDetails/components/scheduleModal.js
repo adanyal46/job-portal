@@ -120,7 +120,7 @@ const ScheduleModal = (props) => {
       const formattedTime = selectedTime ? selectedTime.format("HH:mm:ss") : "";
 
       let values = {
-        selectedService: 1,
+        selectedService: selectedServiceId,
         selectedDateTime: `${formattedDate}:${formattedTime}`,
         mentorId: mentorId,
       };
