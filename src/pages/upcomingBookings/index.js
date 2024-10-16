@@ -26,8 +26,10 @@ const BookingsListing = ({ bookingSession }) => {
           <BookingCard
             mentor
             progress="Completed"
-            mentorName={booking?.jsName}
-            selectedDateTime={booking?.selectedDateTime}
+            serviceName={booking?.serviceName}
+            mentorName={booking?.jobSeekerName}
+            date={booking?.date}
+            time={booking?.time}
           />
         ))
       ) : (
@@ -67,17 +69,17 @@ const UpcomingBookings = () => {
           {
             key: "upcoming",
             label: "Up Coming",
-            children: <NoBooking />,
+            children: <NoBooking bookingSession={bookingSession} />,
           },
           {
             key: "previous",
             label: "Previous",
-            children: <NoBooking />,
+            children: <NoBooking bookingSession={bookingSession} />,
           },
           {
             key: "customFilters",
             label: "Custom Filters",
-            children: <NoBooking />,
+            children: <NoBooking bookingSession={bookingSession} />,
           },
         ]}
       />
