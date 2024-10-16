@@ -1,8 +1,10 @@
 import { Upload, Modal, Button, message, Flex } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { uploadMentorVideo } from "../features/profile/profileSlice";
+import noVideoImage from "../assets/no-video.jpg"; // Path to your "No Video" image
+import CustomButton from "./customButton";
 
 const MentorVideoContainer = ({ mentorvideolink, canUpload = false }) => {
   const dispatch = useDispatch();
@@ -22,7 +24,7 @@ const MentorVideoContainer = ({ mentorvideolink, canUpload = false }) => {
     if (!videoFile)
       return message.open({
         type: "error",
-        content: "Please upload video to upload",
+        content: "Please upload a video to continue",
       });
     try {
       const formData = new FormData();
@@ -35,11 +37,6 @@ const MentorVideoContainer = ({ mentorvideolink, canUpload = false }) => {
     } catch (error) {
       console.log("error");
     }
-    // setTimeout(() => {
-    //   setLoading(false);
-    //   // setIsUploadModalVisible(false);
-    //   message.success("Video uploaded successfully!");
-    // }, 2000);
   };
 
   return (
@@ -49,36 +46,43 @@ const MentorVideoContainer = ({ mentorvideolink, canUpload = false }) => {
         Get to know Olivia better through her video introduction.
       </p>
 
-      {/* Video Upload Area */}
-      <Upload
-        accept="video/*"
-        showUploadList={false}
-        beforeUpload={() => false} // Prevent auto upload
-        onChange={handleVideoChange}
-        maxCount={1}
-        disabled={!canUpload}
-      >
-        <div className={videoFile ? "video-container" : "upload-container"}>
-          {videoFile || mentorvideolink ? (
-            <video
-              src={videoFile ? URL.createObjectURL(videoFile) : mentorvideolink}
-              controls
-              className="video"
-              autoPlay={false}
-            />
-          ) : (
-            <div className="upload-content">
-              <UploadOutlined className="upload-icon" />
-              <p className="upload-text">
-                Drag and drop a video file here or click to upload
-              </p>
-            </div>
-          )}
-        </div>
-      </Upload>
+      {/* Video Display Area */}
+      <div className="video-container">
+        {videoFile || mentorvideolink ? (
+          <video
+            src={videoFile ? URL.createObjectURL(videoFile) : mentorvideolink}
+            controls
+            className="video"
+            style={{ height: "300px", objectFit: "cover" }}
+          />
+        ) : (
+          <img
+            src={noVideoImage}
+            alt="No Video Available"
+            style={{ height: "300px", objectFit: "cover", width: "100%" }}
+          />
+        )}
+      </div>
+
+      {/* Upload Field (Only shown if canUpload is true) */}
+      {canUpload && (
+        <Upload
+          accept="video/*"
+          showUploadList={false}
+          beforeUpload={() => false} // Prevent auto upload
+          onChange={handleVideoChange}
+          maxCount={1}
+        >
+          <Flex style={{ marginTop: "10px" }}>
+            <Button type="dashed" block>
+              Upload New Video
+            </Button>
+          </Flex>
+        </Upload>
+      )}
 
       {/* Upload Button */}
-      {videoFile && (
+      {canUpload && videoFile && (
         <Flex justify="end">
           <Button
             type="primary"
