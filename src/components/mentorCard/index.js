@@ -27,7 +27,7 @@ const MentorCard = (props) => {
       <figure className="mentor-icon-container">
         <img
           loading="lazy"
-          src={"/images/mentors/mentor-1.png"}
+          src={profile?.avatarUrl || "/images/mentors/mentor-1.png"}
           alt={profile?.fullname || "Guest"}
           className="mentor-icon"
         />
