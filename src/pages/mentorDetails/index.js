@@ -176,6 +176,7 @@ const MentorDetails = () => {
           setSelectedTime={setSelectedTime}
           mentorId={mentorId}
           services={services}
+          setSelectedServiceId={setSelectedServiceId}
         />
       )}
     </section>

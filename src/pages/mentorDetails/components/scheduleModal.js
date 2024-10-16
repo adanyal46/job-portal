@@ -37,12 +37,24 @@ const ModalStep = (props) => {
   );
 };
 
-const StepButtons = () => {
+const StepButtons = ({ services, selectedServiceId, setSelectedServiceId }) => {
+  const handleServiceClick = (serviceId) => {
+    setSelectedServiceId(serviceId); // Set the selected service ID
+  };
   return (
     <section className="steps-buttons-container">
-      <p className="step-button active">Resume Review</p>
-      <p className="step-button">Interview Prep</p>
-      <p className="step-button">Job Search Strategy</p>
+      {services?.map((service) => (
+        <p
+          key={service.id}
+          style={{ cursor: "pointer" }}
+          className={`step-button ${
+            selectedServiceId === service.id ? "active" : ""
+          }`} // Add 'active' class if selected
+          onClick={() => handleServiceClick(service.id)} // Handle click event
+        >
+          {service.name}
+        </p>
+      ))}
     </section>
   );
 };
@@ -100,6 +112,7 @@ const ScheduleModal = (props) => {
     setSelectedTime,
     services,
     mentorId,
+    setSelectedServiceId,
   } = props;
   const dispatch = useDispatch();
   const [currentStep, setCurrentStep] = useState(1);
@@ -218,7 +231,11 @@ const ScheduleModal = (props) => {
         <section className="schedule-form-container">
           {currentStep === 1 && (
             <section className="schedule-step-container">
-              <StepButtons />
+              <StepButtons
+                services={services}
+                selectedServiceId={selectedServiceId}
+                setSelectedServiceId={setSelectedServiceId}
+              />
 
               <section className="schedule-fields-container">
                 <CommonInput
@@ -257,7 +274,7 @@ const ScheduleModal = (props) => {
 
               <article className="review-content-container">
                 <p className="review-label">Service</p>
-                <p className="review-value">Resume Review</p>
+                <p className="review-value">{findServ?.name}</p>
               </article>
 
               <article className="review-content-container">
@@ -267,7 +284,7 @@ const ScheduleModal = (props) => {
 
               <article className="review-content-container">
                 <p className="review-label">Special Discount</p>
-                <p className="review-value">$10</p>
+                <p className="review-value">$0</p>
               </article>
 
               <section className="voucher-field-container">
@@ -289,7 +306,7 @@ const ScheduleModal = (props) => {
 
               <article className="review-content-container">
                 <p className="total-label">Total</p>
-                <h4 className="total-value">${findServ?.pricing - 10}</h4>
+                <h4 className="total-value">${findServ?.pricing}</h4>
               </article>
 
               <ScheduleButtons
