@@ -19,6 +19,7 @@ import {
   updateMentorServiceApi,
   updateOtherInfoMentorApi,
   uploadMentorVideoApi,
+  uploadRecruiterVideoApi,
 } from "./profileApi";
 import { jwtDecode } from "jwt-decode";
 
@@ -397,7 +398,7 @@ export const deleteServiceMentor = createAsyncThunk(
   "delete/service/mentor",
   async (serviceId, { getState, rejectWithValue }) => {
     try {
-      const response = await deleteMentorServiceApi(serviceId);
+      await deleteMentorServiceApi(serviceId);
       const currentUser = getState().profile.user;
 
       const updatedServices = currentUser.services.filter(
@@ -420,7 +421,7 @@ export const deleteServiceMentor = createAsyncThunk(
 );
 export const updateOtherInfoMentor = createAsyncThunk(
   "profile/update/mentor",
-  async (formData, { getState, rejectWithValue }) => {
+  async (formData, { rejectWithValue }) => {
     try {
       const response = await updateOtherInfoMentorApi(formData);
       return response;
@@ -431,9 +432,20 @@ export const updateOtherInfoMentor = createAsyncThunk(
 );
 export const uploadMentorVideo = createAsyncThunk(
   "profile/update/mentor/video",
-  async (formData, { getState, rejectWithValue }) => {
+  async (formData, { rejectWithValue }) => {
     try {
       const response = await uploadMentorVideoApi(formData);
+      return response;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+export const uploadRecruiterVideo = createAsyncThunk(
+  "profile/update/recuriter/video",
+  async (formData, { rejectWithValue }) => {
+    try {
+      const response = await uploadRecruiterVideoApi(formData);
       return response;
     } catch (error) {
       return rejectWithValue(error.message);
@@ -612,7 +624,7 @@ const profileSlice = createSlice({
       .addCase(updateOtherInfoMentor.pending, (state) => {
         state.error = null;
       })
-      .addCase(updateOtherInfoMentor.fulfilled, (state, action) => {})
+      .addCase(updateOtherInfoMentor.fulfilled, () => {})
       .addCase(updateOtherInfoMentor.rejected, (state, action) => {
         state.error = action.payload;
       })
@@ -620,10 +632,21 @@ const profileSlice = createSlice({
         state.error = null;
         state.videoLoading = true;
       })
-      .addCase(uploadMentorVideo.fulfilled, (state, action) => {
+      .addCase(uploadMentorVideo.fulfilled, (state) => {
         state.videoLoading = false;
       })
       .addCase(uploadMentorVideo.rejected, (state, action) => {
+        state.error = action.payload;
+        state.videoLoading = false;
+      })
+      .addCase(uploadRecruiterVideo.pending, (state) => {
+        state.error = null;
+        state.videoLoading = true;
+      })
+      .addCase(uploadRecruiterVideo.fulfilled, (state) => {
+        state.videoLoading = false;
+      })
+      .addCase(uploadRecruiterVideo.rejected, (state, action) => {
         state.error = action.payload;
         state.videoLoading = false;
       });

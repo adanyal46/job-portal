@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import "./styles.scss";
-import { Avatar, Dropdown, Image, message } from "antd";
-import { useDispatch, useSelector } from "react-redux";
+import { Dropdown, Image, message } from "antd";
+import { useDispatch } from "react-redux";
 import { logout } from "../../features/auth/authSlice";
 
 const Navbar = ({ user }) => {
@@ -14,8 +14,13 @@ const Navbar = ({ user }) => {
   const serverUrl = "http://54.144.76.160:5000";
 
   const isMentor = user?.role === "MENTOR";
-  const isSeeker = user?.role === "JOB_SEEKER";
-  const routePrefix = isMentor ? "/mentor" : "/job-seeker";
+  // const isSeeker = user?.role === "JOB_SEEKER";
+  const isRecruiter = user?.role === "RECRUITER";
+  const routePrefix = isMentor
+    ? "/mentor"
+    : isRecruiter
+    ? "/recruiter"
+    : "/job-seeker";
 
   let profileImage =
     profileData?.avatarUrl &&
@@ -104,9 +109,11 @@ const Navbar = ({ user }) => {
             </NavLink>
           )}
 
-          <NavLink className="navbar-items" to={routePrefix + "/blogs"}>
-            <li className="item-name">Blogs</li>
-          </NavLink>
+          {user?.role !== "RECRUITER" && (
+            <NavLink className="navbar-items" to={routePrefix + "/blogs"}>
+              <li className="item-name">Blogs</li>
+            </NavLink>
+          )}
 
           <li className="navbar-items">
             <figure className="notifications-icon">

@@ -109,6 +109,35 @@ export const BookingsIcon = () => (
   </svg>
 );
 
+export const JobSeekerIcon = (props) => {
+  return (
+    <svg
+      width={24}
+      height={24}
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <g
+        clipPath="url(#clip0_5845_3614)"
+        stroke="#2F2C39"
+        strokeWidth={1.5}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <path d="M16.5 9.75L12 12V6.75M12 21a9 9 0 119-9" />
+        <path d="M18 18.75a2.25 2.25 0 100-4.5 2.25 2.25 0 000 4.5zM15 21c.344-1.294 1.556-2.25 3-2.25s2.656.956 3 2.25" />
+      </g>
+      <defs>
+        <clipPath id="clip0_5845_3614">
+          <path fill="#fff" d="M0 0H24V24H0z" />
+        </clipPath>
+      </defs>
+    </svg>
+  );
+};
+
 export const JobsIcon = () => (
   <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
     <path

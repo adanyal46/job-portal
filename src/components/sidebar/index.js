@@ -10,6 +10,7 @@ import {
   BookingsIcon,
   EarningsIcon,
   ReviewIcon,
+  JobSeekerIcon,
 } from "../../assets/svg";
 import "./styles.scss";
 import { Image } from "antd";
@@ -29,11 +30,16 @@ const Sidebar = ({ user }) => {
 
   // Role-based URL prefixes
   const isMentor = user?.role === "MENTOR";
-  const routePrefix = isMentor ? "/mentor" : "/job-seeker";
+  const isRecruiter = user?.role === "RECRUITER";
+  const routePrefix = isMentor
+    ? "/mentor"
+    : isRecruiter
+    ? "/recruiter"
+    : "/job-seeker";
 
   const items = [
     // Jobs section only for job seekers
-    ...(!isMentor
+    ...(!isMentor && !isRecruiter
       ? [
           {
             key: "2",
@@ -114,7 +120,7 @@ const Sidebar = ({ user }) => {
       : []),
 
     // Mentor-only sections
-    ...(isMentor
+    ...(isMentor || isRecruiter
       ? [
           {
             key: "1",
@@ -148,6 +154,19 @@ const Sidebar = ({ user }) => {
                   </li>
                 </Link>
               </ul>
+            ),
+          },
+          {
+            key: "job-seeker",
+            showArrow: false,
+            collapsible: "header",
+            label: (
+              // <Link to={`${routePrefix}/earnings`}>
+              <section className="collapse-header-wrapper">
+                <JobSeekerIcon />
+                <h5 className="collapse-heading">Job Seeker</h5>
+              </section>
+              // </Link>
             ),
           },
           {
@@ -205,7 +224,7 @@ const Sidebar = ({ user }) => {
     },
   ];
 
-  const onChange = (key) => {};
+  const onChange = () => {};
 
   return (
     <aside className="fuse-main-sidebar-wrapper">

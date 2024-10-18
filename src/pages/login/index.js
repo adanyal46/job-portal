@@ -4,7 +4,6 @@ import { clearMessage, login } from "../../features/auth/authSlice";
 import { Form, Input, Button, Typography, message, Card } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import { isTokenValid } from "../../utils"; // Utility function to check if token is valid
-import { profile } from "../../features/profile/profileSlice";
 import Loader from "../../components/Loader";
 
 const { Title } = Typography;
@@ -70,10 +69,12 @@ const LoginForm = () => {
 
         // Navigate based on user role after successful login
         setTimeout(() => {
-          if (role !== "JOB_SEEKER") {
+          if (role === "MENTOR") {
             window.location.replace("/mentor/profile");
-          } else {
+          } else if (role === "JOB_SEEKER") {
             window.location.replace("/job-seeker/jobs/search?type=search");
+          } else {
+            window.location.replace("/recruiter/profile");
           }
           setIsNavigating(false);
         }, 500); // Delay navigation by 500ms

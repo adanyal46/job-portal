@@ -4,6 +4,7 @@ import { Roles } from "./utils/roles";
 import Layout from "./Layout";
 import { Navigate } from "react-router-dom";
 import ErrorPage from "./ErrorPage";
+import RecruiterProfile from "./pages/recruiterProfile";
 
 // Lazy loaded components
 const MyProfile = lazy(() => import("./pages/myProfile"));
@@ -29,17 +30,17 @@ const routeConfig = (token) => {
       {
         path: "/",
         element: <Navigate to={"/login"} replace />,
-        errorElement: <ErrorPage />, // Adding Error Page for error handling
+        errorElement: <ErrorPage />,
       },
       {
         path: "/login",
         element: <LoginForm />,
-        errorElement: <ErrorPage />, // Adding Error Page for error handling
+        errorElement: <ErrorPage />,
       },
       {
         path: "/signup",
         element: <SignUp />,
-        errorElement: <ErrorPage />, // Adding Error Page for error handling
+        errorElement: <ErrorPage />,
       },
     ];
   }
@@ -50,7 +51,7 @@ const routeConfig = (token) => {
     {
       path: "*",
       element: <Navigate to={"/job-seeker/profile"} replace />,
-      errorElement: <ErrorPage />, // Adding Error Page for error handling
+      errorElement: <ErrorPage />,
     },
     {
       path: "/job-seeker",
@@ -59,7 +60,7 @@ const routeConfig = (token) => {
         {
           path: "profile",
           element: <MyProfile />,
-          errorElement: <ErrorPage />, // Adding Error Page for error handling
+          errorElement: <ErrorPage />,
         },
         {
           path: "jobs/search",
@@ -154,11 +155,67 @@ const routeConfig = (token) => {
     },
   ];
 
+  const recruiterRoutes = [
+    {
+      path: "*",
+      element: <Navigate to={"/recruiter/profile"} replace />,
+      errorElement: <ErrorPage />, // Adding Error Page for error handling
+    },
+    {
+      path: "/recruiter",
+      element: <Layout />,
+      children: [
+        {
+          path: "profile",
+          element: <RecruiterProfile />,
+          errorElement: <ErrorPage />, // Adding Error Page for error handling
+        },
+        {
+          path: "upcoming-bookings",
+          element: <UpcomingBookings />,
+          errorElement: <ErrorPage />,
+        },
+        {
+          path: "history-bookings",
+          element: <HistoryBookings />,
+          errorElement: <ErrorPage />,
+        },
+        {
+          path: "notifications",
+          element: <Notifications />,
+          errorElement: <ErrorPage />,
+        },
+        {
+          path: "reviews",
+          element: <Reviews />,
+          errorElement: <ErrorPage />,
+        },
+        {
+          path: "settings",
+          element: <Settings />,
+          errorElement: <ErrorPage />,
+        },
+        {
+          path: "earnings",
+          element: <Earnings />,
+          errorElement: <ErrorPage />,
+        },
+        {
+          path: "blogs",
+          element: <Blogs />,
+          errorElement: <ErrorPage />,
+        },
+      ],
+    },
+  ];
+
   switch (role) {
     case Roles.JOB_SEEKER:
       return [...jobSeekerRoutes];
     case Roles.MENTOR:
       return [...mentorRoutes];
+    case Roles.RECRUITER:
+      return [...recruiterRoutes];
     default:
       return [
         {
