@@ -21,7 +21,10 @@ const MentorProfileHeader = ({ user, showInfoModal, setShowInfoModal }) => {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   const profile = user && user?.Profile[0];
-  const serverUrl = "http://54.144.76.160:5000";
+  const serverUrl =
+    process.env.REACT_APP_NODE_ENV === "development"
+      ? "http://54.144.76.160:5000"
+      : window.origin; // Use window.origin for production
 
   let profileImage =
     profile?.avatarUrl &&

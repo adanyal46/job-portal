@@ -21,7 +21,10 @@ const ProfileHeader = ({
 }) => {
   const dispatch = useDispatch();
   const profile = user?.Profile[0];
-  const serverUrl = "http://54.144.76.160:5000";
+  const serverUrl =
+    process.env.REACT_APP_NODE_ENV === "development"
+      ? "http://54.144.76.160:5000"
+      : window.origin; // Use window.origin for production
 
   // Replace placeholder with actual server URL
   let profileImage =
