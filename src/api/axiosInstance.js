@@ -1,8 +1,14 @@
 // src/api/axiosInstance.js
 import axios from "axios";
 
+// Determine if the app is running in development mode (local) or production (Netlify)
+const isDevelopment = process.env.NODE_ENV === "development";
+
+// Set the baseURL dynamically
 const axiosInstance = axios.create({
-  baseURL: "http://54.144.76.160:5000/api", // Set the base URL for all API calls
+  baseURL: isDevelopment
+    ? "http://54.144.76.160:5000/api" // Local API URL for development
+    : "/api", // Relative path for Netlify's proxy in production
 });
 
 // Interceptors for requests
