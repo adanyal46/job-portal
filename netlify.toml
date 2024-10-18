@@ -2,3 +2,8 @@
   from = "/api/*"
   to = "http://54.144.76.160:5000/api/:splat"
   status = 200
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
