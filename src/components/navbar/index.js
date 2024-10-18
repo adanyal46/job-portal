@@ -11,7 +11,10 @@ const Navbar = ({ user }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [toggleNav, setToggleNav] = useState(false);
-  const serverUrl = "http://54.144.76.160:5000";
+  const serverUrl =
+    process.env.REACT_APP_NODE_ENV === "development"
+      ? "http://54.144.76.160:5000"
+      : "https://jobportal-fuse.netlify.app"; // Use window.origin for production
 
   const isMentor = user?.role === "MENTOR";
   // const isSeeker = user?.role === "JOB_SEEKER";

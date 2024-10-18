@@ -24,7 +24,7 @@ const ProfileHeader = ({
   const serverUrl =
     process.env.REACT_APP_NODE_ENV === "development"
       ? "http://54.144.76.160:5000"
-      : window.origin; // Use window.origin for production
+      : "https://jobportal-fuse.netlify.app"; // Use window.origin for production
 
   // Replace placeholder with actual server URL
   let profileImage =

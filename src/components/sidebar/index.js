@@ -20,7 +20,10 @@ const Sidebar = ({ user }) => {
   const location = useLocation();
   const profile =
     user && user.Profile && user.Profile.length > 0 ? user.Profile[0] : null;
-  const serverUrl = "http://54.144.76.160:5000";
+  const serverUrl =
+    process.env.REACT_APP_NODE_ENV === "development"
+      ? "http://54.144.76.160:5000"
+      : "https://jobportal-fuse.netlify.app";
 
   let profileImage =
     profile?.avatarUrl &&
