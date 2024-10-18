@@ -14,20 +14,19 @@ import {
 } from "../../assets/svg";
 import "./styles.scss";
 import { Image } from "antd";
+import { getRelativePath } from "../../utils";
 
 const Sidebar = ({ user }) => {
   let query = useQuery();
   const location = useLocation();
   const profile =
     user && user.Profile && user.Profile.length > 0 ? user.Profile[0] : null;
-  const serverUrl =
+  const baseUrl =
     process.env.REACT_APP_NODE_ENV === "development"
       ? "http://54.144.76.160:5000"
       : "https://jobportal-fuse.netlify.app";
-
-  let profileImage =
-    profile?.avatarUrl &&
-    profile?.avatarUrl.replace("http://your-server-url", serverUrl);
+  const fullAvatarUrl = profile?.avatarUrl || "";
+  const relativeAvatarUrl = getRelativePath(fullAvatarUrl, baseUrl);
 
   const searchParams = query.get("type");
 
@@ -242,7 +241,7 @@ const Sidebar = ({ user }) => {
           <Image
             loading="lazy"
             className="sidebar-user-icon"
-            src={profileImage || "/images/sidebar-user-icon.png"}
+            src={relativeAvatarUrl || "/images/sidebar-user-icon.png"}
             alt="fuseUser"
             style={{
               borderRadius: "100px",

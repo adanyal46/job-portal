@@ -11,14 +11,9 @@ import "./styles.scss";
 import { useDispatch } from "react-redux";
 import { profileUpdate } from "../../features/profile/profileSlice";
 import { Image, message } from "antd";
+import { getRelativePath } from "../../utils";
 
-const ProfileHeader = ({
-  user,
-  showInfoModal,
-  setShowInfoModal,
-  setShowEducationModal,
-  setShowCertificationModal,
-}) => {
+const ProfileHeader = ({ user, showInfoModal, setShowInfoModal }) => {
   const dispatch = useDispatch();
   const profile = user?.Profile[0];
   const serverUrl =
@@ -27,24 +22,25 @@ const ProfileHeader = ({
       : "https://jobportal-fuse.netlify.app"; // Use window.origin for production
 
   // Replace placeholder with actual server URL
-  let profileImage =
-    profile?.avatarUrl &&
-    profile?.avatarUrl.replace("http://your-server-url", serverUrl);
+  const baseUrl =
+    process.env.REACT_APP_NODE_ENV === "development"
+      ? "http://54.144.76.160:5000"
+      : "https://jobportal-fuse.netlify.app";
+  const fullAvatarUrl = profile?.avatarUrl || "";
+  const relativeAvatarUrl = getRelativePath(fullAvatarUrl, baseUrl);
 
   const [profileData, setProfileData] = useState({
     fullname: profile?.fullname || "",
     email: user?.email || "",
     phnumber: profile?.phnumber || "",
-    profilePic: profileImage || "",
+    profilePic: relativeAvatarUrl || "",
   });
 
-  const [imageUrl, setImageUrl] = useState(profileImage); // State for image URL
+  const [imageUrl, setImageUrl] = useState(relativeAvatarUrl); // State for image URL
   // Update the imageUrl when the profile changes
   useEffect(() => {
-    if (profileImage) {
-      setImageUrl(profileImage);
-    }
-  }, [profileImage]);
+    setImageUrl(relativeAvatarUrl);
+  }, [relativeAvatarUrl]);
 
   const handleShowInfoModal = () => {
     setShowInfoModal(() => true);
@@ -93,7 +89,7 @@ const ProfileHeader = ({
             width={200}
             height={200}
             className="user-profile-image"
-            src={imageUrl || "/images/user-profile-image.png"} // Use imageUrl state
+            src={relativeAvatarUrl || "/images/user-profile-image.png"} // Use imageUrl state
             alt="UserProfileImage"
             style={{ objectFit: "cover" }}
           />

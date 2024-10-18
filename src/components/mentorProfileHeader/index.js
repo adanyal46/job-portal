@@ -16,25 +16,26 @@ import {
 import { Image, message, Input } from "antd";
 import Rating from "../rating";
 import LocationWithIcon from "../locationWithIcon";
+import { getRelativePath } from "../../utils";
 
 const MentorProfileHeader = ({ user, showInfoModal, setShowInfoModal }) => {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   const profile = user && user?.Profile[0];
-  const serverUrl =
+
+  const baseUrl =
     process.env.REACT_APP_NODE_ENV === "development"
       ? "http://54.144.76.160:5000"
-      : "https://jobportal-fuse.netlify.app"; // Use window.origin for production
+      : "https://jobportal-fuse.netlify.app";
+  const fullAvatarUrl = profile?.avatarUrl || "";
+  const relativeAvatarUrl = getRelativePath(fullAvatarUrl, baseUrl);
 
-  let profileImage =
-    profile?.avatarUrl &&
-    profile?.avatarUrl.replace("http://your-server-url", serverUrl);
-
+  // Initialize state for profile data
   const [profileData, setProfileData] = useState({
     fullname: profile?.fullname || "",
     email: user?.email || "",
     phnumber: profile?.phnumber || "",
-    profilePic: profileImage || "",
+    profilePic: relativeAvatarUrl || "",
     location: profile?.location || "",
     companyName: profile?.companyName || "",
     description: profile?.about || "",
@@ -42,12 +43,13 @@ const MentorProfileHeader = ({ user, showInfoModal, setShowInfoModal }) => {
     speak: profile?.language || "",
   });
 
-  const [imageUrl, setImageUrl] = useState(profileImage); // State for image URL
+  // Set initial image URL state, ensuring it uses HTTPS
+  const [imageUrl, setImageUrl] = useState(relativeAvatarUrl);
+
+  // Update imageUrl whenever profileImage changes
   useEffect(() => {
-    if (profileImage) {
-      setImageUrl(profileImage);
-    }
-  }, [profileImage]);
+    setImageUrl(relativeAvatarUrl); // Update imageUrl using the utility function
+  }, [relativeAvatarUrl]);
 
   const handleShowInfoModal = () => {
     setShowInfoModal(() => true);

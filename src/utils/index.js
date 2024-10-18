@@ -86,3 +86,12 @@ export const formatDateTime = (selectedDateTime) => {
 
   return { formattedDate, formattedTime };
 };
+
+// Function to convert full URL to relative path
+export const getRelativePath = (fullAvatarUrl, url) => {
+  const baseUrl = "http://54.144.76.160:5000";
+  const parts = fullAvatarUrl.split(baseUrl);
+  // Concatenate with the new base URL
+  const updatedUrl = url + parts[1];
+  return updatedUrl;
+};

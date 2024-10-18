@@ -4,6 +4,7 @@ import "./styles.scss";
 import { Dropdown, Image, message } from "antd";
 import { useDispatch } from "react-redux";
 import { logout } from "../../features/auth/authSlice";
+import { getRelativePath } from "../../utils";
 
 const Navbar = ({ user }) => {
   const profileData =
@@ -11,10 +12,12 @@ const Navbar = ({ user }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [toggleNav, setToggleNav] = useState(false);
-  const serverUrl =
+  const baseUrl =
     process.env.REACT_APP_NODE_ENV === "development"
       ? "http://54.144.76.160:5000"
-      : "https://jobportal-fuse.netlify.app"; // Use window.origin for production
+      : "https://jobportal-fuse.netlify.app";
+  const fullAvatarUrl = profileData?.avatarUrl || "";
+  const relativeAvatarUrl = getRelativePath(fullAvatarUrl, baseUrl);
 
   const isMentor = user?.role === "MENTOR";
   // const isSeeker = user?.role === "JOB_SEEKER";
@@ -24,10 +27,6 @@ const Navbar = ({ user }) => {
     : isRecruiter
     ? "/recruiter"
     : "/job-seeker";
-
-  let profileImage =
-    profileData?.avatarUrl &&
-    profileData?.avatarUrl.replace("http://your-server-url", serverUrl);
 
   const goToNotificationsPage = () => {
     const route = routePrefix + "/notifications"; // Set the route to save
@@ -146,7 +145,7 @@ const Navbar = ({ user }) => {
                   loading="lazy"
                   style={{ width: "40px", height: "40px", objectFit: "cover" }}
                   className="user-icon"
-                  src={profileImage || "/images/user-icon.png"}
+                  src={relativeAvatarUrl || "/images/user-icon.png"}
                   alt="fuseUser"
                   preview={false}
                 />
