@@ -10,7 +10,7 @@ import { EditProfileIcon, VerifiedIcon } from "../../assets/svg";
 import "./styles.scss";
 import { useDispatch } from "react-redux";
 import {
-  updateOtherInfoMentor,
+  updateOtherInfo,
   profile as profileRefresh,
 } from "../../features/profile/profileSlice";
 import { Image, message, Input } from "antd";
@@ -83,7 +83,7 @@ const MentorProfileHeader = ({ user, showInfoModal, setShowInfoModal }) => {
     try {
       setLoading(true);
       const resultAction = await dispatch(
-        updateOtherInfoMentor(formData)
+        updateOtherInfo(formData)
       ).unwrap();
       if (resultAction.success) {
         message.success("Profile updated successfully!");

@@ -95,6 +95,10 @@ const EducationAndCertification = ({
   const handleActionMenu = (action, id) => {
     if (action === "edit") {
       const data = education.find((item) => item.id === id);
+      if (!data) {
+        message.error("Education data not found for ID:", id);
+        return; // Exit if no data found
+      }
       setEducationId(data.id);
       setEducationData({
         degree: data.degreName,
@@ -110,6 +114,10 @@ const EducationAndCertification = ({
     }
   };
   const confirmDelete = async (id) => {
+    if (!educationId) {
+      message.error("Education ID is undefined when attempting to delete.");
+      return; // Exit if educationId is not set
+    }
     const response = await dispatch(
       deleteEducation({ educationId: id })
     ).unwrap();

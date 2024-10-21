@@ -1,7 +1,7 @@
 import { Upload, Modal, Button, message, Flex } from "antd";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { uploadRecruiterVideo } from "../features/profile/profileSlice";
+import { uploadMentorVideo } from "../features/profile/profileSlice";
 import noVideoImage from "../assets/no-video.jpg"; // Path to your "No Video" image
 
 const RecruiterVideoContainer = ({ mentorvideolink, canUpload = false }) => {
@@ -27,7 +27,7 @@ const RecruiterVideoContainer = ({ mentorvideolink, canUpload = false }) => {
     try {
       const formData = new FormData();
       formData.append("mentorVideo", videoFile);
-      const response = await dispatch(uploadRecruiterVideo(formData)).unwrap();
+      const response = await dispatch(uploadMentorVideo(formData)).unwrap();
       if (response && response.message && response.profile) {
         setIsUploadModalVisible(false);
         window.location.replace("/recruiter/profile");

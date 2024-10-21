@@ -18,6 +18,7 @@ const CommonInput = (props) => {
     onEnter,
     name,
     handleClear,
+    maxLength
   } = props;
 
   const handleDateChange = (date, dateString) => {
@@ -129,7 +130,7 @@ const CommonInput = (props) => {
 
       <Case condition={category === "textarea"}>
         <TextArea
-          maxLength={200}
+          maxLength={maxLength || 200}
           className={`common-textarea-field ${classes}`}
           onChange={handleInputChange}
           placeholder={placeholder}

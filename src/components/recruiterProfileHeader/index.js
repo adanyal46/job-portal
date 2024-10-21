@@ -9,7 +9,7 @@ import { EditProfileIcon } from "../../assets/svg";
 
 import "./styles.scss";
 import { useDispatch } from "react-redux";
-import { updateOtherInfoMentor } from "../../features/profile/profileSlice";
+import { updateOtherInfo } from "../../features/profile/profileSlice";
 import { Image, message, Input } from "antd";
 import Rating from "../rating";
 import LocationWithIcon from "../locationWithIcon";
@@ -30,9 +30,9 @@ const RecruiterProfileHeader = ({ user, showInfoModal, setShowInfoModal }) => {
     fullname: profile?.fullname || "",
     email: user?.email || "",
     phnumber: profile?.phnumber || "",
-    profilePic: profileImage || "",
+    profilePic: relativeAvatarUrl || "",
     location: profile?.location || "",
-    companyName: profile?.companyName || "",
+    companyName: profile?.industry || "",
     description: profile?.about || "",
     tagline: profile?.tagline || "",
     speak: profile?.language || "",
@@ -64,7 +64,7 @@ const RecruiterProfileHeader = ({ user, showInfoModal, setShowInfoModal }) => {
     formData.append("email", profileData.email);
     formData.append("phnumber", profileData.phnumber);
     formData.append("location", profileData.location);
-    formData.append("companyName", profileData.companyName);
+    formData.append("industry", profileData.companyName);
     formData.append("about", profileData.description);
     formData.append("tagline", profileData.tagline);
     formData.append("language", profileData.speak);
@@ -75,11 +75,11 @@ const RecruiterProfileHeader = ({ user, showInfoModal, setShowInfoModal }) => {
     try {
       setLoading(true);
       const resultAction = await dispatch(
-        updateOtherInfoMentor(formData)
+        updateOtherInfo(formData)
       ).unwrap();
       if (resultAction.success) {
         message.success("Profile updated successfully!");
-        window.location.replace("/mentor/profile");
+        // window.location.replace("/recruiter/profile");
         handleCloseInfoModal();
       }
     } catch (error) {
@@ -109,7 +109,7 @@ const RecruiterProfileHeader = ({ user, showInfoModal, setShowInfoModal }) => {
             <h2 className="mentor-name">{profile?.fullname || "Guest"}</h2>
             <Rating rating={4} reviews={7} />
             <LocationWithIcon location={profile?.location || "N/A"} />
-            <p className="mentor-expertise">{profile?.companyName || "N/A"}</p>
+            <p className="mentor-expertise">{profile?.industry || "N/A"}</p>
             <p className="mentor-tagline">
               {profile?.tagline || "No tagline available"}
             </p>
@@ -200,6 +200,7 @@ const RecruiterProfileHeader = ({ user, showInfoModal, setShowInfoModal }) => {
                   category="textarea"
                   placeholder="Enter Description"
                   value={profileData.description}
+                  maxLength={1000}
                   onChange={(val) => handleChange("description", val)}
                 />
               </section>
