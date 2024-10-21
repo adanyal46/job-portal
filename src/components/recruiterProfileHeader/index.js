@@ -79,7 +79,7 @@ const RecruiterProfileHeader = ({ user, showInfoModal, setShowInfoModal }) => {
       ).unwrap();
       if (resultAction.success) {
         message.success("Profile updated successfully!");
-        // window.location.replace("/recruiter/profile");
+        window.location.replace("/recruiter/profile");
         handleCloseInfoModal();
       }
     } catch (error) {
