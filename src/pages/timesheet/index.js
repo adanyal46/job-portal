@@ -1,3 +1,4 @@
+import { Card } from "antd";
 import CommonTable from "../../components/commonTable";
 import "./styles.scss";
 
@@ -126,10 +127,10 @@ const tableData = [
 
 const Timesheet = () => {
   return (
-    <section className="main-layout-container">
-      <h3 className="layout-main-heading">Timesheet</h3>
-
+    <Card>
       <section className="time-sheet-main-container">
+        <Typography>Timesheet</Typography>
+
         <CommonTable columns={columns} data={tableData} />
 
         <section className="time-total-calculation-wrapper">
@@ -177,7 +178,7 @@ const Timesheet = () => {
           </article>
         </section>
       </section>
-    </section>
+    </Card>
   );
 };
 

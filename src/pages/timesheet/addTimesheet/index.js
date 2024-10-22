@@ -1,4 +1,4 @@
-import { Checkbox } from "antd";
+import { Card, Checkbox, Typography } from "antd";
 import { PlusIcon } from "../../../assets/svg";
 import CommonInput from "../../../components/commonInput";
 import CustomButton from "../../../components/customButton";
@@ -141,13 +141,13 @@ const TimesheetForm = () => {
 
 const AddTimesheet = () => {
   return (
-    <section className="main-layout-container">
-      <h3 className="layout-main-heading">Add Timesheet</h3>
+    <Card>
+      <Typography.Title level={3}>Add Timesheet</Typography.Title>
 
       <section className="time-sheet-main-container">
         <TimesheetForm />
       </section>
-    </section>
+    </Card>
   );
 };
 

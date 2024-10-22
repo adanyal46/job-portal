@@ -1,10 +1,13 @@
 import { Typography } from "antd";
-import BookingCard from "../../components/bookingCard";
+import BookingCard, {
+  BookingCardRecruiter,
+} from "../../components/bookingCard";
 // import CustomPagination from "../../components/customPagination";
 import CustomTabs from "../../components/customTabs";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { upcomingBookingSession } from "../../features/booking/bookingSlice";
+import tokenDecoder from "../../utils/jwtDecoder";
 
 const NoBooking = () => {
   return (
@@ -16,41 +19,70 @@ const NoBooking = () => {
   );
 };
 
-const BookingsListing = ({ bookingSession }) => {
+const BookingsListingMentor = ({ bookingSession }) => {
   return (
-    <section className="booking-listing-wrapper">
+    <>
       {bookingSession &&
       Array.isArray(bookingSession) &&
       bookingSession.length > 0 ? (
         bookingSession.map((booking) => (
-          <BookingCard
-            mentor
-            progress="Completed"
-            serviceName={booking?.serviceName}
-            mentorName={booking?.jobSeekerName}
-            date={booking?.date}
-            time={booking?.time}
-          />
+          <section className="booking-listing-wrapper">
+            <BookingCard
+              mentor
+              progress="Completed"
+              serviceName={booking?.serviceName}
+              mentorName={booking?.jobSeekerName}
+              date={booking?.date}
+              time={booking?.time}
+            />
+          </section>
         ))
       ) : (
         <NoBooking />
       )}
 
       {/* <BookingCard mentor progress="In Progress" />
-      <BookingCard mentor progress="Completed" /> */}
+    <BookingCard mentor progress="Completed" /> */}
       {/* <CustomPagination /> */}
-    </section>
+    </>
+  );
+};
+const BookingsListingRecruiter = ({ bookingSession }) => {
+  return (
+    <>
+      <section className="booking-listing-wrapper">
+        {bookingSession &&
+          Array.isArray(bookingSession) &&
+          bookingSession.length > 0 &&
+          bookingSession.map((booking) => (
+            <BookingCardRecruiter
+              mentor
+              progress="Completed"
+              serviceName={booking?.serviceName}
+              mentorName={booking?.jobSeekerName}
+              date={booking?.date}
+              time={booking?.time}
+            />
+          ))}
+      </section>
+
+      {/* <BookingCard mentor progress="In Progress" />
+    <BookingCard mentor progress="Completed" /> */}
+      {/* <CustomPagination /> */}
+    </>
   );
 };
 
 const UpcomingBookings = () => {
-  const { bookingSession } = useSelector((state) => state.bookings);
+  const token = localStorage.getItem("token");
+  const decodedToken = tokenDecoder(token);
+  const USER_ROLE = decodedToken.role;
+  console.log(USER_ROLE);
   const dispatch = useDispatch();
-
+  const { bookingSession } = useSelector((state) => state.bookings);
   useEffect(() => {
     dispatch(upcomingBookingSession());
   }, [dispatch]);
-
   const handleTabChange = (key) => {};
 
   return (
@@ -64,7 +96,16 @@ const UpcomingBookings = () => {
           {
             key: "today",
             label: "Today",
-            children: <BookingsListing bookingSession={bookingSession} />,
+            children:
+              bookingSession.length > 0 ? (
+                USER_ROLE !== "RECRUITER" ? (
+                  <BookingsListingMentor bookingSession={bookingSession} />
+                ) : (
+                  <BookingsListingRecruiter bookingSession={bookingSession} />
+                )
+              ) : (
+                <NoBooking />
+              ),
           },
           {
             key: "upcoming",

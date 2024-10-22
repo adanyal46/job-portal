@@ -171,6 +171,7 @@ const Sidebar = ({ user }) => {
               // </Link>
             ),
           },
+
           {
             key: "4",
             showArrow: false,
@@ -198,6 +199,19 @@ const Sidebar = ({ user }) => {
                 <section className="collapse-header-wrapper">
                   <ReviewIcon />
                   <h5 className="collapse-heading">Reviews</h5>
+                </section>
+              </Link>
+            ),
+          },
+          {
+            key: "time-sheet",
+            showArrow: false,
+            collapsible: "header",
+            label: (
+              <Link to={"/recruiter/timesheet"}>
+                <section className="collapse-header-wrapper">
+                  <JobSeekerIcon />
+                  <h5 className="collapse-heading">Timesheet</h5>
                 </section>
               </Link>
             ),

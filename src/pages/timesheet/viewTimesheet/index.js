@@ -1,3 +1,4 @@
+import { Card, Typography } from "antd";
 import { DetailsIcon } from "../../../assets/svg";
 import CommonInput from "../../../components/commonInput";
 import CommonTable from "../../../components/commonTable";
@@ -6,6 +7,7 @@ import CustomPagination from "../../../components/customPagination";
 import CustomTabs from "../../../components/customTabs";
 
 import "../styles.scss";
+import { Link } from "react-router-dom";
 
 const viewTimesheetColumns = [
   {
@@ -85,7 +87,11 @@ const columns = [
     title: "Actions",
     dataIndex: "actions",
     key: "actions",
-    render: () => <CustomButton category="additional" name="Add Timesheet" />,
+    render: () => (
+      <Link to="/recruiter/create-timesheet">
+        <CustomButton category="additional" name="Add Timesheet" />
+      </Link>
+    ),
   },
 ];
 
@@ -167,8 +173,10 @@ const ViewTimesheet = () => {
   const handleTabChange = (key) => {};
 
   return (
-    <section className="main-layout-container">
-      <h3 className="layout-main-heading">Timesheet</h3>
+    <div>
+      <Typography.Title level={2} style={{ fontWeight: "400" }}>
+        Timesheet{" "}
+      </Typography.Title>
 
       <CustomTabs
         handleChange={handleTabChange}
@@ -177,26 +185,42 @@ const ViewTimesheet = () => {
           {
             key: "allRoles",
             label: "All Roles",
-            children: <AllRoles role="in-progress-roles" />,
+            children: (
+              <Card>
+                <AllRoles />
+              </Card>
+            ),
           },
           {
             key: "inProgressRoles",
             label: "In Progress Roles",
-            children: <AllRoles role="in-progress-roles" />,
+            children: (
+              <Card>
+                <AllRoles role="in-progress-roles" />
+              </Card>
+            ),
           },
           {
             key: "addTimesheet",
             label: "Add Timesheet",
-            children: <AllRoles />,
+            children: (
+              <Card>
+                <AllRoles />
+              </Card>
+            ),
           },
           {
             key: "viewTimesheets",
             label: "View Timesheets",
-            children: <AllRoles role="view-timesheet" />,
+            children: (
+              <Card>
+                <AllRoles role="view-timesheet" />
+              </Card>
+            ),
           },
         ]}
       />
-    </section>
+    </div>
   );
 };
 

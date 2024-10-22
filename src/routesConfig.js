@@ -15,7 +15,9 @@ const JobSearch = lazy(() => import("./pages/jobSearch"));
 const Mentors = lazy(() => import("./pages/mentors"));
 const Bookings = lazy(() => import("./pages/bookings"));
 const Notifications = lazy(() => import("./pages/notifications"));
-const RecruiterNotification = lazy(() => import("./pages/recruiterNotification"));
+const RecruiterNotification = lazy(() =>
+  import("./pages/recruiterNotification")
+);
 const Settings = lazy(() => import("./pages/settings"));
 const Earnings = lazy(() => import("./pages/earnings"));
 const Blogs = lazy(() => import("./pages/blogs"));
@@ -23,6 +25,8 @@ const SignUp = lazy(() => import("./pages/signUp"));
 const LoginForm = lazy(() => import("./pages/login"));
 const MentorProfile = lazy(() => import("./components/mentorProfile"));
 const MentorDetails = lazy(() => import("./pages/mentorDetails"));
+const Timesheet = lazy(() => import("./pages/timesheet/viewTimesheet"));
+const AddTimesheet = lazy(() => import("./pages/timesheet/addTimesheet"));
 
 const routeConfig = (token) => {
   const decodedToken = tokenDecoder(token);
@@ -204,6 +208,16 @@ const routeConfig = (token) => {
         {
           path: "blogs",
           element: <Blogs />,
+          errorElement: <ErrorPage />,
+        },
+        {
+          path: "timesheet",
+          element: <Timesheet />,
+          errorElement: <ErrorPage />,
+        },
+        {
+          path: "create-timesheet",
+          element: <AddTimesheet />,
           errorElement: <ErrorPage />,
         },
       ],
