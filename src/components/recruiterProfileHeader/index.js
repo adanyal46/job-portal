@@ -100,7 +100,7 @@ const RecruiterProfileHeader = ({ user, showInfoModal, setShowInfoModal }) => {
             className="user-profile-image"
             src={imageUrl || "/images/user-profile-image.png"}
             alt="UserProfileImage"
-            style={{ objectFit: "cover" }}
+            style={{ objectFit: "cover", }}
           />
         </figure>
 
@@ -108,11 +108,11 @@ const RecruiterProfileHeader = ({ user, showInfoModal, setShowInfoModal }) => {
           <article className="mentor-card-details">
             <h2 className="mentor-name">{profile?.fullname || "Guest"}</h2>
             <Rating rating={4} reviews={7} />
-            <LocationWithIcon location={profile?.location || "N/A"} />
+            {/* <LocationWithIcon location={profile?.location || "N/A"} /> */}
             <p className="mentor-expertise">{profile?.industry || "N/A"}</p>
-            <p className="mentor-tagline">
+            {/* <p className="mentor-tagline">
               {profile?.tagline || "No tagline available"}
-            </p>
+            </p> */}
           </article>
         </article>
         <CustomButton
@@ -167,14 +167,14 @@ const RecruiterProfileHeader = ({ user, showInfoModal, setShowInfoModal }) => {
                 />
               </section>
 
-              <section className="field-container">
+              {/* <section className="field-container">
                 <span className="label">Location</span>
                 <CommonInput
                   placeholder="Enter Location"
                   value={profileData.location}
                   onChange={(val) => handleChange("location", val)}
                 />
-              </section>
+              </section> */}
 
               <section className="field-container">
                 <span className="label">Company Name</span>
@@ -185,14 +185,14 @@ const RecruiterProfileHeader = ({ user, showInfoModal, setShowInfoModal }) => {
                 />
               </section>
 
-              <section className="field-container">
+              {/* <section className="field-container">
                 <span className="label">Tagline</span>
                 <CommonInput
                   placeholder="Enter Tagline"
                   value={profileData.tagline}
                   onChange={(val) => handleChange("tagline", val)}
                 />
-              </section>
+              </section> */}
 
               <section className="field-container">
                 <span className="label">Description</span>

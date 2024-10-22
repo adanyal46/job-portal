@@ -53,6 +53,9 @@ const PhotoUpload = ({ initialImageUrl, onChange, name = "avatarUrl" }) => {
           style={{
             width: "100%",
             borderRadius: "100px",
+            objectFit: "cover",
+            height: "140px",
+            maxWidth: "140px",
           }}
         />
       ) : (

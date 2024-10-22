@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { getNotificationList, postReviewNotification } from "./notificationApi";
+import { getNotificationList, handleApproveNotificationApi, postReviewNotification } from "./notificationApi";
 
 // Async thunk for fetching notifications
 export const fetchNotificationList = createAsyncThunk(
@@ -13,6 +13,13 @@ export const createNotificationReview = createAsyncThunk(
   "notifications/review/post",
   async (formData) => {
     const response = await postReviewNotification(formData);
+    return response.data;
+  }
+);
+export const approveNotification = createAsyncThunk(
+  "notifications/recruiter/approve",
+  async (formData) => {
+    const response = await handleApproveNotificationApi(formData);
     return response.data;
   }
 );
@@ -57,6 +64,17 @@ const notificationSlice = createSlice({
       .addCase(createNotificationReview.rejected, (state, action) => {
         state.reviewLoading = false;
         state.error = action.error.message; // Set error message
+      })
+      .addCase(approveNotification.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(approveNotification.fulfilled, (state, action) => {
+        state.loading = false;
+      })
+      .addCase(approveNotification.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message; 
       });
   },
 });

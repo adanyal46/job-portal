@@ -15,6 +15,7 @@ const JobSearch = lazy(() => import("./pages/jobSearch"));
 const Mentors = lazy(() => import("./pages/mentors"));
 const Bookings = lazy(() => import("./pages/bookings"));
 const Notifications = lazy(() => import("./pages/notifications"));
+const RecruiterNotification = lazy(() => import("./pages/recruiterNotification"));
 const Settings = lazy(() => import("./pages/settings"));
 const Earnings = lazy(() => import("./pages/earnings"));
 const Blogs = lazy(() => import("./pages/blogs"));
@@ -182,7 +183,7 @@ const routeConfig = (token) => {
         },
         {
           path: "notifications",
-          element: <Notifications />,
+          element: <RecruiterNotification />,
           errorElement: <ErrorPage />,
         },
         {
