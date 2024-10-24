@@ -1174,3 +1174,68 @@ export function CalendarDashboardIcon(props) {
     </svg>
   );
 }
+export function JobListIcon(props) {
+  return (
+    <svg width={24} height={24} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+      <g clipPath="url(#clip0_6005_41855)">
+        <path
+          d="M7.5 13.5C9.57107 13.5 11.25 11.8211 11.25 9.75C11.25 7.67893 9.57107 6 7.5 6C5.42893 6 3.75 7.67893 3.75 9.75C3.75 11.8211 5.42893 13.5 7.5 13.5Z"
+          stroke="#2F2C39"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+        <path d="M15 7.5H23.25" stroke="#2F2C39" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M15 12H23.25" stroke="#2F2C39" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M17.25 16.5H23.25" stroke="#2F2C39" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        <path
+          d="M1.5 18C2.16562 15.4125 4.70438 13.5 7.5 13.5C10.2956 13.5 12.8344 15.4125 13.5 18"
+          stroke="#2F2C39"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </g>
+      <defs>
+        <clipPath id="clip0_6005_41855">
+          <rect width={24} height={24} fill="white" />
+        </clipPath>
+      </defs>
+    </svg>
+  );
+}
+export function DashboardRecruiterIcon(props) {
+  return (
+    <svg width={24} height={24} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+      <g clipPath="url(#clip0_6005_19847)">
+        <path d="M3.75 6H20.25" stroke="#2F2C39" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M3.75 6H20.25" stroke="#2F2C39" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M3.75 12H10.5" stroke="#2F2C39" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M3.75 12H10.5" stroke="#2F2C39" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M3.75 18H12" stroke="#2F2C39" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M3.75 18H12" stroke="#2F2C39" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        <path
+          d="M17.25 16.5C18.9069 16.5 20.25 15.1569 20.25 13.5C20.25 11.8431 18.9069 10.5 17.25 10.5C15.5931 10.5 14.25 11.8431 14.25 13.5C14.25 15.1569 15.5931 16.5 17.25 16.5Z"
+          stroke="#2F2C39"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+        <path
+          d="M17.25 16.5C18.9069 16.5 20.25 15.1569 20.25 13.5C20.25 11.8431 18.9069 10.5 17.25 10.5C15.5931 10.5 14.25 11.8431 14.25 13.5C14.25 15.1569 15.5931 16.5 17.25 16.5Z"
+          stroke="#2F2C39"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+        <path d="M19.3711 15.6211L21.7495 17.9995" stroke="#2F2C39" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M19.3711 15.6211L21.7495 17.9995" stroke="#2F2C39" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+      </g>
+      <defs>
+        <clipPath id="clip0_6005_19847">
+          <rect width={24} height={24} fill="white" />
+        </clipPath>
+      </defs>
+    </svg>
+  );
+}

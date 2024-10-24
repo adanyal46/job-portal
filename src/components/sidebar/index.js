@@ -12,6 +12,8 @@ import {
   ReviewIcon,
   JobSeekerIcon,
   DashboardEmployerSidebarIcon,
+  JobListIcon,
+  DashboardRecruiterIcon,
 } from "../../assets/svg";
 import "./styles.scss";
 import { Image } from "antd";
@@ -35,7 +37,7 @@ const Sidebar = ({ user }) => {
 
   const items = [
     // Jobs section only for job seekers
-    ...(!isMentor && !isRecruiter
+    ...(!isMentor && !isRecruiter && !isEmployer
       ? [
           {
             key: "2",
@@ -173,6 +175,71 @@ const Sidebar = ({ user }) => {
                 <section className="collapse-header-wrapper">
                   <DashboardEmployerSidebarIcon />
                   <h5 className="collapse-heading">Dashboard</h5>
+                </section>
+              </Link>
+            ),
+          },
+          {
+            key: "employer-talent",
+            showArrow: false,
+            collapsible: "header",
+            label: (
+              <Link to={`${routePrefix}/talent`}>
+                <section className="collapse-header-wrapper">
+                  <JobListIcon />
+                  <h5 className="collapse-heading">Talent</h5>
+                </section>
+              </Link>
+            ),
+          },
+          {
+            key: "employer-recruiter",
+            showArrow: false,
+            collapsible: "header",
+            label: (
+              <Link to={`${routePrefix}/recruiter`}>
+                <section className="collapse-header-wrapper">
+                  <DashboardRecruiterIcon />
+                  <h5 className="collapse-heading">Recruiter</h5>
+                </section>
+              </Link>
+            ),
+          },
+          {
+            key: "employer-jobs",
+            showArrow: false,
+            collapsible: "header",
+            label: (
+              <Link to={`${routePrefix}/jobs`}>
+                <section className="collapse-header-wrapper">
+                  <JobListIcon />
+                  <h5 className="collapse-heading">Jobs</h5>
+                </section>
+              </Link>
+            ),
+          },
+          {
+            key: "employer-hired-recruiter",
+            showArrow: false,
+            collapsible: "header",
+            label: (
+              <Link to={`${routePrefix}/hired-recruiter`}>
+                <section className="collapse-header-wrapper">
+                  <JobListIcon />
+                  <h5 className="collapse-heading">Hired Recruiter</h5>
+                </section>
+              </Link>
+            ),
+          },
+          {
+            key: "employer-staffs",
+            showArrow: false,
+            collapsible: "header",
+            label: (
+              <Link to={`${routePrefix}/staffs`}>
+                <section className="collapse-header-wrapper">
+                  <JobListIcon />
+                  <h5 className="collapse-heading">Staff Member</h5>
                 </section>
               </Link>
             ),

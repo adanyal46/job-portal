@@ -49,8 +49,8 @@ const viewTimesheetColumns = [
 const InprogressRolesColumns = [
   {
     title: "Booking ID",
-    dataIndex: "bookingID",
-    key: "bookingID",
+    dataIndex: "bookingId",
+    key: "bookingId",
   },
   {
     title: "Employer Name",
@@ -78,7 +78,7 @@ const columns = [
   },
   {
     title: "Company Name",
-    dataIndex: "companyName",
+    dataIndex: "CompanyName",
     key: "companyName",
   },
   {
@@ -176,7 +176,7 @@ const ViewTimesheet = () => {
   const [activeKey, setActiveKey] = useState("allRoles");
   const { roles, progressRole, roleLoading, pRoleLoading } = useSelector((state) => state.timesheet);
   const dispatch = useDispatch();
-
+  console.log("roles", progressRole);
   useEffect(() => {
     if (activeKey === "allRoles") {
       dispatch(fetchRecruiterRole());
@@ -185,10 +185,9 @@ const ViewTimesheet = () => {
     } else {
       console.log("Key not found");
     }
-    dispatch(fetchRecruiterAddTimesheetList())
+    dispatch(fetchRecruiterAddTimesheetList());
   }, [dispatch, activeKey]);
 
-  console.log(progressRole);
   const handleTabChange = (key) => {
     setActiveKey(key);
   };
@@ -208,7 +207,7 @@ const ViewTimesheet = () => {
             label: "All Roles",
             children: (
               <Card>
-                <AllRoles tableData={roles} loading={roleLoading} />
+                <AllRoles tableData={Array.isArray(roles) ? roles : []} loading={roleLoading} />
               </Card>
             ),
           },

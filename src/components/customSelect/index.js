@@ -2,16 +2,7 @@ import { Select } from "antd";
 import "./styles.scss";
 
 const CustomSelect = (props) => {
-  const {
-    placeholder = "",
-    height,
-    width,
-    options,
-    value = undefined,
-    onChange,
-    name,
-    handleClear,
-  } = props;
+  const { placeholder = "", height, width, options, value = undefined, onChange, name, handleClear, styles } = props;
 
   return (
     <Select
@@ -22,6 +13,7 @@ const CustomSelect = (props) => {
         width: "100%",
         height: height || 48,
         width: width,
+        ...styles,
       }}
       onChange={(value) => {
         onChange(value || "");

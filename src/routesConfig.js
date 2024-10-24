@@ -28,8 +28,10 @@ const AddTimesheet = lazy(() => import("./pages/timesheet/addTimesheet"));
 const EmployerProfile = lazy(() => import("./pages/empoyerProfile"));
 const EmployerDashboard = lazy(() => import("./pages/employerDashboard"));
 const EmployerJobs = lazy(() => import("./pages/employer-jobs"));
-const EmployerRecruiter = lazy(() => import("./pages/employer-recruiter"));
+const EmployerHiredRecruiter = lazy(() => import("./pages/employer-recruiter"));
 const EmployerStaffs = lazy(() => import("./pages/employer-staff"));
+const EmployerTalent = lazy(() => import("./pages/employerTalent"));
+const EmployerRecruiter = lazy(() => import("./pages/employerRecruiter"));
 
 const routeConfig = (token) => {
   const decodedToken = tokenDecoder(token);
@@ -259,12 +261,22 @@ const routeConfig = (token) => {
         },
         {
           path: "hired-recruiter",
-          element: <EmployerRecruiter />,
+          element: <EmployerHiredRecruiter />,
           errorElement: <ErrorPage />,
         },
         {
           path: "staffs",
           element: <EmployerStaffs />,
+          errorElement: <ErrorPage />,
+        },
+        {
+          path: "talent",
+          element: <EmployerTalent />,
+          errorElement: <ErrorPage />,
+        },
+        {
+          path: "recruiter",
+          element: <EmployerRecruiter />,
           errorElement: <ErrorPage />,
         },
       ],
