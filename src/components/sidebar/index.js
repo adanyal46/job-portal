@@ -11,6 +11,7 @@ import {
   EarningsIcon,
   ReviewIcon,
   JobSeekerIcon,
+  DashboardEmployerSidebarIcon,
 } from "../../assets/svg";
 import "./styles.scss";
 import { Image } from "antd";
@@ -19,12 +20,8 @@ import { getRelativePath } from "../../utils";
 const Sidebar = ({ user }) => {
   let query = useQuery();
   const location = useLocation();
-  const profile =
-    user && user.Profile && user.Profile.length > 0 ? user.Profile[0] : null;
-  const baseUrl =
-    process.env.REACT_APP_NODE_ENV === "development"
-      ? "http://54.144.76.160:5000"
-      : "https://jobportal-fuse.netlify.app";
+  const profile = user && user.Profile && user.Profile.length > 0 ? user.Profile[0] : null;
+  const baseUrl = process.env.REACT_APP_NODE_ENV === "development" ? "http://54.144.76.160:5000" : "https://jobportal-fuse.netlify.app";
   const fullAvatarUrl = profile?.avatarUrl || "";
   const relativeAvatarUrl = getRelativePath(fullAvatarUrl, baseUrl);
 
@@ -33,11 +30,8 @@ const Sidebar = ({ user }) => {
   // Role-based URL prefixes
   const isMentor = user?.role === "MENTOR";
   const isRecruiter = user?.role === "RECRUITER";
-  const routePrefix = isMentor
-    ? "/mentor"
-    : isRecruiter
-    ? "/recruiter"
-    : "/job-seeker";
+  const isEmployer = user?.role === "EMPLOYER";
+  const routePrefix = isMentor ? "/mentor" : isRecruiter ? "/recruiter" : isEmployer ? "/employer" : "/job-seeker";
 
   const items = [
     // Jobs section only for job seekers
@@ -54,33 +48,15 @@ const Sidebar = ({ user }) => {
             children: (
               <ul className="collpase-items-list">
                 <Link to={`${routePrefix}/jobs/search?type=search`}>
-                  <li
-                    className={`collpase-item ${
-                      searchParams === "search" && "active"
-                    }`}
-                  >
-                    Search
-                  </li>
+                  <li className={`collpase-item ${searchParams === "search" && "active"}`}>Search</li>
                 </Link>
 
                 <Link to={`${routePrefix}/jobs/search?type=applied`}>
-                  <li
-                    className={`collpase-item ${
-                      searchParams === "applied" && "active"
-                    }`}
-                  >
-                    Applied Jobs
-                  </li>
+                  <li className={`collpase-item ${searchParams === "applied" && "active"}`}>Applied Jobs</li>
                 </Link>
 
                 <Link to={`${routePrefix}/jobs/search?type=saved`}>
-                  <li
-                    className={`collpase-item ${
-                      searchParams === "saved" && "active"
-                    }`}
-                  >
-                    Saved Jobs
-                  </li>
+                  <li className={`collpase-item ${searchParams === "saved" && "active"}`}>Saved Jobs</li>
                 </Link>
               </ul>
             ),
@@ -96,24 +72,11 @@ const Sidebar = ({ user }) => {
             children: (
               <ul className="collpase-items-list">
                 <Link to={`${routePrefix}/mentors?type=myMentors`}>
-                  <li
-                    className={`collpase-item ${
-                      searchParams === "myMentors" && "active"
-                    }`}
-                  >
-                    My Mentor
-                  </li>
+                  <li className={`collpase-item ${searchParams === "myMentors" && "active"}`}>My Mentor</li>
                 </Link>
 
                 <Link to={`${routePrefix}/bookings`}>
-                  <li
-                    className={`collpase-item ${
-                      location.pathname === `${routePrefix}/bookings` &&
-                      "active"
-                    }`}
-                  >
-                    Bookings
-                  </li>
+                  <li className={`collpase-item ${location.pathname === `${routePrefix}/bookings` && "active"}`}>Bookings</li>
                 </Link>
               </ul>
             ),
@@ -135,25 +98,11 @@ const Sidebar = ({ user }) => {
             children: (
               <ul className="collpase-items-list">
                 <Link to={`${routePrefix}/upcoming-bookings`}>
-                  <li
-                    className={`collpase-item ${
-                      location.pathname ===
-                        `${routePrefix}/upcoming-bookings` && "active"
-                    }`}
-                  >
-                    Upcoming Bookings
-                  </li>
+                  <li className={`collpase-item ${location.pathname === `${routePrefix}/upcoming-bookings` && "active"}`}>Upcoming Bookings</li>
                 </Link>
 
                 <Link to={`${routePrefix}/history-bookings`}>
-                  <li
-                    className={`collpase-item ${
-                      location.pathname === `${routePrefix}/history-bookings` &&
-                      "active"
-                    }`}
-                  >
-                    Booking History
-                  </li>
+                  <li className={`collpase-item ${location.pathname === `${routePrefix}/history-bookings` && "active"}`}>Booking History</li>
                 </Link>
               </ul>
             ),
@@ -190,12 +139,7 @@ const Sidebar = ({ user }) => {
             showArrow: false,
             collapsible: "header",
             label: (
-              <Link
-                to={`${routePrefix}/reviews`}
-                onClick={() =>
-                  localStorage.setItem("lastRoute", `${routePrefix}/reviews`)
-                }
-              >
+              <Link to={`${routePrefix}/reviews`} onClick={() => localStorage.setItem("lastRoute", `${routePrefix}/reviews`)}>
                 <section className="collapse-header-wrapper">
                   <ReviewIcon />
                   <h5 className="collapse-heading">Reviews</h5>
@@ -218,19 +162,30 @@ const Sidebar = ({ user }) => {
           },
         ]
       : []),
-
+    ...(isEmployer
+      ? [
+          {
+            key: "employer-dashboard",
+            showArrow: false,
+            collapsible: "header",
+            label: (
+              <Link to={`${routePrefix}/dashboard`}>
+                <section className="collapse-header-wrapper">
+                  <DashboardEmployerSidebarIcon />
+                  <h5 className="collapse-heading">Dashboard</h5>
+                </section>
+              </Link>
+            ),
+          },
+        ]
+      : []),
     // Settings section for both roles
     {
       key: "7",
       showArrow: false,
       collapsible: "header",
       label: (
-        <Link
-          to={`${routePrefix}/settings`}
-          onClick={() =>
-            localStorage.setItem("lastRoute", `${routePrefix}/settings`)
-          }
-        >
+        <Link to={`${routePrefix}/settings`} onClick={() => localStorage.setItem("lastRoute", `${routePrefix}/settings`)}>
           <section className="collapse-header-wrapper">
             <SettingIcon />
             <h5 className="collapse-heading">Settings</h5>
@@ -265,9 +220,7 @@ const Sidebar = ({ user }) => {
             preview={false}
           />
 
-          <figcaption className="sidebar-user-name">
-            {profile?.fullname || "Guest"}
-          </figcaption>
+          <figcaption className="sidebar-user-name">{profile?.fullname || "Guest"}</figcaption>
         </figure>
 
         <Link to={`${routePrefix}/profile`}>

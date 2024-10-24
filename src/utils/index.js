@@ -1,4 +1,7 @@
+import dayjs from "dayjs";
 import { jwtDecode } from "jwt-decode";
+import isToday  from 'dayjs/plugin/isToday' 
+dayjs.extend(isToday)
 
 export function getDaysAgo(createdAt) {
   const createdDate = new Date(createdAt);
@@ -8,12 +11,8 @@ export function getDaysAgo(createdAt) {
 
   // Calculate the differences
   const daysDifference = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
-  const hoursDifference = Math.floor(
-    (timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-  );
-  const minutesDifference = Math.floor(
-    (timeDifference % (1000 * 60 * 60)) / (1000 * 60)
-  );
+  const hoursDifference = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  const minutesDifference = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
   const secondsDifference = Math.floor((timeDifference % (1000 * 60)) / 1000);
 
   // Format the output based on days, hours, minutes, and seconds
@@ -94,4 +93,17 @@ export const getRelativePath = (fullAvatarUrl, url) => {
   // Concatenate with the new base URL
   const updatedUrl = url + parts[1];
   return updatedUrl;
+};
+
+export const getDayDate = (targetDay) => {
+  const today = dayjs();
+
+  const daysOfWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+
+  const todayIndex = today.day() === 0 ? 6 : today.day() - 1;
+  const targetIndex = daysOfWeek.indexOf(targetDay)
+
+  const dayDifference  = targetIndex - todayIndex
+
+  return today.add(dayDifference, 'day').format('D/MM/YYYY');
 };

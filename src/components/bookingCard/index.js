@@ -29,7 +29,7 @@ export const BookingCardRecruiter = ({
         <section className="slot-content">
           <CalendarIcon />
 
-          <p className="slot-info">{new Date(date).toDateString()}</p>
+          <p className="slot-info">{new Date(date).toLocaleDateString()}</p>
         </section>
 
         {/* <section className="slot-content">

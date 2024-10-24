@@ -85,3 +85,8 @@
 .upload-button {
   margin-top: 10px; /* Add some space above the button */
 }
+
+
+.w-100{
+  width: 100% !important;
+}

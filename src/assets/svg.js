@@ -14,24 +14,12 @@ export const MentorsIcon = () => (
       strokeLinecap="round"
       strokeLinejoin="round"
     />
-    <path
-      d="M16.5 16.5H18V7.5H6V9"
-      stroke="#2F2C39"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
+    <path d="M16.5 16.5H18V7.5H6V9" stroke="#2F2C39" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
   </svg>
 );
 
 export const EarningsIcon = () => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width="24"
-    height="24"
-    viewBox="0 0 24 24"
-    fill="none"
-  >
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
     <path
       d="M22.5 17.5115C13.9088 21.7087 10.0912 13.5412 1.5 17.7383V6.48834C10.0912 2.29115 13.9088 10.4587 22.5 6.26147V17.5115Z"
       stroke="#2F2C39"
@@ -46,31 +34,13 @@ export const EarningsIcon = () => (
       strokeLinecap="round"
       strokeLinejoin="round"
     />
-    <path
-      d="M4.5 9V13.5"
-      stroke="#2F2C39"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-    <path
-      d="M19.5 10.5V15"
-      stroke="#2F2C39"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
+    <path d="M4.5 9V13.5" stroke="#2F2C39" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M19.5 10.5V15" stroke="#2F2C39" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
   </svg>
 );
 
 export const BookingsIcon = () => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width="24"
-    height="24"
-    viewBox="0 0 24 24"
-    fill="none"
-  >
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
     <path
       d="M19.5 3.75H4.5C4.08579 3.75 3.75 4.08579 3.75 4.5V19.5C3.75 19.9142 4.08579 20.25 4.5 20.25H19.5C19.9142 20.25 20.25 19.9142 20.25 19.5V4.5C20.25 4.08579 19.9142 3.75 19.5 3.75Z"
       stroke="#2F2C39"
@@ -78,54 +48,17 @@ export const BookingsIcon = () => (
       strokeLinecap="round"
       strokeLinejoin="round"
     />
-    <path
-      d="M16.5 2.25V5.25"
-      stroke="#2F2C39"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-    <path
-      d="M7.5 2.25V5.25"
-      stroke="#2F2C39"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-    <path
-      d="M3.75 8.25H20.25"
-      stroke="#2F2C39"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-    <path
-      d="M8.625 14.25L10.875 16.5L15.375 12"
-      stroke="#2F2C39"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
+    <path d="M16.5 2.25V5.25" stroke="#2F2C39" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M7.5 2.25V5.25" stroke="#2F2C39" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M3.75 8.25H20.25" stroke="#2F2C39" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M8.625 14.25L10.875 16.5L15.375 12" stroke="#2F2C39" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
   </svg>
 );
 
 export const JobSeekerIcon = (props) => {
   return (
-    <svg
-      width={24}
-      height={24}
-      viewBox="0 0 24 24"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      {...props}
-    >
-      <g
-        clipPath="url(#clip0_5845_3614)"
-        stroke="#2F2C39"
-        strokeWidth={1.5}
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      >
+    <svg width={24} height={24} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+      <g clipPath="url(#clip0_5845_3614)" stroke="#2F2C39" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round">
         <path d="M16.5 9.75L12 12V6.75M12 21a9 9 0 119-9" />
         <path d="M18 18.75a2.25 2.25 0 100-4.5 2.25 2.25 0 000 4.5zM15 21c.344-1.294 1.556-2.25 3-2.25s2.656.956 3 2.25" />
       </g>
@@ -161,13 +94,7 @@ export const JobsIcon = () => (
       strokeLinecap="round"
       strokeLinejoin="round"
     />
-    <path
-      d="M9 6H15"
-      stroke="#2F2C39"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
+    <path d="M9 6H15" stroke="#2F2C39" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
   </svg>
 );
 
@@ -218,22 +145,8 @@ export const ContactFuseIcon = () => (
 
 export const EditProfileIcon = () => (
   <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
-    <rect
-      x="0.492188"
-      y="0.5"
-      width="39"
-      height="39"
-      rx="19.5"
-      fill="#EFF3F4"
-    />
-    <rect
-      x="0.492188"
-      y="0.5"
-      width="39"
-      height="39"
-      rx="19.5"
-      stroke="#8F979A"
-    />
+    <rect x="0.492188" y="0.5" width="39" height="39" rx="19.5" fill="#EFF3F4" />
+    <rect x="0.492188" y="0.5" width="39" height="39" rx="19.5" stroke="#8F979A" />
     <g clipPath="url(#clip0_3358_35482)">
       <path
         d="M16.6819 28.2501H12.4922C12.2933 28.2501 12.1025 28.1711 11.9619 28.0305C11.8212 27.8898 11.7422 27.699 11.7422 27.5001V23.3104C11.7423 23.1118 11.8212 22.9213 11.9616 22.7807L23.5228 11.2195C23.6635 11.079 23.8541 11 24.053 11C24.2518 11 24.4425 11.079 24.5831 11.2195L28.7728 15.4064C28.9134 15.547 28.9923 15.7377 28.9923 15.9365C28.9923 16.1354 28.9134 16.326 28.7728 16.4667L17.2116 28.0307C17.071 28.1711 16.8805 28.25 16.6819 28.2501Z"
@@ -242,13 +155,7 @@ export const EditProfileIcon = () => (
         strokeLinecap="round"
         strokeLinejoin="round"
       />
-      <path
-        d="M20.7422 14L25.9922 19.25"
-        stroke="#2F2C39"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
+      <path d="M20.7422 14L25.9922 19.25" stroke="#2F2C39" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
     </g>
     <defs>
       <clipPath id="clip0_3358_35482">
@@ -271,20 +178,8 @@ export const EducationIcon = () => (
   <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
     <rect width="36" height="36" rx="18" fill="#DDF0F7" />
     <g clipPath="url(#clip0_3358_35497)">
-      <path
-        d="M6.75 15L18 9L29.25 15L18 21L6.75 15Z"
-        stroke="#009DD1"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M18 15L23.25 17.8003V28.5"
-        stroke="#009DD1"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
+      <path d="M6.75 15L18 9L29.25 15L18 21L6.75 15Z" stroke="#009DD1" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M18 15L23.25 17.8003V28.5" stroke="#009DD1" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
       <path
         d="M26.25 16.6016V21.5909C26.2504 21.7742 26.1837 21.9513 26.0625 22.0888C25.0031 23.2691 22.4156 25.5013 18 25.5013C13.5844 25.5013 10.9988 23.2691 9.9375 22.0888C9.81628 21.9513 9.74958 21.7742 9.75 21.5909V16.6016"
         stroke="#009DD1"
@@ -305,20 +200,8 @@ export const CertificationsIcon = () => (
   <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
     <rect width="36" height="36" rx="18" fill="#FFE7DC" />
     <g clipPath="url(#clip0_3358_35535)">
-      <path
-        d="M12.75 18.75H17.25"
-        stroke="#FF7940"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M12.75 15.75H17.25"
-        stroke="#FF7940"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
+      <path d="M12.75 18.75H17.25" stroke="#FF7940" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M12.75 15.75H17.25" stroke="#FF7940" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
       <path
         d="M24.375 21.75C26.6532 21.75 28.5 19.9032 28.5 17.625C28.5 15.3468 26.6532 13.5 24.375 13.5C22.0968 13.5 20.25 15.3468 20.25 17.625C20.25 19.9032 22.0968 21.75 24.375 21.75Z"
         stroke="#FF7940"
@@ -333,13 +216,7 @@ export const CertificationsIcon = () => (
         strokeLinecap="round"
         strokeLinejoin="round"
       />
-      <path
-        d="M21.75 20.8047V26.9978L24.375 25.4978L27 26.9978V20.8047"
-        stroke="#FF7940"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
+      <path d="M21.75 20.8047V26.9978L24.375 25.4978L27 26.9978V20.8047" stroke="#FF7940" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
     </g>
     <defs>
       <clipPath id="clip0_3358_35535">
@@ -384,20 +261,8 @@ export const AddCircleIcon = () => (
         strokeWidth="1.5"
         strokeMiterlimit="10"
       />
-      <path
-        d="M8.25 12H15.75"
-        stroke="#6F6B7D"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M12 8.25V15.75"
-        stroke="#6F6B7D"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
+      <path d="M8.25 12H15.75" stroke="#6F6B7D" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M12 8.25V15.75" stroke="#6F6B7D" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
     </g>
     <defs>
       <clipPath id="clip0_3712_210793">
@@ -410,27 +275,9 @@ export const AddCircleIcon = () => (
 export const DocumentUploadIcon = () => (
   <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
     <g clipPath="url(#clip0_3712_213226)">
-      <path
-        d="M11 12.375V2.75"
-        stroke="white"
-        strokeWidth="1.375"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M18.5625 12.375V17.875H3.4375V12.375"
-        stroke="white"
-        strokeWidth="1.375"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M7.5625 6.1875L11 2.75L14.4375 6.1875"
-        stroke="white"
-        strokeWidth="1.375"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
+      <path d="M11 12.375V2.75" stroke="white" strokeWidth="1.375" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M18.5625 12.375V17.875H3.4375V12.375" stroke="white" strokeWidth="1.375" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M7.5625 6.1875L11 2.75L14.4375 6.1875" stroke="white" strokeWidth="1.375" strokeLinecap="round" strokeLinejoin="round" />
     </g>
     <defs>
       <clipPath id="clip0_3712_213226">
@@ -442,13 +289,7 @@ export const DocumentUploadIcon = () => (
 
 export const CloseIcon = () => (
   <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-    <path
-      d="M19 5L5 19M5 5L19 19"
-      stroke="#2F2C39"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
+    <path d="M19 5L5 19M5 5L19 19" stroke="#2F2C39" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
   </svg>
 );
 
@@ -506,34 +347,14 @@ export const JobAppliedIcon = () => (
       strokeLinecap="round"
       strokeLinejoin="round"
     />
-    <path
-      d="M8.625 11.625L12.375 15.375L21.375 5.625"
-      stroke="#1BBB62"
-      strokeWidth="2.25"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
+    <path d="M8.625 11.625L12.375 15.375L21.375 5.625" stroke="#1BBB62" strokeWidth="2.25" strokeLinecap="round" strokeLinejoin="round" />
   </svg>
 );
 
 export const SearchFieldIcon = () => (
   <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-    <circle
-      cx="8.33333"
-      cy="8.33333"
-      r="5.83333"
-      stroke="#AEACB4"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-    <path
-      d="M17.5 17.5L12.5 12.5"
-      stroke="#AEACB4"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
+    <circle cx="8.33333" cy="8.33333" r="5.83333" stroke="#AEACB4" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M17.5 17.5L12.5 12.5" stroke="#AEACB4" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
   </svg>
 );
 
@@ -555,53 +376,17 @@ export const VerifiedIcon = () => (
       strokeLinecap="round"
       strokeLinejoin="round"
     />
-    <path
-      d="M9.09668 11.625L12.8467 15.375L21.8467 5.625"
-      stroke="white"
-      strokeWidth="2.25"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
+    <path d="M9.09668 11.625L12.8467 15.375L21.8467 5.625" stroke="white" strokeWidth="2.25" strokeLinecap="round" strokeLinejoin="round" />
   </svg>
 );
 
 export const MentorTranslateIcon = () => (
-  <svg
-    width="24"
-    height="24"
-    viewBox="0 0 24 24"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
     <g clipPath="url(#clip0_3712_214855)">
-      <path
-        d="M22.5 20.25L17.25 9.75L12 20.25"
-        stroke="#656565"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M13.5 17.25H21"
-        stroke="#656565"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M9 3V5.25"
-        stroke="#656565"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M3 5.25H15"
-        stroke="#656565"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
+      <path d="M22.5 20.25L17.25 9.75L12 20.25" stroke="#656565" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M13.5 17.25H21" stroke="#656565" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M9 3V5.25" stroke="#656565" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M3 5.25H15" stroke="#656565" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
       <path
         d="M12 5.25C12 7.63695 11.0518 9.92613 9.36396 11.614C7.67613 13.3018 5.38695 14.25 3 14.25"
         stroke="#656565"
@@ -626,13 +411,7 @@ export const MentorTranslateIcon = () => (
 );
 
 export const MentorBriefcaseIcon = () => (
-  <svg
-    width="26"
-    height="26"
-    viewBox="0 0 26 26"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
+  <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
     <g clipPath="url(#clip0_3712_214865)">
       <path
         d="M21.9375 6.5H4.0625C3.61377 6.5 3.25 6.86377 3.25 7.3125V20.3125C3.25 20.7612 3.61377 21.125 4.0625 21.125H21.9375C22.3862 21.125 22.75 20.7612 22.75 20.3125V7.3125C22.75 6.86377 22.3862 6.5 21.9375 6.5Z"
@@ -655,13 +434,7 @@ export const MentorBriefcaseIcon = () => (
         strokeLinecap="round"
         strokeLinejoin="round"
       />
-      <path
-        d="M11.375 11.375H14.625"
-        stroke="#656565"
-        strokeWidth="1.625"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
+      <path d="M11.375 11.375H14.625" stroke="#656565" strokeWidth="1.625" strokeLinecap="round" strokeLinejoin="round" />
     </g>
     <defs>
       <clipPath id="clip0_3712_214865">
@@ -672,13 +445,7 @@ export const MentorBriefcaseIcon = () => (
 );
 
 export const InfoIcon = () => (
-  <svg
-    width="22"
-    height="22"
-    viewBox="0 0 22 22"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
+  <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
     <g id="Info">
       <path
         id="Vector"
@@ -706,43 +473,17 @@ export const InfoIcon = () => (
 );
 
 export const ChevronUpIcon = () => (
-  <svg
-    width="18"
-    height="19"
-    viewBox="0 0 18 19"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
+  <svg width="18" height="19" viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg">
     <g id="chevron-right">
-      <path
-        id="Path"
-        d="M4.5 11.75L9 7.25L13.5 11.75"
-        stroke="#52595C"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
+      <path id="Path" d="M4.5 11.75L9 7.25L13.5 11.75" stroke="#52595C" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
     </g>
   </svg>
 );
 
 export const ScheduleDetailIcon = () => (
-  <svg
-    width="24"
-    height="25"
-    viewBox="0 0 24 25"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
+  <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
     <g id="file-text">
-      <path
-        id="Path"
-        d="M14 3.5V7.5C14 8.05228 14.4477 8.5 15 8.5H19"
-        stroke="#4B465C"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
+      <path id="Path" d="M14 3.5V7.5C14 8.05228 14.4477 8.5 15 8.5H19" stroke="#4B465C" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
       <path
         id="Path_2"
         fill-rule="evenodd"
@@ -753,30 +494,9 @@ export const ScheduleDetailIcon = () => (
         strokeLinecap="round"
         strokeLinejoin="round"
       />
-      <path
-        id="Path_3"
-        d="M9 9.5H10"
-        stroke="#4B465C"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <path
-        id="Path_4"
-        d="M9 13.5H15"
-        stroke="#4B465C"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <path
-        id="Path_5"
-        d="M9 17.5H15"
-        stroke="#4B465C"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
+      <path id="Path_3" d="M9 9.5H10" stroke="#4B465C" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+      <path id="Path_4" d="M9 13.5H15" stroke="#4B465C" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+      <path id="Path_5" d="M9 17.5H15" stroke="#4B465C" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
     </g>
   </svg>
 );
@@ -784,14 +504,7 @@ export const ScheduleDetailIcon = () => (
 export const ActiveScheduleDetailIcon = () => (
   <svg width="24" height="25" viewBox="0 0 24 25" fill="none">
     <g id="file-text">
-      <path
-        id="Path"
-        d="M14 3.5V7.5C14 8.05228 14.4477 8.5 15 8.5H19"
-        stroke="#ffffff"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
+      <path id="Path" d="M14 3.5V7.5C14 8.05228 14.4477 8.5 15 8.5H19" stroke="#ffffff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
       <path
         id="Path_2"
         fill-rule="evenodd"
@@ -802,42 +515,15 @@ export const ActiveScheduleDetailIcon = () => (
         strokeLinecap="round"
         strokeLinejoin="round"
       />
-      <path
-        id="Path_3"
-        d="M9 9.5H10"
-        stroke="#ffffff"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <path
-        id="Path_4"
-        d="M9 13.5H15"
-        stroke="#ffffff"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <path
-        id="Path_5"
-        d="M9 17.5H15"
-        stroke="#ffffff"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
+      <path id="Path_3" d="M9 9.5H10" stroke="#ffffff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+      <path id="Path_4" d="M9 13.5H15" stroke="#ffffff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+      <path id="Path_5" d="M9 17.5H15" stroke="#ffffff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
     </g>
   </svg>
 );
 
 export const ReadCVIcon = () => (
-  <svg
-    width="24"
-    height="25"
-    viewBox="0 0 24 25"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
+  <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
     <g id="ReadCvLogo" clipPath="url(#clip0_3894_2249)">
       <g id="Vector">
         <path
@@ -857,78 +543,28 @@ export const ReadCVIcon = () => (
         />
       </g>
       <g id="Vector_2">
-        <path
-          d="M9.11426 6.10742L16.8936 7.4818"
-          stroke="#4B465C"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-        <path
-          d="M9.11426 6.10742L16.8936 7.4818"
-          stroke="white"
-          stroke-opacity="0.2"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
+        <path d="M9.11426 6.10742L16.8936 7.4818" stroke="#4B465C" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M9.11426 6.10742L16.8936 7.4818" stroke="white" stroke-opacity="0.2" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
       </g>
       <g id="Vector_3">
-        <path
-          d="M16.3746 10.4359L8.59424 9.0625"
-          stroke="#4B465C"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-        <path
-          d="M16.3746 10.4359L8.59424 9.0625"
-          stroke="white"
-          stroke-opacity="0.2"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
+        <path d="M16.3746 10.4359L8.59424 9.0625" stroke="#4B465C" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M16.3746 10.4359L8.59424 9.0625" stroke="white" stroke-opacity="0.2" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
       </g>
       <g id="Vector_4">
-        <path
-          d="M11.9644 12.7028L8.07471 12.0156"
-          stroke="#4B465C"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-        <path
-          d="M11.9644 12.7028L8.07471 12.0156"
-          stroke="white"
-          stroke-opacity="0.2"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
+        <path d="M11.9644 12.7028L8.07471 12.0156" stroke="#4B465C" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M11.9644 12.7028L8.07471 12.0156" stroke="white" stroke-opacity="0.2" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
       </g>
     </g>
     <defs>
       <clipPath id="clip0_3894_2249">
-        <rect
-          width="24"
-          height="24"
-          fill="white"
-          transform="translate(0 0.5)"
-        />
+        <rect width="24" height="24" fill="white" transform="translate(0 0.5)" />
       </clipPath>
     </defs>
   </svg>
 );
 
 export const ActiveReadCVIcon = () => (
-  <svg
-    width="24"
-    height="25"
-    viewBox="0 0 24 25"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
+  <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
     <g id="ReadCvLogo" clipPath="url(#clip0_3894_2249)">
       <g id="Vector">
         <path
@@ -948,78 +584,28 @@ export const ActiveReadCVIcon = () => (
         />
       </g>
       <g id="Vector_2">
-        <path
-          d="M9.11426 6.10742L16.8936 7.4818"
-          stroke="#ffffff"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-        <path
-          d="M9.11426 6.10742L16.8936 7.4818"
-          stroke="white"
-          stroke-opacity="0.2"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
+        <path d="M9.11426 6.10742L16.8936 7.4818" stroke="#ffffff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M9.11426 6.10742L16.8936 7.4818" stroke="white" stroke-opacity="0.2" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
       </g>
       <g id="Vector_3">
-        <path
-          d="M16.3746 10.4359L8.59424 9.0625"
-          stroke="#ffffff"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-        <path
-          d="M16.3746 10.4359L8.59424 9.0625"
-          stroke="white"
-          stroke-opacity="0.2"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
+        <path d="M16.3746 10.4359L8.59424 9.0625" stroke="#ffffff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M16.3746 10.4359L8.59424 9.0625" stroke="white" stroke-opacity="0.2" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
       </g>
       <g id="Vector_4">
-        <path
-          d="M11.9644 12.7028L8.07471 12.0156"
-          stroke="#ffffff"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-        <path
-          d="M11.9644 12.7028L8.07471 12.0156"
-          stroke="white"
-          stroke-opacity="0.2"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
+        <path d="M11.9644 12.7028L8.07471 12.0156" stroke="#ffffff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M11.9644 12.7028L8.07471 12.0156" stroke="white" stroke-opacity="0.2" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
       </g>
     </g>
     <defs>
       <clipPath id="clip0_3894_2249">
-        <rect
-          width="24"
-          height="24"
-          fill="white"
-          transform="translate(0 0.5)"
-        />
+        <rect width="24" height="24" fill="white" transform="translate(0 0.5)" />
       </clipPath>
     </defs>
   </svg>
 );
 
 export const BillingIcon = () => (
-  <svg
-    width="24"
-    height="25"
-    viewBox="0 0 24 25"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
+  <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
     <g id="credit-card">
       <g id="Vector">
         <path
@@ -1043,13 +629,7 @@ export const BillingIcon = () => (
 );
 
 export const ActiveBillingIcon = () => (
-  <svg
-    width="24"
-    height="25"
-    viewBox="0 0 24 25"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
+  <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
     <g id="credit-card">
       <g id="Vector">
         <path
@@ -1073,147 +653,49 @@ export const ActiveBillingIcon = () => (
 );
 
 export const CheckIcon = () => (
-  <svg
-    width="24"
-    height="25"
-    viewBox="0 0 24 25"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
+  <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
     <g id="check">
       <g id="Path">
-        <path
-          d="M5 12.5L10 17.5L20 7.5"
-          stroke="#4B465C"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-        <path
-          d="M5 12.5L10 17.5L20 7.5"
-          stroke="white"
-          stroke-opacity="0.2"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
+        <path d="M5 12.5L10 17.5L20 7.5" stroke="#4B465C" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M5 12.5L10 17.5L20 7.5" stroke="white" stroke-opacity="0.2" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
       </g>
     </g>
   </svg>
 );
 
 export const ActiveCheckIcon = () => (
-  <svg
-    width="24"
-    height="25"
-    viewBox="0 0 24 25"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
+  <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
     <g id="check">
       <g id="Path">
-        <path
-          d="M5 12.5L10 17.5L20 7.5"
-          stroke="#ffffff"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-        <path
-          d="M5 12.5L10 17.5L20 7.5"
-          stroke="white"
-          stroke-opacity="0.2"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
+        <path d="M5 12.5L10 17.5L20 7.5" stroke="#ffffff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M5 12.5L10 17.5L20 7.5" stroke="white" stroke-opacity="0.2" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
       </g>
     </g>
   </svg>
 );
 
 export const LeftArrowIcon = () => (
-  <svg
-    width="18"
-    height="19"
-    viewBox="0 0 18 19"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
+  <svg width="18" height="19" viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg">
     <g id="arrow-narrow-left">
-      <path
-        id="Path"
-        d="M3.75 9.5H14.25"
-        stroke="#A8AAAE"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <path
-        id="Path_2"
-        d="M3.75 9.5L6.75 12.5"
-        stroke="#A8AAAE"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <path
-        id="Path_3"
-        d="M3.75 9.5L6.75 6.5"
-        stroke="#A8AAAE"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
+      <path id="Path" d="M3.75 9.5H14.25" stroke="#A8AAAE" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+      <path id="Path_2" d="M3.75 9.5L6.75 12.5" stroke="#A8AAAE" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+      <path id="Path_3" d="M3.75 9.5L6.75 6.5" stroke="#A8AAAE" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
     </g>
   </svg>
 );
 
 export const RightArrowIcon = () => (
-  <svg
-    width="19"
-    height="19"
-    viewBox="0 0 19 19"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
+  <svg width="19" height="19" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg">
     <g id="arrow-right">
-      <path
-        id="Path"
-        d="M4.49414 9.5H14.9941"
-        stroke="white"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <path
-        id="Path_2"
-        d="M10.4941 14L14.9941 9.5"
-        stroke="white"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <path
-        id="Path_3"
-        d="M10.4941 5L14.9941 9.5"
-        stroke="white"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
+      <path id="Path" d="M4.49414 9.5H14.9941" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+      <path id="Path_2" d="M10.4941 14L14.9941 9.5" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+      <path id="Path_3" d="M10.4941 5L14.9941 9.5" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
     </g>
   </svg>
 );
 
 export const CalendarIcon = () => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width="24"
-    height="24"
-    viewBox="0 0 24 24"
-    fill="none"
-  >
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
     <g clipPath="url(#clip0_3712_216667)">
       <path
         d="M19.5 3.75H4.5C4.08579 3.75 3.75 4.08579 3.75 4.5V19.5C3.75 19.9142 4.08579 20.25 4.5 20.25H19.5C19.9142 20.25 20.25 19.9142 20.25 19.5V4.5C20.25 4.08579 19.9142 3.75 19.5 3.75Z"
@@ -1222,27 +704,9 @@ export const CalendarIcon = () => (
         strokeLinecap="round"
         strokeLinejoin="round"
       />
-      <path
-        d="M16.5 2.25V5.25"
-        stroke="#2F2C39"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M7.5 2.25V5.25"
-        stroke="#2F2C39"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M3.75 8.25H20.25"
-        stroke="#2F2C39"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
+      <path d="M16.5 2.25V5.25" stroke="#2F2C39" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M7.5 2.25V5.25" stroke="#2F2C39" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M3.75 8.25H20.25" stroke="#2F2C39" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
       <path
         d="M12 13.5C12.6213 13.5 13.125 12.9963 13.125 12.375C13.125 11.7537 12.6213 11.25 12 11.25C11.3787 11.25 10.875 11.7537 10.875 12.375C10.875 12.9963 11.3787 13.5 12 13.5Z"
         fill="#2F2C39"
@@ -1273,13 +737,7 @@ export const CalendarIcon = () => (
 );
 
 export const ClockIcon = () => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width="25"
-    height="24"
-    viewBox="0 0 25 24"
-    fill="none"
-  >
+  <svg xmlns="http://www.w3.org/2000/svg" width="25" height="24" viewBox="0 0 25 24" fill="none">
     <g clipPath="url(#clip0_3712_216680)">
       <path
         d="M12.6665 21C17.6371 21 21.6665 16.9706 21.6665 12C21.6665 7.02944 17.6371 3 12.6665 3C7.69594 3 3.6665 7.02944 3.6665 12C3.6665 16.9706 7.69594 21 12.6665 21Z"
@@ -1288,35 +746,18 @@ export const ClockIcon = () => (
         strokeLinecap="round"
         strokeLinejoin="round"
       />
-      <path
-        d="M12.6665 6.75V12H17.9165"
-        stroke="#2F2C39"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
+      <path d="M12.6665 6.75V12H17.9165" stroke="#2F2C39" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
     </g>
     <defs>
       <clipPath id="clip0_3712_216680">
-        <rect
-          width="24"
-          height="24"
-          fill="white"
-          transform="translate(0.666504)"
-        />
+        <rect width="24" height="24" fill="white" transform="translate(0.666504)" />
       </clipPath>
     </defs>
   </svg>
 );
 
 export const BlogLinkedinIcon = () => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width="24"
-    height="24"
-    viewBox="0 0 24 24"
-    fill="none"
-  >
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
     <path
       d="M21.3356 0C22.0429 0 22.7211 0.280937 23.2212 0.781009C23.7213 1.28108 24.0023 1.95932 24.0023 2.66653V21.3323C24.0023 22.0395 23.7213 22.7177 23.2212 23.2178C22.7211 23.7179 22.0429 23.9988 21.3356 23.9988H2.66914C1.96191 23.9988 1.28364 23.7179 0.783544 23.2178C0.283451 22.7177 0.00250244 22.0395 0.00250244 21.3323V2.66653C0.00250244 1.95932 0.283451 1.28108 0.783544 0.781009C1.28364 0.280937 1.96191 0 2.66914 0H21.3356ZM20.669 20.6656V13.5993C20.669 12.4466 20.211 11.341 19.3959 10.5259C18.5807 9.7108 17.4751 9.25287 16.3223 9.25287C15.189 9.25287 13.869 9.94617 13.229 10.9861V9.50619H9.50908V20.6656H13.229V14.0926C13.229 13.066 14.0557 12.2261 15.0824 12.2261C15.5774 12.2261 16.0522 12.4227 16.4023 12.7728C16.7523 13.1228 16.949 13.5976 16.949 14.0926V20.6656H20.669ZM5.17579 7.41296C5.76987 7.41296 6.33961 7.17698 6.75969 6.75692C7.17977 6.33685 7.41577 5.76713 7.41577 5.17308C7.41577 3.93314 6.41578 2.91985 5.17579 2.91985C4.57817 2.91985 4.00503 3.15725 3.58245 3.57981C3.15988 4.00237 2.92248 4.57548 2.92248 5.17308C2.92248 6.41301 3.9358 7.41296 5.17579 7.41296ZM7.0291 20.6656V9.50619H3.3358V20.6656H7.0291Z"
       fill="#E9EEEF"
@@ -1325,13 +766,7 @@ export const BlogLinkedinIcon = () => (
 );
 
 export const BlogFBIcon = () => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width="24"
-    height="24"
-    viewBox="0 0 24 24"
-    fill="none"
-  >
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
     <path
       d="M24.0014 12.0304C24.0014 5.38964 18.6255 0 12.0015 0C5.3776 0 0.00164795 5.38964 0.00164795 12.0304C0.00164795 17.8532 4.12961 22.7014 9.60156 23.8203V15.6396H7.20158V12.0304H9.60156V9.02283C9.60156 6.70096 11.4855 4.81218 13.8015 4.81218H16.8015V8.42131H14.4015C13.7415 8.42131 13.2015 8.96268 13.2015 9.62435V12.0304H16.8015V15.6396H13.2015V24.0007C19.2615 23.3992 24.0014 18.2742 24.0014 12.0304Z"
       fill="#E9EEEF"
@@ -1340,13 +775,7 @@ export const BlogFBIcon = () => (
 );
 
 export const BlogTwitterIcon = () => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width="24"
-    height="24"
-    viewBox="0 0 24 24"
-    fill="none"
-  >
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
     <path
       d="M14.2844 10.1623L23.2174 0H21.1004L13.3421 8.82315L7.14765 0H0.000778198L9.37079 13.3433L0.000778198 23.9988H2.11781L10.3106 14.6813L16.8537 23.9988H24.0005L14.2844 10.1623ZM11.3842 13.4597L10.4344 12.1314L2.88075 1.55992H6.13335L12.2293 10.0915L13.1779 11.4198L21.1016 22.5097H17.8503L11.383 13.4609L11.3842 13.4597Z"
       fill="#E9EEEF"
@@ -1355,13 +784,7 @@ export const BlogTwitterIcon = () => (
 );
 
 export const BlogInstaIcon = () => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width="24"
-    height="24"
-    viewBox="0 0 24 24"
-    fill="none"
-  >
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
     <path
       d="M6.95986 0H17.0398C20.8797 0 23.9997 3.11985 23.9997 6.95966V17.0392C23.9997 18.885 23.2664 20.6552 21.9612 21.9604C20.656 23.2656 18.8857 23.9988 17.0398 23.9988H6.95986C3.1199 23.9988 -7.62939e-05 20.879 -7.62939e-05 17.0392V6.95966C-7.62939e-05 5.11384 0.733201 3.34363 2.03844 2.03844C3.34368 0.733248 5.11397 0 6.95986 0ZM6.71986 2.39988C5.57414 2.39988 4.47534 2.855 3.66519 3.66512C2.85504 4.47524 2.3999 5.57399 2.3999 6.71967V17.2791C2.3999 19.667 4.33189 21.5989 6.71986 21.5989H17.2798C18.4255 21.5989 19.5243 21.1438 20.3344 20.3337C21.1446 19.5236 21.5997 18.4248 21.5997 17.2791V6.71967C21.5997 4.33179 19.6677 2.39988 17.2798 2.39988H6.71986ZM18.2998 4.19979C18.6976 4.19979 19.0791 4.35782 19.3604 4.63911C19.6417 4.9204 19.7997 5.30191 19.7997 5.69972C19.7997 6.09752 19.6417 6.47904 19.3604 6.76033C19.0791 7.04162 18.6976 7.19965 18.2998 7.19965C17.9019 7.19965 17.5204 7.04162 17.2391 6.76033C16.9578 6.47904 16.7998 6.09752 16.7998 5.69972C16.7998 5.30191 16.9578 4.9204 17.2391 4.63911C17.5204 4.35782 17.9019 4.19979 18.2998 4.19979ZM11.9998 5.9997C13.5911 5.9997 15.1172 6.63181 16.2424 7.75698C17.3676 8.88214 17.9998 10.4082 17.9998 11.9994C17.9998 13.5906 17.3676 15.1167 16.2424 16.2418C15.1172 17.367 13.5911 17.9991 11.9998 17.9991C10.4085 17.9991 8.88242 17.367 7.75721 16.2418C6.63201 15.1167 5.99987 13.5906 5.99987 11.9994C5.99987 10.4082 6.63201 8.88214 7.75721 7.75698C8.88242 6.63181 10.4085 5.9997 11.9998 5.9997ZM11.9998 8.39959C11.045 8.39959 10.1294 8.77885 9.45426 9.45395C8.77913 10.129 8.39985 11.0447 8.39985 11.9994C8.39985 12.9541 8.77913 13.8698 9.45426 14.5449C10.1294 15.22 11.045 15.5992 11.9998 15.5992C12.9546 15.5992 13.8703 15.22 14.5454 14.5449C15.2205 13.8698 15.5998 12.9541 15.5998 11.9994C15.5998 11.0447 15.2205 10.129 14.5454 9.45395C13.8703 8.77885 12.9546 8.39959 11.9998 8.39959Z"
       fill="#E9EEEF"
@@ -1370,35 +793,11 @@ export const BlogInstaIcon = () => (
 );
 
 export const DownloadIcon = () => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width="22"
-    height="22"
-    viewBox="0 0 22 22"
-    fill="none"
-  >
+  <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none">
     <g clip-path="url(#clip0_3712_218871)">
-      <path
-        d="M11 12.375V2.75"
-        stroke="#2F2C39"
-        strokeWidth="1.375"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M18.5625 12.375V17.875H3.4375V12.375"
-        stroke="#2F2C39"
-        strokeWidth="1.375"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M14.4375 8.9375L11 12.375L7.5625 8.9375"
-        stroke="#2F2C39"
-        strokeWidth="1.375"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
+      <path d="M11 12.375V2.75" stroke="#2F2C39" strokeWidth="1.375" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M18.5625 12.375V17.875H3.4375V12.375" stroke="#2F2C39" strokeWidth="1.375" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M14.4375 8.9375L11 12.375L7.5625 8.9375" stroke="#2F2C39" strokeWidth="1.375" strokeLinecap="round" strokeLinejoin="round" />
     </g>
     <defs>
       <clipPath id="clip0_3712_218871">
@@ -1409,13 +808,7 @@ export const DownloadIcon = () => (
 );
 
 export const ReviewIcon = () => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width="24"
-    height="24"
-    viewBox="0 0 24 24"
-    fill="none"
-  >
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
     <path
       d="M11.9991 17.7272L17.1291 20.8819C17.2622 20.9627 17.4162 21.0023 17.5718 20.9955C17.7274 20.9888 17.8774 20.9361 18.003 20.8441C18.1287 20.7521 18.2242 20.6249 18.2775 20.4786C18.3309 20.3323 18.3397 20.1735 18.3028 20.0222L16.9078 14.1357L21.4734 10.1982C21.5898 10.096 21.6738 9.9619 21.7149 9.81254C21.7559 9.66317 21.7524 9.50504 21.7046 9.35768C21.6569 9.21031 21.567 9.08015 21.4461 8.98328C21.3252 8.88641 21.1786 8.82706 21.0244 8.81255L15.0328 8.32505L12.7247 2.73755C12.6658 2.5934 12.5654 2.47004 12.4362 2.38321C12.3069 2.29637 12.1548 2.25 11.9991 2.25C11.8434 2.25 11.6912 2.29637 11.562 2.38321C11.4327 2.47004 11.3323 2.5934 11.2734 2.73755L8.96532 8.32505L2.97375 8.81255C2.81847 8.82619 2.67065 8.88528 2.54876 8.98244C2.42686 9.0796 2.3363 9.21053 2.28839 9.35887C2.24048 9.5072 2.23734 9.66636 2.27937 9.81647C2.3214 9.96658 2.40672 10.101 2.52469 10.2029L7.09032 14.1404L5.69532 20.0222C5.65844 20.1735 5.66723 20.3323 5.72059 20.4786C5.77394 20.6249 5.86947 20.7521 5.99508 20.8441C6.1207 20.9361 6.27077 20.9888 6.42634 20.9955C6.5819 21.0023 6.73596 20.9627 6.86907 20.8819L11.9991 17.7272Z"
       stroke="#2F2C39"
@@ -1427,58 +820,23 @@ export const ReviewIcon = () => (
 );
 
 export const PlusIcon = () => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width="18"
-    height="18"
-    viewBox="0 0 18 19"
-    fill="none"
-  >
+  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 19" fill="none">
     <g clip-path="url(#clip0_3712_220352)">
-      <path
-        d="M2.8125 9.5H15.1875"
-        stroke="#52595C"
-        strokeWidth="1.125"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M9 3.3125V15.6875"
-        stroke="#52595C"
-        strokeWidth="1.125"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
+      <path d="M2.8125 9.5H15.1875" stroke="#52595C" strokeWidth="1.125" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M9 3.3125V15.6875" stroke="#52595C" strokeWidth="1.125" strokeLinecap="round" strokeLinejoin="round" />
     </g>
     <defs>
       <clipPath id="clip0_3712_220352">
-        <rect
-          width="18"
-          height="18"
-          fill="white"
-          transform="translate(0 0.5)"
-        />
+        <rect width="18" height="18" fill="white" transform="translate(0 0.5)" />
       </clipPath>
     </defs>
   </svg>
 );
 
 export const TimeSheetIcon = () => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width="24"
-    height="24"
-    viewBox="0 0 24 24"
-    fill="none"
-  >
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
     <g clip-path="url(#clip0_4858_9116)">
-      <path
-        d="M16.5 9.75L12 12V6.75"
-        stroke="#2F2C39"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
+      <path d="M16.5 9.75L12 12V6.75" stroke="#2F2C39" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
       <path
         d="M12 21C10.22 21 8.47991 20.4722 6.99987 19.4832C5.51983 18.4943 4.36628 17.0887 3.68509 15.4442C3.0039 13.7996 2.82567 11.99 3.17294 10.2442C3.5202 8.49836 4.37737 6.89472 5.63604 5.63604C6.89472 4.37737 8.49836 3.5202 10.2442 3.17294C11.99 2.82567 13.7996 3.0039 15.4442 3.68509C17.0887 4.36628 18.4943 5.51983 19.4832 6.99987C20.4722 8.47991 21 10.22 21 12"
         stroke="#2F2C39"
@@ -1508,3 +866,311 @@ export const TimeSheetIcon = () => (
     </defs>
   </svg>
 );
+
+export function EditEmployerProfileIcon(props) {
+  return (
+    <svg width={40} height={40} viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+      <rect x="0.5" y="0.5" width={39} height={39} rx="19.5" fill="#F4F9FA" />
+      <rect x="0.5" y="0.5" width={39} height={39} rx="19.5" stroke="#E6EDEE" />
+      <g clipPath="url(#clip0_3712_250446)">
+        <path
+          d="M16.6897 28.2501H12.5C12.3011 28.2501 12.1103 28.1711 11.9697 28.0305C11.829 27.8898 11.75 27.699 11.75 27.5001V23.3104C11.7501 23.1118 11.829 22.9213 11.9694 22.7807L23.5306 11.2195C23.6713 11.079 23.862 11 24.0608 11C24.2596 11 24.4503 11.079 24.5909 11.2195L28.7806 15.4064C28.9212 15.547 29.0001 15.7377 29.0001 15.9365C29.0001 16.1354 28.9212 16.326 28.7806 16.4667L17.2194 28.0307C17.0788 28.1711 16.8883 28.25 16.6897 28.2501Z"
+          stroke="#4B465C"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+        <path d="M20.75 14L26 19.25" stroke="#4B465C" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+      </g>
+      <defs>
+        <clipPath id="clip0_3712_250446">
+          <rect x={8} y={8} width={24} height={24} rx={12} fill="white" />
+        </clipPath>
+      </defs>
+    </svg>
+  );
+}
+export function LinkEmployerProfileIcon(props) {
+  return (
+    <svg width={24} height={24} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+      <g clipPath="url(#clip0_3712_250458)">
+        <path d="M20.25 9.75L20.2491 3.75094L14.25 3.75" stroke="#5D586C" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M12.75 11.25L20.25 3.75" stroke="#5D586C" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        <path
+          d="M17.25 12.75V19.5C17.25 19.6989 17.171 19.8897 17.0303 20.0303C16.8897 20.171 16.6989 20.25 16.5 20.25H4.5C4.30109 20.25 4.11032 20.171 3.96967 20.0303C3.82902 19.8897 3.75 19.6989 3.75 19.5V7.5C3.75 7.30109 3.82902 7.11032 3.96967 6.96967C4.11032 6.82902 4.30109 6.75 4.5 6.75H11.25"
+          stroke="#5D586C"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </g>
+      <defs>
+        <clipPath id="clip0_3712_250458">
+          <rect width={24} height={24} fill="white" />
+        </clipPath>
+      </defs>
+    </svg>
+  );
+}
+export function LocationEmployerProfileIcon(props) {
+  return (
+    <svg width={36} height={36} viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+      <rect width={36} height={36} rx={18} fill="#D7FFDD" />
+      <g clipPath="url(#clip0_3712_250469)">
+        <path
+          d="M18 18.75C19.6569 18.75 21 17.4069 21 15.75C21 14.0931 19.6569 12.75 18 12.75C16.3431 12.75 15 14.0931 15 15.75C15 17.4069 16.3431 18.75 18 18.75Z"
+          stroke="#3DD555"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+        <path
+          d="M25.5 15.75C25.5 22.5 18 27.75 18 27.75C18 27.75 10.5 22.5 10.5 15.75C10.5 13.7609 11.2902 11.8532 12.6967 10.4467C14.1032 9.04018 16.0109 8.25 18 8.25C19.9891 8.25 21.8968 9.04018 23.3033 10.4467C24.7098 11.8532 25.5 13.7609 25.5 15.75Z"
+          stroke="#3DD555"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </g>
+      <defs>
+        <clipPath id="clip0_3712_250469">
+          <rect width={24} height={24} fill="white" transform="translate(6 6)" />
+        </clipPath>
+      </defs>
+    </svg>
+  );
+}
+export function MenuEmployerProfileIcon(props) {
+  return (
+    <svg width={24} height={24} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+      <path
+        d="M10 12C10 12.5304 10.2107 13.0391 10.5858 13.4142C10.9609 13.7893 11.4696 14 12 14C12.5304 14 13.0391 13.7893 13.4142 13.4142C13.7893 13.0391 14 12.5304 14 12C14 11.4696 13.7893 10.9609 13.4142 10.5858C13.0391 10.2107 12.5304 10 12 10C11.4696 10 10.9609 10.2107 10.5858 10.5858C10.2107 10.9609 10 11.4696 10 12ZM10 6C10 6.53043 10.2107 7.03914 10.5858 7.41421C10.9609 7.78929 11.4696 8 12 8C12.5304 8 13.0391 7.78929 13.4142 7.41421C13.7893 7.03914 14 6.53043 14 6C14 5.46957 13.7893 4.96086 13.4142 4.58579C13.0391 4.21071 12.5304 4 12 4C11.4696 4 10.9609 4.21071 10.5858 4.58579C10.2107 4.96086 10 5.46957 10 6ZM10 18C10 18.5304 10.2107 19.0391 10.5858 19.4142C10.9609 19.7893 11.4696 20 12 20C12.5304 20 13.0391 19.7893 13.4142 19.4142C13.7893 19.0391 14 18.5304 14 18C14 17.4696 13.7893 16.9609 13.4142 16.5858C13.0391 16.2107 12.5304 16 12 16C11.4696 16 10.9609 16.2107 10.5858 16.5858C10.2107 16.9609 10 17.4696 10 18Z"
+        fill="#4B465C"
+      />
+    </svg>
+  );
+}
+export function UserEmployerProfileIcon(props) {
+  return (
+    <svg width={36} height={36} viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+      <rect width={36} height={36} rx={18} fill="#DDF0F7" />
+      <g clipPath="url(#clip0_3712_250399)">
+        <path
+          d="M18 21C21.3137 21 24 18.3137 24 15C24 11.6863 21.3137 9 18 9C14.6863 9 12 11.6863 12 15C12 18.3137 14.6863 21 18 21Z"
+          stroke="url(#paint0_linear_3712_250399)"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+        <path
+          d="M9 26.25C10.8159 23.1122 14.1141 21 18 21C21.8859 21 25.1841 23.1122 27 26.25"
+          stroke="url(#paint1_linear_3712_250399)"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </g>
+      <defs>
+        <linearGradient id="paint0_linear_3712_250399" x1={24} y1={31} x2="5.86378" y2="25.1116" gradientUnits="userSpaceOnUse">
+          <stop stopColor="#001F3F" />
+          <stop offset="0.660481" stopColor="#009DD1" />
+        </linearGradient>
+        <linearGradient id="paint1_linear_3712_250399" x1={27} y1="30.625" x2="13.5699" y2="15.675" gradientUnits="userSpaceOnUse">
+          <stop stopColor="#001F3F" />
+          <stop offset="0.660481" stopColor="#009DD1" />
+        </linearGradient>
+        <clipPath id="clip0_3712_250399">
+          <rect width={24} height={24} fill="white" transform="translate(6 6)" />
+        </clipPath>
+      </defs>
+    </svg>
+  );
+}
+export function DashboardEmployerSidebarIcon(props) {
+  return (
+    <svg width={24} height={24} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <g clipPath="url(#clip0_6005_41992)">
+        <path
+          d="M20.25 4.5H3.75C3.33579 4.5 3 4.83579 3 5.25V16.5C3 16.9142 3.33579 17.25 3.75 17.25H20.25C20.6642 17.25 21 16.9142 21 16.5V5.25C21 4.83579 20.6642 4.5 20.25 4.5Z"
+          stroke="#2F2C39"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+        <path d="M15 17.25L18 21" stroke="#2F2C39" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M9 17.25L6 21" stroke="#2F2C39" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M9 11.25V13.5" stroke="#2F2C39" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M12 9.75V13.5" stroke="#2F2C39" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M15 8.25V13.5" stroke="#2F2C39" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M12 4.5V2.25" stroke="#2F2C39" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+      </g>
+      <defs>
+        <clipPath id="clip0_6005_41992">
+          <rect width={24} height={24} fill="white" />
+        </clipPath>
+      </defs>
+    </svg>
+  );
+}
+export function DashboardJobPostIcon(props) {
+  return (
+    <svg width={43} height={43} viewBox="0 0 43 43" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="0.667969" y="0.5" width={42} height={42} rx={21} fill="#E2F3F9" />
+      <g clipPath="url(#clip0_3712_236998)">
+        <path
+          d="M30.6055 15H12.7305C12.2817 15 11.918 15.3638 11.918 15.8125V28.8125C11.918 29.2612 12.2817 29.625 12.7305 29.625H30.6055C31.0542 29.625 31.418 29.2612 31.418 28.8125V15.8125C31.418 15.3638 31.0542 15 30.6055 15Z"
+          stroke="url(#paint0_linear_3712_236998)"
+          strokeWidth="1.625"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+        <path
+          d="M25.7305 15V13.375C25.7305 12.944 25.5593 12.5307 25.2545 12.226C24.9498 11.9212 24.5364 11.75 24.1055 11.75H19.2305C18.7995 11.75 18.3862 11.9212 18.0814 12.226C17.7767 12.5307 17.6055 12.944 17.6055 13.375V15"
+          stroke="url(#paint1_linear_3712_236998)"
+          strokeWidth="1.625"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+        <path
+          d="M31.418 20.5156C28.455 22.23 25.0912 23.1302 21.668 23.1248C18.2449 23.1302 14.8812 22.2304 11.918 20.5166"
+          stroke="url(#paint2_linear_3712_236998)"
+          strokeWidth="1.625"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+        <path d="M20.043 19.875H23.293" stroke="url(#paint3_linear_3712_236998)" strokeWidth="1.625" strokeLinecap="round" strokeLinejoin="round" />
+      </g>
+      <defs>
+        <linearGradient id="paint0_linear_3712_236998" x1="31.418" y1="41.8125" x2="3.98157" y2="29.9353" gradientUnits="userSpaceOnUse">
+          <stop stopColor="#001F3F" />
+          <stop offset="0.660481" stopColor="#009DD1" />
+        </linearGradient>
+        <linearGradient id="paint1_linear_3712_236998" x1="25.7305" y1="17.7083" x2="17.5475" y2="11.0663" gradientUnits="userSpaceOnUse">
+          <stop stopColor="#001F3F" />
+          <stop offset="0.660481" stopColor="#009DD1" />
+        </linearGradient>
+        <linearGradient id="paint2_linear_3712_236998" x1="31.418" y1="25.2991" x2="26.6883" y2="13.8224" gradientUnits="userSpaceOnUse">
+          <stop stopColor="#001F3F" />
+          <stop offset="0.660481" stopColor="#009DD1" />
+        </linearGradient>
+        <linearGradient id="paint3_linear_3712_236998" x1="23.293" y1="21.7083" x2="20.7238" y2="18.9974" gradientUnits="userSpaceOnUse">
+          <stop stopColor="#001F3F" />
+          <stop offset="0.660481" stopColor="#009DD1" />
+        </linearGradient>
+        <clipPath id="clip0_3712_236998">
+          <rect width={26} height={26} fill="white" transform="translate(8.66797 8.5)" />
+        </clipPath>
+      </defs>
+    </svg>
+  );
+}
+export function DashboardAppliationIcon(props) {
+  return (
+    <svg width={43} height={43} viewBox="0 0 43 43" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="0.335938" y="0.5" width={42} height={42} rx={21} fill="#E2F3F9" />
+      <path
+        d="M28.6484 31.25H14.0234C13.8079 31.25 13.6013 31.1644 13.4489 31.012C13.2965 30.8597 13.2109 30.653 13.2109 30.4375V12.5625C13.2109 12.347 13.2965 12.1403 13.4489 11.988C13.6013 11.8356 13.8079 11.75 14.0234 11.75H23.7734L29.4609 17.4375V30.4375C29.4609 30.653 29.3753 30.8597 29.223 31.012C29.0706 31.1644 28.8639 31.25 28.6484 31.25Z"
+        stroke="url(#paint0_linear_3712_237010)"
+        strokeWidth="1.625"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path d="M23.7734 11.75V17.4375H29.4609" stroke="url(#paint1_linear_3712_237010)" strokeWidth="1.625" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M18.0859 22.3125H24.5859" stroke="url(#paint2_linear_3712_237010)" strokeWidth="1.625" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M18.0859 25.5625H24.5859" stroke="url(#paint3_linear_3712_237010)" strokeWidth="1.625" strokeLinecap="round" strokeLinejoin="round" />
+      <defs>
+        <linearGradient id="paint0_linear_3712_237010" x1="29.4609" y1="47.5" x2="4.16437" y2="40.6557" gradientUnits="userSpaceOnUse">
+          <stop stopColor="#001F3F" />
+          <stop offset="0.660481" stopColor="#009DD1" />
+        </linearGradient>
+        <linearGradient id="paint1_linear_3712_237010" x1="29.4609" y1="22.1771" x2="20.8651" y2="19.3862" gradientUnits="userSpaceOnUse">
+          <stop stopColor="#001F3F" />
+          <stop offset="0.660481" stopColor="#009DD1" />
+        </linearGradient>
+        <linearGradient id="paint2_linear_3712_237010" x1="24.5859" y1="24.1458" x2="22.5948" y2="19.9437" gradientUnits="userSpaceOnUse">
+          <stop stopColor="#001F3F" />
+          <stop offset="0.660481" stopColor="#009DD1" />
+        </linearGradient>
+        <linearGradient id="paint3_linear_3712_237010" x1="24.5859" y1="27.3958" x2="22.5948" y2="23.1937" gradientUnits="userSpaceOnUse">
+          <stop stopColor="#001F3F" />
+          <stop offset="0.660481" stopColor="#009DD1" />
+        </linearGradient>
+      </defs>
+    </svg>
+  );
+}
+export function DashboardRecruiterHiredIcon(props) {
+  return (
+    <svg width={42} height={43} viewBox="0 0 42 43" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect y="0.5" width={42} height={42} rx={21} fill="#E2F3F9" />
+      <path
+        d="M18.9688 24.75C22.3342 24.75 25.0625 22.0217 25.0625 18.6562C25.0625 15.2908 22.3342 12.5625 18.9688 12.5625C15.6033 12.5625 12.875 15.2908 12.875 18.6562C12.875 22.0217 15.6033 24.75 18.9688 24.75Z"
+        stroke="url(#paint0_linear_3712_237021)"
+        strokeWidth="1.625"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M10.4375 28.8125C12.5246 26.3293 15.4709 24.75 18.9688 24.75C22.4666 24.75 25.4129 26.3293 27.5 28.8125"
+        stroke="url(#paint1_linear_3712_237021)"
+        strokeWidth="1.625"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M28.3125 23.125L29.9375 24.75L33.1875 21.5"
+        stroke="url(#paint2_linear_3712_237021)"
+        strokeWidth="1.625"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <defs>
+        <linearGradient id="paint0_linear_3712_237021" x1="25.0625" y1="34.9062" x2="6.6429" y2="28.9259" gradientUnits="userSpaceOnUse">
+          <stop stopColor="#001F3F" />
+          <stop offset="0.660481" stopColor="#009DD1" />
+        </linearGradient>
+        <linearGradient id="paint1_linear_3712_237021" x1="27.5" y1="32.1979" x2="17.5312" y2="18.6041" gradientUnits="userSpaceOnUse">
+          <stop stopColor="#001F3F" />
+          <stop offset="0.660481" stopColor="#009DD1" />
+        </linearGradient>
+        <linearGradient id="paint2_linear_3712_237021" x1="33.1875" y1="27.4583" x2="26.6044" y2="24.2523" gradientUnits="userSpaceOnUse">
+          <stop stopColor="#001F3F" />
+          <stop offset="0.660481" stopColor="#009DD1" />
+        </linearGradient>
+      </defs>
+    </svg>
+  );
+}
+export function DashboardClockIcon(props) {
+  return (
+    <svg width={24} height={24} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+      <g clipPath="url(#clip0_3712_237135)">
+        <path
+          d="M12 21C16.9706 21 21 16.9706 21 12C21 7.02944 16.9706 3 12 3C7.02944 3 3 7.02944 3 12C3 16.9706 7.02944 21 12 21Z"
+          stroke="#2F2C39"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+        <path d="M12 6.75V12H17.25" stroke="#2F2C39" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+      </g>
+      <defs>
+        <clipPath id="clip0_3712_237135">
+          <rect width={24} height={24} fill="white" />
+        </clipPath>
+      </defs>
+    </svg>
+  );
+}
+export function CalendarDashboardIcon(props) {
+  return (
+    <svg width={24} height={24} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+      <rect x={4} y={5} width={16} height={16} rx={2} stroke="#52595C" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M16 3V7" stroke="#52595C" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M8 3V7" stroke="#52595C" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M4 11H20" stroke="#52595C" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M11 15H12" stroke="#52595C" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M12 15V18" stroke="#52595C" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}

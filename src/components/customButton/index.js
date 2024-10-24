@@ -4,12 +4,12 @@ import { Button } from "antd";
 import "./styles.scss";
 
 const CustomButton = (props) => {
-  const { category, type, name, disabled, handleClick, icon, shape, classes, loading = false } = props;
+  const { category, type, name, disabled, handleClick, icon, shape, classes, loading = false, block=false } = props;
   const onClick = typeof handleClick === "function" ? handleClick : () => {};
   return (
     <Switch>
       <Case condition={category === "primary"}>
-        <Button loading={loading} type="primary" className={`common-button-styles custom-button-primary ${classes}`} onClick={onClick}>
+        <Button loading={loading} type="primary" className={`common-button-styles custom-button-primary ${classes}`} onClick={onClick} block={block}>
           {name}
         </Button>
       </Case>

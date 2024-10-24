@@ -8,6 +8,9 @@ import CustomTabs from "../../../components/customTabs";
 
 import "../styles.scss";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { fetchRecruiterAddTimesheetList, fetchRecruiterProgressRole, fetchRecruiterRole } from "../../../features/timesheet/timesheetSlice";
 
 const viewTimesheetColumns = [
   {
@@ -70,8 +73,8 @@ const InprogressRolesColumns = [
 const columns = [
   {
     title: "Booking ID",
-    dataIndex: "bookingID",
-    key: "bookingID",
+    dataIndex: "bookingId",
+    key: "bookingId",
   },
   {
     title: "Company Name",
@@ -149,7 +152,7 @@ const data = [
 ];
 
 const AllRoles = (props) => {
-  const { role } = props;
+  const { role, tableData = [], loading = false } = props;
 
   const tableColumns = (arg) => {
     if (arg === "view-timesheet") return viewTimesheetColumns;
@@ -162,7 +165,7 @@ const AllRoles = (props) => {
     <section className="common-view-timesheet-container">
       <CommonInput classes="view-timesheet-search" placeholder="Search" />
 
-      <CommonTable columns={tableColumns(role)} data={data} />
+      <CommonTable columns={tableColumns(role)} data={tableData} loading={loading} />
 
       <CustomPagination />
     </section>
@@ -170,7 +173,25 @@ const AllRoles = (props) => {
 };
 
 const ViewTimesheet = () => {
-  const handleTabChange = (key) => {};
+  const [activeKey, setActiveKey] = useState("allRoles");
+  const { roles, progressRole, roleLoading, pRoleLoading } = useSelector((state) => state.timesheet);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (activeKey === "allRoles") {
+      dispatch(fetchRecruiterRole());
+    } else if (activeKey === "inProgressRoles") {
+      dispatch(fetchRecruiterProgressRole());
+    } else {
+      console.log("Key not found");
+    }
+    dispatch(fetchRecruiterAddTimesheetList())
+  }, [dispatch, activeKey]);
+
+  console.log(progressRole);
+  const handleTabChange = (key) => {
+    setActiveKey(key);
+  };
 
   return (
     <div>
@@ -187,7 +208,7 @@ const ViewTimesheet = () => {
             label: "All Roles",
             children: (
               <Card>
-                <AllRoles />
+                <AllRoles tableData={roles} loading={roleLoading} />
               </Card>
             ),
           },
@@ -196,7 +217,7 @@ const ViewTimesheet = () => {
             label: "In Progress Roles",
             children: (
               <Card>
-                <AllRoles role="in-progress-roles" />
+                <AllRoles role="in-progress-roles" loading={pRoleLoading} tableData={progressRole} />
               </Card>
             ),
           },

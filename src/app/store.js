@@ -8,6 +8,7 @@ import notificationReducer from "../features/notification/notificationSlice";
 import bookingReducer from "../features/booking/bookingSlice";
 import mentorReviewReducer from "../features/mentorReviews/mentorReviewSlice";
 import earningReducer from "../features/earning/earningSlice";
+import timesheetReducer from "../features/timesheet/timesheetSlice";
 
 export const store = configureStore({
   reducer: {
@@ -19,5 +20,6 @@ export const store = configureStore({
     bookings: bookingReducer,
     mentorReviews: mentorReviewReducer,
     earning: earningReducer,
+    timesheet: timesheetReducer,
   },
 });

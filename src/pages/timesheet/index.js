@@ -1,4 +1,4 @@
-import { Card } from "antd";
+import { Card, Typography } from "antd";
 import CommonTable from "../../components/commonTable";
 import "./styles.scss";
 
@@ -129,7 +129,9 @@ const Timesheet = () => {
   return (
     <Card>
       <section className="time-sheet-main-container">
-        <Typography>Timesheet</Typography>
+        <Typography.Title level={3} style={{ fontWeight: "400" }}>
+          Timesheet
+        </Typography.Title>
 
         <CommonTable columns={columns} data={tableData} />
 

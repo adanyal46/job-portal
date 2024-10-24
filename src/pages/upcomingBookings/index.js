@@ -59,9 +59,8 @@ const BookingsListingRecruiter = ({ bookingSession }) => {
               mentor
               progress="Completed"
               serviceName={booking?.serviceName}
-              mentorName={booking?.jobSeekerName}
-              date={booking?.date}
-              time={booking?.time}
+              mentorName={booking?.fullname}
+              date={booking?.datetime}
             />
           ))}
       </section>
@@ -77,13 +76,15 @@ const UpcomingBookings = () => {
   const token = localStorage.getItem("token");
   const decodedToken = tokenDecoder(token);
   const USER_ROLE = decodedToken.role;
-  console.log(USER_ROLE);
   const dispatch = useDispatch();
   const { bookingSession } = useSelector((state) => state.bookings);
+
   useEffect(() => {
     dispatch(upcomingBookingSession());
   }, [dispatch]);
   const handleTabChange = (key) => {};
+
+  console.log('bookingSession',bookingSession);
 
   return (
     <section>

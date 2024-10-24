@@ -15,9 +15,7 @@ const JobSearch = lazy(() => import("./pages/jobSearch"));
 const Mentors = lazy(() => import("./pages/mentors"));
 const Bookings = lazy(() => import("./pages/bookings"));
 const Notifications = lazy(() => import("./pages/notifications"));
-const RecruiterNotification = lazy(() =>
-  import("./pages/recruiterNotification")
-);
+const RecruiterNotification = lazy(() => import("./pages/recruiterNotification"));
 const Settings = lazy(() => import("./pages/settings"));
 const Earnings = lazy(() => import("./pages/earnings"));
 const Blogs = lazy(() => import("./pages/blogs"));
@@ -27,6 +25,11 @@ const MentorProfile = lazy(() => import("./components/mentorProfile"));
 const MentorDetails = lazy(() => import("./pages/mentorDetails"));
 const Timesheet = lazy(() => import("./pages/timesheet/viewTimesheet"));
 const AddTimesheet = lazy(() => import("./pages/timesheet/addTimesheet"));
+const EmployerProfile = lazy(() => import("./pages/empoyerProfile"));
+const EmployerDashboard = lazy(() => import("./pages/employerDashboard"));
+const EmployerJobs = lazy(() => import("./pages/employer-jobs"));
+const EmployerRecruiter = lazy(() => import("./pages/employer-recruiter"));
+const EmployerStaffs = lazy(() => import("./pages/employer-staff"));
 
 const routeConfig = (token) => {
   const decodedToken = tokenDecoder(token);
@@ -224,6 +227,50 @@ const routeConfig = (token) => {
     },
   ];
 
+  const employerRoutes = [
+    {
+      path: "*",
+      element: <Navigate to={"/employer/profile"} replace />,
+      errorElement: <ErrorPage />, // Adding Error Page for error handling
+    },
+    {
+      path: "/employer",
+      element: <Layout />,
+      children: [
+        {
+          path: "profile",
+          element: <EmployerProfile />,
+          errorElement: <ErrorPage />,
+        },
+        {
+          path: "dashboard",
+          element: <EmployerDashboard />,
+          errorElement: <ErrorPage />,
+        },
+        {
+          path: "notifications",
+          element: <RecruiterNotification />,
+          errorElement: <ErrorPage />,
+        },
+        {
+          path: "jobs",
+          element: <EmployerJobs />,
+          errorElement: <ErrorPage />,
+        },
+        {
+          path: "hired-recruiter",
+          element: <EmployerRecruiter />,
+          errorElement: <ErrorPage />,
+        },
+        {
+          path: "staffs",
+          element: <EmployerStaffs />,
+          errorElement: <ErrorPage />,
+        },
+      ],
+    },
+  ];
+
   switch (role) {
     case Roles.JOB_SEEKER:
       return [...jobSeekerRoutes];
@@ -231,6 +278,8 @@ const routeConfig = (token) => {
       return [...mentorRoutes];
     case Roles.RECRUITER:
       return [...recruiterRoutes];
+    case Roles.EMPLOYER:
+      return [...employerRoutes];
     default:
       return [
         {
