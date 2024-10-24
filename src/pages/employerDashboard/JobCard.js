@@ -1,28 +1,65 @@
-import { Card, Flex, Typography } from "antd";
+import { Card, Flex, Typography, Dropdown, Menu } from "antd";
 import React from "react";
 import { MenuEmployerProfileIcon } from "../../assets/svg";
+import { Link } from "react-router-dom";
+import { EllipsisOutlined } from "@ant-design/icons"; // Import the menu dot icon
 
 const JobCard = ({ item, TEXT_STYLE }) => {
+  // Define the menu items
+  const menu = (
+    <Menu>
+      <Menu.Item key="edit">
+        <Link to={`/employer/edit-job/1`}>Edit Job</Link>
+      </Menu.Item>
+      {/* Add more menu items as needed */}
+    </Menu>
+  );
+
   return (
     <Card style={{ borderColor: "#DDDCE2" }}>
       <Flex justify="space-between" align="center">
-        <Typography.Text style={{ backgroundColor: "#E2F3F9", padding: "4px", color: "#0077A6" }} strong>
+        <Typography.Text
+          style={{
+            backgroundColor: "#E2F3F9",
+            padding: "4px",
+            color: "#0077A6",
+          }}
+          strong
+        >
           ID: {item.id}
         </Typography.Text>
-        <MenuEmployerProfileIcon />
+        <Dropdown
+          overlay={menu}
+          trigger={["click"]}
+          overlayStyle={{ width: "200px" }}
+        >
+          <a onClick={(e) => e.preventDefault()}>
+            <MenuEmployerProfileIcon
+              style={{ fontSize: "20px", cursor: "pointer" }}
+            />
+          </a>
+        </Dropdown>
       </Flex>
       <Flex gap={8} className="w-100" style={{ marginTop: "10px" }} vertical>
         <Flex align="center" className="w-100">
           <Flex flex={1}>
-            <Typography.Text style={{ ...TEXT_STYLE, fontWeight: "500" }}>Job Title</Typography.Text>
+            <Typography.Text style={{ ...TEXT_STYLE, fontWeight: "500" }}>
+              Job Title
+            </Typography.Text>
           </Flex>
           <Flex flex={1}>
-            <Typography.Text style={TEXT_STYLE}>{item.jobTitle}</Typography.Text>
+            <Link to={`/employer/job-detail/${item.id}`}>
+              <Typography.Text style={{ ...TEXT_STYLE }}>
+                {item.jobTitle}
+              </Typography.Text>
+            </Link>
           </Flex>
         </Flex>
         <Flex align="center" className="w-100">
           <Flex flex={1}>
-            <Typography.Text style={{ ...TEXT_STYLE, fontWeight: "500" }}>Status</Typography.Text>
+            <Typography.Text style={{ ...TEXT_STYLE, fontWeight: "500" }}>
+              Status
+            </Typography.Text>
           </Flex>
           <Flex flex={1}>
             <div
@@ -43,16 +80,22 @@ const JobCard = ({ item, TEXT_STYLE }) => {
         </Flex>
         <Flex align="center" className="w-100">
           <Flex flex={1}>
-            <Typography.Text style={{ ...TEXT_STYLE, fontWeight: "500" }}>Applications Received</Typography.Text>
+            <Typography.Text style={{ ...TEXT_STYLE, fontWeight: "500" }}>
+              Applications Received
+            </Typography.Text>
           </Flex>
           <Flex flex={1}>
-            <Typography.Text style={TEXT_STYLE}>{item.applicationReceived}</Typography.Text>
+            <Typography.Text style={TEXT_STYLE}>
+              {item.applicationReceived}
+            </Typography.Text>
           </Flex>
         </Flex>
 
         <Flex align="center" className="w-100">
           <Flex flex={1}>
-            <Typography.Text style={{ ...TEXT_STYLE, fontWeight: "500" }}>Date of Post</Typography.Text>
+            <Typography.Text style={{ ...TEXT_STYLE, fontWeight: "500" }}>
+              Date of Post
+            </Typography.Text>
           </Flex>
           <Flex flex={1}>
             <Typography.Text style={TEXT_STYLE}>{item.date}</Typography.Text>

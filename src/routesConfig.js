@@ -5,6 +5,9 @@ import Layout from "./Layout";
 import { Navigate } from "react-router-dom";
 import ErrorPage from "./ErrorPage";
 import RecruiterProfile from "./pages/recruiterProfile";
+import JobDetail from "./pages/employerDashboard/JobDetail";
+import ViewJobApplicantList from "./pages/employerDashboard/ViewJobApplicantList";
+import EditJob from "./pages/employerDashboard/EditJob";
 
 // Lazy loaded components
 const MyProfile = lazy(() => import("./pages/myProfile"));
@@ -15,7 +18,9 @@ const JobSearch = lazy(() => import("./pages/jobSearch"));
 const Mentors = lazy(() => import("./pages/mentors"));
 const Bookings = lazy(() => import("./pages/bookings"));
 const Notifications = lazy(() => import("./pages/notifications"));
-const RecruiterNotification = lazy(() => import("./pages/recruiterNotification"));
+const RecruiterNotification = lazy(() =>
+  import("./pages/recruiterNotification")
+);
 const Settings = lazy(() => import("./pages/settings"));
 const Earnings = lazy(() => import("./pages/earnings"));
 const Blogs = lazy(() => import("./pages/blogs"));
@@ -221,7 +226,7 @@ const routeConfig = (token) => {
           errorElement: <ErrorPage />,
         },
         {
-          path: "create-timesheet",
+          path: "create-timesheet/:id",
           element: <AddTimesheet />,
           errorElement: <ErrorPage />,
         },
@@ -277,6 +282,21 @@ const routeConfig = (token) => {
         {
           path: "recruiter",
           element: <EmployerRecruiter />,
+          errorElement: <ErrorPage />,
+        },
+        {
+          path: "job-detail/:id",
+          element: <JobDetail />,
+          errorElement: <ErrorPage />,
+        },
+        {
+          path: "edit-job/:id",
+          element: <EditJob />,
+          errorElement: <ErrorPage />,
+        },
+        {
+          path: "job-applicants",
+          element: <ViewJobApplicantList />,
           errorElement: <ErrorPage />,
         },
       ],

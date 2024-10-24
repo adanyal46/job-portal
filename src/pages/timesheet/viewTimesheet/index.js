@@ -10,7 +10,11 @@ import "../styles.scss";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { fetchRecruiterAddTimesheetList, fetchRecruiterProgressRole, fetchRecruiterRole } from "../../../features/timesheet/timesheetSlice";
+import {
+  fetchRecruiterAddTimesheetList,
+  fetchRecruiterProgressRole,
+  fetchRecruiterRole,
+} from "../../../features/timesheet/timesheetSlice";
 
 const viewTimesheetColumns = [
   {
@@ -90,11 +94,13 @@ const columns = [
     title: "Actions",
     dataIndex: "actions",
     key: "actions",
-    render: () => (
-      <Link to="/recruiter/create-timesheet">
-        <CustomButton category="additional" name="Add Timesheet" />
-      </Link>
-    ),
+    render: (_, record) => {
+      return (
+        <Link to={"/recruiter/create-timesheet/" + record?.bookingId}>
+          <CustomButton category="additional" name="Add Timesheet" />
+        </Link>
+      );
+    },
   },
 ];
 
@@ -165,7 +171,11 @@ const AllRoles = (props) => {
     <section className="common-view-timesheet-container">
       <CommonInput classes="view-timesheet-search" placeholder="Search" />
 
-      <CommonTable columns={tableColumns(role)} data={tableData} loading={loading} />
+      <CommonTable
+        columns={tableColumns(role)}
+        data={tableData}
+        loading={loading}
+      />
 
       <CustomPagination />
     </section>
@@ -174,7 +184,9 @@ const AllRoles = (props) => {
 
 const ViewTimesheet = () => {
   const [activeKey, setActiveKey] = useState("allRoles");
-  const { roles, progressRole, roleLoading, pRoleLoading } = useSelector((state) => state.timesheet);
+  const { roles, progressRole, roleLoading, pRoleLoading } = useSelector(
+    (state) => state.timesheet
+  );
   const dispatch = useDispatch();
   console.log("roles", progressRole);
   useEffect(() => {
@@ -207,7 +219,10 @@ const ViewTimesheet = () => {
             label: "All Roles",
             children: (
               <Card>
-                <AllRoles tableData={Array.isArray(roles) ? roles : []} loading={roleLoading} />
+                <AllRoles
+                  tableData={Array.isArray(roles) ? roles : []}
+                  loading={roleLoading}
+                />
               </Card>
             ),
           },
@@ -216,7 +231,11 @@ const ViewTimesheet = () => {
             label: "In Progress Roles",
             children: (
               <Card>
-                <AllRoles role="in-progress-roles" loading={pRoleLoading} tableData={progressRole} />
+                <AllRoles
+                  role="in-progress-roles"
+                  loading={pRoleLoading}
+                  tableData={progressRole}
+                />
               </Card>
             ),
           },

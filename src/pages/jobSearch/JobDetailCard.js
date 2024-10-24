@@ -51,7 +51,7 @@ const JobDetailCard = ({
         <section className="current-job-actions">
           {!jobData?.applied && (
             <a
-              href={jobData.applicationLink}
+              href={jobData?.applicationLink}
               target="_blank"
               rel="noopener noreferrer"
               onClick={handleApplyNow}

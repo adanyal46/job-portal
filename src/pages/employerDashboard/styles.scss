@@ -1,0 +1,23 @@
+.permium-tag {
+    background: linear-gradient(white, white) padding-box,
+    linear-gradient(287.99deg, #001f3f -20.42%, #009dd1 62.87%) border-box;
+  border-radius: 4px;
+  border: 0.1rem solid transparent;
+  padding: 1px 3px;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  font-size: 12px;
+  margin-bottom: 10px;
+
+}
+
+.content-wrapper{
+    background: -webkit-linear-gradient(
+        287.99deg,
+        #001f3f -20.42%,
+        #009dd1 62.87%
+      );
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+}

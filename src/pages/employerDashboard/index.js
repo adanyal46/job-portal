@@ -1,20 +1,30 @@
 import React, { useState } from "react";
-import { Row, Col, Card, Flex, Typography, List, Input, DatePicker, Button } from "antd";
+import {
+  Row,
+  Col,
+  Card,
+  Flex,
+  Typography,
+  List,
+  Input,
+  DatePicker,
+} from "antd";
 import {
   CalendarDashboardIcon,
   DashboardAppliationIcon,
   DashboardClockIcon,
   DashboardJobPostIcon,
+  DashboardPremiumOne,
+  DashboardPremiumTwo,
   DashboardRecruiterHiredIcon,
-  MenuEmployerProfileIcon,
 } from "../../assets/svg";
 import CustomTabs from "../../components/customTabs";
 import CustomButton from "../../components/customButton";
 import JobCard from "./JobCard";
 import CustomPagination from "../../components/customPagination";
-import MentorCard from "../../components/mentorCard";
 import RecruiterCard from "./RecruiterCard";
 import StaffCard from "./StaffCard";
+import "./styles.scss";
 
 const Dashboard = () => {
   const [activeTabKey, setActiveTabKey] = useState("1");
@@ -86,7 +96,11 @@ const Dashboard = () => {
       imageName: "",
       fullname: "Olivia Roy",
       location: "US",
-      services: ["Resume Review", "30-Minute Career Q&A", "Job Search Strategy"],
+      services: [
+        "Resume Review",
+        "30-Minute Career Q&A",
+        "Job Search Strategy",
+      ],
     },
 
     {
@@ -95,7 +109,11 @@ const Dashboard = () => {
       fullname: "Olivia Roy",
 
       location: "US",
-      services: ["Resume Review", "30-Minute Career Q&A", "Job Search Strategy"],
+      services: [
+        "Resume Review",
+        "30-Minute Career Q&A",
+        "Job Search Strategy",
+      ],
     },
     {
       id: 3,
@@ -103,14 +121,22 @@ const Dashboard = () => {
       location: "US",
       fullname: "Olivia Roy",
 
-      services: ["Resume Review", "30-Minute Career Q&A", "Job Search Strategy"],
+      services: [
+        "Resume Review",
+        "30-Minute Career Q&A",
+        "Job Search Strategy",
+      ],
     },
     {
       id: 4,
       imageName: "",
       location: "US",
       fullname: "Olivia Roy",
-      services: ["Resume Review", "30-Minute Career Q&A", "Job Search Strategy"],
+      services: [
+        "Resume Review",
+        "30-Minute Career Q&A",
+        "Job Search Strategy",
+      ],
     },
   ];
 
@@ -150,13 +176,27 @@ const Dashboard = () => {
     return (
       <Row gutter={16} style={{ alignItems: "center" }}>
         <Col flex={1}>
-          <Input.Search size="large" placeholder="Search" onSearch={(value) => console.log(value)} />
+          <Input.Search
+            size="large"
+            placeholder="Search"
+            onSearch={(value) => console.log(value)}
+          />
         </Col>
         <Col flex={1}>
-          <DatePicker size="large" className="w-100" suffixIcon={<CalendarDashboardIcon />} placeholder="Date Range" />
+          <DatePicker
+            size="large"
+            className="w-100"
+            suffixIcon={<CalendarDashboardIcon />}
+            placeholder="Date Range"
+          />
         </Col>
         <Col flex={1}>
-          <DatePicker size="large" className="w-100" suffixIcon={<CalendarDashboardIcon />} placeholder="Date Range" />
+          <DatePicker
+            size="large"
+            className="w-100"
+            suffixIcon={<CalendarDashboardIcon />}
+            placeholder="Date Range"
+          />
         </Col>
         <Col>
           <CustomButton category="primary" name="Add" />
@@ -243,13 +283,18 @@ const Dashboard = () => {
       <Row gutter={[16, 16]}>
         {cardData.map((item) => (
           <Col span={8} key={item.key}>
-            <Card bordered={false} style={{ boxShadow: "0px 4px 18px 0px #4B465C1A" }}>
+            <Card
+              bordered={false}
+              style={{ boxShadow: "0px 4px 18px 0px #4B465C1A" }}
+            >
               <Flex className="w-100" justify="space-between" align="center">
                 <Flex vertical gap={0}>
                   <Typography.Title level={3} style={{ color: "#2F2C39" }}>
                     {item.count}
                   </Typography.Title>
-                  <Typography.Text style={{ color: "#52595C" }}>{item.title}</Typography.Text>
+                  <Typography.Text style={{ color: "#52595C" }}>
+                    {item.title}
+                  </Typography.Text>
                 </Flex>
                 {item.icon}
               </Flex>
@@ -261,29 +306,104 @@ const Dashboard = () => {
       {/* Second Row: Two Cards (Left: 30%, Right: Custom Tabs) */}
       <Row gutter={[16, 16]} style={{ marginTop: "16px" }}>
         <Col span={8} style={{ marginTop: "58px" }}>
-          <Card title="Activity" bordered={false} style={{ height: "100%", boxShadow: "0px 4px 18px 0px #4B465C1A" }}>
+          {/* Activity Card */}
+          <Card
+            title="Activity"
+            bordered={false}
+            style={{ boxShadow: "0px 4px 18px 0px #4B465C1A" }}
+          >
             <List
               bordered
               dataSource={activityData}
               size={"large"}
               renderItem={(item) => (
-                <List.Item style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                <List.Item
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                  }}
+                >
                   <Typography.Text style={{ fontSize: "18px" }}>
-                    New job for <strong style={{ color: "#1C1C1C" }}>{item.title}</strong> <br />
+                    New job for{" "}
+                    <strong style={{ color: "#1C1C1C" }}>{item.title}</strong>{" "}
+                    <br />
                     role is Posted
                   </Typography.Text>
                   <Flex align="center" gap={3}>
                     <DashboardClockIcon />
-                    <Typography.Text style={{ color: "#2F2C39" }}>{item.time}</Typography.Text>
+                    <Typography.Text style={{ color: "#2F2C39" }}>
+                      {item.time}
+                    </Typography.Text>
                   </Flex>
                 </List.Item>
               )}
             />
           </Card>
+          {/* Two Small Cards Below the Activity Section */}
+          <Row gutter={[16, 16]} style={{ marginTop: "16px" }}>
+            <Col span={12}>
+              <Card
+                bordered={false}
+                style={{ boxShadow: "0px 4px 18px 0px #4B465C1A" }}
+              >
+                <Flex vertical>
+                  <Flex justify="space-between">
+                    <Flex vertical gap={0}>
+                      <div class="permium-tag">
+                        <div className="content-wrapper">Premium</div>
+                      </div>
+                      <Typography.Title level={4} style={{ fontWeight: "400" }}>
+                        16 / <strong>25</strong>
+                      </Typography.Title>
+                    </Flex>
+                    <DashboardPremiumOne />
+                  </Flex>
+                  <Typography.Text
+                    style={{ color: "#52595C", marginBottom: "10px" }}
+                  >
+                    Resume Searches
+                  </Typography.Text>
+                  <CustomButton name="Upgrade" />
+                </Flex>
+              </Card>
+            </Col>
+            <Col span={12}>
+              <Card
+                bordered={false}
+                style={{ boxShadow: "0px 4px 18px 0px #4B465C1A" }}
+              >
+                <Flex vertical>
+                  <Flex justify="space-between">
+                    <Flex vertical gap={0}>
+                      <div class="permium-tag">
+                        <div className="content-wrapper">Premium</div>
+                      </div>
+                      <Typography.Title level={4} style={{ fontWeight: "400" }}>
+                        2 / <strong>5</strong>
+                      </Typography.Title>
+                    </Flex>
+                    <DashboardPremiumTwo />
+                  </Flex>
+                  <Typography.Text
+                    style={{ color: "#52595C", marginBottom: "10px" }}
+                  >
+                    Job Postings
+                  </Typography.Text>
+                  <CustomButton name="Upgrade" />
+                </Flex>
+              </Card>
+            </Col>
+          </Row>
         </Col>
 
         <Col span={16}>
-          <CustomTabs items={tabItems} defaultActiveKey={activeTabKey} handleChange={handleTabChange} centered={true} />
+          <CustomTabs
+            items={tabItems}
+            defaultActiveKey={activeTabKey}
+            handleChange={handleTabChange}
+            centered={true}
+          />
         </Col>
       </Row>
     </div>

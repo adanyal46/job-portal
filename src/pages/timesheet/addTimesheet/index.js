@@ -4,8 +4,14 @@ import CommonInput from "../../../components/commonInput";
 import CustomButton from "../../../components/customButton";
 import CustomSelect from "../../../components/customSelect";
 import "../styles.scss";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { getDayDate } from "../../../utils";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  fetchRecruiterRoleDetail,
+  fetchrecruiterTimeSheetPost,
+} from "../../../features/timesheet/timesheetSlice";
+import { useNavigate, useParams } from "react-router-dom";
 
 const industriesOptions = [
   { value: "technology", label: "Technology" },
@@ -70,36 +76,87 @@ const TimesheetRow = ({ day, date, name }) => {
       <p>{day}</p>
       <p>{date}</p>
 
-      <Form.Item name={[name, "projectName"]} rules={[{ required: true, message: "Project Name is required" }]} noStyle>
-        <CommonInput classes="time-sheet-row-input" placeholder="Project Name" />
+      <Form.Item
+        name={[name, "projectName"]}
+        rules={[{ required: true, message: "Project Name is required" }]}
+        noStyle
+      >
+        <CommonInput
+          classes="time-sheet-row-input"
+          placeholder="Project Name"
+        />
       </Form.Item>
 
-      <Form.Item name={[name, "projectDescription"]} rules={[{ required: true, message: "Project Description is required" }]} noStyle>
-        <CommonInput classes="time-sheet-row-input" placeholder="Project Description" />
+      <Form.Item
+        name={[name, "projectDescription"]}
+        rules={[{ required: true, message: "Project Description is required" }]}
+        noStyle
+      >
+        <CommonInput
+          classes="time-sheet-row-input"
+          placeholder="Project Description"
+        />
       </Form.Item>
 
-      <Form.Item name={[name, "industries"]} rules={[{ required: true, message: "Industries selection is required" }]} noStyle>
-        <CustomSelect classes="time-sheet-row-input" placeholder="Select Industries" height={35} options={industriesOptions} />
+      <Form.Item
+        name={[name, "industries"]}
+        rules={[
+          { required: true, message: "Industries selection is required" },
+        ]}
+        noStyle
+      >
+        <CustomSelect
+          classes="time-sheet-row-input"
+          placeholder="Select Industries"
+          height={35}
+          options={industriesOptions}
+        />
       </Form.Item>
 
-      <Form.Item name={[name, "services"]} rules={[{ required: true, message: "Services selection is required" }]} noStyle>
-        <CustomSelect classes="time-sheet-row-input" placeholder="Select Services" height={35} options={servicesOptions} />
+      <Form.Item
+        name={[name, "services"]}
+        rules={[{ required: true, message: "Services selection is required" }]}
+        noStyle
+      >
+        <CustomSelect
+          classes="time-sheet-row-input"
+          placeholder="Select Services"
+          height={35}
+          options={servicesOptions}
+        />
       </Form.Item>
 
-      <Form.Item name={[name, "serviceFee"]} rules={[{ required: true, message: "Service Fee is required" }]} noStyle>
+      <Form.Item
+        name={[name, "serviceFee"]}
+        rules={[{ required: true, message: "Service Fee is required" }]}
+        noStyle
+      >
         <InputNumber classes="time-sheet-row-input" placeholder="Service Fee" />
       </Form.Item>
 
-      <Form.Item name={[name, "hours"]} rules={[{ required: true, message: "Hours are required" }]} noStyle>
+      <Form.Item
+        name={[name, "hours"]}
+        rules={[{ required: true, message: "Hours are required" }]}
+        noStyle
+      >
         <InputNumber classes="time-sheet-row-input" placeholder="Hours" />
       </Form.Item>
     </div>
   );
 };
 
-const TimesheetForm = ({ onSubmit }) => {
+const TimesheetForm = ({ onSubmit, roleDetail }) => {
+  const { user } = useSelector((state) => state.profile);
   const [timeSheetForm] = Form.useForm();
-  const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+  const daysOfWeek = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ];
   const todayIndex = new Date().getDay(); // 0 = Sunday, 1 = Monday, ..., 6 = Saturday
   const startIndex = todayIndex; // Start with today
 
@@ -119,8 +176,14 @@ const TimesheetForm = ({ onSubmit }) => {
 
   const handleValuesChange = (changedValues) => {
     const timesheetRows = timeSheetForm.getFieldValue("weeklyTimesheet") || [];
-    const totalFee = timesheetRows.reduce((sum, row) => sum + (row?.serviceFee || 0), 0);
-    const totalHour = timesheetRows.reduce((sum, row) => sum + (row?.hours || 0), 0);
+    const totalFee = timesheetRows.reduce(
+      (sum, row) => sum + (row?.serviceFee || 0),
+      0
+    );
+    const totalHour = timesheetRows.reduce(
+      (sum, row) => sum + (row?.hours || 0),
+      0
+    );
     // Update total fields in the form
     timeSheetForm.setFieldValue("totalHourWork", totalHour);
     timeSheetForm.setFieldValue("totalDueAmount", totalFee);
@@ -146,17 +209,26 @@ const TimesheetForm = ({ onSubmit }) => {
           };
         });
 
-        const jsonData = {
-          recruitingId: 2, // Example ID, adjust as needed
-          weeklyTimesheet,
+        weeklyTimesheet.push({
           totalDueAmount: values["totalDueAmount"],
           totalHourWork: values["totalHourWork"],
           totalPayableAmount: values["totalPayableAmount"],
+        });
+
+        const jsonData = {
+          recruitingId: user?.id, // Example ID, adjust as needed
+          weeklyTimesheet,
+          // totalDueAmount: values["totalDueAmount"],
+          // totalHourWork: values["totalHourWork"],
+          // totalPayableAmount: values["totalPayableAmount"],
           ...checkboxValues,
           managingSupervisor: values.managingSupervisor,
+          recruiterName: roleDetail.recruiterName,
+          HiredBy: roleDetail?.hireBy,
+          phoneNumber: roleDetail?.phoneNumber,
         };
 
-        console.log("Submitted Data:", JSON.stringify(jsonData, null, 2));
+        // console.log("Submitted Data:", JSON.stringify(jsonData, null, 2));
         onSubmit(jsonData);
       })
       .catch((errorInfo) => {
@@ -165,7 +237,11 @@ const TimesheetForm = ({ onSubmit }) => {
   };
 
   return (
-    <Form form={timeSheetForm} layout="vertical" onValuesChange={handleValuesChange}>
+    <Form
+      form={timeSheetForm}
+      layout="vertical"
+      onValuesChange={handleValuesChange}
+    >
       <section className="add-time-sheet-form-wrapper">
         <section className="timesheet-form-header">
           <p className="header-field">Day</p>
@@ -211,39 +287,63 @@ const TimesheetForm = ({ onSubmit }) => {
 
           <article className="role-detail-row">
             <p className="label">Recruiter Name</p>
-            <p className="value">{roleDetails?.recruiterName}</p>
+            <p className="value">{roleDetail?.RecruiterName}</p>
           </article>
 
           <article className="role-detail-row">
             <p className="label">Hired By</p>
-            <p className="value">{roleDetails?.recruiterName}</p>
+            <p className="value">{roleDetail?.hireBy}</p>
           </article>
 
           <article className="role-detail-row">
             <p className="label">Phone Number</p>
-            <p className="value">+1 302 3235235</p>
+            <p className="value">{roleDetail?.phoneNumber}</p>
           </article>
         </section>
 
-        <p className="select-boxes-heading">Please select the boxes to Continue</p>
+        <p className="select-boxes-heading">
+          Please select the boxes to Continue
+        </p>
 
         <Form.Item name="checkboxGroup" noStyle>
-          <Checkbox.Group onChange={handleCheckboxChange} className="custom-checkbox-group">
-            <Checkbox value="independentContracter">Independent contractor agreement.</Checkbox>
-            <Checkbox value="sendingtoclient">You are sending this timesheet to client for approval.</Checkbox>
+          <Checkbox.Group
+            onChange={handleCheckboxChange}
+            className="custom-checkbox-group"
+          >
+            <Checkbox value="independentContracter">
+              Independent contractor agreement.
+            </Checkbox>
+            <Checkbox value="sendingtoclient">
+              You are sending this timesheet to client for approval.
+            </Checkbox>
             <Checkbox value="sendChargestoFuse">Send charges to Fuse.</Checkbox>
           </Checkbox.Group>
         </Form.Item>
 
         <article className="field-group-wrapper">
           <label className="select-label">Managing Supervisor</label>
-          <Form.Item name="managingSupervisor" rules={[{ required: true, message: "Managing Supervisor is required" }]}>
-            <CustomSelect classes="time-sheet-row-input" placeholder="Select Managing Supervisor" height={35} width={460} options={managingSupervisors} />
+          <Form.Item
+            name="managingSupervisor"
+            rules={[
+              { required: true, message: "Managing Supervisor is required" },
+            ]}
+          >
+            <CustomSelect
+              classes="time-sheet-row-input"
+              placeholder="Select Managing Supervisor"
+              height={35}
+              width={460}
+              options={managingSupervisors}
+            />
           </Form.Item>
         </article>
         <section className="timesheet-footer-buttons">
           <CustomButton category="additional" name="Go Back" />
-          <CustomButton category="primary" name="Send to Client" handleClick={handleSubmit} />
+          <CustomButton
+            category="primary"
+            name="Send to Client"
+            handleClick={handleSubmit}
+          />
         </section>
       </section>
     </Form>
@@ -251,8 +351,25 @@ const TimesheetForm = ({ onSubmit }) => {
 };
 
 const AddTimesheet = () => {
-  const handleSubmit = (data) => {
-    console.log("Final Submit:", data);
+  const params = useParams();
+  const { roleDetail } = useSelector((state) => state.timesheet);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (params && params.id) dispatch(fetchRecruiterRoleDetail(params.id));
+  }, [dispatch, params, params?.id]);
+
+  const handleSubmit = async (data) => {
+    console.log(data);
+    try {
+      const response = await dispatch(fetchrecruiterTimeSheetPost(data));
+      console.log(response);
+      if (response.status === 201) {
+        navigate("/employer/timesheet");
+      }
+    } catch (error) {
+      console.log(error);
+    }
     // Here you can handle the data submission (e.g., API call)
   };
 
@@ -261,7 +378,7 @@ const AddTimesheet = () => {
       <Typography.Title level={3}>Add Timesheet</Typography.Title>
 
       <section className="time-sheet-main-container">
-        <TimesheetForm onSubmit={handleSubmit} />
+        <TimesheetForm onSubmit={handleSubmit} roleDetail={roleDetail} />
       </section>
     </Card>
   );
