@@ -7,10 +7,7 @@ import "../styles.scss";
 import { useEffect, useState } from "react";
 import { getDayDate } from "../../../utils";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  fetchRecruiterRoleDetail,
-  fetchrecruiterTimeSheetPost,
-} from "../../../features/timesheet/timesheetSlice";
+import { fetchRecruiterRoleDetail, fetchrecruiterTimeSheetPost } from "../../../features/timesheet/timesheetSlice";
 import { useNavigate, useParams } from "react-router-dom";
 
 const industriesOptions = [
@@ -76,70 +73,28 @@ const TimesheetRow = ({ day, date, name }) => {
       <p>{day}</p>
       <p>{date}</p>
 
-      <Form.Item
-        name={[name, "projectName"]}
-        rules={[{ required: true, message: "Project Name is required" }]}
-        noStyle
-      >
-        <CommonInput
-          classes="time-sheet-row-input"
-          placeholder="Project Name"
-        />
+      <Form.Item name={[name, "projectName"]} rules={[{ required: true, message: "Project Name is required" }]} noStyle>
+        <CommonInput classes="time-sheet-row-input" placeholder="Project Name" />
       </Form.Item>
 
-      <Form.Item
-        name={[name, "projectDescription"]}
-        rules={[{ required: true, message: "Project Description is required" }]}
-        noStyle
-      >
-        <CommonInput
-          classes="time-sheet-row-input"
-          placeholder="Project Description"
-        />
+      <Form.Item name={[name, "projectDescription"]} rules={[{ required: true, message: "Project Description is required" }]} noStyle>
+        <CommonInput classes="time-sheet-row-input" placeholder="Project Description" />
       </Form.Item>
 
-      <Form.Item
-        name={[name, "industries"]}
-        rules={[
-          { required: true, message: "Industries selection is required" },
-        ]}
-        noStyle
-      >
-        <CustomSelect
-          classes="time-sheet-row-input"
-          placeholder="Select Industries"
-          height={35}
-          options={industriesOptions}
-        />
+      <Form.Item name={[name, "industries"]} rules={[{ required: true, message: "Industries selection is required" }]} noStyle>
+        <CustomSelect classes="time-sheet-row-input" placeholder="Select Industries" height={35} options={industriesOptions} />
       </Form.Item>
 
-      <Form.Item
-        name={[name, "services"]}
-        rules={[{ required: true, message: "Services selection is required" }]}
-        noStyle
-      >
-        <CustomSelect
-          classes="time-sheet-row-input"
-          placeholder="Select Services"
-          height={35}
-          options={servicesOptions}
-        />
+      <Form.Item name={[name, "services"]} rules={[{ required: true, message: "Services selection is required" }]} noStyle>
+        <CustomSelect classes="time-sheet-row-input" placeholder="Select Services" height={35} options={servicesOptions} />
       </Form.Item>
 
-      <Form.Item
-        name={[name, "serviceFee"]}
-        rules={[{ required: true, message: "Service Fee is required" }]}
-        noStyle
-      >
-        <InputNumber classes="time-sheet-row-input" placeholder="Service Fee" />
+      <Form.Item name={[name, "serviceFee"]} rules={[{ required: true, message: "Service Fee is required" }]} noStyle>
+        <InputNumber classes="time-sheet-row-input" placeholder="Service Fee" className="w-100" suffix="/hr" />
       </Form.Item>
 
-      <Form.Item
-        name={[name, "hours"]}
-        rules={[{ required: true, message: "Hours are required" }]}
-        noStyle
-      >
-        <InputNumber classes="time-sheet-row-input" placeholder="Hours" />
+      <Form.Item name={[name, "hours"]} rules={[{ required: true, message: "Hours are required" }]} noStyle>
+        <InputNumber classes="time-sheet-row-input" placeholder="Hours" className="w-100" />
       </Form.Item>
     </div>
   );
@@ -148,15 +103,7 @@ const TimesheetRow = ({ day, date, name }) => {
 const TimesheetForm = ({ onSubmit, roleDetail }) => {
   const { user } = useSelector((state) => state.profile);
   const [timeSheetForm] = Form.useForm();
-  const daysOfWeek = [
-    "Sunday",
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday",
-  ];
+  const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
   const todayIndex = new Date().getDay(); // 0 = Sunday, 1 = Monday, ..., 6 = Saturday
   const startIndex = todayIndex; // Start with today
 
@@ -176,14 +123,8 @@ const TimesheetForm = ({ onSubmit, roleDetail }) => {
 
   const handleValuesChange = (changedValues) => {
     const timesheetRows = timeSheetForm.getFieldValue("weeklyTimesheet") || [];
-    const totalFee = timesheetRows.reduce(
-      (sum, row) => sum + (row?.serviceFee || 0),
-      0
-    );
-    const totalHour = timesheetRows.reduce(
-      (sum, row) => sum + (row?.hours || 0),
-      0
-    );
+    const totalFee = timesheetRows.reduce((sum, row) => sum + (row?.serviceFee || 0) * (row?.hours || 0), 0);
+    const totalHour = timesheetRows.reduce((sum, row) => sum + (row?.hours || 0), 0);
     // Update total fields in the form
     timeSheetForm.setFieldValue("totalHourWork", totalHour);
     timeSheetForm.setFieldValue("totalDueAmount", totalFee);
@@ -237,11 +178,7 @@ const TimesheetForm = ({ onSubmit, roleDetail }) => {
   };
 
   return (
-    <Form
-      form={timeSheetForm}
-      layout="vertical"
-      onValuesChange={handleValuesChange}
-    >
+    <Form form={timeSheetForm} layout="vertical" onValuesChange={handleValuesChange}>
       <section className="add-time-sheet-form-wrapper">
         <section className="timesheet-form-header">
           <p className="header-field">Day</p>
@@ -301,49 +238,25 @@ const TimesheetForm = ({ onSubmit, roleDetail }) => {
           </article>
         </section>
 
-        <p className="select-boxes-heading">
-          Please select the boxes to Continue
-        </p>
+        <p className="select-boxes-heading">Please select the boxes to Continue</p>
 
         <Form.Item name="checkboxGroup" noStyle>
-          <Checkbox.Group
-            onChange={handleCheckboxChange}
-            className="custom-checkbox-group"
-          >
-            <Checkbox value="independentContracter">
-              Independent contractor agreement.
-            </Checkbox>
-            <Checkbox value="sendingtoclient">
-              You are sending this timesheet to client for approval.
-            </Checkbox>
+          <Checkbox.Group onChange={handleCheckboxChange} className="custom-checkbox-group">
+            <Checkbox value="independentContracter">Independent contractor agreement.</Checkbox>
+            <Checkbox value="sendingtoclient">You are sending this timesheet to client for approval.</Checkbox>
             <Checkbox value="sendChargestoFuse">Send charges to Fuse.</Checkbox>
           </Checkbox.Group>
         </Form.Item>
 
         <article className="field-group-wrapper">
           <label className="select-label">Managing Supervisor</label>
-          <Form.Item
-            name="managingSupervisor"
-            rules={[
-              { required: true, message: "Managing Supervisor is required" },
-            ]}
-          >
-            <CustomSelect
-              classes="time-sheet-row-input"
-              placeholder="Select Managing Supervisor"
-              height={35}
-              width={460}
-              options={managingSupervisors}
-            />
+          <Form.Item name="managingSupervisor" rules={[{ required: true, message: "Managing Supervisor is required" }]}>
+            <CustomSelect classes="time-sheet-row-input" placeholder="Select Managing Supervisor" height={35} width={460} options={managingSupervisors} />
           </Form.Item>
         </article>
         <section className="timesheet-footer-buttons">
           <CustomButton category="additional" name="Go Back" />
-          <CustomButton
-            category="primary"
-            name="Send to Client"
-            handleClick={handleSubmit}
-          />
+          <CustomButton category="primary" name="Send to Client" handleClick={handleSubmit} />
         </section>
       </section>
     </Form>

@@ -149,6 +149,10 @@ const Sidebar = ({ user }) => {
               </Link>
             ),
           },
+        ]
+      : []),
+    ...(isRecruiter
+      ? [
           {
             key: "time-sheet",
             showArrow: false,

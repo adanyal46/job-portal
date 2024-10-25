@@ -86,7 +86,22 @@
   margin-top: 10px; /* Add some space above the button */
 }
 
-
-.w-100{
+.w-100 {
   width: 100% !important;
+}
+.verified-profile {
+  width: 116px;
+  height: 36px;
+  padding: 6px 11px 6px 11px;
+  gap: 8px;
+  border-radius: 12px;
+  opacity: 0px;
+  background: #25b16e;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}
+.verified-profile:hover {
+  color: whitesmoke;
 }

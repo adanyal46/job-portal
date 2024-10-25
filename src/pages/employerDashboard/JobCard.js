@@ -2,7 +2,6 @@ import { Card, Flex, Typography, Dropdown, Menu } from "antd";
 import React from "react";
 import { MenuEmployerProfileIcon } from "../../assets/svg";
 import { Link } from "react-router-dom";
-import { EllipsisOutlined } from "@ant-design/icons"; // Import the menu dot icon
 
 const JobCard = ({ item, TEXT_STYLE }) => {
   // Define the menu items
@@ -48,7 +47,7 @@ const JobCard = ({ item, TEXT_STYLE }) => {
             </Typography.Text>
           </Flex>
           <Flex flex={1}>
-            <Link to={`/employer/job-detail/${item.id}`}>
+            <Link to={`/employer/job-detail/1`}>
               <Typography.Text style={{ ...TEXT_STYLE }}>
                 {item.jobTitle}
               </Typography.Text>

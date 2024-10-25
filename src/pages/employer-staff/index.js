@@ -56,6 +56,7 @@ const staffData = [
     phone: "+1 305 3216549",
   },
 ];
+
 const index = () => {
   return (
     <div>

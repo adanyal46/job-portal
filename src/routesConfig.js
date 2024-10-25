@@ -8,6 +8,9 @@ import RecruiterProfile from "./pages/recruiterProfile";
 import JobDetail from "./pages/employerDashboard/JobDetail";
 import ViewJobApplicantList from "./pages/employerDashboard/ViewJobApplicantList";
 import EditJob from "./pages/employerDashboard/EditJob";
+import ViewTimeSheetRecruiter from "./pages/employerDashboard/ViewTimesheetRecruiter";
+import StaffMemberDetail from "./pages/employerDashboard/StaffMemberDetail";
+import StaffMemberProfile from "./pages/employerDashboard/StaffMemberProfile";
 
 // Lazy loaded components
 const MyProfile = lazy(() => import("./pages/myProfile"));
@@ -18,9 +21,7 @@ const JobSearch = lazy(() => import("./pages/jobSearch"));
 const Mentors = lazy(() => import("./pages/mentors"));
 const Bookings = lazy(() => import("./pages/bookings"));
 const Notifications = lazy(() => import("./pages/notifications"));
-const RecruiterNotification = lazy(() =>
-  import("./pages/recruiterNotification")
-);
+const RecruiterNotification = lazy(() => import("./pages/recruiterNotification"));
 const Settings = lazy(() => import("./pages/settings"));
 const Earnings = lazy(() => import("./pages/earnings"));
 const Blogs = lazy(() => import("./pages/blogs"));
@@ -297,6 +298,21 @@ const routeConfig = (token) => {
         {
           path: "job-applicants",
           element: <ViewJobApplicantList />,
+          errorElement: <ErrorPage />,
+        },
+        {
+          path: "view-timesheet-recruiter/:id",
+          element: <ViewTimeSheetRecruiter />,
+          errorElement: <ErrorPage />,
+        },
+        {
+          path: "staff-member/:id",
+          element: <StaffMemberDetail />,
+          errorElement: <ErrorPage />,
+        },
+        {
+          path: "profile/:id",
+          element: <StaffMemberProfile />,
           errorElement: <ErrorPage />,
         },
       ],

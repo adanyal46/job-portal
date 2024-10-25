@@ -10,6 +10,7 @@ const RecruiterCard = (props) => {
   const navigate = useNavigate();
 
   const handleDetailsClick = () => {
+    navigate('/employer/profile/1')
     // navigate("/job-seeker/mentor/mentorDetail", {
     //   state: {
     //     services,

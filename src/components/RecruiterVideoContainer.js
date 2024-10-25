@@ -1,8 +1,9 @@
-import { Upload, Modal, Button, message, Flex } from "antd";
+import { Upload, Modal, Button, message, Flex, Typography } from "antd";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { uploadMentorVideo } from "../features/profile/profileSlice";
 import noVideoImage from "../assets/no-video.jpg"; // Path to your "No Video" image
+import { VideoIconProfile } from "../assets/svg";
 
 const RecruiterVideoContainer = ({ mentorvideolink, canUpload = false }) => {
   const dispatch = useDispatch();
@@ -38,14 +39,15 @@ const RecruiterVideoContainer = ({ mentorvideolink, canUpload = false }) => {
   };
 
   return (
-    <article className="mentor-video-container">
-      <h4 className="title">Olivia's Introductory Video Clip</h4>
-      <p className="description">
-        Get to know Olivia better through her video introduction.
-      </p>
+    <article>
+      <Flex gap={5}>
+        <VideoIconProfile />
+        <Typography.Text style={{ fontSize: "16px", color: "#2F2C39" }}>Olivia’s Introductory video clip </Typography.Text>
+      </Flex>
+      <Typography.Text style={{ fontSize: "16px", color: "#2F2C39" }}>Get to know Olivia in a better way</Typography.Text>
 
       {/* Video Display Area */}
-      <div className="video-container">
+      <div className="video-container" style={{ marginTop: "10px" }}>
         {videoFile || mentorvideolink ? (
           <video
             src={videoFile ? URL.createObjectURL(videoFile) : mentorvideolink}
@@ -54,11 +56,7 @@ const RecruiterVideoContainer = ({ mentorvideolink, canUpload = false }) => {
             style={{ height: "300px", objectFit: "cover" }}
           />
         ) : (
-          <img
-            src={noVideoImage}
-            alt="No Video Available"
-            style={{ height: "300px", objectFit: "cover", width: "100%" }}
-          />
+          <img src={noVideoImage} alt="No Video Available" style={{ height: "300px", objectFit: "cover", width: "100%" }} />
         )}
       </div>
 
@@ -82,11 +80,7 @@ const RecruiterVideoContainer = ({ mentorvideolink, canUpload = false }) => {
       {/* Upload Button */}
       {canUpload && videoFile && (
         <Flex justify="end">
-          <Button
-            type="primary"
-            onClick={() => setIsUploadModalVisible(true)}
-            className="upload-button"
-          >
+          <Button type="primary" onClick={() => setIsUploadModalVisible(true)} className="upload-button">
             Confirm Upload
           </Button>
         </Flex>
@@ -101,21 +95,12 @@ const RecruiterVideoContainer = ({ mentorvideolink, canUpload = false }) => {
           <Button key="back" onClick={() => setIsUploadModalVisible(false)}>
             Cancel
           </Button>,
-          <Button
-            key="submit"
-            type="primary"
-            loading={videoLoading}
-            onClick={handleConfirmUpload}
-          >
+          <Button key="submit" type="primary" loading={videoLoading} onClick={handleConfirmUpload}>
             Confirm Upload
           </Button>,
         ]}
       >
-        <p>
-          {videoFile
-            ? `Are you sure you want to upload ${videoFile.name}?`
-            : "No video selected."}
-        </p>
+        <p>{videoFile ? `Are you sure you want to upload ${videoFile.name}?` : "No video selected."}</p>
       </Modal>
     </article>
   );

@@ -10,6 +10,7 @@ const StaffCard = (props) => {
   const navigate = useNavigate();
 
   const handleDetailsClick = () => {
+    navigate('/employer/staff-member/1')
     // navigate("/job-seeker/mentor/mentorDetail", {
     //   state: {
     //     services,
