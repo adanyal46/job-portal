@@ -1,5 +1,9 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { getNotificationList, handleApproveNotificationApi, postReviewNotification } from "./notificationApi";
+import {
+  getNotificationList,
+  handleApproveNotificationApi,
+  postReviewNotification,
+} from "./notificationApi";
 
 // Async thunk for fetching notifications
 export const fetchNotificationList = createAsyncThunk(
@@ -74,7 +78,7 @@ const notificationSlice = createSlice({
       })
       .addCase(approveNotification.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.error.message; 
+        state.error = action.error.message;
       });
   },
 });

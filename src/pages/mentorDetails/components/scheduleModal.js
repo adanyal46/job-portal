@@ -20,7 +20,7 @@ import {
 } from "../../../assets/svg";
 
 import "./scheduleModal.scss";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { bookSession } from "../../../features/booking/bookingSlice";
 
 const ModalStep = (props) => {
@@ -117,6 +117,7 @@ const ScheduleModal = (props) => {
   const dispatch = useDispatch();
   const [currentStep, setCurrentStep] = useState(1);
   const findServ = services?.find((item) => item.id === selectedServiceId);
+  const { user } = useSelector((state) => state.profile);
 
   const handleNextStep = async () => {
     if (!selectedDate || !selectedTime) {
@@ -136,14 +137,14 @@ const ScheduleModal = (props) => {
         selectedService: selectedServiceId,
         selectedDateTime: `${formattedDate}:${formattedTime}`,
         mentorId: mentorId,
+        userId: user?.id,
       };
-
       const response = await dispatch(bookSession(values)).unwrap();
       if (response.success) {
         closeScheduleModal();
         message.open({
           type: "success",
-          content: "Booking save successfully!F",
+          content: "Booking save successfully!",
         });
       }
     }

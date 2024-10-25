@@ -11,6 +11,7 @@ import EditJob from "./pages/employerDashboard/EditJob";
 import ViewTimeSheetRecruiter from "./pages/employerDashboard/ViewTimesheetRecruiter";
 import StaffMemberDetail from "./pages/employerDashboard/StaffMemberDetail";
 import StaffMemberProfile from "./pages/employerDashboard/StaffMemberProfile";
+import RecruiterSetting from "./pages/recruiterSetting";
 
 // Lazy loaded components
 const MyProfile = lazy(() => import("./pages/myProfile"));
@@ -208,7 +209,7 @@ const routeConfig = (token) => {
         },
         {
           path: "settings",
-          element: <Settings />,
+          element: <RecruiterSetting />,
           errorElement: <ErrorPage />,
         },
         {

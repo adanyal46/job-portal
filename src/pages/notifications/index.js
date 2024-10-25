@@ -162,9 +162,9 @@ const Notifications = () => {
                   borderRadius: "100%",
                 }}
                 src={
-                  profile?.avatarId.startsWith("https")
-                    ? profile?.avatarId
-                    : profile?.avatarUrl || "/images/review-write-icon.png"
+                  profile?.avatarId ||
+                  profile?.avatarUrl ||
+                  "/images/review-write-icon.png"
                 }
                 alt="writeReviewIcon"
                 className="avatar"

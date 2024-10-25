@@ -4,13 +4,11 @@ import CustomButton from "../customButton";
 import "./styles.scss";
 
 const getClassName = (progress) => {
-  if (progress === "Completed") return "completed";
-
-  return "in-progress";
+  return progress === "ACCEPTED" ? "completed" : "in-progress";
 };
 export const BookingCardRecruiter = ({
   mentorName,
-  progress,
+  status,
   serviceName,
   date,
   time,
@@ -21,9 +19,15 @@ export const BookingCardRecruiter = ({
         {serviceName} with <span className="mentor-name">{mentorName}</span>
       </h5>
 
-      <p className={`booking-tag-content ${getClassName(progress)}`}>
-        {progress}
-      </p>
+      {status && (
+        <p
+          className={`booking-tag-content ${getClassName(
+            status === "ACCEPTED" ? "completed" : "in-progress"
+          )}`}
+        >
+          {status}
+        </p>
+      )}
 
       <section className="booking-time-slot-container">
         <section className="slot-content">
@@ -50,16 +54,19 @@ export const BookingCardRecruiter = ({
   );
 };
 
-const BookingCard = ({ mentorName, progress, serviceName, date, time }) => {
+const BookingCard = ({ mentorName, status, serviceName, date, time }) => {
+  console.log(status);
   return (
     <section className="booking-card-container">
       <h5 className="booking-card-heading">
         {serviceName} with <span className="mentor-name">{mentorName}</span>
       </h5>
 
-      {/* <p className={`booking-tag-content ${getClassName(progress)}`}>
-        {progress}
-      </p> */}
+      {status && (
+        <p className={`booking-tag-content ${getClassName(status)}`}>
+          {status}
+        </p>
+      )}
 
       <section className="booking-time-slot-container">
         <section className="slot-content">

@@ -20,6 +20,7 @@ import {
 import "./styles.scss";
 import { useLocation } from "react-router-dom";
 import MentorVideoContainer from "../../components/MentorVideoContainer";
+import { Typography } from "antd";
 
 const MentorDetails = () => {
   const location = useLocation();
@@ -44,14 +45,9 @@ const MentorDetails = () => {
 
   return (
     <section className="mentor-detail-layout-container">
+      <Typography.Title level={5}>Mentors / Mentor Details</Typography.Title>
       <section className="mentor-details-page-wrapper">
         <section className="mentor-detail-container" style={{ width: "100%" }}>
-          <p className="page-main-heading">
-            Mentors
-            <span className="slash"> / </span>
-            <span className="highlighted">Mentors Details</span>
-          </p>
-
           <section className="mentor-card-container">
             <figure className="mentor-card-image-wrapper">
               <img

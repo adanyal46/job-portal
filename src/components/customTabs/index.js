@@ -25,8 +25,23 @@ import "./styles.scss";
 // ];
 
 const CustomTabs = (props) => {
-  const { items, defaultActiveKey, handleChange, centered = false } = props;
+  const {
+    items,
+    defaultActiveKey,
+    activeKey,
+    handleChange,
+    centered = false,
+  } = props;
 
-  return <Tabs defaultActiveKey={defaultActiveKey} items={items} onChange={handleChange} className="custom-tabs-wrapper" centered={centered} />;
+  return (
+    <Tabs
+      activeKey={activeKey}
+      defaultActiveKey={defaultActiveKey}
+      items={items}
+      onChange={handleChange}
+      className="custom-tabs-wrapper"
+      centered={centered}
+    />
+  );
 };
 export default CustomTabs;

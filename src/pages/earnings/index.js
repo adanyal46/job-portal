@@ -1,17 +1,18 @@
 // src/components/Earnings.js
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Typography } from "antd";
+import { Flex, Typography } from "antd";
 import CustomTabs from "../../components/customTabs";
 import CustomButton from "../../components/customButton";
 import CommonInput from "../../components/commonInput";
 import CommonTable from "../../components/commonTable";
-import { DownloadIcon, SearchFieldIcon } from "../../assets/svg";
-import "./styles.scss";
 import {
-  fetchEarningList,
-  setDateRange,
-} from "../../features/earning/earningSlice";
+  DownloadIcon,
+  EarningNotFound,
+  SearchFieldIcon,
+} from "../../assets/svg";
+import "./styles.scss";
+import { fetchEarningList } from "../../features/earning/earningSlice";
 
 const LifeTimeEarnings = ({ monthly, weekly, custom }) => {
   const dispatch = useDispatch();
@@ -76,120 +77,141 @@ const LifeTimeEarnings = ({ monthly, weekly, custom }) => {
 
   return (
     <section className="earnings-main-layout-container">
-      <section className="download-buttons-wrapper">
-        <CustomButton
-          classes="download-button"
-          name={
-            <article className="button-title">
-              <DownloadIcon />
-              <p className="title">Download CVS</p>
-            </article>
-          }
-        />
-        <CustomButton
-          classes="download-button"
-          name={
-            <article className="button-title">
-              <DownloadIcon />
-              <p className="title">Download PDF</p>
-            </article>
-          }
-        />
-      </section>
-
-      <hr className="form-divider" />
-
-      <section className="earning-detail-container">
-        <h4 className="grand-total">
-          $
-          {earningList
-            .reduce((total, item) => {
-              const earning = parseFloat(item.earningPrice);
-              return total + (isNaN(earning) ? 0 : earning);
-            }, 0)
-            .toFixed(2)}
-        </h4>
-        <p className="earning-detail">
-          Your earnings after FuseWW platform commission
-        </p>
-
-        <p className="earning-detail">
-          Total Billed{" "}
-          <span className="amount">
-            $
-            {earningList.reduce((total, item) => {
-              const earning = parseFloat(item.earningPrice) || 0; // Handle "N/A" cases
-              return total + earning;
-            }, 0) - (10).toFixed(2)}
-          </span>
-        </p>
-
-        <p className="earning-detail">
-          Fuse Commission <span className="amount">$10</span>
-        </p>
-      </section>
-
-      <hr className="form-divider" />
-
-      <section className="earnings-search-fields-wrapper">
-        <CommonInput
-          classes="earnings-search-field"
-          placeholder="Search ID"
-          prefix={<SearchFieldIcon />}
-          onChange={(val) => setSearchQuery(val)}
-        />
-
-        {monthly && (
-          <CommonInput
-            category="month"
-            classes="earnings-select-field"
-            placeholder="Select Month"
-            prefix={<SearchFieldIcon />}
-            onChange={(startDate, endDate) => {
-              setFromDate(startDate);
-              setToDate(endDate);
+      {earningList.length === 0 && fromDate === "" && toDate === "" ? (
+        <Flex
+          justify={"center"}
+          align={"center"}
+          style={{ minHeight: "calc(100vh - 330px)" }}
+          vertical
+        >
+          <EarningNotFound />
+          <CustomButton
+            name="Refresh"
+            category="primary"
+            style={{ marginTop: "10px" }}
+            handleClick={async () => {
+              window.location.reload();
             }}
           />
-        )}
-
-        {weekly && (
-          <CommonInput
-            category="week"
-            classes="earnings-select-field"
-            onChange={(startDate, endDate) => {
-              setFromDate(startDate);
-              setToDate(endDate);
-            }}
-            placeholder="This Week"
-            prefix={<SearchFieldIcon />}
-          />
-        )}
-
-        {custom && (
-          <>
-            <CommonInput
-              category="customDateRange"
-              classes="earnings-select-field"
-              placeholder="Select From"
-              prefix={<SearchFieldIcon />}
-              onChange={(dateStrings) => {
-                setFromDate(dateStrings[0]);
-                setToDate(dateStrings[1]);
-              }}
+        </Flex>
+      ) : (
+        <>
+          <section className="download-buttons-wrapper">
+            <CustomButton
+              classes="download-button"
+              name={
+                <article className="button-title">
+                  <DownloadIcon />
+                  <p className="title">Download CVS</p>
+                </article>
+              }
             />
-          </>
-        )}
-      </section>
+            <CustomButton
+              classes="download-button"
+              name={
+                <article className="button-title">
+                  <DownloadIcon />
+                  <p className="title">Download PDF</p>
+                </article>
+              }
+            />
+          </section>
 
-      <hr className="form-divider" />
+          <hr className="form-divider" />
 
-      <section className="earnings-table-wrapper">
-        <CommonTable
-          columns={columns}
-          data={filteredEarningList}
-          loading={loading}
-        />
-      </section>
+          <section className="earning-detail-container">
+            <h4 className="grand-total">
+              $
+              {earningList
+                .reduce((total, item) => {
+                  const earning = parseFloat(item.earningPrice);
+                  return total + (isNaN(earning) ? 0 : earning);
+                }, 0)
+                .toFixed(2)}
+            </h4>
+            <p className="earning-detail">
+              Your earnings after FuseWW platform commission
+            </p>
+
+            <p className="earning-detail">
+              Total Billed{" "}
+              <span className="amount">
+                $
+                {earningList.reduce((total, item) => {
+                  const earning = parseFloat(item.earningPrice) || 0; // Handle "N/A" cases
+                  return total + earning;
+                }, 0) - (10).toFixed(2)}
+              </span>
+            </p>
+
+            <p className="earning-detail">
+              Fuse Commission <span className="amount">$10</span>
+            </p>
+          </section>
+
+          <hr className="form-divider" />
+
+          <section className="earnings-search-fields-wrapper">
+            <CommonInput
+              classes="earnings-search-field"
+              placeholder="Search ID"
+              prefix={<SearchFieldIcon />}
+              onChange={(val) => setSearchQuery(val)}
+            />
+
+            {monthly && (
+              <CommonInput
+                category="month"
+                classes="earnings-select-field"
+                placeholder="Select Month"
+                prefix={<SearchFieldIcon />}
+                onChange={(startDate, endDate) => {
+                  setFromDate(startDate);
+                  setToDate(endDate);
+                }}
+              />
+            )}
+
+            {weekly && (
+              <CommonInput
+                category="week"
+                classes="earnings-select-field"
+                onChange={(startDate, endDate) => {
+                  setFromDate(startDate);
+                  setToDate(endDate);
+                }}
+                placeholder="This Week"
+                prefix={<SearchFieldIcon />}
+              />
+            )}
+
+            {custom && (
+              <>
+                <CommonInput
+                  category="customDateRange"
+                  classes="earnings-select-field"
+                  placeholder="Select From"
+                  prefix={<SearchFieldIcon />}
+                  onChange={(dateStrings) => {
+                    setFromDate(dateStrings[0]);
+                    setToDate(dateStrings[1]);
+                  }}
+                />
+              </>
+            )}
+          </section>
+
+          <hr className="form-divider" />
+
+          <section className="earnings-table-wrapper">
+            <CommonTable
+              columns={columns}
+              data={filteredEarningList}
+              loading={loading}
+            />
+          </section>
+        </>
+      )}
     </section>
   );
 };

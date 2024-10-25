@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import CustomTabs from "../../components/customTabs";
 import CommonInput from "../../components/commonInput";
 import JobCard from "../../components/jobCard";
@@ -191,7 +191,10 @@ const Search = ({
 const JobSearch = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [searchParamsss] = useSearchParams(); // Get search params
+  const jobType = searchParamsss.get("type");
   const { jobs, loading, appliedLoading } = useSelector((state) => state.job);
+  const [activeTab, setActiveTab] = useState("search");
   const [searchParams, setSearchParams] = useState({
     jobTitle: "",
     location: "",
@@ -200,6 +203,11 @@ const JobSearch = () => {
     dateRange: "",
   });
   const [selectedJob, setSelectedJob] = useState(null);
+
+  useEffect(() => {
+    setActiveTab(jobType);
+    navigate(`/job-seeker/jobs/search?type=${jobType}`);
+  }, [jobType, navigate]);
 
   useEffect(() => {
     const filterCount = Object.values(searchParams).filter(
@@ -216,8 +224,12 @@ const JobSearch = () => {
   return (
     <section className="main-layout-container">
       <CustomTabs
-        handleChange={(key) => navigate(`/jobs/search?type=${key}`)}
-        defaultActiveKey="search"
+        handleChange={(key) => {
+          setSelectedJob(null);
+          setActiveTab(key);
+          navigate(`/job-seeker/jobs/search?type=${key}`);
+        }}
+        activeKey={activeTab}
         items={[
           {
             key: "search",
@@ -250,7 +262,7 @@ const JobSearch = () => {
             ),
           },
           {
-            key: "save",
+            key: "saved",
             label: "Saved Jobs",
             children: (
               <Search

@@ -1,4 +1,4 @@
-import { Typography } from "antd";
+import { Flex, Typography } from "antd";
 import BookingCard, {
   BookingCardRecruiter,
 } from "../../components/bookingCard";
@@ -22,25 +22,22 @@ const NoBooking = () => {
 const BookingsListingMentor = ({ bookingSession }) => {
   return (
     <>
-      {bookingSession &&
-      Array.isArray(bookingSession) &&
-      bookingSession.length > 0 ? (
-        bookingSession.map((booking) => (
-          <section className="booking-listing-wrapper">
+      <section className="booking-listing-wrapper">
+        {bookingSession &&
+          Array.isArray(bookingSession) &&
+          bookingSession.length > 0 &&
+          bookingSession.map((booking) => (
             <BookingCard
               mentor
-              progress="Completed"
+              status={booking?.status}
               serviceName={booking?.serviceName}
               mentorName={booking?.jobSeekerName}
               date={booking?.date}
               time={booking?.time}
             />
-          </section>
-        ))
-      ) : (
-        <NoBooking />
-      )}
-
+          ))}
+      </section>
+      {bookingSession.length === 0 && <NoBooking />}
       {/* <BookingCard mentor progress="In Progress" />
     <BookingCard mentor progress="Completed" /> */}
       {/* <CustomPagination /> */}
@@ -57,7 +54,7 @@ const BookingsListingRecruiter = ({ bookingSession }) => {
           bookingSession.map((booking) => (
             <BookingCardRecruiter
               mentor
-              progress="Completed"
+              status={booking?.status}
               serviceName={booking?.serviceName}
               mentorName={booking?.fullname}
               date={booking?.datetime}
@@ -83,8 +80,6 @@ const UpcomingBookings = () => {
     dispatch(upcomingBookingSession());
   }, [dispatch]);
   const handleTabChange = (key) => {};
-
-  console.log('bookingSession',bookingSession);
 
   return (
     <section>
