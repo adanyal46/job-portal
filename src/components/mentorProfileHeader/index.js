@@ -9,11 +9,8 @@ import { EditProfileIcon, VerifiedIcon } from "../../assets/svg";
 
 import "./styles.scss";
 import { useDispatch } from "react-redux";
-import {
-  updateOtherInfo,
-  profile as profileRefresh,
-} from "../../features/profile/profileSlice";
-import { Image, message, Input } from "antd";
+import { updateOtherInfo, profile as profileRefresh } from "../../features/profile/profileSlice";
+import { Image, message, Input, InputNumber } from "antd";
 import Rating from "../rating";
 import LocationWithIcon from "../locationWithIcon";
 import { getRelativePath } from "../../utils";
@@ -23,10 +20,7 @@ const MentorProfileHeader = ({ user, showInfoModal, setShowInfoModal }) => {
   const [loading, setLoading] = useState(false);
   const profile = user && user?.Profile[0];
 
-  const baseUrl =
-    process.env.REACT_APP_NODE_ENV === "development"
-      ? "http://54.144.76.160:5000"
-      : "https://jobportal-fuse.netlify.app";
+  const baseUrl = process.env.REACT_APP_NODE_ENV === "development" ? "http://54.144.76.160:5000" : "https://jobportal-fuse.netlify.app";
   const fullAvatarUrl = profile?.avatarUrl || "";
   const relativeAvatarUrl = getRelativePath(fullAvatarUrl, baseUrl);
 
@@ -82,9 +76,7 @@ const MentorProfileHeader = ({ user, showInfoModal, setShowInfoModal }) => {
 
     try {
       setLoading(true);
-      const resultAction = await dispatch(
-        updateOtherInfo(formData)
-      ).unwrap();
+      const resultAction = await dispatch(updateOtherInfo(formData)).unwrap();
       if (resultAction.success) {
         message.success("Profile updated successfully!");
         window.location.replace("/mentor/profile");
@@ -118,17 +110,10 @@ const MentorProfileHeader = ({ user, showInfoModal, setShowInfoModal }) => {
             <Rating rating={4} reviews={7} />
             <LocationWithIcon location={profile?.location || "N/A"} />
             <p className="mentor-expertise">{profile?.companyName || "N/A"}</p>
-            <p className="mentor-tagline">
-              {profile?.tagline || "No tagline available"}
-            </p>
+            <p className="mentor-tagline">{profile?.tagline || "No tagline available"}</p>
           </article>
         </article>
-        <CustomButton
-          category="iconed"
-          shape="circle"
-          icon={<EditProfileIcon />}
-          handleClick={handleShowInfoModal}
-        />
+        <CustomButton category="iconed" shape="circle" icon={<EditProfileIcon />} handleClick={handleShowInfoModal} />
       </section>
 
       {showInfoModal && (
@@ -141,65 +126,37 @@ const MentorProfileHeader = ({ user, showInfoModal, setShowInfoModal }) => {
           loading={loading}
         >
           <section className="basic-info-inner-wrapper">
-            <PhotoUpload
-              initialImageUrl={imageUrl}
-              onChange={handleChange}
-              name="profilePic"
-            />
+            <PhotoUpload initialImageUrl={imageUrl} onChange={handleChange} name="profilePic" />
 
             <section className="basic-info-form-wrapper">
               <section className="field-container">
                 <span className="label">Full Name</span>
-                <CommonInput
-                  placeholder="Enter Full Name"
-                  value={profileData.fullname}
-                  onChange={(val) => handleChange("fullname", val)}
-                />
+                <CommonInput placeholder="Enter Full Name" value={profileData.fullname} onChange={(val) => handleChange("fullname", val)} />
               </section>
 
               <section className="field-container">
                 <span className="label">Email</span>
-                <CommonInput
-                  placeholder="Enter Email"
-                  value={profileData.email}
-                  onChange={(val) => handleChange("email", val)}
-                />
+                <CommonInput placeholder="Enter Email" value={profileData.email} onChange={(val) => handleChange("email", val)} />
               </section>
 
               <section className="field-container">
                 <span className="label">Contact Number</span>
-                <CommonInput
-                  placeholder="Enter Contact Number"
-                  value={profileData.phnumber}
-                  onChange={(val) => handleChange("phnumber", val)}
-                />
+                <InputNumber className="w-100" maxLength={10} placeholder="Enter Contact Number" value={profileData.phnumber} onChange={(val) => handleChange("phnumber", val)} />
               </section>
 
               <section className="field-container">
                 <span className="label">Location</span>
-                <CommonInput
-                  placeholder="Enter Location"
-                  value={profileData.location}
-                  onChange={(val) => handleChange("location", val)}
-                />
+                <CommonInput placeholder="Enter Location" value={profileData.location} onChange={(val) => handleChange("location", val)} />
               </section>
 
               <section className="field-container">
                 <span className="label">Company Name</span>
-                <CommonInput
-                  placeholder="Enter Company Name"
-                  value={profileData.companyName}
-                  onChange={(val) => handleChange("companyName", val)}
-                />
+                <CommonInput placeholder="Enter Company Name" value={profileData.companyName} onChange={(val) => handleChange("companyName", val)} />
               </section>
 
               <section className="field-container">
                 <span className="label">Tagline</span>
-                <CommonInput
-                  placeholder="Enter Tagline"
-                  value={profileData.tagline}
-                  onChange={(val) => handleChange("tagline", val)}
-                />
+                <CommonInput placeholder="Enter Tagline" value={profileData.tagline} onChange={(val) => handleChange("tagline", val)} />
               </section>
 
               <section className="field-container">
@@ -215,11 +172,7 @@ const MentorProfileHeader = ({ user, showInfoModal, setShowInfoModal }) => {
 
               <section className="field-container">
                 <span className="label">Speak Input</span>
-                <Input.TextArea
-                  value={profileData.speak}
-                  onChange={(e) => handleChange("speak", e.target.value)}
-                  placeholder="Enter Speak Input"
-                />
+                <Input.TextArea value={profileData.speak} onChange={(e) => handleChange("speak", e.target.value)} placeholder="Enter Speak Input" />
               </section>
             </section>
           </section>
