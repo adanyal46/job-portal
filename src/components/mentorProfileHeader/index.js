@@ -206,6 +206,7 @@ const MentorProfileHeader = ({ user, showInfoModal, setShowInfoModal }) => {
                 <span className="label">Description</span>
                 <CommonInput
                   category="textarea"
+                  maxLength={1000}
                   placeholder="Enter Description"
                   value={profileData.description}
                   onChange={(val) => handleChange("description", val)}
