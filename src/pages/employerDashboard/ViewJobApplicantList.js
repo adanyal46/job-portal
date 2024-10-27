@@ -4,85 +4,50 @@ import {
   DatePicker,
   Divider,
   Input,
+  message,
   Row,
   Table,
   Typography,
 } from "antd";
 import { DownOutlined } from "@ant-design/icons"; // Importing the chevron down icon
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { CalendarDashboardIcon } from "../../assets/svg";
 import CustomPagination from "../../components/customPagination";
+import { useParams } from "react-router-dom";
+import { getAppliedJobListApi } from "../../features/employerDashboard/employerDashboardApi";
+const DIVIDER_STYLE = {
+  borderColor: "#DEDCE4",
+};
 
 const ViewJobApplicantList = () => {
-  const DIVIDER_STYLE = {
-    borderColor: "#DEDCE4",
-  };
+  const { id } = useParams();
+  const [applicantList, setApplicantList] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchJobApplicant = async () => {
+      try {
+        const result = await getAppliedJobListApi(id);
+        setApplicantList(result.data);
+      } catch (error) {
+        message.error(
+          error.message || "Failed to fetch job details. Please try again."
+        );
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchJobApplicant();
+  }, [id]);
 
   // Sample data for the table
-  const dataSource = [
-    {
-      key: "1",
-      candidate: "John Doe",
-      dateOfApplication: "2024-01-01",
-      workExperience: "5 years",
-      qualification: "Bachelor’s Degree",
-      location: "New York",
-      zipCode: "10001",
-      resume: "link-to-resume-1.pdf",
-      status: "In Progress", // Status can be: "In Progress", "Resume Reviewed", "Interview Scheduled", "Shortlisted", "Rejected"
-    },
-    {
-      key: "2",
-      candidate: "Jane Smith",
-      dateOfApplication: "2024-02-01",
-      workExperience: "3 years",
-      qualification: "Master’s Degree",
-      location: "Los Angeles",
-      zipCode: "90001",
-      resume: "link-to-resume-2.pdf",
-      status: "Shortlisted",
-    },
-    {
-      key: "3",
-      candidate: "Michael Johnson",
-      dateOfApplication: "2024-03-01",
-      workExperience: "4 years",
-      qualification: "Bachelor’s Degree",
-      location: "Chicago",
-      zipCode: "60601",
-      resume: "link-to-resume-3.pdf",
-      status: "Rejected",
-    },
-    {
-      key: "4",
-      candidate: "Michael Johnson",
-      dateOfApplication: "2024-03-01",
-      workExperience: "4 years",
-      qualification: "Bachelor’s Degree",
-      location: "Chicago",
-      zipCode: "60601",
-      resume: "link-to-resume-3.pdf",
-      status: "Resume Reviewed",
-    },
-    {
-      key: "5",
-      candidate: "Michael Johnson",
-      dateOfApplication: "2024-03-01",
-      workExperience: "4 years",
-      qualification: "Bachelor’s Degree",
-      location: "Chicago",
-      zipCode: "60601",
-      resume: "link-to-resume-3.pdf",
-      status: "Shortlisted",
-    },
-    // Add more sample data as needed
-  ];
 
   const columns = [
     {
       title: "Candidate",
-      dataIndex: "candidate",
-      key: "candidate",
+      dataIndex: "fullname",
+      key: "fullname",
       width: 100,
     },
     {
@@ -146,17 +111,17 @@ const ViewJobApplicantList = () => {
       render: (status) => {
         let style = {};
         switch (status) {
-          case "In Progress":
+          case "IN_PROGRESS":
             style = { backgroundColor: "#FAF4EE", color: "#F9912E" };
             break;
-          case "Resume Reviewed":
-          case "Interview Scheduled":
+          case "RESUMED_REVIEWED":
+          case "INTERVIEW_SCHEDULED":
             style = { backgroundColor: "#E2F3F9", color: "#0077A6" };
             break;
-          case "Shortlisted":
+          case "SHORTLISTED":
             style = { backgroundColor: "#DAF9E8", color: "#1BBB62" };
             break;
-          case "Rejected":
+          case "REJECTED":
             style = { backgroundColor: "#FAF4EE", color: "#F9912E" };
             break;
           default:
@@ -190,7 +155,7 @@ const ViewJobApplicantList = () => {
       }}
     >
       <Typography.Title level={4} style={{ fontWeight: "400" }}>
-        Dashboard / ID #A324BC / Job Applicants
+        Dashboard / ID #{id.toUpperCase()} / Job Applicants
       </Typography.Title>
       <Card
         style={{ width: "100%" }}
@@ -199,6 +164,7 @@ const ViewJobApplicantList = () => {
             padding: 0,
           },
         }}
+        loading={loading}
       >
         <div style={{ padding: "20px" }}>
           <Row gutter={16}>
@@ -229,7 +195,7 @@ const ViewJobApplicantList = () => {
         <Divider style={{ ...DIVIDER_STYLE, marginTop: "0" }} />
         <div style={{ padding: "0px 20px 20px 20px" }}>
           <Table
-            dataSource={dataSource}
+            dataSource={applicantList}
             columns={columns}
             pagination={false}
             style={{ background: "white" }} // Table background
@@ -248,7 +214,7 @@ const ViewJobApplicantList = () => {
               },
             }}
           />
-          <CustomPagination />
+          {applicantList?.length >= 10 && <CustomPagination />}
         </div>
       </Card>
     </div>

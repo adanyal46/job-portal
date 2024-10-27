@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   Card,
   Typography,
@@ -14,49 +14,15 @@ import {
 import ReactQuill from "react-quill"; // Import React Quill
 import "react-quill/dist/quill.snow.css"; // Import styles
 import { useSelector } from "react-redux";
-import {
-  createJobApi,
-  getJobDetailApi,
-  updateJobApi,
-} from "../../features/employerDashboard/employerDashboardApi";
-import { useNavigate, useParams } from "react-router-dom";
+import { createJobApi } from "../../features/employerDashboard/employerDashboardApi";
+import { useNavigate } from "react-router-dom";
 
-const EditJob = () => {
-  let [form] = Form.useForm();
-  const { id } = useParams();
-  const [jobDetails, setJobDetails] = useState(null);
-  const [editLoading, setEditLoading] = useState(true);
+const AddJob = () => {
   const { user } = useSelector((state) => state.profile);
-  const profileData = user?.Profile?.[0];
+  const profileData = user.Profile?.[0];
   const navigate = useNavigate();
   const [description, setDescription] = useState("");
   const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    const fetchJobDetails = async () => {
-      try {
-        const result = await getJobDetailApi(id);
-        if (result.success) {
-          const data = result.data;
-          setJobDetails(data);
-          form.setFieldsValue({
-            ...data,
-            minPay: data.minPrice,
-            maxPay: data.maxPrice,
-            jobLocation: data.location,
-          });
-        }
-      } catch (error) {
-        message.error(
-          error.message || "Failed to fetch job details. Please try again."
-        );
-      } finally {
-        setEditLoading(false);
-      }
-    };
-
-    fetchJobDetails();
-  }, [id]);
 
   const handleSubmit = async (values) => {
     setLoading(true); // Start loading
@@ -82,12 +48,11 @@ const EditJob = () => {
       };
 
       // Send POST request to the API
-      const response = await updateJobApi(jobDetails?.id, jobData);
-      console.log(response);
+      const response = await createJobApi(jobData);
 
       // Handle success response
       if (response.success) {
-        message.success("Job Updated successfully!");
+        message.success("Job added successfully!");
         navigate("/employer/dashboard");
       }
     } catch (error) {
@@ -106,15 +71,10 @@ const EditJob = () => {
       }}
     >
       <Typography.Title level={4} style={{ fontWeight: "400" }}>
-        Dashboard / ID # {id.toUpperCase()} / Edit Job
+        Dashboard / Add Job
       </Typography.Title>
-      <Card loading={editLoading}>
-        <Form
-          layout="vertical"
-          size="large"
-          onFinish={handleSubmit}
-          form={form}
-        >
+      <Card>
+        <Form layout="vertical" size="large" onFinish={handleSubmit}>
           {/* Job Title Field */}
           <Row gutter={16}>
             <Col span={12}>
@@ -259,4 +219,4 @@ const EditJob = () => {
   );
 };
 
-export default EditJob;
+export default AddJob;

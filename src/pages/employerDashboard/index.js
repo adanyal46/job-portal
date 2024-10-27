@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Row,
   Col,
@@ -8,6 +8,7 @@ import {
   List,
   Input,
   DatePicker,
+  message,
 } from "antd";
 import {
   CalendarDashboardIcon,
@@ -25,70 +26,105 @@ import CustomPagination from "../../components/customPagination";
 import RecruiterCard from "./RecruiterCard";
 import StaffCard from "./StaffCard";
 import "./styles.scss";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  fetchActivityList,
+  fetchEmployerDashboardData,
+  fetchHireRecruiterList,
+  fetchJobList,
+} from "../../features/employerDashboard/employerDashboardSlice";
+import Loader from "../../components/Loader";
+import { Link } from "react-router-dom";
+import { formatTimeAgo, getFormattedTitleWithStrong } from "../../utils";
 
 const Dashboard = () => {
+  const dispatch = useDispatch();
+  const {
+    counts,
+    jobList,
+    activity,
+    loading,
+    recruiters,
+    loadingCounts,
+    loadingJobs,
+    loadingActivity,
+    error,
+  } = useSelector((state) => state.employerDashboard);
   const [activeTabKey, setActiveTabKey] = useState("1");
+
+  useEffect(() => {
+    dispatch(fetchEmployerDashboardData());
+    dispatch(fetchJobList());
+    dispatch(fetchActivityList());
+    dispatch(fetchHireRecruiterList());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (error) {
+      message.error({
+        type: "error",
+        content: "error",
+      });
+    }
+  }, [error]);
 
   const TEXT_STYLE = {
     color: "#2F2C39",
   };
 
-  const handleTabChange = (key) => {
-    console.log(key); // Log the active tab key
-    setActiveTabKey(key); // Update the active tab state
-  };
+  const handleTabChange = (key) => setActiveTabKey(key);
 
   const cardData = [
     {
       key: 1,
-      count: "20",
+      count: counts ? counts.jobPostCount : "0",
       title: "JOBS POSTED",
       icon: <DashboardJobPostIcon />,
     },
     {
       key: 2,
-      count: "22",
+      count: counts ? counts.applicationReceivedCount : "0",
       title: "APPLICATIONS RECEIVED",
       icon: <DashboardAppliationIcon />,
     },
     {
       key: 3,
-      count: "128",
+      count: counts ? counts.hiredRecruiterCount : "0",
       title: "RECRUITERS HIRED",
       icon: <DashboardRecruiterHiredIcon />,
     },
   ];
 
-  const jobData = [
-    {
-      id: "#A324BC",
-      jobTitle: "UI/UX Designer",
-      status: "Open",
-      applicationReceived: "323",
-      date: "11 Nov 2024",
-    },
-    {
-      id: "#A12324BC",
-      jobTitle: "UI/UX Designer",
-      status: "Open",
-      applicationReceived: "345",
-      date: "11 Nov 2024",
-    },
-    {
-      id: "#A234BC",
-      jobTitle: "UI/UX Designer",
-      status: "Open",
-      applicationReceived: "232",
-      date: "11 Nov 2024",
-    },
-    {
-      id: "#A454BC",
-      jobTitle: "UI/UX Designer",
-      status: "Closed",
-      applicationReceived: "123",
-      date: "11 Nov 2024",
-    },
-  ];
+  // const jobData = [
+  //   {
+  //     id: "#A324BC",
+  //     jobTitle: "UI/UX Designer",
+  //     status: "Open",
+  //     applicationReceived: "323",
+  //     date: "11 Nov 2024",
+  //   },
+  //   {
+  //     id: "#A12324BC",
+  //     jobTitle: "UI/UX Designer",
+  //     status: "Open",
+  //     applicationReceived: "345",
+  //     date: "11 Nov 2024",
+  //   },
+  //   {
+  //     id: "#A234BC",
+  //     jobTitle: "UI/UX Designer",
+  //     status: "Open",
+  //     applicationReceived: "232",
+  //     date: "11 Nov 2024",
+  //   },
+  //   {
+  //     id: "#A454BC",
+  //     jobTitle: "UI/UX Designer",
+  //     status: "Closed",
+  //     applicationReceived: "123",
+  //     date: "11 Nov 2024",
+  //   },
+  // ];
 
   const hiredRecruiterData = [
     {
@@ -199,7 +235,9 @@ const Dashboard = () => {
           />
         </Col>
         <Col>
-          <CustomButton category="primary" name="Add" />
+          <Link to={"/employer/add-job"}>
+            <CustomButton category="primary" name="Add" />
+          </Link>
         </Col>
       </Row>
     );
@@ -212,14 +250,18 @@ const Dashboard = () => {
       children: (
         <Card title="Jobs" bordered={false}>
           <FilterTab />
-          <Row gutter={[12, 12]} style={{ marginTop: "20px" }}>
-            {jobData?.map((item) => (
-              <Col md={12} key={item.id}>
-                <JobCard item={item} TEXT_STYLE={TEXT_STYLE} />
-              </Col>
-            ))}
-          </Row>
-          <CustomPagination />
+          {Array.isArray(jobList) && jobList.length > 0 && (
+            <>
+              <Row gutter={[12, 12]} style={{ marginTop: "20px" }}>
+                {(jobList || [])?.map((item) => (
+                  <Col md={12} key={item.id}>
+                    <JobCard item={item} TEXT_STYLE={TEXT_STYLE} />
+                  </Col>
+                ))}
+              </Row>
+            </>
+          )}
+          {jobList?.length >= 10 && <CustomPagination />}{" "}
         </Card>
       ),
     },
@@ -227,10 +269,10 @@ const Dashboard = () => {
       key: "2",
       label: "Hired Recruiters",
       children: (
-        <Card title="Hired Recruiters" bordered={false}>
+        <Card title="Hired Recruiters" bordered={false} loading={loading}>
           <FilterTab />
           <Row gutter={[12, 12]} style={{ marginTop: "20px" }}>
-            {hiredRecruiterData?.map((item, index) => (
+            {recruiters?.map((item, index) => (
               <Col md={12} key={item.id}>
                 <RecruiterCard key={`mentor-card-${index}`} {...item} />
               </Col>
@@ -259,23 +301,9 @@ const Dashboard = () => {
     },
   ];
 
-  let activityData = [
-    {
-      key: 1,
-      title: "Product Designer",
-      time: "1h",
-    },
-    {
-      key: 2,
-      title: "Product Designer",
-      time: "1h",
-    },
-    {
-      key: 3,
-      title: "Product Designer",
-      time: "1h",
-    },
-  ];
+  if (loadingCounts || loadingJobs || loadingActivity) {
+    return <Loader />;
+  }
 
   return (
     <div style={{ padding: "20px" }}>
@@ -314,30 +342,35 @@ const Dashboard = () => {
           >
             <List
               bordered
-              dataSource={activityData}
+              dataSource={activity || []}
               size={"large"}
-              renderItem={(item) => (
-                <List.Item
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                  }}
-                >
-                  <Typography.Text style={{ fontSize: "18px" }}>
-                    New job for{" "}
-                    <strong style={{ color: "#1C1C1C" }}>{item.title}</strong>{" "}
-                    <br />
-                    role is Posted
-                  </Typography.Text>
-                  <Flex align="center" gap={3}>
-                    <DashboardClockIcon />
-                    <Typography.Text style={{ color: "#2F2C39" }}>
-                      {item.time}
+              renderItem={(item) => {
+                console.log();
+                return (
+                  <List.Item
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Typography.Text style={{ fontSize: "18px" }}>
+                      {getFormattedTitleWithStrong(item.title)}
                     </Typography.Text>
-                  </Flex>
-                </List.Item>
-              )}
+                    <Flex
+                      align="center"
+                      gap={3}
+                      style={{ width: "150px" }}
+                      justify="end"
+                    >
+                      <DashboardClockIcon />
+                      <Typography.Text style={{ color: "#2F2C39" }}>
+                        {formatTimeAgo(item.createdAt)}
+                      </Typography.Text>
+                    </Flex>
+                  </List.Item>
+                );
+              }}
             />
           </Card>
           {/* Two Small Cards Below the Activity Section */}

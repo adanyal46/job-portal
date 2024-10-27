@@ -5,6 +5,7 @@ import {
   recruiterRoleApi,
   recruiterTimesheetListApi,
   recruiterTimeSheetPostAPi,
+  recruiterViewTimesheetListApi,
 } from "./timesheetApi";
 
 // Async thunk for fetching notifications
@@ -35,6 +36,17 @@ export const fetchRecruiterAddTimesheetList = createAsyncThunk(
   async () => {
     try {
       const response = await recruiterTimesheetListApi();
+      return response.data;
+    } catch (error) {
+      return error;
+    }
+  }
+);
+export const fetchRecruiterViewTimesheetList = createAsyncThunk(
+  "timesheet/view-timesheet-list",
+  async () => {
+    try {
+      const response = await recruiterViewTimesheetListApi();
       return response.data;
     } catch (error) {
       return error;
@@ -143,6 +155,18 @@ const timesheetSlice = createSlice({
       })
       .addCase(fetchrecruiterTimeSheetPost.rejected, (state, action) => {
         state.adlLoading = false;
+        state.error = action.error.message;
+      })
+      .addCase(fetchRecruiterViewTimesheetList.pending, (state) => {
+        state.vtLoading = true;
+        state.error = null;
+      })
+      .addCase(fetchRecruiterViewTimesheetList.fulfilled, (state, action) => {
+        state.vtLoading = false;
+        state.viewTimeSheetList = action.payload;
+      })
+      .addCase(fetchRecruiterViewTimesheetList.rejected, (state, action) => {
+        state.vtLoading = false;
         state.error = action.error.message;
       });
   },

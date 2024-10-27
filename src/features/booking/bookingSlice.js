@@ -30,9 +30,9 @@ export const getBookingSession = createAsyncThunk(
 );
 export const upcomingBookingSession = createAsyncThunk(
   "mentor/booking/session",
-  async (_, { rejectWithValue }) => {
+  async (filter, { rejectWithValue }) => {
     try {
-      const response = await upcomingBookingSessionApi();
+      const response = await upcomingBookingSessionApi(filter);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.message);

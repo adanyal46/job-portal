@@ -1,22 +1,38 @@
 import { Card, Col, DatePicker, Input, Row, Typography } from "antd";
-import React from "react";
+import React, { useEffect } from "react";
 import CustomButton from "../../components/customButton";
 import { CalendarDashboardIcon } from "../../assets/svg";
 import CustomPagination from "../../components/customPagination";
 import RecruiterCard from "../employerDashboard/RecruiterCard";
-import './styles.scss'
+import "./styles.scss";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchHireRecruiterList } from "../../features/employerDashboard/employerDashboardSlice";
 
 const FilterTab = () => {
   return (
     <Row gutter={16} style={{ alignItems: "center" }}>
       <Col flex={1}>
-        <Input.Search size="large" placeholder="Search" onSearch={(value) => console.log(value)} />
+        <Input.Search
+          size="large"
+          placeholder="Search"
+          onSearch={(value) => console.log(value)}
+        />
       </Col>
       <Col flex={1}>
-        <DatePicker size="large" className="w-100" suffixIcon={<CalendarDashboardIcon />} placeholder="Date Range" />
+        <DatePicker
+          size="large"
+          className="w-100"
+          suffixIcon={<CalendarDashboardIcon />}
+          placeholder="Date Range"
+        />
       </Col>
       <Col flex={1}>
-        <DatePicker size="large" className="w-100" suffixIcon={<CalendarDashboardIcon />} placeholder="Date Range" />
+        <DatePicker
+          size="large"
+          className="w-100"
+          suffixIcon={<CalendarDashboardIcon />}
+          placeholder="Date Range"
+        />
       </Col>
       <Col>
         <CustomButton category="primary" name="Add" />
@@ -85,7 +101,15 @@ const hiredRecruiterData = [
     services: ["Resume Review", "30-Minute Career Q&A", "Job Search Strategy"],
   },
 ];
-const index = () => {
+const HiredRecruiter = () => {
+  const dispatch = useDispatch();
+  const { recruiters, loading } = useSelector(
+    (state) => state.employerDashboard
+  );
+
+  useEffect(() => {
+    dispatch(fetchHireRecruiterList());
+  }, [dispatch]);
   return (
     <div>
       <Typography.Title level={3} style={{ fontWeight: 400 }}>
@@ -94,7 +118,7 @@ const index = () => {
       <Card bordered={false}>
         <FilterTab />
         <Row gutter={[12, 12]} style={{ marginTop: "20px" }}>
-          {hiredRecruiterData?.map((item, index) => (
+          {recruiters?.map((item, index) => (
             <Col md={8} key={item.id}>
               <RecruiterCard key={`mentor-card-${index}`} {...item} />
             </Col>
@@ -106,4 +130,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default HiredRecruiter;

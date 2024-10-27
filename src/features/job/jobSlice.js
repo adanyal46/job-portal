@@ -8,6 +8,7 @@ export const jobList = createAsyncThunk(
   async (formData, { rejectWithValue }) => {
     try {
       const data = await getJobList(formData);
+      console.log(data);
       return data.data; // Assuming data.data holds the job list
     } catch (error) {
       return rejectWithValue(error.message);

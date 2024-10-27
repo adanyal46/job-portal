@@ -6,25 +6,35 @@ import Tag from "../../components/tag";
 
 const RecruiterCard = (props) => {
   const { ...profile } = props;
-  let services;
   const navigate = useNavigate();
 
   const handleDetailsClick = () => {
-    navigate('/employer/profile/1')
-    // navigate("/job-seeker/mentor/mentorDetail", {
-    //   state: {
-    //     services,
-    //     profile,
-    //     certificate,
-    //     mentorId,
-    //   },
-    // });
+    navigate(
+      "/employer/profile/" +
+        (profile.recruiterId ? profile.recruiterId : profile.id)
+    );
   };
 
   return (
-    <section className="mentor-card-wrapper">
+    <section
+      className="mentor-card-wrapper"
+      style={{
+        maxHeight: "265px",
+        height: "100%",
+      }}
+    >
       <figure className="mentor-icon-container">
-        <img loading="lazy" src={profile?.avatarUrl || "/images/mentors/mentor-1.png"} alt={profile?.fullname || "Guest"} className="mentor-icon" />
+        <img
+          loading="lazy"
+          style={{ objectFit: "cover", height: "200px" }}
+          src={
+            profile?.avatarId
+              ? process.env.REACT_APP_MEDIA_URL + profile?.avatarId
+              : "/images/no-image.jpg"
+          }
+          alt={profile?.fullname || "Guest"}
+          className="mentor-icon"
+        />
       </figure>
 
       <article className="mentor-details-container">
@@ -37,13 +47,24 @@ const RecruiterCard = (props) => {
         {profile.services && (
           <article className="mentor-card-tags-container">
             {profile.services.slice(0, 3).map((experty, index) => {
-              return <Tag key={`mentor-card-tag-${index}`} label={experty} />;
+              return (
+                <Tag
+                  key={`mentor-card-tag-${index}`}
+                  label={experty?.name || experty.service?.name}
+                />
+              );
             })}
           </article>
         )}
 
         <section className="mentor-detail-button">
-          <CustomButton category="primary" name="Details" classes="mentor-details-button" handleClick={handleDetailsClick} block={true} />
+          <CustomButton
+            category="primary"
+            name="Details"
+            classes="mentor-details-button"
+            handleClick={handleDetailsClick}
+            block={true}
+          />
         </section>
       </article>
     </section>

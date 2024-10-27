@@ -13,24 +13,17 @@ import { updateOtherInfo } from "../../features/profile/profileSlice";
 import { Image, message, Input } from "antd";
 import Rating from "../rating";
 import LocationWithIcon from "../locationWithIcon";
-import { getRelativePath } from "../../utils";
 
 const RecruiterProfileHeader = ({ user, showInfoModal, setShowInfoModal }) => {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   const profile = user && user?.Profile[0];
-  const baseUrl =
-    process.env.REACT_APP_NODE_ENV === "development"
-      ? "http://54.144.76.160:5000"
-      : "https://jobportal-fuse.netlify.app";
-  const fullAvatarUrl = profile?.avatarUrl || "";
-  const relativeAvatarUrl = getRelativePath(fullAvatarUrl, baseUrl);
 
   const [profileData, setProfileData] = useState({
     fullname: profile?.fullname || "",
     email: user?.email || "",
     phnumber: profile?.phnumber || "",
-    profilePic: relativeAvatarUrl || "",
+    profilePic: profile?.avatarId || "",
     location: profile?.location || "",
     companyName: profile?.industry || "",
     description: profile?.about || "",
@@ -38,10 +31,15 @@ const RecruiterProfileHeader = ({ user, showInfoModal, setShowInfoModal }) => {
     speak: profile?.language || "",
   });
 
-  const [imageUrl, setImageUrl] = useState(relativeAvatarUrl); // State for image URL
+  const [imageUrl, setImageUrl] = useState(null);
+
   useEffect(() => {
-    setImageUrl(relativeAvatarUrl);
-  }, [relativeAvatarUrl]);
+    setImageUrl(
+      profile?.avatarId
+        ? process.env.REACT_APP_MEDIA_URL + profile?.avatarId
+        : "/images/no-image.jpg"
+    );
+  }, [profile]);
 
   const handleShowInfoModal = () => {
     setShowInfoModal(() => true);
@@ -74,9 +72,7 @@ const RecruiterProfileHeader = ({ user, showInfoModal, setShowInfoModal }) => {
 
     try {
       setLoading(true);
-      const resultAction = await dispatch(
-        updateOtherInfo(formData)
-      ).unwrap();
+      const resultAction = await dispatch(updateOtherInfo(formData)).unwrap();
       if (resultAction.success) {
         message.success("Profile updated successfully!");
         window.location.replace("/recruiter/profile");
@@ -98,9 +94,9 @@ const RecruiterProfileHeader = ({ user, showInfoModal, setShowInfoModal }) => {
             width={200}
             height={200}
             className="user-profile-image"
-            src={imageUrl || "/images/user-profile-image.png"}
+            src={imageUrl || "/images/no-image.jpg"}
             alt="UserProfileImage"
-            style={{ objectFit: "cover", }}
+            style={{ objectFit: "cover" }}
           />
         </figure>
 

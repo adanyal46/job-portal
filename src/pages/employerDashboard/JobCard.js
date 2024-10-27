@@ -4,11 +4,10 @@ import { MenuEmployerProfileIcon } from "../../assets/svg";
 import { Link } from "react-router-dom";
 
 const JobCard = ({ item, TEXT_STYLE }) => {
-  // Define the menu items
   const menu = (
     <Menu>
       <Menu.Item key="edit">
-        <Link to={`/employer/edit-job/1`}>Edit Job</Link>
+        <Link to={`/employer/edit-job/${item.randomId}`}>Edit Job</Link>
       </Menu.Item>
       {/* Add more menu items as needed */}
     </Menu>
@@ -22,10 +21,11 @@ const JobCard = ({ item, TEXT_STYLE }) => {
             backgroundColor: "#E2F3F9",
             padding: "4px",
             color: "#0077A6",
+            textTransform: "uppercase",
           }}
           strong
         >
-          ID: {item.id}
+          ID: {item.randomId}
         </Typography.Text>
         <Dropdown
           overlay={menu}
@@ -47,7 +47,7 @@ const JobCard = ({ item, TEXT_STYLE }) => {
             </Typography.Text>
           </Flex>
           <Flex flex={1}>
-            <Link to={`/employer/job-detail/1`}>
+            <Link to={`/employer/job-detail/${item.randomId}`}>
               <Typography.Text style={{ ...TEXT_STYLE }}>
                 {item.jobTitle}
               </Typography.Text>
@@ -63,8 +63,8 @@ const JobCard = ({ item, TEXT_STYLE }) => {
           <Flex flex={1}>
             <div
               style={{
-                backgroundColor: item.status === "Open" ? "#DAF9E8" : "#F8EEED",
-                color: item.status === "Open" ? "#1BBB62" : "#E8381A",
+                backgroundColor: item.status === "OPEN" ? "#DAF9E8" : "#F8EEED",
+                color: item.status === "OPEN" ? "#1BBB62" : "#E8381A",
                 borderRadius: "6px",
                 height: "30px",
                 display: "flex",
@@ -97,7 +97,9 @@ const JobCard = ({ item, TEXT_STYLE }) => {
             </Typography.Text>
           </Flex>
           <Flex flex={1}>
-            <Typography.Text style={TEXT_STYLE}>{item.date}</Typography.Text>
+            <Typography.Text style={TEXT_STYLE}>
+              {new Date(item.createdAt).toLocaleDateString()}
+            </Typography.Text>
           </Flex>
         </Flex>
       </Flex>

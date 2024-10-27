@@ -28,6 +28,7 @@ const CustomButton = (props) => {
           onClick={onClick}
           block={block}
           style={style}
+          htmlType="submit"
         >
           {name}
         </Button>

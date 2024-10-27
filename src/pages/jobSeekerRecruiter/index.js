@@ -7,8 +7,9 @@ import RecruiterCard from "../employerDashboard/RecruiterCard";
 import "./styles.scss";
 import CommonInput from "../../components/commonInput";
 import CustomSelect from "../../components/customSelect";
+import JobSeekerRecruiterCard from "./JobSeekerRecruiterCard";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchTalentList } from "../../features/employerDashboard/employerDashboardSlice";
+import { fetchJobSeekerList } from "../../features/recruiter/recruiterSlice";
 
 const SearchFields = ({
   locationOptions,
@@ -150,16 +151,9 @@ const hiredRecruiterData = [
     services: ["Resume Review", "30-Minute Career Q&A", "Job Search Strategy"],
   },
 ];
-const EmployerRecruiter = () => {
+const JobSeekerRecruiter = () => {
   const dispatch = useDispatch();
-  const { talents, loading, error } = useSelector(
-    (state) => state.employerDashboard
-  );
-
-  useEffect(() => {
-    dispatch(fetchTalentList());
-  }, [dispatch]);
-
+  const { jobSeekerList } = useSelector((state) => state.recruiter);
   const [searchFields, setSearchFields] = useState({
     serviceName: "",
     location: null,
@@ -167,11 +161,16 @@ const EmployerRecruiter = () => {
     industry: null,
     yearOfExperience: null,
   });
+
+  useEffect(() => {
+    dispatch(fetchJobSeekerList());
+  }, [dispatch]);
+
   const handleSearch = () => {};
   return (
     <div>
       <Typography.Title level={3} style={{ fontWeight: 400 }}>
-        Talent
+        Job Seekers
       </Typography.Title>
       <SearchFields
         locationOptions={[
@@ -198,18 +197,18 @@ const EmployerRecruiter = () => {
         searchFields={searchFields}
         setSearchFields={setSearchFields}
       />
-      <Card bordered={false} loading={loading}>
+      <Card bordered={false}>
         <Row gutter={[12, 12]} style={{ marginTop: "20px" }}>
-          {talents?.map((item, index) => (
+          {jobSeekerList?.map((item, index) => (
             <Col md={8} key={item.id}>
-              <RecruiterCard key={`mentor-card-${index}`} {...item} />
+              <JobSeekerRecruiterCard key={`mentor-card-${index}`} {...item} />
             </Col>
           ))}
         </Row>
-        <CustomPagination />
+        {/* <CustomPagination /> */}
       </Card>
     </div>
   );
 };
 
-export default EmployerRecruiter;
+export default JobSeekerRecruiter;

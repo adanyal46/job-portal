@@ -1,5 +1,5 @@
 import { Card, Col, DatePicker, Flex, Input, Row, Typography } from "antd";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import CustomButton from "../../components/customButton";
 import { CalendarDashboardIcon, SearchFieldIcon } from "../../assets/svg";
 import CustomPagination from "../../components/customPagination";
@@ -7,8 +7,18 @@ import RecruiterCard from "../employerDashboard/RecruiterCard";
 import "./styles.scss";
 import CommonInput from "../../components/commonInput";
 import CustomSelect from "../../components/customSelect";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchRecruiterList } from "../../features/employerDashboard/employerDashboardSlice";
 
-const SearchFields = ({ locationOptions, disciplineOptions, industryOptions, experienceOptions, searchFields, setSearchFields, onSearch }) => {
+const SearchFields = ({
+  locationOptions,
+  disciplineOptions,
+  industryOptions,
+  experienceOptions,
+  searchFields,
+  setSearchFields,
+  onSearch,
+}) => {
   const handleInputChange = (value) => {
     setSearchFields((prev) => ({
       ...prev,
@@ -141,6 +151,10 @@ const hiredRecruiterData = [
   },
 ];
 const EmployerTalent = () => {
+  const dispatch = useDispatch();
+  const { recruiters, loading } = useSelector(
+    (state) => state.employerDashboard
+  );
   const [searchFields, setSearchFields] = useState({
     serviceName: "",
     location: null,
@@ -148,6 +162,12 @@ const EmployerTalent = () => {
     industry: null,
     yearOfExperience: null,
   });
+
+  console.log(recruiters);
+  useEffect(() => {
+    dispatch(fetchRecruiterList());
+  }, [dispatch]);
+
   const handleSearch = () => {};
   return (
     <div>
@@ -179,15 +199,15 @@ const EmployerTalent = () => {
         searchFields={searchFields}
         setSearchFields={setSearchFields}
       />
-      <Card bordered={false}>
+      <Card bordered={false} loading={loading}>
         <Row gutter={[12, 12]} style={{ marginTop: "20px" }}>
-          {hiredRecruiterData?.map((item, index) => (
+          {recruiters?.map((item, index) => (
             <Col md={8} key={item.id}>
               <RecruiterCard key={`mentor-card-${index}`} {...item} />
             </Col>
           ))}
         </Row>
-        <CustomPagination />
+        {recruiters?.length >= 10 && <CustomPagination />}
       </Card>
     </div>
   );

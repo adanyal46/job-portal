@@ -24,7 +24,7 @@ export const approveNotification = createAsyncThunk(
   "notifications/recruiter/approve",
   async (formData) => {
     const response = await handleApproveNotificationApi(formData);
-    return response.data;
+    return response;
   }
 );
 

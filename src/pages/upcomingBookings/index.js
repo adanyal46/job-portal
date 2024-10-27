@@ -5,7 +5,7 @@ import BookingCard, {
 // import CustomPagination from "../../components/customPagination";
 import CustomTabs from "../../components/customTabs";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { upcomingBookingSession } from "../../features/booking/bookingSlice";
 import tokenDecoder from "../../utils/jwtDecoder";
 
@@ -54,10 +54,10 @@ const BookingsListingRecruiter = ({ bookingSession }) => {
           bookingSession.map((booking) => (
             <BookingCardRecruiter
               mentor
-              status={booking?.status}
+              status={booking?.recruiterApprovalStatus}
               serviceName={booking?.serviceName}
               mentorName={booking?.fullname}
-              date={booking?.datetime}
+              date={booking?.date}
             />
           ))}
       </section>
@@ -71,15 +71,18 @@ const BookingsListingRecruiter = ({ bookingSession }) => {
 
 const UpcomingBookings = () => {
   const token = localStorage.getItem("token");
+  const [activeKey, setActiveKey] = useState("today");
   const decodedToken = tokenDecoder(token);
   const USER_ROLE = decodedToken.role;
   const dispatch = useDispatch();
   const { bookingSession } = useSelector((state) => state.bookings);
 
   useEffect(() => {
-    dispatch(upcomingBookingSession());
-  }, [dispatch]);
-  const handleTabChange = (key) => {};
+    dispatch(upcomingBookingSession(activeKey));
+  }, [dispatch, activeKey]);
+  const handleTabChange = (key) => {
+    setActiveKey(key);
+  };
 
   return (
     <section>

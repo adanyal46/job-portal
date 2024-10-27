@@ -9,8 +9,14 @@ export const recruiterProgressRoleApi = async () => {
   const response = await axiosInstance.get("/Recruiter/progress-roles");
   return response.data;
 };
+
 export const recruiterTimesheetListApi = async () => {
-  const response = await axiosInstance.get("/Recruiter/timesheet");
+  const response = await axiosInstance.get("/Recruiter/add-timesheet-list");
+  return response.data;
+};
+
+export const recruiterViewTimesheetListApi = async () => {
+  const response = await axiosInstance.get("/Recruiter/view-timesheet-list");
   return response.data;
 };
 

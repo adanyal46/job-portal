@@ -12,6 +12,9 @@ import ViewTimeSheetRecruiter from "./pages/employerDashboard/ViewTimesheetRecru
 import StaffMemberDetail from "./pages/employerDashboard/StaffMemberDetail";
 import StaffMemberProfile from "./pages/employerDashboard/StaffMemberProfile";
 import RecruiterSetting from "./pages/recruiterSetting";
+import RecruiterNotificationDetail from "./pages/recruiterNotification/RecruiterNotificationDetail";
+import AddJob from "./pages/employerDashboard/AddJob";
+import JobRequest from "./pages/employerDashboard/JobRequest";
 
 // Lazy loaded components
 const MyProfile = lazy(() => import("./pages/myProfile"));
@@ -22,7 +25,9 @@ const JobSearch = lazy(() => import("./pages/jobSearch"));
 const Mentors = lazy(() => import("./pages/mentors"));
 const Bookings = lazy(() => import("./pages/bookings"));
 const Notifications = lazy(() => import("./pages/notifications"));
-const RecruiterNotification = lazy(() => import("./pages/recruiterNotification"));
+const RecruiterNotification = lazy(() =>
+  import("./pages/recruiterNotification")
+);
 const Settings = lazy(() => import("./pages/settings"));
 const Earnings = lazy(() => import("./pages/earnings"));
 const Blogs = lazy(() => import("./pages/blogs"));
@@ -39,6 +44,10 @@ const EmployerHiredRecruiter = lazy(() => import("./pages/employer-recruiter"));
 const EmployerStaffs = lazy(() => import("./pages/employer-staff"));
 const EmployerTalent = lazy(() => import("./pages/employerTalent"));
 const EmployerRecruiter = lazy(() => import("./pages/employerRecruiter"));
+const JobSeekerRecruiter = lazy(() => import("./pages/jobSeekerRecruiter"));
+const JobSeekerRecruiterDetail = lazy(() =>
+  import("./pages/jobSeekerRecruiter/JobSeekerDetail")
+);
 
 const routeConfig = (token) => {
   const decodedToken = tokenDecoder(token);
@@ -203,8 +212,24 @@ const routeConfig = (token) => {
           errorElement: <ErrorPage />,
         },
         {
+          path: "notification/job-request/:id",
+          element: <RecruiterNotificationDetail />,
+          errorElement: <ErrorPage />,
+        },
+
+        {
           path: "reviews",
           element: <Reviews />,
+          errorElement: <ErrorPage />,
+        },
+        {
+          path: "jobseekers",
+          element: <JobSeekerRecruiter />,
+          errorElement: <ErrorPage />,
+        },
+        {
+          path: "jobseeker/detail/:id",
+          element: <JobSeekerRecruiterDetail />,
           errorElement: <ErrorPage />,
         },
         {
@@ -292,12 +317,17 @@ const routeConfig = (token) => {
           errorElement: <ErrorPage />,
         },
         {
+          path: "add-job",
+          element: <AddJob />,
+          errorElement: <ErrorPage />,
+        },
+        {
           path: "edit-job/:id",
           element: <EditJob />,
           errorElement: <ErrorPage />,
         },
         {
-          path: "job-applicants",
+          path: "job-applicants/:id",
           element: <ViewJobApplicantList />,
           errorElement: <ErrorPage />,
         },
@@ -314,6 +344,11 @@ const routeConfig = (token) => {
         {
           path: "profile/:id",
           element: <StaffMemberProfile />,
+          errorElement: <ErrorPage />,
+        },
+        {
+          path: "job-request",
+          element: <JobRequest />,
           errorElement: <ErrorPage />,
         },
       ],

@@ -24,12 +24,6 @@ const Sidebar = ({ user }) => {
   const location = useLocation();
   const profile =
     user && user.Profile && user.Profile.length > 0 ? user.Profile[0] : null;
-  const baseUrl =
-    process.env.REACT_APP_NODE_ENV === "development"
-      ? "http://54.144.76.160:5000"
-      : "https://jobportal-fuse.netlify.app";
-  const fullAvatarUrl = profile?.avatarUrl || "";
-  const relativeAvatarUrl = getRelativePath(fullAvatarUrl, baseUrl);
 
   const searchParams = query.get("type");
 
@@ -201,6 +195,19 @@ const Sidebar = ({ user }) => {
     ...(isRecruiter
       ? [
           {
+            key: "job-seeker",
+            showArrow: false,
+            collapsible: "header",
+            label: (
+              <Link to={`${routePrefix}/jobseekers`}>
+                <section className="collapse-header-wrapper">
+                  <JobSeekerIcon />
+                  <h5 className="collapse-heading">Job Seeker</h5>
+                </section>
+              </Link>
+            ),
+          },
+          {
             key: "time-sheet",
             showArrow: false,
             collapsible: "header",
@@ -230,19 +237,7 @@ const Sidebar = ({ user }) => {
               </Link>
             ),
           },
-          {
-            key: "job-seeker",
-            showArrow: false,
-            collapsible: "header",
-            label: (
-              // <Link to={`${routePrefix}/earnings`}>
-              <section className="collapse-header-wrapper">
-                <JobSeekerIcon />
-                <h5 className="collapse-heading">Job Seeker</h5>
-              </section>
-              // </Link>
-            ),
-          },
+
           {
             key: "employer-talent",
             showArrow: false,
@@ -346,7 +341,10 @@ const Sidebar = ({ user }) => {
           <Image
             loading="lazy"
             className="sidebar-user-icon"
-            src={relativeAvatarUrl || "/images/sidebar-user-icon.png"}
+            src={
+              process.env.REACT_APP_MEDIA_URL + profile?.avatarId ||
+              "/images/no-image.jpg"
+            }
             alt="fuseUser"
             style={{
               borderRadius: "100px",

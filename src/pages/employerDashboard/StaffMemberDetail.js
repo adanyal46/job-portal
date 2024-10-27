@@ -1,6 +1,11 @@
 import React from "react";
 import { Card, Col, Flex, List, Row, Typography } from "antd";
-import { DashboardAppliationIcon, DashboardClockIcon, DashboardJobPostIcon, DashboardRecruiterHiredIcon } from "../../assets/svg";
+import {
+  DashboardAppliationIcon,
+  DashboardClockIcon,
+  DashboardJobPostIcon,
+  DashboardRecruiterHiredIcon,
+} from "../../assets/svg";
 const cardData = [
   {
     key: 1,
@@ -113,13 +118,18 @@ const StaffMemberDetail = () => {
       <Row gutter={[16, 16]}>
         {cardData.map((item) => (
           <Col span={8} key={item.key}>
-            <Card bordered={false} style={{ boxShadow: "0px 4px 18px 0px #4B465C1A" }}>
+            <Card
+              bordered={false}
+              style={{ boxShadow: "0px 4px 18px 0px #4B465C1A" }}
+            >
               <Flex className="w-100" justify="space-between" align="center">
                 <Flex vertical gap={0}>
                   <Typography.Title level={3} style={{ color: "#2F2C39" }}>
                     {item.count}
                   </Typography.Title>
-                  <Typography.Text style={{ color: "#52595C" }}>{item.title}</Typography.Text>
+                  <Typography.Text style={{ color: "#52595C" }}>
+                    {item.title}
+                  </Typography.Text>
                 </Flex>
                 {item.icon}
               </Flex>
@@ -131,7 +141,11 @@ const StaffMemberDetail = () => {
       <Row gutter={[16, 16]} style={{ marginTop: "16px" }}>
         <Col span={8}>
           {/* Activity Card */}
-          <Card title="Activity" bordered={false} style={{ boxShadow: "0px 4px 18px 0px #4B465C1A" }}>
+          <Card
+            title="Activity"
+            bordered={false}
+            style={{ boxShadow: "0px 4px 18px 0px #4B465C1A" }}
+          >
             <List
               bordered
               dataSource={activityData}
@@ -145,11 +159,14 @@ const StaffMemberDetail = () => {
                   }}
                 >
                   <Typography.Text style={{ fontSize: "16px" }}>
-                    {item.start} <strong style={{ color: "#1C1C1C" }}>{item.title}</strong>
+                    {item.start}{" "}
+                    <strong style={{ color: "#1C1C1C" }}>{item.title}</strong>
                   </Typography.Text>
                   <Flex align="center" gap={3}>
                     <DashboardClockIcon />
-                    <Typography.Text style={{ color: "#2F2C39" }}>{item.time}</Typography.Text>
+                    <Typography.Text style={{ color: "#2F2C39" }}>
+                      {item.time}
+                    </Typography.Text>
                   </Flex>
                 </List.Item>
               )}
@@ -183,12 +200,24 @@ const StaffMemberDetail = () => {
                     alignItems: "center",
                   }}
                 >
-                  <Typography.Text style={{ fontSize: "16px" }}>{item.title}</Typography.Text>
+                  <Typography.Text style={{ fontSize: "16px" }}>
+                    {item.title}
+                  </Typography.Text>
                   <div
                     style={{
-                      color: item.status === "Low" ? "#1BBB62" : item.status === "Medium" ? "#F9912E" : "#E8381A",
+                      color:
+                        item.status === "Low"
+                          ? "#1BBB62"
+                          : item.status === "Medium"
+                          ? "#F9912E"
+                          : "#E8381A",
                       fontSize: "14px",
-                      backgroundColor: item.status === "Low" ? "#DAF9E8" : item.status === "Medium" ? "#FAF4EE" : "#F8EEED",
+                      backgroundColor:
+                        item.status === "Low"
+                          ? "#DAF9E8"
+                          : item.status === "Medium"
+                          ? "#FAF4EE"
+                          : "#F8EEED",
                       padding: "1px 7px",
                       borderRadius: "4px",
                     }}
@@ -228,7 +257,9 @@ const StaffMemberDetail = () => {
                     alignItems: "center",
                   }}
                 >
-                  <Typography.Text style={{ fontSize: "16px" }}>{item.title}</Typography.Text>
+                  <Typography.Text style={{ fontSize: "16px" }}>
+                    {item.title}
+                  </Typography.Text>
                   <div
                     style={{
                       color: "#1C1C1C",

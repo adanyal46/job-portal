@@ -40,8 +40,10 @@ const JobDetailCard = ({
           <p className="name">{jobData?.companyName || "N/A"}</p>
           <ExternalLinkIcon />
         </article>
-        <p className="current-job-location">{jobData?.location ?? "N/A"}</p>
-        <Tag label={jobData?.salary ?? "N/A"} />
+        <p className="current-job-location" style={{ marginBottom: "10px" }}>
+          {jobData?.location ?? "N/A"}
+        </p>
+        <Tag label={"$" + jobData?.minPrice + " - " + "$" + jobData.maxPrice} />
         {jobData?.applied && (
           <section className="current-job-applied">
             <JobAppliedIcon />

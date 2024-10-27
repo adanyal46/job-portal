@@ -14,6 +14,7 @@ import {
   fetchRecruiterAddTimesheetList,
   fetchRecruiterProgressRole,
   fetchRecruiterRole,
+  fetchRecruiterViewTimesheetList,
 } from "../../../features/timesheet/timesheetSlice";
 
 const viewTimesheetColumns = [
@@ -82,7 +83,7 @@ const columns = [
   },
   {
     title: "Company Name",
-    dataIndex: "CompanyName",
+    dataIndex: "companyName",
     key: "companyName",
   },
   {
@@ -159,6 +160,7 @@ const data = [
 
 const AllRoles = (props) => {
   const { role, tableData = [], loading = false } = props;
+  console.log(tableData);
 
   const tableColumns = (arg) => {
     if (arg === "view-timesheet") return viewTimesheetColumns;
@@ -184,20 +186,29 @@ const AllRoles = (props) => {
 
 const ViewTimesheet = () => {
   const [activeKey, setActiveKey] = useState("allRoles");
-  const { roles, progressRole, roleLoading, pRoleLoading } = useSelector(
-    (state) => state.timesheet
-  );
+  const {
+    roles,
+    progressRole,
+    roleLoading,
+    pRoleLoading,
+    addTimeSheetList,
+    adlLoading,
+    vtLoading,
+    viewTimeSheetList,
+  } = useSelector((state) => state.timesheet);
+
   const dispatch = useDispatch();
-  console.log("roles", progressRole);
+
   useEffect(() => {
     if (activeKey === "allRoles") {
       dispatch(fetchRecruiterRole());
     } else if (activeKey === "inProgressRoles") {
       dispatch(fetchRecruiterProgressRole());
+    } else if (activeKey === "addTimesheet") {
+      dispatch(fetchRecruiterAddTimesheetList());
     } else {
       console.log("Key not found");
     }
-    dispatch(fetchRecruiterAddTimesheetList());
   }, [dispatch, activeKey]);
 
   const handleTabChange = (key) => {
@@ -244,7 +255,7 @@ const ViewTimesheet = () => {
             label: "Add Timesheet",
             children: (
               <Card>
-                <AllRoles />
+                <AllRoles tableData={addTimeSheetList} loading={adlLoading} />
               </Card>
             ),
           },
@@ -253,7 +264,11 @@ const ViewTimesheet = () => {
             label: "View Timesheets",
             children: (
               <Card>
-                <AllRoles role="view-timesheet" />
+                <AllRoles
+                  role="view-timesheet"
+                  loading={vtLoading}
+                  tableData={viewTimeSheetList}
+                />
               </Card>
             ),
           },

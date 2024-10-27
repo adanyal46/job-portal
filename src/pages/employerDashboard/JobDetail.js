@@ -1,5 +1,5 @@
-import { Card, Flex, Image, List, Typography } from "antd";
-import React from "react";
+import { Card, Flex, Image, message, Typography } from "antd";
+import React, { useEffect, useState } from "react";
 import {
   LinkEmployerProfileIcon,
   LocationIcon,
@@ -8,28 +8,34 @@ import {
 } from "../../assets/svg";
 import CustomButton from "../../components/customButton";
 import Tag from "../../components/tag";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import { getJobDetailApi } from "../../features/employerDashboard/employerDashboardApi";
 
-const responsibilities = [
-  "Conduct user research and evaluate user feedback.",
-  "Develop wireframes and prototypes for user interfaces.",
-  "Collaborate with product managers and developers to create optimal designs.",
-  "Design and optimize user interactions for various platforms.",
-  "Stay up-to-date with the latest design trends and technologies.",
-];
-
-const requirements = [
-  "Proficiency in design software such as Adobe XD, Figma, or Sketch.",
-  "Strong understanding of user-centered design principles.",
-  "Experience with responsive design and mobile-first approaches.",
-  "Ability to present design ideas clearly and effectively.",
-  "Good communication and collaboration skills.",
-];
-
+const TEXT_STYLE = {
+  color: "#2F2C39",
+};
 const JobDetail = () => {
-  const TEXT_STYLE = {
-    color: "#2F2C39",
-  };
+  const { id } = useParams();
+  const [jobDetails, setJobDetails] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchJobDetails = async () => {
+      try {
+        const result = await getJobDetailApi(id);
+        setJobDetails(result.data);
+      } catch (error) {
+        message.error(
+          error.message || "Failed to fetch job details. Please try again."
+        );
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchJobDetails();
+  }, [id]);
+
   return (
     <div
       style={{
@@ -39,14 +45,14 @@ const JobDetail = () => {
       }}
     >
       <Typography.Title level={4} style={{ fontWeight: "400" }}>
-        Dashboard / ID #A324BC
+        Dashboard / ID #{id.toUpperCase()}
       </Typography.Title>
-      <Card style={{ width: "100%" }}>
+      <Card style={{ width: "100%" }} loading={loading}>
         <Flex justify="space-between">
           <Flex gap={"small"} align="center">
             <Image src="/images/job-icon.png" />
             <Typography.Title level={3} style={TEXT_STYLE}>
-              UI/UX Designer
+              {jobDetails?.jobTitle ?? "-"}
             </Typography.Title>
           </Flex>
           <MenuEmployerProfileIcon style={{ cursor: "pointer" }} />
@@ -54,12 +60,12 @@ const JobDetail = () => {
         <Flex vertical gap={5}>
           <Flex gap={"small"} style={{ marginTop: "10px" }}>
             <Typography.Text style={{ ...TEXT_STYLE, fontSize: "16px" }}>
-              Kosmic AI
+              {jobDetails?.companyName ?? "-"}
             </Typography.Text>
             <LinkEmployerProfileIcon />
           </Flex>
           <Typography.Text style={{ ...TEXT_STYLE, fontSize: "16px" }}>
-            Surat
+            {jobDetails?.location ?? "-"}
           </Typography.Text>
           <Typography.Text
             style={{
@@ -68,10 +74,10 @@ const JobDetail = () => {
               fontWeight: "500",
             }}
           >
-            $60,000-$80,000
+            ${jobDetails?.minPrice ?? "-"} - ${jobDetails?.maxPrice ?? "-"}
           </Typography.Text>
           <div>
-            <Link to={"/employer/job-applicants"}>
+            <Link to={"/employer/job-applicants/" + jobDetails?.randomId}>
               <CustomButton name="View Job Applicants" category="primary" />
             </Link>
           </div>
@@ -85,14 +91,21 @@ const JobDetail = () => {
             <MoneyIcon />
             <Typography.Text style={TEXT_STYLE}>Pay</Typography.Text>
           </Flex>
-          <Tag label={"$60,000-$80,000 a month"} />
+          <Tag
+            label={
+              "$" +
+              (jobDetails?.minPrice ?? "-") +
+              "-" +
+              "$" +
+              (jobDetails?.maxPrice ?? "-")
+            }
+          />
           <Flex gap={4} style={{ marginBottom: "5px", marginTop: "10px" }}>
             <MoneyIcon />
             <Typography.Text style={TEXT_STYLE}>Pay</Typography.Text>
           </Flex>
-          <Flex gap={5}>
-            <Tag label={"Full Time"} />
-            <Tag label={"Contract"} />
+          <Flex gap={5} style={{ textTransform: "capitalize" }}>
+            <Tag label={jobDetails?.jobType} />
           </Flex>
         </Flex>
 
@@ -102,7 +115,9 @@ const JobDetail = () => {
           </Typography.Title>
           <Flex gap={5}>
             <LocationIcon />
-            <Typography.Text style={TEXT_STYLE}>Surat</Typography.Text>
+            <Typography.Text style={TEXT_STYLE}>
+              {jobDetails?.location ?? "-"}
+            </Typography.Text>
           </Flex>
         </Flex>
 
@@ -111,45 +126,18 @@ const JobDetail = () => {
             Full job description
           </Typography.Title>
           <Typography.Title level={4} style={{ ...TEXT_STYLE, marginTop: 0 }}>
-            Full job description: UI/UX Designer
+            Full job description:
+            {jobDetails?.jobTitle ?? "-"}
           </Typography.Title>
           <Typography.Title level={4} style={{ ...TEXT_STYLE, marginTop: 0 }}>
             Summary:
           </Typography.Title>
-
-          <Typography.Text style={TEXT_STYLE}>
-            We are seeking a talented UI/UX designer to join our team For
-            Contractual basis of 3 months . As a designer, you will be
-            responsible for creating visually appealing and user-friendly web
-            pages and landing pages that align with clients brand and business
-            objectives. You will collaborate with cross-functional teams,
-            including marketing, development, and content, to ensure the design
-            meets the needs of our clients and target audience.
-          </Typography.Text>
-          <Typography.Title
-            level={4}
-            style={{ ...TEXT_STYLE, marginTop: "10px" }}
-          >
-            Responsibilities:
-          </Typography.Title>
-          <Typography.Paragraph style={{ marginBottom: "0" }}>
-            <ul>
-              {responsibilities.map((item) => (
-                <li style={{ fontSize: "14px" }}>{item}</li>
-              ))}
-            </ul>
-          </Typography.Paragraph>
-
-          <Typography.Title level={4} style={{ ...TEXT_STYLE, marginTop: "0" }}>
-            Requirements:
-          </Typography.Title>
-
-          <Typography.Paragraph style={{ marginBottom: 0 }}>
-            <ul>
-              {requirements.map((item) => (
-                <li style={{ fontSize: "14px" }}>{item}</li>
-              ))}
-            </ul>
+          <Typography.Paragraph style={TEXT_STYLE}>
+            <span
+              dangerouslySetInnerHTML={{
+                __html: jobDetails?.description ?? "-",
+              }}
+            />
           </Typography.Paragraph>
         </Flex>
       </Card>

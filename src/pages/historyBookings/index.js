@@ -6,7 +6,7 @@ import CustomTabs from "../../components/customTabs";
 import tokenDecoder from "../../utils/jwtDecoder";
 import { useDispatch, useSelector } from "react-redux";
 import { upcomingBookingSession } from "../../features/booking/bookingSlice";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const BookingsListingMentor = ({ bookingSession }) => {
   return (
@@ -49,7 +49,7 @@ const BookingsListingRecruiter = ({ bookingSession }) => {
               status={booking?.status}
               serviceName={booking?.serviceName}
               mentorName={booking?.fullname}
-              date={booking?.datetime}
+              date={booking?.date}
             />
           ))}
       </section>
@@ -72,6 +72,7 @@ const NoBooking = () => {
 };
 
 const HistoryBookings = () => {
+  const [activeKey, setActiveKey] = useState("lastthreedays");
   const token = localStorage.getItem("token");
   const decodedToken = tokenDecoder(token);
   const USER_ROLE = decodedToken.role;
@@ -79,10 +80,12 @@ const HistoryBookings = () => {
   const { bookingSession } = useSelector((state) => state.bookings);
 
   useEffect(() => {
-    dispatch(upcomingBookingSession());
-  }, [dispatch]);
+    dispatch(upcomingBookingSession(activeKey));
+  }, [dispatch, activeKey]);
 
-  const handleTabChange = (key) => {};
+  const handleTabChange = (key) => {
+    setActiveKey(key);
+  };
 
   return (
     <section>
@@ -95,7 +98,7 @@ const HistoryBookings = () => {
         defaultActiveKey="last-3-Days"
         items={[
           {
-            key: "last-3-Days",
+            key: "lastthreedays",
             label: "Last 3 Days",
             children:
               bookingSession.length > 0 ? (
@@ -109,12 +112,12 @@ const HistoryBookings = () => {
               ),
           },
           {
-            key: "last-Week",
+            key: "lastweek",
             label: "Last Week",
             children: <NoBooking />,
           },
           {
-            key: "last-Month",
+            key: "lastmonth",
             label: "Last Month",
             children: <NoBooking />,
           },

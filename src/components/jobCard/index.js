@@ -28,7 +28,7 @@ const JobCard = (props) => {
 
       <h5 className="job-main-title">{job?.jobTitle ?? "N/A"}</h5>
 
-      <Tag label={job?.salary ?? "N/A"} />
+      <Tag label={"$" + job?.minPrice + " - " + "$" + job.maxPrice} />
 
       <ul className="job-description-list">
         <li className="list-item">{job?.description ?? "N/A"}</li>

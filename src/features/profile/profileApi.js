@@ -16,15 +16,23 @@ const getEducationApiRoute = () => {
 };
 const getCertificateApiRoute = () => {
   const USER_ROLE = getUserRole();
-  return USER_ROLE === "RECRUITER" ? "/recruiter/certificate" : "/user/certificate";
+  return USER_ROLE === "RECRUITER"
+    ? "/recruiter/certificate"
+    : "/user/certificate";
 };
 const getExperienceRoute = () => {
   const USER_ROLE = getUserRole();
-  return USER_ROLE === "RECRUITER" ? "/recruiter/employment-history" : "/user/employment-history";
+  return USER_ROLE === "RECRUITER"
+    ? "/recruiter/employment-history"
+    : "/user/employment-history";
 };
 const getLocationRoute = () => {
   const USER_ROLE = getUserRole();
-  return USER_ROLE === "RECRUITER" ? "/recruiter/location" : "/user/location";
+  return USER_ROLE === "RECRUITER"
+    ? "/recruiter/location"
+    : USER_ROLE === "EMPLOYER"
+    ? "/employer/location"
+    : "/user/location";
 };
 
 const getDocumentRoute = () => {
@@ -34,18 +42,26 @@ const getDocumentRoute = () => {
 
 const uploadVideoRoute = () => {
   const USER_ROLE = getUserRole();
-  return USER_ROLE === "RECRUITER" ? "/recruiter/upload-video" : "/mentor/upload-video";
+  return USER_ROLE === "RECRUITER"
+    ? "/recruiter/upload-video"
+    : "/mentor/upload-video";
 };
 
 const updateProfileOtherInfoRoute = () => {
   const USER_ROLE = getUserRole();
-  return USER_ROLE === "RECRUITER" ? "/recruiter/profile" : "/mentor/profile";
+  return USER_ROLE === "RECRUITER"
+    ? "/recruiter/profile"
+    : USER_ROLE === "EMPLOYER"
+    ? "/employer/profile"
+    : USER_ROLE === "MENTOR"
+    ? "/mentor/profile"
+    : "/user/profile";
 };
 
 const getServiceRoute = () => {
   const USER_ROLE = getUserRole();
   return USER_ROLE === "RECRUITER" ? "/recruiter/service" : "/mentor/service";
-}
+};
 
 export const profileApi = async () => {
   const response = await axiosInstance.get("/user/profile");
@@ -59,6 +75,11 @@ export const mentorProfileApi = async () => {
 export const recruiterProfileApi = async () => {
   const response = await axiosInstance.get("/recruiter/profile");
   return response.data; // Return the full response data
+};
+
+export const employerProfileApi = async () => {
+  const response = await axiosInstance.get("/employer/profile");
+  return response.data;
 };
 
 export const profileApiPost = async (formData) => {
@@ -139,19 +160,19 @@ export const deleteEmploymentHisApi = async (formData) => {
 // service api
 
 export const createMentorServiceApi = async (formData) => {
-  const route = getServiceRoute()
+  const route = getServiceRoute();
   const USER_ROLE = getUserRole();
-  if(USER_ROLE === 'RECRUITER'){
-    formData.recId = formData.mentorId
-    delete formData.mentorId
-  }else{
-    formData.mentorId = formData.mentorId; 
+  if (USER_ROLE === "RECRUITER") {
+    formData.recId = formData.mentorId;
+    delete formData.mentorId;
+  } else {
+    formData.mentorId = formData.mentorId;
   }
-  const response = await axiosInstance.post(route, {...formData,});
+  const response = await axiosInstance.post(route, { ...formData });
   return response.data;
 };
 export const updateMentorServiceApi = async (serviceId, formData) => {
-  const route = getServiceRoute()
+  const route = getServiceRoute();
   const response = await axiosInstance.put(route, formData, {
     params: {
       serviceId,
@@ -161,7 +182,7 @@ export const updateMentorServiceApi = async (serviceId, formData) => {
 };
 
 export const deleteMentorServiceApi = async (serviceId) => {
-  const route = getServiceRoute()
+  const route = getServiceRoute();
   const response = await axiosInstance.delete(route, {
     params: {
       serviceId: serviceId,

@@ -9,6 +9,8 @@ import bookingReducer from "../features/booking/bookingSlice";
 import mentorReviewReducer from "../features/mentorReviews/mentorReviewSlice";
 import earningReducer from "../features/earning/earningSlice";
 import timesheetReducer from "../features/timesheet/timesheetSlice";
+import recruiterReducer from "../features/recruiter/recruiterSlice";
+import employerDashboardReducer from "../features/employerDashboard/employerDashboardSlice";
 
 export const store = configureStore({
   reducer: {
@@ -21,5 +23,7 @@ export const store = configureStore({
     mentorReviews: mentorReviewReducer,
     earning: earningReducer,
     timesheet: timesheetReducer,
+    recruiter: recruiterReducer,
+    employerDashboard: employerDashboardReducer,
   },
 });

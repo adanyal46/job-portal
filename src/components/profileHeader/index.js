@@ -21,26 +21,22 @@ const ProfileHeader = ({ user, showInfoModal, setShowInfoModal }) => {
       ? "http://54.144.76.160:5000"
       : "https://jobportal-fuse.netlify.app"; // Use window.origin for production
 
-  // Replace placeholder with actual server URL
-  const baseUrl =
-    process.env.REACT_APP_NODE_ENV === "development"
-      ? "http://54.144.76.160:5000"
-      : "https://jobportal-fuse.netlify.app";
-  const fullAvatarUrl = profile?.avatarUrl || "";
-  const relativeAvatarUrl = getRelativePath(fullAvatarUrl, baseUrl);
-
   const [profileData, setProfileData] = useState({
     fullname: profile?.fullname || "",
     email: user?.email || "",
     phnumber: profile?.phnumber || "",
-    profilePic: relativeAvatarUrl || "",
+    profilePic: profile?.avatarId || "",
   });
 
-  const [imageUrl, setImageUrl] = useState(relativeAvatarUrl); // State for image URL
-  // Update the imageUrl when the profile changes
+  const [imageUrl, setImageUrl] = useState(null);
+
   useEffect(() => {
-    setImageUrl(relativeAvatarUrl);
-  }, [relativeAvatarUrl]);
+    setImageUrl(
+      profile?.avatarId
+        ? process.env.REACT_APP_MEDIA_URL + profile?.avatarId
+        : "/images/no-image.jpg"
+    );
+  }, [profile]);
 
   const handleShowInfoModal = () => {
     setShowInfoModal(() => true);
@@ -89,7 +85,7 @@ const ProfileHeader = ({ user, showInfoModal, setShowInfoModal }) => {
             width={200}
             height={200}
             className="user-profile-image"
-            src={relativeAvatarUrl || "/images/user-profile-image.png"} // Use imageUrl state
+            src={imageUrl || "/images/no-image.jpg"} // Use imageUrl state
             alt="UserProfileImage"
             style={{ objectFit: "cover" }}
           />

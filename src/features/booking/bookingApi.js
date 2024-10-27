@@ -13,11 +13,11 @@ const getUserRole = () => {
   return USER_ROLE;
 };
 
-const getBookingRoute = () => {
+const getBookingRoute = (filter = "today") => {
   const role = getUserRole();
   return role !== "RECRUITER"
     ? "/mentor/session"
-    : "/Recruiter/upcommingbookings";
+    : "/Recruiter/bookings?filter=" + filter;
 };
 
 export const bookSessionApi = async (formData) => {
@@ -30,8 +30,8 @@ export const getBookingSessionApi = async (formData) => {
   return response.data;
 };
 
-export const upcomingBookingSessionApi = async () => {
-  const route = getBookingRoute();
+export const upcomingBookingSessionApi = async (filter) => {
+  const route = getBookingRoute(filter);
   const response = await axiosInstance.get(route);
   return response.data;
 };
