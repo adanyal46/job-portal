@@ -14,6 +14,7 @@ import {
   DashboardEmployerSidebarIcon,
   JobListIcon,
   DashboardRecruiterIcon,
+  SubscriptionDashboardIcon,
 } from "../../assets/svg";
 import "./styles.scss";
 import { Image } from "antd";
@@ -233,6 +234,19 @@ const Sidebar = ({ user }) => {
                 <section className="collapse-header-wrapper">
                   <DashboardEmployerSidebarIcon />
                   <h5 className="collapse-heading">Dashboard</h5>
+                </section>
+              </Link>
+            ),
+          },
+          {
+            key: "employer-subscription",
+            showArrow: false,
+            collapsible: "header",
+            label: (
+              <Link to={`${routePrefix}/subscriptions`}>
+                <section className="collapse-header-wrapper">
+                  <SubscriptionDashboardIcon />
+                  <h5 className="collapse-heading">Subscriptions &Upgrades</h5>
                 </section>
               </Link>
             ),

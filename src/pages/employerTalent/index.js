@@ -1,7 +1,7 @@
 import { Card, Col, DatePicker, Flex, Input, Row, Typography } from "antd";
 import React, { useEffect, useState } from "react";
 import CustomButton from "../../components/customButton";
-import { CalendarDashboardIcon, SearchFieldIcon } from "../../assets/svg";
+import { CalendarDashboardIcon, EmptyStateRecruiter, SearchFieldIcon } from "../../assets/svg";
 import CustomPagination from "../../components/customPagination";
 import RecruiterCard from "../employerDashboard/RecruiterCard";
 import "./styles.scss";
@@ -10,15 +10,7 @@ import CustomSelect from "../../components/customSelect";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchTalentList } from "../../features/employerDashboard/employerDashboardSlice";
 
-const SearchFields = ({
-  locationOptions,
-  disciplineOptions,
-  industryOptions,
-  experienceOptions,
-  searchFields,
-  setSearchFields,
-  onSearch,
-}) => {
+const SearchFields = ({ locationOptions, disciplineOptions, industryOptions, experienceOptions, searchFields, setSearchFields, onSearch }) => {
   const handleInputChange = (value) => {
     setSearchFields((prev) => ({
       ...prev,
@@ -152,9 +144,7 @@ const hiredRecruiterData = [
 ];
 const EmployerRecruiter = () => {
   const dispatch = useDispatch();
-  const { talents, loading, error } = useSelector(
-    (state) => state.employerDashboard
-  );
+  const { talents, loading, error } = useSelector((state) => state.employerDashboard);
 
   useEffect(() => {
     dispatch(fetchTalentList());
@@ -199,14 +189,21 @@ const EmployerRecruiter = () => {
         setSearchFields={setSearchFields}
       />
       <Card bordered={false} loading={loading}>
-        <Row gutter={[12, 12]} style={{ marginTop: "20px" }}>
-          {talents?.map((item, index) => (
-            <Col md={8} key={item.id}>
-              <RecruiterCard key={`mentor-card-${index}`} {...item} />
-            </Col>
-          ))}
-        </Row>
-        <CustomPagination />
+        {Array.isArray(talents) && talents.length > 0 ? (
+          <Row gutter={[12, 12]} style={{ marginTop: "20px" }}>
+            {talents?.map((item, index) => (
+              <Col md={8} key={item.id}>
+                <RecruiterCard key={`mentor-card-${index}`} {...item} />
+              </Col>
+            ))}
+          </Row>
+        ) : (
+          <Flex style={{ minHeight: "calc(100vh - 30.5vh)" }} align="center" justify="center">
+            <EmptyStateRecruiter />
+          </Flex>
+        )}
+
+        {Array.isArray(talents) && talents.length >= 10 && <CustomPagination />}
       </Card>
     </div>
   );

@@ -11,7 +11,7 @@ import EditJob from "./pages/employerDashboard/EditJob";
 import ViewTimeSheetRecruiter from "./pages/employerDashboard/ViewTimesheetRecruiter";
 import StaffMemberDetail from "./pages/employerDashboard/StaffMemberDetail";
 import StaffMemberProfile from "./pages/employerDashboard/StaffMemberProfile";
-import RecruiterSetting from "./pages/recruiterSetting";
+import EmployerSetting from "./pages/employerSetting";
 import RecruiterNotificationDetail from "./pages/recruiterNotification/RecruiterNotificationDetail";
 import AddJob from "./pages/employerDashboard/AddJob";
 import JobRequest from "./pages/employerDashboard/JobRequest";
@@ -47,6 +47,9 @@ const EmployerRecruiter = lazy(() => import("./pages/employerRecruiter"));
 const JobSeekerRecruiter = lazy(() => import("./pages/jobSeekerRecruiter"));
 const JobSeekerRecruiterDetail = lazy(() =>
   import("./pages/jobSeekerRecruiter/JobSeekerDetail")
+);
+const EmployerSubscription = lazy(() =>
+  import("./pages/employerSubscription")
 );
 
 const routeConfig = (token) => {
@@ -234,7 +237,7 @@ const routeConfig = (token) => {
         },
         {
           path: "settings",
-          element: <RecruiterSetting />,
+          element: <Settings />,
           errorElement: <ErrorPage />,
         },
         {
@@ -351,6 +354,16 @@ const routeConfig = (token) => {
           element: <JobRequest />,
           errorElement: <ErrorPage />,
         },
+       {
+          path: "settings",
+          element: <EmployerSetting />,
+          errorElement: <ErrorPage />,
+        }, 
+       {
+          path: "subscriptions",
+          element: <EmployerSubscription />,
+          errorElement: <ErrorPage />,
+        }, 
       ],
     },
   ];

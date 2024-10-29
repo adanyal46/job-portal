@@ -1,17 +1,7 @@
-import {
-  Card,
-  Col,
-  DatePicker,
-  Empty,
-  Flex,
-  Input,
-  message,
-  Row,
-  Typography,
-} from "antd";
+import { Card, Col, DatePicker, Empty, Flex, Input, message, Row, Typography } from "antd";
 import React, { useEffect } from "react";
 import CustomButton from "../../components/customButton";
-import { CalendarDashboardIcon } from "../../assets/svg";
+import { CalendarDashboardIcon, EmptyStateRecruiter } from "../../assets/svg";
 import JobCard from "../employerDashboard/JobCard";
 import CustomPagination from "../../components/customPagination";
 import { useDispatch, useSelector } from "react-redux";
@@ -21,27 +11,13 @@ const FilterTab = () => {
   return (
     <Row gutter={16} style={{ alignItems: "center" }}>
       <Col flex={1}>
-        <Input.Search
-          size="large"
-          placeholder="Search"
-          onSearch={(value) => console.log(value)}
-        />
+        <Input.Search size="large" placeholder="Search" onSearch={(value) => console.log(value)} />
       </Col>
       <Col flex={1}>
-        <DatePicker
-          size="large"
-          className="w-100"
-          suffixIcon={<CalendarDashboardIcon />}
-          placeholder="Date Range"
-        />
+        <DatePicker size="large" className="w-100" suffixIcon={<CalendarDashboardIcon />} placeholder="Date Range" />
       </Col>
       <Col flex={1}>
-        <DatePicker
-          size="large"
-          className="w-100"
-          suffixIcon={<CalendarDashboardIcon />}
-          placeholder="Date Range"
-        />
+        <DatePicker size="large" className="w-100" suffixIcon={<CalendarDashboardIcon />} placeholder="Date Range" />
       </Col>
       <Col>
         <Link to={"/employer/add-job"}>
@@ -54,9 +30,7 @@ const FilterTab = () => {
 
 const Jobs = () => {
   const dispatch = useDispatch();
-  const { jobList, loadingJobs, error } = useSelector(
-    (state) => state.employerDashboard
-  );
+  const { jobList, loadingJobs, error } = useSelector((state) => state.employerDashboard);
 
   useEffect(() => {
     dispatch(fetchJobList());
@@ -89,12 +63,10 @@ const Jobs = () => {
         </Row>
         {jobList?.length >= 10 && <CustomPagination />}
         {jobList?.length === 0 && (
-          <Flex
-            style={{ minHeight: "calc(100vh - 32vh)" }}
-            align="center"
-            justify="center"
-          >
-            <Empty description="No jobs found!" />
+          <Flex style={{ minHeight: "calc(100vh - 32vh)" }} align="center" justify="center">
+            <Flex style={{ minHeight: "calc(100vh - 30.5vh)" }} align="center" justify="center">
+              <EmptyStateRecruiter />
+            </Flex>
           </Flex>
         )}
       </Card>

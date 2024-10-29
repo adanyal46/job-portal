@@ -105,3 +105,10 @@
 .verified-profile:hover {
   color: whitesmoke;
 }
+
+.fw-400{
+  font-weight: 400 !important;
+}
+.color-neutral {
+  color: #52595C !important;
+}

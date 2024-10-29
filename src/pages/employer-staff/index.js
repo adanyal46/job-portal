@@ -1,7 +1,7 @@
-import { Card, Col, DatePicker, Input, Row, Typography } from "antd";
+import { Card, Col, DatePicker, Flex, Input, Row, Typography } from "antd";
 import React from "react";
 import CustomButton from "../../components/customButton";
-import { CalendarDashboardIcon } from "../../assets/svg";
+import { CalendarDashboardIcon, EmptyStateRecruiter } from "../../assets/svg";
 import CustomPagination from "../../components/customPagination";
 import "./styles.scss";
 import StaffCard from "../employerDashboard/StaffCard";
@@ -41,20 +41,6 @@ const staffData = [
     email: "Jannetsummers@gmail.com",
     phone: "+1 305 3216549",
   },
-  {
-    id: 3,
-    title: "Project Manager",
-    fullname: "Jannet Summers",
-    email: "Jannetsummers@gmail.com",
-    phone: "+1 305 3216549",
-  },
-  {
-    id: 4,
-    title: "Project Manager",
-    fullname: "Jannet Summers",
-    email: "Jannetsummers@gmail.com",
-    phone: "+1 305 3216549",
-  },
 ];
 
 const index = () => {
@@ -65,14 +51,21 @@ const index = () => {
       </Typography.Title>
       <Card bordered={false}>
         <FilterTab />
-        <Row gutter={[12, 12]} style={{ marginTop: "20px" }}>
-          {staffData?.map((item, index) => (
-            <Col md={8} key={item.id}>
-              <StaffCard key={`staff-card-${index}`} {...item} />
-            </Col>
-          ))}
-        </Row>
-        <CustomPagination />
+        {Array.isArray(staffData) && staffData.length > 0 ? (
+          <Row gutter={[12, 12]} style={{ marginTop: "20px" }}>
+            {staffData?.map((item, index) => (
+              <Col md={8} key={item.id}>
+                <StaffCard key={`staff-card-${index}`} {...item} />
+              </Col>
+            ))}
+          </Row>
+        ) : (
+          <Flex style={{ minHeight: "calc(100vh - 30.5vh)" }} align="center" justify="center">
+            <EmptyStateRecruiter />
+          </Flex>
+        )}
+
+        {Array.isArray(staffData) && staffData.length >= 10 && <CustomPagination />}
       </Card>
     </div>
   );

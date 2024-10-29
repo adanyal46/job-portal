@@ -1,7 +1,7 @@
-import { Card, Col, DatePicker, Input, Row, Typography } from "antd";
+import { Card, Col, DatePicker, Flex, Input, Row, Typography } from "antd";
 import React, { useEffect } from "react";
 import CustomButton from "../../components/customButton";
-import { CalendarDashboardIcon } from "../../assets/svg";
+import { CalendarDashboardIcon, EmptyStateRecruiter } from "../../assets/svg";
 import CustomPagination from "../../components/customPagination";
 import RecruiterCard from "../employerDashboard/RecruiterCard";
 import "./styles.scss";
@@ -12,27 +12,13 @@ const FilterTab = () => {
   return (
     <Row gutter={16} style={{ alignItems: "center" }}>
       <Col flex={1}>
-        <Input.Search
-          size="large"
-          placeholder="Search"
-          onSearch={(value) => console.log(value)}
-        />
+        <Input.Search size="large" placeholder="Search" onSearch={(value) => console.log(value)} />
       </Col>
       <Col flex={1}>
-        <DatePicker
-          size="large"
-          className="w-100"
-          suffixIcon={<CalendarDashboardIcon />}
-          placeholder="Date Range"
-        />
+        <DatePicker size="large" className="w-100" suffixIcon={<CalendarDashboardIcon />} placeholder="Date Range" />
       </Col>
       <Col flex={1}>
-        <DatePicker
-          size="large"
-          className="w-100"
-          suffixIcon={<CalendarDashboardIcon />}
-          placeholder="Date Range"
-        />
+        <DatePicker size="large" className="w-100" suffixIcon={<CalendarDashboardIcon />} placeholder="Date Range" />
       </Col>
       <Col>
         <CustomButton category="primary" name="Add" />
@@ -103,9 +89,7 @@ const hiredRecruiterData = [
 ];
 const HiredRecruiter = () => {
   const dispatch = useDispatch();
-  const { recruiters, loading } = useSelector(
-    (state) => state.employerDashboard
-  );
+  const { recruiters, loading } = useSelector((state) => state.employerDashboard);
 
   useEffect(() => {
     dispatch(fetchHireRecruiterList());
@@ -117,14 +101,22 @@ const HiredRecruiter = () => {
       </Typography.Title>
       <Card bordered={false}>
         <FilterTab />
-        <Row gutter={[12, 12]} style={{ marginTop: "20px" }}>
-          {recruiters?.map((item, index) => (
-            <Col md={8} key={item.id}>
-              <RecruiterCard key={`mentor-card-${index}`} {...item} />
-            </Col>
-          ))}
-        </Row>
-        <CustomPagination />
+
+        {Array.isArray(recruiters) && recruiters.length > 0 ? (
+          <Row gutter={[12, 12]} style={{ marginTop: "20px" }}>
+            {recruiters?.map((item, index) => (
+              <Col md={8} key={item.id}>
+                <RecruiterCard key={`mentor-card-${index}`} {...item} />
+              </Col>
+            ))}
+          </Row>
+        ) : (
+          <Flex style={{ minHeight: "calc(100vh - 30.5vh)" }} align="center" justify="center">
+            <EmptyStateRecruiter />
+          </Flex>
+        )}
+
+        {Array.isArray(recruiters) && recruiters.length >= 10 && <CustomPagination />}
       </Card>
     </div>
   );
