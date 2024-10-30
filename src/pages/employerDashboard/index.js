@@ -1,15 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  Row,
-  Col,
-  Card,
-  Flex,
-  Typography,
-  List,
-  Input,
-  DatePicker,
-  message,
-} from "antd";
+import { Row, Col, Card, Flex, Typography, List, Input, DatePicker, message } from "antd";
 import {
   CalendarDashboardIcon,
   DashboardAppliationIcon,
@@ -18,6 +8,7 @@ import {
   DashboardPremiumOne,
   DashboardPremiumTwo,
   DashboardRecruiterHiredIcon,
+  EmptyStateRecruiter,
 } from "../../assets/svg";
 import CustomTabs from "../../components/customTabs";
 import CustomButton from "../../components/customButton";
@@ -27,29 +18,16 @@ import RecruiterCard from "./RecruiterCard";
 import StaffCard from "./StaffCard";
 import "./styles.scss";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  fetchActivityList,
-  fetchEmployerDashboardData,
-  fetchHireRecruiterList,
-  fetchJobList,
-} from "../../features/employerDashboard/employerDashboardSlice";
+import { fetchActivityList, fetchEmployerDashboardData, fetchHireRecruiterList, fetchJobList } from "../../features/employerDashboard/employerDashboardSlice";
 import Loader from "../../components/Loader";
 import { Link } from "react-router-dom";
 import { formatTimeAgo, getFormattedTitleWithStrong } from "../../utils";
 
 const Dashboard = () => {
   const dispatch = useDispatch();
-  const {
-    counts,
-    jobList,
-    activity,
-    loading,
-    recruiters,
-    loadingCounts,
-    loadingJobs,
-    loadingActivity,
-    error,
-  } = useSelector((state) => state.employerDashboard);
+  const { counts, jobList, activity, loading, recruiters, loadingCounts, loadingJobs, loadingActivity, error } = useSelector(
+    (state) => state.employerDashboard
+  );
   const [activeTabKey, setActiveTabKey] = useState("1");
 
   useEffect(() => {
@@ -126,56 +104,6 @@ const Dashboard = () => {
   //   },
   // ];
 
-  const hiredRecruiterData = [
-    {
-      id: 1,
-      imageName: "",
-      fullname: "Olivia Roy",
-      location: "US",
-      services: [
-        "Resume Review",
-        "30-Minute Career Q&A",
-        "Job Search Strategy",
-      ],
-    },
-
-    {
-      id: 2,
-      imageName: "",
-      fullname: "Olivia Roy",
-
-      location: "US",
-      services: [
-        "Resume Review",
-        "30-Minute Career Q&A",
-        "Job Search Strategy",
-      ],
-    },
-    {
-      id: 3,
-      imageName: "",
-      location: "US",
-      fullname: "Olivia Roy",
-
-      services: [
-        "Resume Review",
-        "30-Minute Career Q&A",
-        "Job Search Strategy",
-      ],
-    },
-    {
-      id: 4,
-      imageName: "",
-      location: "US",
-      fullname: "Olivia Roy",
-      services: [
-        "Resume Review",
-        "30-Minute Career Q&A",
-        "Job Search Strategy",
-      ],
-    },
-  ];
-
   const staffData = [
     {
       id: 1,
@@ -212,27 +140,13 @@ const Dashboard = () => {
     return (
       <Row gutter={16} style={{ alignItems: "center" }}>
         <Col flex={1}>
-          <Input.Search
-            size="large"
-            placeholder="Search"
-            onSearch={(value) => console.log(value)}
-          />
+          <Input.Search size="large" placeholder="Search" onSearch={(value) => console.log(value)} />
         </Col>
         <Col flex={1}>
-          <DatePicker
-            size="large"
-            className="w-100"
-            suffixIcon={<CalendarDashboardIcon />}
-            placeholder="Date Range"
-          />
+          <DatePicker size="large" className="w-100" suffixIcon={<CalendarDashboardIcon />} placeholder="Date Range" />
         </Col>
         <Col flex={1}>
-          <DatePicker
-            size="large"
-            className="w-100"
-            suffixIcon={<CalendarDashboardIcon />}
-            placeholder="Date Range"
-          />
+          <DatePicker size="large" className="w-100" suffixIcon={<CalendarDashboardIcon />} placeholder="Date Range" />
         </Col>
         <Col>
           <Link to={"/employer/add-job"}>
@@ -251,15 +165,18 @@ const Dashboard = () => {
         <Card title="Jobs" bordered={false}>
           <FilterTab />
           {Array.isArray(jobList) && jobList.length > 0 && (
-            <>
-              <Row gutter={[12, 12]} style={{ marginTop: "20px" }}>
-                {(jobList || [])?.map((item) => (
-                  <Col md={12} key={item.id}>
-                    <JobCard item={item} TEXT_STYLE={TEXT_STYLE} />
-                  </Col>
-                ))}
-              </Row>
-            </>
+            <Row gutter={[12, 12]} style={{ marginTop: "20px" }}>
+              {(jobList || [])?.map((item) => (
+                <Col md={12} key={item.id}>
+                  <JobCard item={item} TEXT_STYLE={TEXT_STYLE} />
+                </Col>
+              ))}
+            </Row>
+          )}
+          {jobList?.length === 0 && (
+            <Flex style={{ paddingBlock: "20px", minHeight: "40vh" }} align="center" justify="center">
+              <EmptyStateRecruiter />
+            </Flex>
           )}
           {jobList?.length >= 10 && <CustomPagination />}{" "}
         </Card>
@@ -271,14 +188,21 @@ const Dashboard = () => {
       children: (
         <Card title="Hired Recruiters" bordered={false} loading={loading}>
           <FilterTab />
-          <Row gutter={[12, 12]} style={{ marginTop: "20px" }}>
-            {recruiters?.map((item, index) => (
-              <Col md={12} key={item.id}>
-                <RecruiterCard key={`mentor-card-${index}`} {...item} />
-              </Col>
-            ))}
-          </Row>
-          <CustomPagination />
+          {Array.isArray(recruiters) && recruiters.length > 0 && (
+            <Row gutter={[12, 12]} style={{ marginTop: "20px" }}>
+              {recruiters?.map((item, index) => (
+                <Col md={12} key={item.id}>
+                  <RecruiterCard key={`mentor-card-${index}`} {...item} />
+                </Col>
+              ))}
+            </Row>
+          )}
+          {recruiters?.length === 0 && (
+            <Flex style={{ paddingBlock: "20px", minHeight: "40vh" }} align="center" justify="center">
+              <EmptyStateRecruiter />
+            </Flex>
+          )}
+          {recruiters?.length >= 10 && <CustomPagination />}{" "}
         </Card>
       ),
     },
@@ -311,18 +235,13 @@ const Dashboard = () => {
       <Row gutter={[16, 16]}>
         {cardData.map((item) => (
           <Col span={8} key={item.key}>
-            <Card
-              bordered={false}
-              style={{ boxShadow: "0px 4px 18px 0px #4B465C1A" }}
-            >
+            <Card bordered={false} style={{ boxShadow: "0px 4px 18px 0px #4B465C1A" }}>
               <Flex className="w-100" justify="space-between" align="center">
                 <Flex vertical gap={0}>
                   <Typography.Title level={3} style={{ color: "#2F2C39" }}>
                     {item.count}
                   </Typography.Title>
-                  <Typography.Text style={{ color: "#52595C" }}>
-                    {item.title}
-                  </Typography.Text>
+                  <Typography.Text style={{ color: "#52595C" }}>{item.title}</Typography.Text>
                 </Flex>
                 {item.icon}
               </Flex>
@@ -335,11 +254,7 @@ const Dashboard = () => {
       <Row gutter={[16, 16]} style={{ marginTop: "16px" }}>
         <Col span={8} style={{ marginTop: "58px" }}>
           {/* Activity Card */}
-          <Card
-            title="Activity"
-            bordered={false}
-            style={{ boxShadow: "0px 4px 18px 0px #4B465C1A" }}
-          >
+          <Card title="Activity" bordered={false} style={{ boxShadow: "0px 4px 18px 0px #4B465C1A" }}>
             <List
               bordered
               dataSource={activity || []}
@@ -354,19 +269,10 @@ const Dashboard = () => {
                       alignItems: "center",
                     }}
                   >
-                    <Typography.Text style={{ fontSize: "18px" }}>
-                      {getFormattedTitleWithStrong(item.title)}
-                    </Typography.Text>
-                    <Flex
-                      align="center"
-                      gap={3}
-                      style={{ width: "150px" }}
-                      justify="end"
-                    >
+                    <Typography.Text style={{ fontSize: "18px" }}>{getFormattedTitleWithStrong(item.title)}</Typography.Text>
+                    <Flex align="center" gap={3} style={{ width: "150px" }} justify="end">
                       <DashboardClockIcon />
-                      <Typography.Text style={{ color: "#2F2C39" }}>
-                        {formatTimeAgo(item.createdAt)}
-                      </Typography.Text>
+                      <Typography.Text style={{ color: "#2F2C39" }}>{formatTimeAgo(item.createdAt)}</Typography.Text>
                     </Flex>
                   </List.Item>
                 );
@@ -376,10 +282,7 @@ const Dashboard = () => {
           {/* Two Small Cards Below the Activity Section */}
           <Row gutter={[16, 16]} style={{ marginTop: "16px" }}>
             <Col span={12}>
-              <Card
-                bordered={false}
-                style={{ boxShadow: "0px 4px 18px 0px #4B465C1A" }}
-              >
+              <Card bordered={false} style={{ boxShadow: "0px 4px 18px 0px #4B465C1A" }}>
                 <Flex vertical>
                   <Flex justify="space-between">
                     <Flex vertical gap={0}>
@@ -392,20 +295,13 @@ const Dashboard = () => {
                     </Flex>
                     <DashboardPremiumOne />
                   </Flex>
-                  <Typography.Text
-                    style={{ color: "#52595C", marginBottom: "10px" }}
-                  >
-                    Resume Searches
-                  </Typography.Text>
+                  <Typography.Text style={{ color: "#52595C", marginBottom: "10px" }}>Resume Searches</Typography.Text>
                   <CustomButton name="Upgrade" />
                 </Flex>
               </Card>
             </Col>
             <Col span={12}>
-              <Card
-                bordered={false}
-                style={{ boxShadow: "0px 4px 18px 0px #4B465C1A" }}
-              >
+              <Card bordered={false} style={{ boxShadow: "0px 4px 18px 0px #4B465C1A" }}>
                 <Flex vertical>
                   <Flex justify="space-between">
                     <Flex vertical gap={0}>
@@ -418,11 +314,7 @@ const Dashboard = () => {
                     </Flex>
                     <DashboardPremiumTwo />
                   </Flex>
-                  <Typography.Text
-                    style={{ color: "#52595C", marginBottom: "10px" }}
-                  >
-                    Job Postings
-                  </Typography.Text>
+                  <Typography.Text style={{ color: "#52595C", marginBottom: "10px" }}>Job Postings</Typography.Text>
                   <CustomButton name="Upgrade" />
                 </Flex>
               </Card>
@@ -431,12 +323,7 @@ const Dashboard = () => {
         </Col>
 
         <Col span={16}>
-          <CustomTabs
-            items={tabItems}
-            defaultActiveKey={activeTabKey}
-            handleChange={handleTabChange}
-            centered={true}
-          />
+          <CustomTabs items={tabItems} defaultActiveKey={activeTabKey} handleChange={handleTabChange} centered={true} />
         </Col>
       </Row>
     </div>

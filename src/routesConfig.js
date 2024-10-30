@@ -367,6 +367,39 @@ const routeConfig = (token) => {
       ],
     },
   ];
+  const staffMemberRoutes = [
+    {
+      path: "*",
+      element: <Navigate to={"/staff/dashboard"} replace />,
+      errorElement: <ErrorPage />, // Adding Error Page for error handling
+    },
+    {
+      path: "/staff",
+      element: <Layout />,
+      children: [
+        {
+          path: "dashboard",
+          element: <EmployerDashboard />,
+          errorElement: <ErrorPage />,
+        },
+        {
+          path: "notifications",
+          element: <RecruiterNotification />,
+          errorElement: <ErrorPage />,
+        },
+       {
+          path: "settings",
+          element: <EmployerSetting />,
+          errorElement: <ErrorPage />,
+        }, 
+       {
+          path: "subscriptions",
+          element: <EmployerSubscription />,
+          errorElement: <ErrorPage />,
+        }, 
+      ],
+    },
+  ];
 
   switch (role) {
     case Roles.JOB_SEEKER:
@@ -377,6 +410,8 @@ const routeConfig = (token) => {
       return [...recruiterRoutes];
     case Roles.EMPLOYER:
       return [...employerRoutes];
+    case Roles.STAFF_MEMBER:
+      return [...staffMemberRoutes];
     default:
       return [
         {

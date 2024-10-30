@@ -3,4 +3,6 @@ export const Roles = {
   MENTOR: "MENTOR",
   RECRUITER: "RECRUITER",
   EMPLOYER: "EMPLOYER",
+  STAFF_MEMBER: "STAFF_MEMBER",
+  ADMIN: "ADMIN",
 };
