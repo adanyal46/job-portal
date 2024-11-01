@@ -12,7 +12,11 @@ const Certifications = ({ certificates, profile }) => {
             <figure className="certification-icon">
               <img
                 loading="lazy"
-                src={profile?.avatarUrl || "/images/user-icon.png"}
+                src={
+                  profile?.avatarId
+                    ? process.env.REACT_APP_MEDIA_URL + profile?.avatarId
+                    : "/images/no-image.jpg"
+                }
                 style={{
                   width: "50px",
                   height: "50px",

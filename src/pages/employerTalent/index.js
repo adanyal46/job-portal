@@ -1,7 +1,11 @@
 import { Card, Col, DatePicker, Flex, Input, Row, Typography } from "antd";
 import React, { useEffect, useState } from "react";
 import CustomButton from "../../components/customButton";
-import { CalendarDashboardIcon, EmptyStateRecruiter, SearchFieldIcon } from "../../assets/svg";
+import {
+  CalendarDashboardIcon,
+  EmptyStateRecruiter,
+  SearchFieldIcon,
+} from "../../assets/svg";
 import CustomPagination from "../../components/customPagination";
 import RecruiterCard from "../employerDashboard/RecruiterCard";
 import "./styles.scss";
@@ -9,8 +13,17 @@ import CommonInput from "../../components/commonInput";
 import CustomSelect from "../../components/customSelect";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchTalentList } from "../../features/employerDashboard/employerDashboardSlice";
+import TalentCard from "../employerDashboard/TalentCard";
 
-const SearchFields = ({ locationOptions, disciplineOptions, industryOptions, experienceOptions, searchFields, setSearchFields, onSearch }) => {
+const SearchFields = ({
+  locationOptions,
+  disciplineOptions,
+  industryOptions,
+  experienceOptions,
+  searchFields,
+  setSearchFields,
+  onSearch,
+}) => {
   const handleInputChange = (value) => {
     setSearchFields((prev) => ({
       ...prev,
@@ -144,7 +157,9 @@ const hiredRecruiterData = [
 ];
 const EmployerRecruiter = () => {
   const dispatch = useDispatch();
-  const { talents, loading, error } = useSelector((state) => state.employerDashboard);
+  const { talents, loading, error } = useSelector(
+    (state) => state.employerDashboard
+  );
 
   useEffect(() => {
     dispatch(fetchTalentList());
@@ -193,12 +208,16 @@ const EmployerRecruiter = () => {
           <Row gutter={[12, 12]} style={{ marginTop: "20px" }}>
             {talents?.map((item, index) => (
               <Col md={8} key={item.id}>
-                <RecruiterCard key={`mentor-card-${index}`} {...item} />
+                <TalentCard key={`mentor-card-${index}`} {...item} />
               </Col>
             ))}
           </Row>
         ) : (
-          <Flex style={{ minHeight: "calc(100vh - 30.5vh)" }} align="center" justify="center">
+          <Flex
+            style={{ minHeight: "calc(100vh - 30.5vh)" }}
+            align="center"
+            justify="center"
+          >
             <EmptyStateRecruiter />
           </Flex>
         )}

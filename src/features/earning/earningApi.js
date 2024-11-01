@@ -33,15 +33,14 @@ const getEarningRoute = (
 
 // Fetch earnings data from the API with optional startDate and endDate parameters
 export const getEarningApi = async (startDate, endDate) => {
+  console.log(startDate, endDate);
+
   try {
+    // `route` will already include startDate and endDate if they are provided
     const route = getEarningRoute("today", startDate, endDate);
 
-    const response = await axiosInstance.get(route, {
-      params: {
-        startDate,
-        endDate,
-      },
-    });
+    // Do not pass `params` again since they're already in the `route` URL
+    const response = await axiosInstance.get(route);
 
     return response.data;
   } catch (error) {

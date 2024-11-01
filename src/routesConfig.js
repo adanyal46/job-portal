@@ -15,6 +15,7 @@ import EmployerSetting from "./pages/employerSetting";
 import RecruiterNotificationDetail from "./pages/recruiterNotification/RecruiterNotificationDetail";
 import AddJob from "./pages/employerDashboard/AddJob";
 import JobRequest from "./pages/employerDashboard/JobRequest";
+import JobSeekerDetail from "./pages/jobSeekerRecruiter/JobSeekerDetail";
 
 // Lazy loaded components
 const MyProfile = lazy(() => import("./pages/myProfile"));
@@ -48,9 +49,7 @@ const JobSeekerRecruiter = lazy(() => import("./pages/jobSeekerRecruiter"));
 const JobSeekerRecruiterDetail = lazy(() =>
   import("./pages/jobSeekerRecruiter/JobSeekerDetail")
 );
-const EmployerSubscription = lazy(() =>
-  import("./pages/employerSubscription")
-);
+const EmployerSubscription = lazy(() => import("./pages/employerSubscription"));
 
 const routeConfig = (token) => {
   const decodedToken = tokenDecoder(token);
@@ -345,6 +344,11 @@ const routeConfig = (token) => {
           errorElement: <ErrorPage />,
         },
         {
+          path: "talent/:id",
+          element: <JobSeekerDetail />,
+          errorElement: <ErrorPage />,
+        },
+        {
           path: "profile/:id",
           element: <StaffMemberProfile />,
           errorElement: <ErrorPage />,
@@ -354,16 +358,16 @@ const routeConfig = (token) => {
           element: <JobRequest />,
           errorElement: <ErrorPage />,
         },
-       {
+        {
           path: "settings",
           element: <EmployerSetting />,
           errorElement: <ErrorPage />,
-        }, 
-       {
+        },
+        {
           path: "subscriptions",
           element: <EmployerSubscription />,
           errorElement: <ErrorPage />,
-        }, 
+        },
       ],
     },
   ];
@@ -387,16 +391,16 @@ const routeConfig = (token) => {
           element: <RecruiterNotification />,
           errorElement: <ErrorPage />,
         },
-       {
+        {
           path: "settings",
           element: <EmployerSetting />,
           errorElement: <ErrorPage />,
-        }, 
-       {
+        },
+        {
           path: "subscriptions",
           element: <EmployerSubscription />,
           errorElement: <ErrorPage />,
-        }, 
+        },
       ],
     },
   ];

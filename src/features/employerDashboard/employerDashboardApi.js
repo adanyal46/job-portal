@@ -35,6 +35,10 @@ export const getTalentList = async () => {
   const response = await axiosInstance.get("/employer/talents");
   return response.data;
 };
+export const getTalentDetailApi = async (id) => {
+  const response = await axiosInstance.get("/employer/talent/" + id);
+  return response.data;
+};
 
 export const getRecruiterList = async () => {
   const response = await axiosInstance.get("/employer/recruiters");

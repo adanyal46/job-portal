@@ -31,7 +31,10 @@ const JobCard = (props) => {
       <Tag label={"$" + job?.minPrice + " - " + "$" + job.maxPrice} />
 
       <ul className="job-description-list">
-        <li className="list-item">{job?.description ?? "N/A"}</li>
+        <li
+          className="list-item"
+          dangerouslySetInnerHTML={{ __html: job?.description ?? "N/A" }}
+        />
       </ul>
 
       <p className="activity-status">{getDaysAgo(job?.createdAt)}</p>
