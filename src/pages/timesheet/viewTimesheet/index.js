@@ -20,13 +20,13 @@ import {
 const viewTimesheetColumns = [
   {
     title: "Timesheet ID",
-    dataIndex: "timesheetID",
-    key: "timesheetID",
+    dataIndex: "id",
+    key: "id",
   },
   {
     title: "Booking ID",
-    dataIndex: "bookingID",
-    key: "bookingID",
+    dataIndex: "bookingId",
+    key: "bookingId",
   },
   {
     title: "Recruiter Name",
@@ -206,10 +206,14 @@ const ViewTimesheet = () => {
       dispatch(fetchRecruiterProgressRole());
     } else if (activeKey === "addTimesheet") {
       dispatch(fetchRecruiterAddTimesheetList());
+    } else if (activeKey === "viewTimesheets") {
+      dispatch(fetchRecruiterViewTimesheetList());
     } else {
       console.log("Key not found");
     }
   }, [dispatch, activeKey]);
+
+  console.log(viewTimeSheetList);
 
   const handleTabChange = (key) => {
     setActiveKey(key);
