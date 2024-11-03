@@ -7,7 +7,7 @@ const isDevelopment = process.env.NODE_ENV === "development";
 // Set the baseURL dynamically
 const axiosInstance = axios.create({
   baseURL: isDevelopment
-    ? "http://54.144.76.160:5000/api" // Local API URL for development
+    ? "http://localhost:9000/api" // Local API URL for development
     : "/api", // Relative path for Netlify's proxy in production
 });
 

@@ -32,17 +32,20 @@ const Sidebar = ({ user }) => {
   const isMentor = user?.role === "MENTOR";
   const isRecruiter = user?.role === "RECRUITER";
   const isEmployer = user?.role === "EMPLOYER";
+  const isStaff = user?.role === "STAFF_MEMBER";
   const routePrefix = isMentor
     ? "/mentor"
     : isRecruiter
     ? "/recruiter"
     : isEmployer
     ? "/employer"
+    : isStaff
+    ? "/staff"
     : "/job-seeker";
 
   const items = [
     // Jobs section only for job seekers
-    ...(!isMentor && !isRecruiter && !isEmployer
+    ...(!isMentor && !isRecruiter && !isEmployer && !isStaff
       ? [
           {
             key: "2",
@@ -223,7 +226,7 @@ const Sidebar = ({ user }) => {
           },
         ]
       : []),
-    ...(isEmployer
+    ...(isEmployer || isStaff
       ? [
           {
             key: "employer-dashboard",

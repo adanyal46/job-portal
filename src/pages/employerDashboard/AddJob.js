@@ -19,13 +19,12 @@ import { useNavigate } from "react-router-dom";
 
 const AddJob = () => {
   const { user } = useSelector((state) => state.profile);
-  const profileData = user.Profile?.[0];
+  const profileData = user?.Profile?.[0];
   const navigate = useNavigate();
   const [description, setDescription] = useState("");
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (values) => {
-    setLoading(true); // Start loading
     values["companyName"] = profileData?.companyName ?? "";
     if (!values["companyName"]) {
       message.open({
@@ -34,6 +33,8 @@ const AddJob = () => {
       });
       return;
     }
+    setLoading(true); // Start loading
+
     try {
       // Create job object
       const jobData = {

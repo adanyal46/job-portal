@@ -106,9 +106,32 @@
   color: whitesmoke;
 }
 
-.fw-400{
+.fw-400 {
   font-weight: 400 !important;
 }
 .color-neutral {
-  color: #52595C !important;
+  color: #52595c !important;
+}
+.admin-menu {
+  padding: 10px;
+}
+
+.admin-menu .ant-menu-item-selected {
+  background: linear-gradient(
+    287.99deg,
+    #001f3f -20.42%,
+    #009dd1 62.87%
+  ) !important;
+  color: white !important;
+}
+
+.admin-menu .ant-menu-item-active:hover {
+  color: white !important;
+}
+.admin-menu .ant-menu-submenu-selected > .ant-menu-submenu-title {
+  color: white !important;
+}
+
+.admin-sidebar {
+  border-radius: 4px 12px 12px 4px;
 }

@@ -2780,7 +2780,7 @@ export function EmptyStateRecruiter(props) {
         fill="#2F2C39"
       />
     </svg>
-  )
+  );
 }
 
 export function SubscriptionDashboardIcon(props) {
@@ -2808,7 +2808,7 @@ export function SubscriptionDashboardIcon(props) {
         </clipPath>
       </defs>
     </svg>
-  )
+  );
 }
 export function CheckIconSvg(props) {
   return (
@@ -2835,5 +2835,147 @@ export function CheckIconSvg(props) {
         </clipPath>
       </defs>
     </svg>
-  )
+  );
+}
+
+export function AdminDashboardIcon(props) {
+  return (
+    <svg
+      width={24}
+      height={24}
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <g
+        clipPath="url(#clip0_6309_35813)"
+        stroke="#fff"
+        strokeWidth={1.5}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <path d="M20.25 4.5H3.75a.75.75 0 00-.75.75V16.5c0 .414.336.75.75.75h16.5a.75.75 0 00.75-.75V5.25a.75.75 0 00-.75-.75zM15 17.25L18 21M9 17.25L6 21M9 11.25v2.25M12 9.75v3.75M15 8.25v5.25M12 4.5V2.25" />
+      </g>
+      <defs>
+        <clipPath id="clip0_6309_35813">
+          <path fill="#fff" d="M0 0H24V24H0z" />
+        </clipPath>
+      </defs>
+    </svg>
+  );
+}
+
+export function AdminUserMangIcon(props) {
+  return (
+    <svg
+      width={24}
+      height={24}
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <g
+        clipPath="url(#clip0_6309_35827)"
+        stroke="#fff"
+        strokeWidth={1.5}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <path d="M18.75 6.75a1.5 1.5 0 100-3 1.5 1.5 0 000 3zM18.75 3.75V2.625M17.45 4.5l-.973-.563M17.45 6l-.973.563M18.75 6.75v1.125M20.05 6l.975.563M20.05 4.5l.975-.563M12 15a3.75 3.75 0 100-7.5 3.75 3.75 0 000 7.5zM5.984 18.69a6.75 6.75 0 0112.038 0M20.876 10.5A8.993 8.993 0 1113.5 3.125" />
+      </g>
+      <defs>
+        <clipPath id="clip0_6309_35827">
+          <path fill="#fff" d="M0 0H24V24H0z" />
+        </clipPath>
+      </defs>
+    </svg>
+  );
+}
+
+export function AdminListIcon(props) {
+  return (
+    <svg
+      width={32}
+      height={32}
+      viewBox="0 0 32 32"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <g
+        clipPath="url(#clip0_6309_36028)"
+        stroke="#fff"
+        strokeWidth={2}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <path d="M5 16h22M5 8h22M5 24h22" />
+      </g>
+      <defs>
+        <clipPath id="clip0_6309_36028">
+          <path fill="#fff" d="M0 0H32V32H0z" />
+        </clipPath>
+      </defs>
+    </svg>
+  );
+}
+
+export function AdminTimesheetIcon(props) {
+  return (
+    <svg
+      width={24}
+      height={24}
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <g
+        clipPath="url(#clip0_6309_35866)"
+        stroke="#fff"
+        strokeWidth={1.5}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <path d="M16.5 9.75L12 12V6.75M12 21a9 9 0 119-9" />
+        <path d="M18 18.75a2.25 2.25 0 100-4.5 2.25 2.25 0 000 4.5zM15 21c.344-1.294 1.556-2.25 3-2.25s2.656.956 3 2.25" />
+      </g>
+      <defs>
+        <clipPath id="clip0_6309_35866">
+          <path fill="#fff" d="M0 0H24V24H0z" />
+        </clipPath>
+      </defs>
+    </svg>
+  );
+}
+
+export function AdminRequestIcon(props) {
+  return (
+    <svg
+      width={24}
+      height={24}
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <g
+        clipPath="url(#clip0_6309_35877)"
+        stroke="#fff"
+        strokeWidth={1.5}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <path d="M9 14.25h6M9 11.25h6M15 3.75h3.75a.75.75 0 01.75.75v15.75a.75.75 0 01-.75.75H5.25a.75.75 0 01-.75-.75V4.5a.75.75 0 01.75-.75H9" />
+        <path d="M8.25 6.75V6a3.75 3.75 0 017.5 0v.75h-7.5z" />
+      </g>
+      <defs>
+        <clipPath id="clip0_6309_35877">
+          <path fill="#fff" d="M0 0H24V24H0z" />
+        </clipPath>
+      </defs>
+    </svg>
+  );
 }

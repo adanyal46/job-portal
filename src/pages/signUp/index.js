@@ -1,12 +1,12 @@
-// src/components/Register.js
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { clearMessage, register } from "../../features/auth/authSlice";
-import { Form, Input, Button, Typography, message, Card, Flex } from "antd";
+import { Form, Input, Button, Typography, message, Card, Select } from "antd";
 import { useNavigate } from "react-router-dom";
 import Loader from "../../components/Loader";
 
 const { Title } = Typography;
+const { Option } = Select;
 
 const RegisterForm = () => {
   const dispatch = useDispatch();
@@ -14,7 +14,16 @@ const RegisterForm = () => {
   const { loading, error } = useSelector((state) => state.auth);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [role, setRole] = useState("JOB_SEEKER");
   const [isLoading, setIsLoading] = useState(false);
+
+  const roles = [
+    "JOB_SEEKER",
+    "MENTOR",
+    "RECRUITER",
+    "EMPLOYER",
+    "STAFF_MEMBER",
+  ];
 
   useEffect(() => {
     if (error) {
@@ -35,7 +44,7 @@ const RegisterForm = () => {
         register({
           email: values.email,
           password: values.password,
-          role: "JOB_SEEKER",
+          role,
         })
       ).unwrap();
 
@@ -97,6 +106,24 @@ const RegisterForm = () => {
             />
           </Form.Item>
 
+          <Form.Item
+            label="Role"
+            name="role"
+            rules={[{ required: true, message: "Please select your role!" }]}
+          >
+            <Select
+              value={role}
+              onChange={(value) => setRole(value)}
+              placeholder="Select a role"
+            >
+              {roles.map((role) => (
+                <Option key={role} value={role}>
+                  {role.replace("_", " ")}
+                </Option>
+              ))}
+            </Select>
+          </Form.Item>
+
           <Form.Item>
             <Button
               type="primary"
@@ -108,12 +135,12 @@ const RegisterForm = () => {
             </Button>
           </Form.Item>
 
-          <Flex justify="center" gap={"small"}>
+          <div style={{ textAlign: "center" }}>
             <Typography.Text style={{ fontSize: "16px" }}>
-              Already account?{" "}
+              Already have an account?{" "}
             </Typography.Text>
             <Typography.Link href="/login">Login</Typography.Link>
-          </Flex>
+          </div>
         </Form>
       </Card>
     </div>

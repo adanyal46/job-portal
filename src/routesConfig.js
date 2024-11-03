@@ -16,6 +16,7 @@ import RecruiterNotificationDetail from "./pages/recruiterNotification/Recruiter
 import AddJob from "./pages/employerDashboard/AddJob";
 import JobRequest from "./pages/employerDashboard/JobRequest";
 import JobSeekerDetail from "./pages/jobSeekerRecruiter/JobSeekerDetail";
+import AdminLayout from "./components/ADMIN/AdminLayout";
 
 // Lazy loaded components
 const MyProfile = lazy(() => import("./pages/myProfile"));
@@ -68,6 +69,11 @@ const routeConfig = (token) => {
       {
         path: "/signup",
         element: <SignUp />,
+        errorElement: <ErrorPage />,
+      },
+      {
+        path: "/admin",
+        element: <AdminLayout />,
         errorElement: <ErrorPage />,
       },
     ];
@@ -399,6 +405,56 @@ const routeConfig = (token) => {
         {
           path: "subscriptions",
           element: <EmployerSubscription />,
+          errorElement: <ErrorPage />,
+        },
+        {
+          path: "jobs",
+          element: <EmployerJobs />,
+          errorElement: <ErrorPage />,
+        },
+        {
+          path: "hired-recruiter",
+          element: <EmployerHiredRecruiter />,
+          errorElement: <ErrorPage />,
+        },
+        {
+          path: "staffs",
+          element: <EmployerStaffs />,
+          errorElement: <ErrorPage />,
+        },
+        {
+          path: "talent",
+          element: <EmployerTalent />,
+          errorElement: <ErrorPage />,
+        },
+        {
+          path: "recruiter",
+          element: <EmployerRecruiter />,
+          errorElement: <ErrorPage />,
+        },
+        {
+          path: "job-detail/:id",
+          element: <JobDetail />,
+          errorElement: <ErrorPage />,
+        },
+        {
+          path: "add-job",
+          element: <AddJob />,
+          errorElement: <ErrorPage />,
+        },
+        {
+          path: "edit-job/:id",
+          element: <EditJob />,
+          errorElement: <ErrorPage />,
+        },
+        {
+          path: "job-applicants/:id",
+          element: <ViewJobApplicantList />,
+          errorElement: <ErrorPage />,
+        },
+        {
+          path: "view-timesheet-recruiter/:id",
+          element: <ViewTimeSheetRecruiter />,
           errorElement: <ErrorPage />,
         },
       ],
