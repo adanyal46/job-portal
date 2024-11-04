@@ -18,6 +18,11 @@ import JobRequest from "./pages/employerDashboard/JobRequest";
 import JobSeekerDetail from "./pages/jobSeekerRecruiter/JobSeekerDetail";
 import AdminLayout from "./components/ADMIN/AdminLayout";
 import AdminDashboard from "./components/ADMIN/AdminDashboard";
+import AdminEmployer from "./components/ADMIN/AdminEmployer";
+import AdminRecruiters from "./components/ADMIN/AdminRecruiters";
+import AdminMentors from "./components/ADMIN/AdminMentors";
+import AdminJobSeeker from "./components/ADMIN/AdminJobSeekers";
+import AdminStaffs from "./components/ADMIN/AdminStaffs";
 
 // Lazy loaded components
 const MyProfile = lazy(() => import("./pages/myProfile"));
@@ -80,6 +85,31 @@ const routeConfig = (token) => {
           {
             path: "dashboard",
             element: <AdminDashboard />,
+            errorElement: <ErrorPage />,
+          },
+          {
+            path: "employers",
+            element: <AdminEmployer />,
+            errorElement: <ErrorPage />,
+          },
+          {
+            path: "recruiters",
+            element: <AdminRecruiters />,
+            errorElement: <ErrorPage />,
+          },
+          {
+            path: "mentors",
+            element: <AdminMentors />,
+            errorElement: <ErrorPage />,
+          },
+          {
+            path: "job-seekers",
+            element: <AdminJobSeeker />,
+            errorElement: <ErrorPage />,
+          },
+          {
+            path: "staffs",
+            element: <AdminStaffs />,
             errorElement: <ErrorPage />,
           },
         ],

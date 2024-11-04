@@ -1,0 +1,50 @@
+.download-buttons-wrapper {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1.6rem;
+    padding: 0 1.6rem;
+    margin-bottom: 1.6rem;
+
+    .ant-btn.custom-button {
+      &.download-button {
+        width: max-content;
+        height: 4rem;
+        border-radius: 0.8rem;
+        background: #e9f0f3;
+        padding: 0 2rem;
+
+        .button-title {
+          display: flex;
+          align-items: center;
+          gap: 0.4rem;
+
+          .title {
+            color: #2f2c39;
+            font-weight: 500;
+          }
+        }
+      }
+    }
+  }
+
+
+  .custom-table .ant-table-thead > tr > th {
+    background-color: #ffffff;
+    border-bottom: 1px solid #f0f0f0;
+    color: #393740 !important;
+    font-weight: 400;
+  }
+  
+  .custom-table .ant-table {
+    background-color: #ffffff;
+    margin-top: 30px;
+  }
+  
+  .custom-table .ant-table-container {
+    background-color: #ffffff;
+  }
+  
+  .custom-table .ant-table-tbody > tr > td {
+    color: #2F2C39;
+  }
+  

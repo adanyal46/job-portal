@@ -3440,3 +3440,90 @@ export function AdminDashboardEducationIcon(props) {
     </svg>
   );
 }
+
+export function AdminSearchIcon(props) {
+  return (
+    <svg
+      width={20}
+      height={20}
+      viewBox="0 0 20 20"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <circle
+        cx={8.33333}
+        cy={8.33333}
+        r={5.83333}
+        stroke="#52595C"
+        strokeWidth={1.5}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M17.5 17.5l-5-5"
+        stroke="#52595C"
+        strokeWidth={1.5}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+export function AdminBookingIcon(props) {
+  return (
+    <svg
+      width={25}
+      height={24}
+      viewBox="0 0 25 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <g
+        clipPath="url(#clip0_3712_241738)"
+        stroke="#2F2C39"
+        strokeWidth={1.5}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <path d="M19.563 3.75h-15a.75.75 0 00-.75.75v15c0 .414.335.75.75.75h15a.75.75 0 00.75-.75v-15a.75.75 0 00-.75-.75zM16.563 2.25v3M7.563 2.25v3M3.813 8.25h16.5" />
+        <path d="M8.688 14.25l2.25 2.25 4.5-4.5" />
+      </g>
+      <defs>
+        <clipPath id="clip0_3712_241738">
+          <path fill="#fff" transform="translate(.063)" d="M0 0H24V24H0z" />
+        </clipPath>
+      </defs>
+    </svg>
+  );
+}
+
+export function AdminNotepadIcon(props) {
+  return (
+    <svg
+      width={25}
+      height={24}
+      viewBox="0 0 25 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <g
+        clipPath="url(#clip0_3712_241746)"
+        stroke="#2F2C39"
+        strokeWidth={1.5}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <path d="M9.438 12h6M9.438 15h6M4.938 3.75h15v15a2.25 2.25 0 01-2.25 2.25h-10.5a2.25 2.25 0 01-2.25-2.25v-15zM7.938 2.25v3M12.438 2.25v3M16.938 2.25v3" />
+      </g>
+      <defs>
+        <clipPath id="clip0_3712_241746">
+          <path fill="#fff" transform="translate(.438)" d="M0 0H24V24H0z" />
+        </clipPath>
+      </defs>
+    </svg>
+  );
+}
