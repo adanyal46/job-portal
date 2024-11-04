@@ -2979,3 +2979,464 @@ export function AdminRequestIcon(props) {
     </svg>
   );
 }
+
+export function AdminDashboardEmployerIcon(props) {
+  return (
+    <svg
+      width={49}
+      height={49}
+      viewBox="0 0 49 49"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <rect
+        x={0.5}
+        y={0.5}
+        width={48}
+        height={48}
+        rx={24}
+        fill="#009DD1"
+        fillOpacity={0.16}
+      />
+      <g
+        clipPath="url(#clip0_3712_252185)"
+        strokeWidth={2}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <path
+          d="M24.5 29.5a4 4 0 100-8 4 4 0 000 8z"
+          stroke="url(#paint0_linear_3712_252185)"
+        />
+        <path
+          d="M18.5 32.5a7.5 7.5 0 0112 0"
+          stroke="url(#paint1_linear_3712_252185)"
+        />
+        <path
+          d="M34.5 35.5v-22a1 1 0 00-1-1h-18a1 1 0 00-1 1v22a1 1 0 001 1h18a1 1 0 001-1z"
+          stroke="url(#paint2_linear_3712_252185)"
+        />
+        <path d="M20.5 16.5h8" stroke="url(#paint3_linear_3712_252185)" />
+      </g>
+      <defs>
+        <linearGradient
+          id="paint0_linear_3712_252185"
+          x1={28.5}
+          y1={36.1667}
+          x2={16.4092}
+          y2={32.2411}
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop stopColor="#001F3F" />
+          <stop offset={0.660481} stopColor="#009DD1" />
+        </linearGradient>
+        <linearGradient
+          id="paint1_linear_3712_252185"
+          x1={30.5}
+          y1={35}
+          x2={23.0378}
+          y2={25.3089}
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop stopColor="#001F3F" />
+          <stop offset={0.660481} stopColor="#009DD1" />
+        </linearGradient>
+        <linearGradient
+          id="paint2_linear_3712_252185"
+          x1={-2.16667}
+          y1={36.5}
+          x2={11.3964}
+          y2={1.68823}
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop stopColor="#001F3F" />
+          <stop offset={0.660481} stopColor="#009DD1" />
+        </linearGradient>
+        <linearGradient
+          id="paint3_linear_3712_252185"
+          x1={28.5}
+          y1={18.3333}
+          x2={26.7747}
+          y2={13.8519}
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop stopColor="#001F3F" />
+          <stop offset={0.660481} stopColor="#009DD1" />
+        </linearGradient>
+        <clipPath id="clip0_3712_252185">
+          <path fill="#fff" transform="translate(8.5 8.5)" d="M0 0H32V32H0z" />
+        </clipPath>
+      </defs>
+    </svg>
+  );
+}
+
+export function AdminDashboardArrowRight(props) {
+  return (
+    <svg
+      width={25}
+      height={25}
+      viewBox="0 0 25 25"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <path
+        d="M9.5 6.5l6 6-6 6"
+        stroke="#6F6B7D"
+        strokeWidth={2}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+export function AdminDashboardDollarIcon(props) {
+  return (
+    <svg
+      width={49}
+      height={49}
+      viewBox="0 0 49 49"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <rect
+        x={0.5}
+        y={0.5}
+        width={48}
+        height={48}
+        rx={24}
+        fill="#009DD1"
+        fillOpacity={0.16}
+      />
+      <g
+        clipPath="url(#clip0_3712_252268)"
+        strokeWidth={2}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <path d="M24.5 17.5v2" stroke="url(#paint0_linear_3712_252268)" />
+        <path d="M24.5 29.5v2" stroke="url(#paint1_linear_3712_252268)" />
+        <path
+          d="M24.5 36.5c6.627 0 12-5.373 12-12s-5.373-12-12-12-12 5.373-12 12 5.373 12 12 12z"
+          stroke="url(#paint2_linear_3712_252268)"
+        />
+        <path
+          d="M21.5 29.5H26a2.5 2.5 0 000-5h-3a2.5 2.5 0 010-5h4.5"
+          stroke="url(#paint3_linear_3712_252268)"
+        />
+      </g>
+      <defs>
+        <linearGradient
+          id="paint0_linear_3712_252268"
+          x1={25.5}
+          y1={21.1667}
+          x2={23.8722}
+          y2={20.9024}
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop stopColor="#001F3F" />
+          <stop offset={0.660481} stopColor="#009DD1" />
+        </linearGradient>
+        <linearGradient
+          id="paint1_linear_3712_252268"
+          x1={25.5}
+          y1={33.1667}
+          x2={23.8722}
+          y2={32.9024}
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop stopColor="#001F3F" />
+          <stop offset={0.660481} stopColor="#009DD1" />
+        </linearGradient>
+        <linearGradient
+          id="paint2_linear_3712_252268"
+          x1={36.5}
+          y1={56.5}
+          x2={0.227557}
+          y2={44.7232}
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop stopColor="#001F3F" />
+          <stop offset={0.660481} stopColor="#009DD1" />
+        </linearGradient>
+        <linearGradient
+          id="paint3_linear_3712_252268"
+          x1={28.5}
+          y1={37.8333}
+          x2={15.9793}
+          y2={34.5812}
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop stopColor="#001F3F" />
+          <stop offset={0.660481} stopColor="#009DD1" />
+        </linearGradient>
+        <clipPath id="clip0_3712_252268">
+          <path fill="#fff" transform="translate(8.5 8.5)" d="M0 0H32V32H0z" />
+        </clipPath>
+      </defs>
+    </svg>
+  );
+}
+
+export function AdminDashboardUserIcon(props) {
+  return (
+    <svg
+      width={48}
+      height={49}
+      viewBox="0 0 48 49"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <rect
+        y={0.5}
+        width={48}
+        height={48}
+        rx={24}
+        fill="#009DD1"
+        fillOpacity={0.16}
+      />
+      <g
+        clipPath="url(#clip0_3712_252227)"
+        strokeWidth={2}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <path
+          d="M24 36.5c6.627 0 12-5.373 12-12s-5.373-12-12-12-12 5.373-12 12 5.373 12 12 12z"
+          stroke="url(#paint0_linear_3712_252227)"
+        />
+        <path
+          d="M24 28.5a5 5 0 100-10 5 5 0 000 10z"
+          stroke="url(#paint1_linear_3712_252227)"
+        />
+        <path
+          d="M15.977 33.422a8.999 8.999 0 0116.05 0"
+          stroke="url(#paint2_linear_3712_252227)"
+        />
+      </g>
+      <defs>
+        <linearGradient
+          id="paint0_linear_3712_252227"
+          x1={36}
+          y1={56.5}
+          x2={-0.272443}
+          y2={44.7232}
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop stopColor="#001F3F" />
+          <stop offset={0.660481} stopColor="#009DD1" />
+        </linearGradient>
+        <linearGradient
+          id="paint1_linear_3712_252227"
+          x1={29}
+          y1={36.8333}
+          x2={13.8865}
+          y2={31.9263}
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop stopColor="#001F3F" />
+          <stop offset={0.660481} stopColor="#009DD1" />
+        </linearGradient>
+        <linearGradient
+          id="paint2_linear_3712_252227"
+          x1={32.0266}
+          y1={37.5267}
+          x2={19.3735}
+          y2={24.1408}
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop stopColor="#001F3F" />
+          <stop offset={0.660481} stopColor="#009DD1" />
+        </linearGradient>
+        <clipPath id="clip0_3712_252227">
+          <path fill="#fff" transform="translate(8 8.5)" d="M0 0H32V32H0z" />
+        </clipPath>
+      </defs>
+    </svg>
+  );
+}
+
+export function AdminDashboardListIcon(props) {
+  return (
+    <svg
+      width={49}
+      height={49}
+      viewBox="0 0 49 49"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <rect
+        x={0.5}
+        y={0.5}
+        width={48}
+        height={48}
+        rx={24}
+        fill="#009DD1"
+        fillOpacity={0.16}
+      />
+      <g
+        clipPath="url(#clip0_3712_252212)"
+        strokeWidth={2}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <path d="M13.5 16.5h22" stroke="url(#paint0_linear_3712_252212)" />
+        <path d="M13.5 24.5h9" stroke="url(#paint1_linear_3712_252212)" />
+        <path d="M13.5 32.5h11" stroke="url(#paint2_linear_3712_252212)" />
+        <path
+          d="M31.5 30.5a4 4 0 100-8 4 4 0 000 8z"
+          stroke="url(#paint3_linear_3712_252212)"
+        />
+        <path
+          d="M34.328 29.328L37.5 32.5"
+          stroke="url(#paint4_linear_3712_252212)"
+        />
+      </g>
+      <defs>
+        <linearGradient
+          id="paint0_linear_3712_252212"
+          x1={35.5}
+          y1={18.3333}
+          x2={34.7935}
+          y2={13.2866}
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop stopColor="#001F3F" />
+          <stop offset={0.660481} stopColor="#009DD1" />
+        </linearGradient>
+        <linearGradient
+          id="paint1_linear_3712_252212"
+          x1={22.5}
+          y1={26.3333}
+          x2={20.9237}
+          y2={21.7271}
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop stopColor="#001F3F" />
+          <stop offset={0.660481} stopColor="#009DD1" />
+        </linearGradient>
+        <linearGradient
+          id="paint2_linear_3712_252212"
+          x1={24.5}
+          y1={34.3333}
+          x2={23.164}
+          y2={29.5618}
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop stopColor="#001F3F" />
+          <stop offset={0.660481} stopColor="#009DD1" />
+        </linearGradient>
+        <linearGradient
+          id="paint3_linear_3712_252212"
+          x1={35.5}
+          y1={37.1667}
+          x2={23.4092}
+          y2={33.2411}
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop stopColor="#001F3F" />
+          <stop offset={0.660481} stopColor="#009DD1" />
+        </linearGradient>
+        <linearGradient
+          id="paint4_linear_3712_252212"
+          x1={37.4994}
+          y1={35.1421}
+          x2={32.7065}
+          y2={33.586}
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop stopColor="#001F3F" />
+          <stop offset={0.660481} stopColor="#009DD1" />
+        </linearGradient>
+        <clipPath id="clip0_3712_252212">
+          <path fill="#fff" transform="translate(8.5 8.5)" d="M0 0H32V32H0z" />
+        </clipPath>
+      </defs>
+    </svg>
+  );
+}
+
+export function AdminDashboardEducationIcon(props) {
+  return (
+    <svg
+      width={48}
+      height={49}
+      viewBox="0 0 48 49"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <rect
+        y={0.5}
+        width={48}
+        height={48}
+        rx={24}
+        fill="#009DD1"
+        fillOpacity={0.16}
+      />
+      <g
+        clipPath="url(#clip0_3712_252199)"
+        strokeWidth={2}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <path
+          d="M9 20.5l15-8 15 8-15 8-15-8z"
+          stroke="url(#paint0_linear_3712_252199)"
+        />
+        <path
+          d="M24 20.5l7 3.734V38.5"
+          stroke="url(#paint1_linear_3712_252199)"
+        />
+        <path
+          d="M35 22.633v6.652a1 1 0 01-.25.664C33.337 31.523 29.887 34.5 24 34.5s-9.335-2.976-10.75-4.55a1 1 0 01-.25-.664v-6.652"
+          stroke="url(#paint2_linear_3712_252199)"
+        />
+      </g>
+      <defs>
+        <linearGradient
+          id="paint0_linear_3712_252199"
+          x1={39}
+          y1={41.8333}
+          x2={2.43191}
+          y2={19.5719}
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop stopColor="#001F3F" />
+          <stop offset={0.660481} stopColor="#009DD1" />
+        </linearGradient>
+        <linearGradient
+          id="paint1_linear_3712_252199"
+          x1={31}
+          y1={53.5}
+          x2={19.4888}
+          y2={52.0466}
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop stopColor="#001F3F" />
+          <stop offset={0.660481} stopColor="#009DD1" />
+        </linearGradient>
+        <linearGradient
+          id="paint2_linear_3712_252199"
+          x1={35}
+          y1={44.3876}
+          x2={8.02089}
+          y2={28.1476}
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop stopColor="#001F3F" />
+          <stop offset={0.660481} stopColor="#009DD1" />
+        </linearGradient>
+        <clipPath id="clip0_3712_252199">
+          <path fill="#fff" transform="translate(8 8.5)" d="M0 0H32V32H0z" />
+        </clipPath>
+      </defs>
+    </svg>
+  );
+}

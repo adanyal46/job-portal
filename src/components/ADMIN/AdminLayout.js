@@ -7,6 +7,7 @@ import {
   AdminTimesheetIcon,
   AdminUserMangIcon,
 } from "../../assets/svg";
+import { Outlet } from "react-router-dom";
 const { Content, Footer, Sider } = Layout;
 function getItem(label, key, icon, children) {
   return {
@@ -101,7 +102,7 @@ const AdminLayout = () => {
                     "linear-gradient(150.25deg, #EAEBEC -12.71%, #88B3C1 131.5%)",
                 }}
               >
-                Bill is a cat.
+                <Outlet />
               </div>
             </Content>
           </Layout>

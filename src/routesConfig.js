@@ -17,6 +17,7 @@ import AddJob from "./pages/employerDashboard/AddJob";
 import JobRequest from "./pages/employerDashboard/JobRequest";
 import JobSeekerDetail from "./pages/jobSeekerRecruiter/JobSeekerDetail";
 import AdminLayout from "./components/ADMIN/AdminLayout";
+import AdminDashboard from "./components/ADMIN/AdminDashboard";
 
 // Lazy loaded components
 const MyProfile = lazy(() => import("./pages/myProfile"));
@@ -75,6 +76,13 @@ const routeConfig = (token) => {
         path: "/admin",
         element: <AdminLayout />,
         errorElement: <ErrorPage />,
+        children: [
+          {
+            path: "dashboard",
+            element: <AdminDashboard />,
+            errorElement: <ErrorPage />,
+          },
+        ],
       },
     ];
   }
