@@ -23,6 +23,12 @@ import AdminRecruiters from "./components/ADMIN/AdminRecruiters";
 import AdminMentors from "./components/ADMIN/AdminMentors";
 import AdminJobSeeker from "./components/ADMIN/AdminJobSeekers";
 import AdminStaffs from "./components/ADMIN/AdminStaffs";
+import Industries from "./components/ADMIN/common-management/Industries";
+import MentorServices from "./components/ADMIN/common-management/MentorServices";
+import RecruiterServices from "./components/ADMIN/common-management/RecruiterServices";
+import Languages from "./components/ADMIN/common-management/Languages";
+import Skills from "./components/ADMIN/common-management/Skills";
+import MentorProfileApprovalRequests from "./components/ADMIN/requests/MentorProfileApprovalRequests";
 
 // Lazy loaded components
 const MyProfile = lazy(() => import("./pages/myProfile"));
@@ -110,6 +116,36 @@ const routeConfig = (token) => {
           {
             path: "staffs",
             element: <AdminStaffs />,
+            errorElement: <ErrorPage />,
+          },
+          {
+            path: "industries",
+            element: <Industries />,
+            errorElement: <ErrorPage />,
+          },
+          {
+            path: "mentor-services",
+            element: <MentorServices />,
+            errorElement: <ErrorPage />,
+          },
+          {
+            path: "recruiter-services",
+            element: <RecruiterServices />,
+            errorElement: <ErrorPage />,
+          },
+          {
+            path: "languages",
+            element: <Languages />,
+            errorElement: <ErrorPage />,
+          },
+          {
+            path: "skills",
+            element: <Skills />,
+            errorElement: <ErrorPage />,
+          },
+          {
+            path: "mentor-profile-approval-requests",
+            element: <MentorProfileApprovalRequests />,
             errorElement: <ErrorPage />,
           },
         ],

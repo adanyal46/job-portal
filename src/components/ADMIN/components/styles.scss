@@ -1,0 +1,16 @@
+.custom-tag {
+    display: inline-block;
+    max-width: 150px;
+    width: 100%;
+    text-align: center;
+    padding: 5px 10px;
+    border-radius: 3px;
+    color: white;
+    cursor: pointer;
+    margin-right: 5px;
+    transition: background-color 0.3s;
+
+    &:hover {
+        opacity: 0.8; // Optional hover effect
+    }
+}
