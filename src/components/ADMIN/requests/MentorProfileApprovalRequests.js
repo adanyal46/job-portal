@@ -161,6 +161,9 @@ const MentorProfileApprovalRequests = () => {
           columns={columns}
           dataSource={paginatedData}
           pagination={false}
+          scroll={{
+            x: 200,
+          }}
           className="custom-table"
         />
         <CustomPagination

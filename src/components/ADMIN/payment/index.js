@@ -226,6 +226,9 @@ const PaymentList = () => {
           bordered={false}
           pagination={false}
           className="custom-table"
+          scroll={{
+            x: 200,
+          }}
           rowKey="id"
         />
         <CustomPagination

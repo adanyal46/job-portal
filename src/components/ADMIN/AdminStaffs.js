@@ -10,6 +10,7 @@ import "./admin-employer-styles.scss";
 import CustomPagination from "../customPagination";
 import { useState } from "react";
 import DownloadButton from "./components/DownloadBtn";
+
 const TEXT_COLOR = {
   color: "#0C0C0C",
 };
@@ -165,6 +166,9 @@ const AdminStaffs = () => {
           pagination={false}
           className="custom-table"
           rowKey="id"
+          scroll={{
+            x: 200,
+          }}
         />
         <CustomPagination
           total={data.length}

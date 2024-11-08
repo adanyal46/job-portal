@@ -1,4 +1,4 @@
-import { Card, Flex, Input, Select, Table, Typography } from "antd";
+import { Card, Dropdown, Flex, Input, Select, Table, Typography } from "antd";
 import {
   AdminBookingIcon,
   AdminSearchIcon,
@@ -9,6 +9,7 @@ import "./admin-employer-styles.scss";
 import CustomPagination from "../customPagination";
 import { useState } from "react";
 import DownloadButton from "./components/DownloadBtn";
+import { Link } from "react-router-dom";
 const TEXT_COLOR = {
   color: "#0C0C0C",
 };
@@ -28,7 +29,32 @@ const columns = [
   {
     title: "Actions",
     key: "actions",
-    render: () => <MenuEmployerProfileIcon />,
+    render: () => (
+      <Dropdown
+        menu={{
+          items: [
+            {
+              label: <Link to={"/admin/user/bookings"}> View Details</Link>,
+              key: "0",
+            },
+            {
+              label: "Edit ",
+              key: "1",
+            },
+            {
+              type: "divider",
+            },
+            {
+              label: "Delete",
+              key: "3",
+            },
+          ],
+        }}
+        trigger={["click"]}
+      >
+        <MenuEmployerProfileIcon />
+      </Dropdown>
+    ),
   },
 ];
 
@@ -200,6 +226,9 @@ const AdminMentors = () => {
           bordered={false}
           pagination={false}
           className="custom-table"
+          scroll={{
+            x: 200,
+          }}
           rowKey="id"
         />
         <CustomPagination

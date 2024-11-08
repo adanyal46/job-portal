@@ -365,6 +365,9 @@ const TimesheetManagement = () => {
             <Table
               columns={columns}
               dataSource={paginatedData}
+              scroll={{
+                x: 200,
+              }}
               bordered={false}
               pagination={false}
               className="custom-table"

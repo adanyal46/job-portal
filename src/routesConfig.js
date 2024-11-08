@@ -40,6 +40,7 @@ import About from "./components/ADMIN/general-management/About";
 import TermCondition from "./components/ADMIN/general-management/TermCondition";
 import PaymentList from "./components/ADMIN/payment";
 import BlogAdmin from "./components/ADMIN/blogs";
+import AdminBookings from "./components/ADMIN/AdminBookings";
 
 // Lazy loaded components
 const MyProfile = lazy(() => import("./pages/myProfile"));
@@ -127,6 +128,11 @@ const routeConfig = (token) => {
           {
             path: "user/staffs",
             element: <AdminStaffs />,
+            errorElement: <ErrorPage />,
+          },
+          {
+            path: "user/bookings",
+            element: <AdminBookings />,
             errorElement: <ErrorPage />,
           },
           {

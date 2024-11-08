@@ -29,7 +29,7 @@ const About = () => {
               value={description}
               onChange={setDescription}
               theme="snow"
-              style={{ height: "calc(100vh - 350px)", marginBottom: "20px" }}
+              style={{ height: "calc(100vh - 320px)", marginBottom: "20px" }}
             />
           </Form.Item>
           <Flex justify="end" style={{ paddingTop: "20px" }}>

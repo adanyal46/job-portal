@@ -182,6 +182,9 @@ const RecruiterProfileApprovalRequests = () => {
           dataSource={paginatedData}
           pagination={false}
           className="custom-table"
+          scroll={{
+            x: 200,
+          }}
         />
         <CustomPagination
           total={data.length}
