@@ -12,7 +12,12 @@ import { useDispatch } from "react-redux";
 import { profileLocation } from "../../features/profile/profileSlice";
 import { message } from "antd";
 
-const Location = ({ showLocationModal, setShowLocationModal, location }) => {
+const Location = ({
+  showLocationModal,
+  setShowLocationModal,
+  location,
+  btnShow = true,
+}) => {
   const dispatch = useDispatch();
   const [locationData, setLocationData] = useState({
     city: (location && location[0]?.city) || "",
@@ -75,12 +80,14 @@ const Location = ({ showLocationModal, setShowLocationModal, location }) => {
         ))}
       </section>
 
-      <CustomButton
-        category="additional"
-        name="Add"
-        icon={<AddCircleIcon />}
-        handleClick={handleShowLocationModal}
-      />
+      {btnShow && (
+        <CustomButton
+          category="additional"
+          name="Add"
+          icon={<AddCircleIcon />}
+          handleClick={handleShowLocationModal}
+        />
+      )}
 
       {showLocationModal && (
         <CommonModal

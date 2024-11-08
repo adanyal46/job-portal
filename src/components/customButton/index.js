@@ -68,6 +68,7 @@ const CustomButton = (props) => {
           }`}
           disabled={disabled}
           onClick={onClick}
+          style={style}
         >
           <section className="additional-button-title">
             {icon}
@@ -81,6 +82,7 @@ const CustomButton = (props) => {
           className={`custom-iconed-button ${classes}`}
           shape={shape}
           icon={icon}
+          style={style}
           onClick={onClick}
           disabled={disabled}
         />

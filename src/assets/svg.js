@@ -3527,3 +3527,175 @@ export function AdminNotepadIcon(props) {
     </svg>
   );
 }
+
+export function LinkedinIcon(props) {
+  return (
+    <svg
+      width={24}
+      height={24}
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <g clipPath="url(#clip0_3712_254835)">
+        <path
+          d="M21.75.563H2.25a1.67 1.67 0 00-1.688 1.65V21.79a1.67 1.67 0 001.688 1.647h19.5a1.674 1.674 0 001.688-1.652V2.207A1.674 1.674 0 0021.75.563z"
+          fill="#0076B2"
+        />
+        <path
+          d="M3.95 9.137h3.395v10.925H3.95V9.137zm1.698-5.438a1.969 1.969 0 110 3.938 1.969 1.969 0 010-3.938zm3.827 5.438h3.255v1.5h.045c.454-.859 1.56-1.765 3.212-1.765 3.439-.007 4.076 2.256 4.076 5.19v6h-3.395v-5.315c0-1.266-.023-2.895-1.765-2.895-1.741 0-2.038 1.38-2.038 2.812v5.398h-3.39V9.137z"
+          fill="#fff"
+        />
+      </g>
+      <defs>
+        <clipPath id="clip0_3712_254835">
+          <path fill="#fff" d="M0 0H24V24H0z" />
+        </clipPath>
+      </defs>
+    </svg>
+  );
+}
+
+export function AdminGeneralManagementIcon(props) {
+  return (
+    <svg
+      width={24}
+      height={24}
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <g
+        clipPath="url(#clip0_3712_245577)"
+        stroke="#fff"
+        strokeWidth={1.5}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <path d="M18.75 16.5V6a2.25 2.25 0 00-2.25-2.25H3.75M9.75 9.75h6M9.75 12.75h6" />
+        <path d="M2.25 7.5S1.5 6.937 1.5 6A2.25 2.25 0 116 6v12a2.25 2.25 0 002.25 2.25m0 0A2.25 2.25 0 0010.5 18c0-.938-.75-1.5-.75-1.5h10.5s.75.563.75 1.5a2.25 2.25 0 01-2.25 2.25H8.25z" />
+      </g>
+      <defs>
+        <clipPath id="clip0_3712_245577">
+          <path fill="#fff" d="M0 0H24V24H0z" />
+        </clipPath>
+      </defs>
+    </svg>
+  );
+}
+
+export function AdminCommonManagementIcon(props) {
+  return (
+    <svg
+      width={24}
+      height={24}
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <g
+        clipPath="url(#clip0_3712_245546)"
+        stroke="#fff"
+        strokeWidth={1.5}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <path d="M19.5 12h-15a.75.75 0 00-.75.75V15c0 .414.336.75.75.75h15a.75.75 0 00.75-.75v-2.25a.75.75 0 00-.75-.75zM19.5 4.5h-15a.75.75 0 00-.75.75V7.5c0 .414.336.75.75.75h15a.75.75 0 00.75-.75V5.25a.75.75 0 00-.75-.75zM9.75 20.5h4.5M12 18v4.5" />
+      </g>
+      <defs>
+        <clipPath id="clip0_3712_245546">
+          <path fill="#fff" d="M0 0H24V24H0z" />
+        </clipPath>
+      </defs>
+    </svg>
+  );
+}
+
+export function AdminPageIcon(props) {
+  return (
+    <svg
+      width={24}
+      height={24}
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <g
+        clipPath="url(#clip0_3712_245522)"
+        stroke="#fff"
+        strokeWidth={1.5}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <path d="M9 9h6M9 12h6M9 15h3M14.69 20.25H4.5a.75.75 0 01-.75-.75v-15a.75.75 0 01.75-.75h15a.75.75 0 01.75.75v10.19a.75.75 0 01-.22.53l-4.81 4.81a.75.75 0 01-.53.22z" />
+        <path d="M20.183 15H15v5.183" />
+      </g>
+      <defs>
+        <clipPath id="clip0_3712_245522">
+          <path fill="#fff" d="M0 0H24V24H0z" />
+        </clipPath>
+      </defs>
+    </svg>
+  );
+}
+
+export function AdminPaymentIcon(props) {
+  return (
+    <svg
+      width={24}
+      height={24}
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <g
+        clipPath="url(#clip0_3712_245612)"
+        stroke="#fff"
+        strokeWidth={1.5}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <path d="M12 15a3 3 0 100-6 3 3 0 000 6z" />
+        <path d="M22.5 6h-21v12h21V6zM22.5 9.75A4.58 4.58 0 0118.75 6M18.75 18a4.58 4.58 0 013.75-3.75M1.5 14.25A4.58 4.58 0 015.25 18M5.25 6A4.58 4.58 0 011.5 9.75" />
+      </g>
+      <defs>
+        <clipPath id="clip0_3712_245612">
+          <path fill="#fff" d="M0 0H24V24H0z" />
+        </clipPath>
+      </defs>
+    </svg>
+  );
+}
+
+export function AdminBlogIcon(props) {
+  return (
+    <svg
+      width={24}
+      height={24}
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <g
+        clipPath="url(#clip0_3712_245600)"
+        stroke="#fff"
+        strokeWidth={1.5}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <path d="M19.5 9h-15a.75.75 0 00-.75.75v9c0 .414.336.75.75.75h15a.75.75 0 00.75-.75v-9A.75.75 0 0019.5 9zM5.25 6h13.5M6.75 3h10.5" />
+      </g>
+      <defs>
+        <clipPath id="clip0_3712_245600">
+          <path fill="#fff" d="M0 0H24V24H0z" />
+        </clipPath>
+      </defs>
+    </svg>
+  );
+}

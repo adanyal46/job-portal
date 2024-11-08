@@ -4,6 +4,7 @@ import { AdminSearchIcon } from "../../../assets/svg";
 import CustomPagination from "../../customPagination";
 import "../admin-employer-styles.scss";
 import CustomTag from "../components/CustomTag";
+import { Link } from "react-router-dom";
 
 const TEXT_COLOR = {
   color: "#0C0C0C",
@@ -95,9 +96,11 @@ const columns = [
     width: 500,
 
     render: (text, record) => (
-      <Button style={{ width: "200px" }} size="large">
-        View Profile
-      </Button>
+      <Link to={"/admin/mentor-profile/" + record.id}>
+        <Button style={{ width: "200px" }} size="large">
+          View Profile
+        </Button>
+      </Link>
     ),
   },
 ];
@@ -138,7 +141,7 @@ const MentorProfileApprovalRequests = () => {
   return (
     <div>
       <Typography.Title level={3} className="fw-400" style={TEXT_COLOR}>
-        Languages
+        Mentor Profile Approval Requests
       </Typography.Title>
       <Card style={{ boxShadow: "0px 2px 4px 0px #A5A3AE4D" }}>
         <Flex gap={10} wrap="wrap" justify="space-between" align="center">

@@ -161,9 +161,9 @@ const MentorProfileHeader = ({ user, showInfoModal, setShowInfoModal }) => {
 
               <section className="field-container">
                 <span className="label">Contact Number</span>
-                <InputNumber
+                <CommonInput
                   className="w-100"
-                  maxLength={10}
+                  // maxLength={10}
                   placeholder="Enter Contact Number"
                   value={profileData.phnumber}
                   onChange={(val) => handleChange("phnumber", val)}

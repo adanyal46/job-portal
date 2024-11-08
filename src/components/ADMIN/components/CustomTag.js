@@ -6,11 +6,28 @@ const CustomTag = ({ label, color, onClick }) => {
     <span
       className="custom-tag"
       style={{
-        backgroundColor: color,
+        backgroundColor:
+          label === "Approved" ||
+          label === "Paid" ||
+          label === "Session" ||
+          label === "Resume Search" ||
+          label === "Premium" ||
+          label === "Job Postings"
+            ? "#DAF9E8"
+            : label === "Disapproved" || label === "Unpaid"
+            ? "#F8EEED"
+            : label === "Pending"
+            ? "#FAF4EE"
+            : color,
         color:
-          label === "Approved"
+          label === "Approved" ||
+          label === "Paid" ||
+          label === "Session" ||
+          label === "Resume Search" ||
+          label === "Premium" ||
+          label === "Job Postings"
             ? "#1BBB62"
-            : label === "Disapproved"
+            : label === "Disapproved" || label === "Unpaid"
             ? "#E8381A"
             : "#F9912E",
       }}

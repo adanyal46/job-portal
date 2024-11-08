@@ -29,6 +29,17 @@ import RecruiterServices from "./components/ADMIN/common-management/RecruiterSer
 import Languages from "./components/ADMIN/common-management/Languages";
 import Skills from "./components/ADMIN/common-management/Skills";
 import MentorProfileApprovalRequests from "./components/ADMIN/requests/MentorProfileApprovalRequests";
+import RecruiterProfileApprovalRequests from "./components/ADMIN/requests/RecruiterProfileApprovalRequests";
+import AdminRecruiterProfile from "./components/ADMIN/profile/AdminRecruiterProfile";
+import AdminMentorProfile from "./components/ADMIN/profile/AdminMentorProfile";
+import TimesheetManagement from "./components/ADMIN/timsheet-management";
+import Setting from "./components/ADMIN/setting";
+import Pages from "./components/ADMIN/pages";
+import PrivacyPolicy from "./components/ADMIN/general-management/PrivacyPolicy";
+import About from "./components/ADMIN/general-management/About";
+import TermCondition from "./components/ADMIN/general-management/TermCondition";
+import PaymentList from "./components/ADMIN/payment";
+import BlogAdmin from "./components/ADMIN/blogs";
 
 // Lazy loaded components
 const MyProfile = lazy(() => import("./pages/myProfile"));
@@ -94,27 +105,27 @@ const routeConfig = (token) => {
             errorElement: <ErrorPage />,
           },
           {
-            path: "employers",
+            path: "user/employers",
             element: <AdminEmployer />,
             errorElement: <ErrorPage />,
           },
           {
-            path: "recruiters",
+            path: "user/recruiters",
             element: <AdminRecruiters />,
             errorElement: <ErrorPage />,
           },
           {
-            path: "mentors",
+            path: "user/mentors",
             element: <AdminMentors />,
             errorElement: <ErrorPage />,
           },
           {
-            path: "job-seekers",
+            path: "user/job-seekers",
             element: <AdminJobSeeker />,
             errorElement: <ErrorPage />,
           },
           {
-            path: "staffs",
+            path: "user/staffs",
             element: <AdminStaffs />,
             errorElement: <ErrorPage />,
           },
@@ -146,6 +157,61 @@ const routeConfig = (token) => {
           {
             path: "mentor-profile-approval-requests",
             element: <MentorProfileApprovalRequests />,
+            errorElement: <ErrorPage />,
+          },
+          {
+            path: "recruiter-profile-approval-requests",
+            element: <RecruiterProfileApprovalRequests />,
+            errorElement: <ErrorPage />,
+          },
+          {
+            path: "recruiter-profile/:id",
+            element: <AdminRecruiterProfile />,
+            errorElement: <ErrorPage />,
+          },
+          {
+            path: "mentor-profile/:id",
+            element: <AdminMentorProfile />,
+            errorElement: <ErrorPage />,
+          },
+          {
+            path: "payments",
+            element: <PaymentList />,
+            errorElement: <ErrorPage />,
+          },
+          {
+            path: "blogs",
+            element: <BlogAdmin />,
+            errorElement: <ErrorPage />,
+          },
+          {
+            path: "timesheet-management",
+            element: <TimesheetManagement />,
+            errorElement: <ErrorPage />,
+          },
+          {
+            path: "about",
+            element: <About />,
+            errorElement: <ErrorPage />,
+          },
+          {
+            path: "term-condition",
+            element: <TermCondition />,
+            errorElement: <ErrorPage />,
+          },
+          {
+            path: "privacy-policy",
+            element: <PrivacyPolicy />,
+            errorElement: <ErrorPage />,
+          },
+          {
+            path: "pages",
+            element: <Pages />,
+            errorElement: <ErrorPage />,
+          },
+          {
+            path: "settings",
+            element: <Setting />,
             errorElement: <ErrorPage />,
           },
         ],
@@ -473,7 +539,7 @@ const routeConfig = (token) => {
         },
         {
           path: "settings",
-          element: <EmployerSetting />,
+          element: <Settings />,
           errorElement: <ErrorPage />,
         },
         {
