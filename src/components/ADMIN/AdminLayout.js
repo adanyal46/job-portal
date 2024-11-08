@@ -149,7 +149,8 @@ const AdminLayout = () => {
               <div
                 style={{
                   padding: 24,
-
+                  minHeight: "calc(100vh - 50px)",
+                  height: "100%",
                   background:
                     "linear-gradient(150.25deg, #EAEBEC -12.71%, #88B3C1 131.5%)",
                 }}
