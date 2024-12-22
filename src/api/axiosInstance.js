@@ -3,11 +3,11 @@ import axios from "axios";
 
 const isDevelopment = process.env.NODE_ENV === "development";
 
+console.log(isDevelopment);
+
 // Set the baseURL dynamically
 const axiosInstance = axios.create({
-  baseURL: isDevelopment
-    ? "http://localhost:9000/api"
-    : "http://54.144.76.160:9000/api", // Relative path for Netlify's proxy in production
+  baseURL: "http://54.144.76.160:9000/api", // Relative path for Netlify's proxy in production
 });
 
 // Interceptors for requests
