@@ -1,4 +1,13 @@
-import { Card, Dropdown, Flex, Input, Select, Table, Typography } from "antd";
+import {
+  Card,
+  Dropdown,
+  Flex,
+  Input,
+  Select,
+  Table,
+  Typography,
+  notification,
+} from "antd";
 import {
   AdminNotepadIcon,
   AdminSearchIcon,
@@ -7,19 +16,21 @@ import {
 } from "../../assets/svg";
 import "./admin-employer-styles.scss";
 import CustomPagination from "../customPagination";
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import DownloadButton from "./components/DownloadBtn";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchJobSeekers } from "../../features/admin/user/jobSeekersSlice";
 const TEXT_COLOR = {
   color: "#0C0C0C",
 };
 
 const columns = [
-  { title: "#", dataIndex: "id", key: "id" },
+  { title: "#", dataIndex: "userId", key: "userId" },
   { title: "Name", dataIndex: "name", key: "name" },
   { title: "Email", dataIndex: "email", key: "email" },
-  { title: "Phone No", dataIndex: "phone", key: "phone" },
-  { title: "State", dataIndex: "state", key: "state" },
+  { title: "Phone No", dataIndex: "phoneNo", key: "phoneNo" },
+  { title: "State", dataIndex: "address", key: "address" },
   { title: "City", dataIndex: "city", key: "city" },
   {
     title: "Purchased Plan",
@@ -65,169 +76,58 @@ const columns = [
   },
 ];
 
-const data = [
-  {
-    id: 1,
-    name: "Olivia Green",
-    email: "olivia.green@example.com",
-    phone: "+123456789",
-    state: "California",
-    city: "Los Angeles",
-    plan: "Standard",
-    resume: "/resumes/olivia-green.pdf",
-  },
-  {
-    id: 2,
-    name: "Noah Blue",
-    email: "noah.blue@example.com",
-    phone: "+987654321",
-    state: "New York",
-    city: "New York City",
-    plan: "Premium",
-    resume: "/resumes/noah-blue.pdf",
-  },
-  {
-    id: 3,
-    name: "Emma White",
-    email: "emma.white@example.com",
-    phone: "+192837465",
-    state: "Texas",
-    city: "Houston",
-    plan: "Basic",
-    resume: "/resumes/emma-white.pdf",
-  },
-  {
-    id: 4,
-    name: "Liam Black",
-    email: "liam.black@example.com",
-    phone: "+564738291",
-    state: "Florida",
-    city: "Miami",
-    plan: "Premium",
-    resume: "/resumes/liam-black.pdf",
-  },
-  {
-    id: 5,
-    name: "Ava Brown",
-    email: "ava.brown@example.com",
-    phone: "+102938475",
-    state: "Illinois",
-    city: "Chicago",
-    plan: "Standard",
-    resume: "/resumes/ava-brown.pdf",
-  },
-  {
-    id: 6,
-    name: "Mason Grey",
-    email: "mason.grey@example.com",
-    phone: "+918273645",
-    state: "Georgia",
-    city: "Atlanta",
-    plan: "Standard",
-    resume: "/resumes/mason-grey.pdf",
-  },
-  {
-    id: 7,
-    name: "Sophia Violet",
-    email: "sophia.violet@example.com",
-    phone: "+5647382910",
-    state: "Arizona",
-    city: "Phoenix",
-    plan: "Basic",
-    resume: "/resumes/sophia-violet.pdf",
-  },
-  {
-    id: 8,
-    name: "Lucas Red",
-    email: "lucas.red@example.com",
-    phone: "+182736455",
-    state: "North Carolina",
-    city: "Charlotte",
-    plan: "Premium",
-    resume: "/resumes/lucas-red.pdf",
-  },
-  {
-    id: 9,
-    name: "Isabella Orange",
-    email: "isabella.orange@example.com",
-    phone: "+374849292",
-    state: "Washington",
-    city: "Seattle",
-    plan: "Standard",
-    resume: "/resumes/isabella-orange.pdf",
-  },
-  {
-    id: 10,
-    name: "Elijah Yellow",
-    email: "elijah.yellow@example.com",
-    phone: "+283746120",
-    state: "Colorado",
-    city: "Denver",
-    plan: "Basic",
-    resume: "/resumes/elijah-yellow.pdf",
-  },
-  {
-    id: 11,
-    name: "Mia Cyan",
-    email: "mia.cyan@example.com",
-    phone: "+384756109",
-    state: "Virginia",
-    city: "Virginia Beach",
-    plan: "Standard",
-    resume: "/resumes/mia-cyan.pdf",
-  },
-  {
-    id: 12,
-    name: "Henry Blue",
-    email: "henry.blue@example.com",
-    phone: "+564738392",
-    state: "Ohio",
-    city: "Columbus",
-    plan: "Premium",
-    resume: "/resumes/henry-blue.pdf",
-  },
-  {
-    id: 13,
-    name: "Evelyn Gold",
-    email: "evelyn.gold@example.com",
-    phone: "+384756291",
-    state: "Michigan",
-    city: "Detroit",
-    plan: "Basic",
-    resume: "/resumes/evelyn-gold.pdf",
-  },
-  {
-    id: 14,
-    name: "William Green",
-    email: "william.green@example.com",
-    phone: "+849302184",
-    state: "Oregon",
-    city: "Portland",
-    plan: "Standard",
-    resume: "/resumes/william-green.pdf",
-  },
-  {
-    id: 15,
-    name: "Ella Brown",
-    email: "ella.brown@example.com",
-    phone: "+937485120",
-    state: "Tennessee",
-    city: "Nashville",
-    plan: "Premium",
-    resume: "/resumes/ella-brown.pdf",
-  },
-];
 const AdminJobSeeker = () => {
-  const [currentPage, setCurrentPage] = useState(1);
-  const [pageSize] = useState(10); // Items per page
-
-  const paginatedData = data.slice(
-    (currentPage - 1) * pageSize,
-    currentPage * pageSize
+  const dispatch = useDispatch();
+  const { data, pagination, loading, error } = useSelector(
+    (state) => state.jobSeekers
   );
 
-  const handlePageChange = (page) => {
+  const [searchQuery, setSearchQuery] = useState("");
+  const [debouncedSearchQuery, setDebouncedSearchQuery] = useState("");
+  const [sortOrder, setSortOrder] = useState("asc");
+  const [currentPage, setCurrentPage] = useState(1);
+
+  useEffect(() => {
+    if (searchQuery.length > 3) {
+      setCurrentPage(1);
+      setDebouncedSearchQuery(searchQuery);
+    } else {
+      setDebouncedSearchQuery("");
+    }
+  }, [searchQuery]);
+
+  useEffect(() => {
+    dispatch(
+      fetchJobSeekers({
+        page: currentPage,
+        pageSize: pagination.pageSize,
+        sortOrder,
+        search: debouncedSearchQuery ?? "",
+      })
+    );
+  }, [
+    dispatch,
+    currentPage,
+    pagination.pageSize,
+    sortOrder,
+    debouncedSearchQuery,
+  ]);
+
+  useEffect(() => {
+    if (error) {
+      notification.error({
+        message: "Error Loading Data",
+        description: error,
+      });
+    }
+  }, [error]);
+
+  const handleTableChange = (page) => {
     setCurrentPage(page);
+  };
+
+  const handleSorting = (value) => {
+    setSortOrder(value);
   };
 
   return (
@@ -243,12 +143,26 @@ const AdminJobSeeker = () => {
               style={{ maxWidth: "400px", width: "100%" }}
               placeholder="Search"
               prefix={<AdminSearchIcon />}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              allowClear
             />
             <Select
               size="large"
               style={{ maxWidth: "200px", width: "100%" }}
               placeholder="Sort By"
               prefix={<AdminSearchIcon />}
+              defaultValue={"asc"}
+              options={[
+                {
+                  label: "Ascending",
+                  value: "asc",
+                },
+                {
+                  label: "Descending",
+                  value: "desc",
+                },
+              ]}
+              onChange={handleSorting}
             />
           </Flex>
           <Flex gap={10} flex={1} justify="end" wrap="wrap">
@@ -259,20 +173,20 @@ const AdminJobSeeker = () => {
 
         <Table
           columns={columns}
-          dataSource={paginatedData}
+          dataSource={Array.isArray(data) && data.length > 0 ? data : []}
           bordered={false}
           pagination={false}
           className="custom-table"
-          rowKey="id"
+          rowKey="userId"
           scroll={{
             x: 200,
           }}
         />
         <CustomPagination
-          total={data.length}
-          pageSize={pageSize}
+          total={pagination.totalItems}
+          pageSize={pagination.pageSize}
           currentPage={currentPage}
-          onChange={handlePageChange}
+          onChange={handleTableChange}
         />
       </Card>
     </div>

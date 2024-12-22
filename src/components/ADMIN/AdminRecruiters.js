@@ -1,47 +1,84 @@
-import { Card, Dropdown, Flex, Input, Select, Table, Typography } from "antd";
+import {
+  Card,
+  Dropdown,
+  Flex,
+  Input,
+  notification,
+  Select,
+  Table,
+  Typography,
+} from "antd";
 import {
   AdminBookingIcon,
   AdminNotepadIcon,
   AdminSearchIcon,
   DownloadIcon,
   MenuEmployerProfileIcon,
+  StarRatingIcon,
 } from "../../assets/svg";
 import "./admin-employer-styles.scss";
 import CustomPagination from "../customPagination";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import DownloadButton from "./components/DownloadBtn";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchRecruiters } from "../../features/admin/user/recruiterSlice";
 const TEXT_COLOR = {
   color: "#0C0C0C",
 };
 
 const columns = [
-  { title: "#", dataIndex: "id", key: "id" },
+  { title: "#", dataIndex: "userId", key: "userId" },
   { title: "Name", dataIndex: "name", key: "name" },
   { title: "Email", dataIndex: "email", key: "email" },
-  { title: "Phone No", dataIndex: "phone", key: "phone" },
+  { title: "Phone No", dataIndex: "phoneNo", key: "phoneNo" },
   { title: "Address", dataIndex: "address", key: "address" },
+  {
+    title: "Booking",
+    dataIndex: "booking",
+    key: "booking",
+    render: (_, record) => (
+      <Link to={"/admin/user/employers/bookings/" + record.userId}>
+        <AdminBookingIcon />
+      </Link>
+    ),
+  },
+
+  {
+    title: "Rating",
+    dataIndex: "ratings",
+    key: "ratings",
+    render: (_, record) => (
+      <Link to={"/admin/user/mentors/review/" + record.userId}>
+        <Flex align="baseline" gap={5}>
+          <Typography.Text>{record.ratings ?? 0}</Typography.Text>{" "}
+          <StarRatingIcon />
+        </Flex>
+      </Link>
+    ),
+  },
   {
     title: "Actions",
     key: "actions",
-    render: () => (
+    render: (_, record) => (
       <Dropdown
         menu={{
           items: [
             {
-              label: <Link to={"/admin/user/bookings"}> View Details</Link>,
+              label: (
+                <Link
+                  to={"/admin/user/recruiters/" + record.userId}
+                  style={{ color: "#2F2C39", fontWeight: "500" }}
+                >
+                  View Details
+                </Link>
+              ),
               key: "0",
-            },
-            {
-              label: "Edit ",
-              key: "1",
-            },
-            {
-              type: "divider",
             },
             {
               label: "Delete",
               key: "3",
+              danger: true,
             },
           ],
         }}
@@ -161,16 +198,56 @@ const data = [
   },
 ];
 const AdminRecruiters = () => {
-  const [currentPage, setCurrentPage] = useState(1);
-  const [pageSize] = useState(10); // Items per page
-
-  const paginatedData = data.slice(
-    (currentPage - 1) * pageSize,
-    currentPage * pageSize
+  const dispatch = useDispatch();
+  const { data, pagination, loading, error } = useSelector(
+    (state) => state.recruiters
   );
 
-  const handlePageChange = (page) => {
+  const [searchQuery, setSearchQuery] = useState("");
+  const [debouncedSearchQuery, setDebouncedSearchQuery] = useState("");
+  const [sortOrder, setSortOrder] = useState("asc");
+  const [currentPage, setCurrentPage] = useState(1);
+  useEffect(() => {
+    if (searchQuery.length > 3) {
+      setCurrentPage(1);
+      setDebouncedSearchQuery(searchQuery);
+    } else {
+      setDebouncedSearchQuery("");
+    }
+  }, [searchQuery]);
+
+  useEffect(() => {
+    dispatch(
+      fetchRecruiters({
+        page: currentPage,
+        pageSize: pagination.pageSize,
+        sortOrder,
+        search: debouncedSearchQuery ?? "",
+      })
+    );
+  }, [
+    dispatch,
+    currentPage,
+    pagination.pageSize,
+    sortOrder,
+    debouncedSearchQuery,
+  ]);
+
+  useEffect(() => {
+    if (error) {
+      notification.error({
+        message: "Error Loading Data",
+        description: error,
+      });
+    }
+  }, [error]);
+
+  const handleTableChange = (page) => {
     setCurrentPage(page);
+  };
+
+  const handleSorting = (value) => {
+    setSortOrder(value);
   };
 
   return (
@@ -186,12 +263,26 @@ const AdminRecruiters = () => {
               style={{ maxWidth: "400px", width: "100%" }}
               placeholder="Search"
               prefix={<AdminSearchIcon />}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              allowClear
             />
             <Select
               size="large"
               style={{ maxWidth: "200px", width: "100%" }}
               placeholder="Sort By"
               prefix={<AdminSearchIcon />}
+              defaultValue={"asc"}
+              options={[
+                {
+                  label: "Ascending",
+                  value: "asc",
+                },
+                {
+                  label: "Descending",
+                  value: "desc",
+                },
+              ]}
+              onChange={handleSorting}
             />
           </Flex>
           <Flex gap={10} flex={1} justify="end" wrap="wrap">
@@ -202,20 +293,20 @@ const AdminRecruiters = () => {
 
         <Table
           columns={columns}
-          dataSource={paginatedData}
+          dataSource={data}
           bordered={false}
           pagination={false}
           className="custom-table"
-          rowKey="id"
+          rowKey="userId"
           scroll={{
             x: 200,
           }}
         />
         <CustomPagination
-          total={data.length}
-          pageSize={pageSize}
+          total={pagination.totalItems}
+          pageSize={pagination.pageSize}
           currentPage={currentPage}
-          onChange={handlePageChange}
+          onChange={handleTableChange}
         />
       </Card>
     </div>

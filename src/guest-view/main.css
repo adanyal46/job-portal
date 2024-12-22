@@ -1,0 +1,58 @@
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap");
+* {
+  font-family: "Plus Jakarta Sans", serif !important;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.home-bg {
+  background: linear-gradient(136.2deg, #eff2f4 50.59%, #88b3c1 113.23%);
+  min-height: 350px;
+  padding: 40px;
+}
+.container-guest {
+  background-image: url("/public/guest/reset-password.svg");
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.container-child {
+  max-width: 800px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 20px;
+}
+.secondary_btn {
+  background-color: #eff3f4 !important;
+  border-color: #eff3f4 !important;
+  color: #52595c !important;
+  padding: 8px 20px !important;
+  min-height: 40px !important;
+  font-size: 15px !important;
+  letter-spacing: 0.03px;
+  font-weight: 500 !important;
+}
+
+.primary_btn {
+  background: linear-gradient(
+    287.99deg,
+    #001f3f -20.42%,
+    #009dd1 62.87%
+  ) !important;
+  box-shadow: 0px 2px 4px 0px #a5a3ae4d !important;
+  color: white !important;
+  border-color: #eff3f4 !important;
+  padding: 8px 20px !important;
+  min-height: 40px !important;
+  font-size: 15px !important;
+  letter-spacing: 0.03px;
+  font-weight: 500 !important;
+}
+
+.btn_type_JOB_SEEKER {
+  border-radius: 48px !important;
+  background: linear-gradient(100deg, #2a7fb7 -1.76%, #2b4054 107.85%);
+}

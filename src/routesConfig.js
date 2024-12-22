@@ -41,6 +41,15 @@ import TermCondition from "./components/ADMIN/general-management/TermCondition";
 import PaymentList from "./components/ADMIN/payment";
 import BlogAdmin from "./components/ADMIN/blogs";
 import AdminBookings from "./components/ADMIN/AdminBookings";
+import AdminMentorBookings from "./components/ADMIN/AdminMentorBookings";
+import AdminEmployerBookings from "./components/ADMIN/AdminEmployerBookings";
+import AdminMentorReview from "./components/ADMIN/AdminMentorReview";
+import Home from "./guest-view/Home";
+import GuestLayout from "./guest-view/Layout";
+import ResetPassword from "./guest-view/ResetPassword";
+import ForgetPassword from "./guest-view/ForgetPassword";
+import SignUpPageUserType from "./guest-view/SignUpPageUserType";
+import RegisterForm from "./pages/signUp";
 
 // Lazy loaded components
 const MyProfile = lazy(() => import("./pages/myProfile"));
@@ -78,10 +87,42 @@ const EmployerSubscription = lazy(() => import("./pages/employerSubscription"));
 
 const routeConfig = (token) => {
   const decodedToken = tokenDecoder(token);
+
+  // Common routes (available to all users)
+  const commonRoutes = [
+    {
+      path: "/reset-password",
+      element: <ResetPassword />,
+    },
+    {
+      path: "/forget-password",
+      element: <ForgetPassword />,
+    },
+    {
+      path: "/signup-type",
+      element: <SignUpPageUserType />,
+    },
+    {
+      path: "/register/:role",
+      element: <RegisterForm />,
+    },
+    {
+      path: "/",
+      element: <GuestLayout />,
+      children: [
+        {
+          path: "/",
+          element: <Home />, // Public or shared home page
+          errorElement: <ErrorPage />,
+        },
+      ],
+    },
+  ];
   if (!decodedToken) {
     return [
+      ...commonRoutes,
       {
-        path: "/",
+        path: "*",
         element: <Navigate to={"/login"} replace />,
         errorElement: <ErrorPage />,
       },
@@ -94,133 +135,6 @@ const routeConfig = (token) => {
         path: "/signup",
         element: <SignUp />,
         errorElement: <ErrorPage />,
-      },
-      {
-        path: "/admin",
-        element: <AdminLayout />,
-        errorElement: <ErrorPage />,
-        children: [
-          {
-            path: "dashboard",
-            element: <AdminDashboard />,
-            errorElement: <ErrorPage />,
-          },
-          {
-            path: "user/employers",
-            element: <AdminEmployer />,
-            errorElement: <ErrorPage />,
-          },
-          {
-            path: "user/recruiters",
-            element: <AdminRecruiters />,
-            errorElement: <ErrorPage />,
-          },
-          {
-            path: "user/mentors",
-            element: <AdminMentors />,
-            errorElement: <ErrorPage />,
-          },
-          {
-            path: "user/job-seekers",
-            element: <AdminJobSeeker />,
-            errorElement: <ErrorPage />,
-          },
-          {
-            path: "user/staffs",
-            element: <AdminStaffs />,
-            errorElement: <ErrorPage />,
-          },
-          {
-            path: "user/bookings",
-            element: <AdminBookings />,
-            errorElement: <ErrorPage />,
-          },
-          {
-            path: "industries",
-            element: <Industries />,
-            errorElement: <ErrorPage />,
-          },
-          {
-            path: "mentor-services",
-            element: <MentorServices />,
-            errorElement: <ErrorPage />,
-          },
-          {
-            path: "recruiter-services",
-            element: <RecruiterServices />,
-            errorElement: <ErrorPage />,
-          },
-          {
-            path: "languages",
-            element: <Languages />,
-            errorElement: <ErrorPage />,
-          },
-          {
-            path: "skills",
-            element: <Skills />,
-            errorElement: <ErrorPage />,
-          },
-          {
-            path: "mentor-profile-approval-requests",
-            element: <MentorProfileApprovalRequests />,
-            errorElement: <ErrorPage />,
-          },
-          {
-            path: "recruiter-profile-approval-requests",
-            element: <RecruiterProfileApprovalRequests />,
-            errorElement: <ErrorPage />,
-          },
-          {
-            path: "recruiter-profile/:id",
-            element: <AdminRecruiterProfile />,
-            errorElement: <ErrorPage />,
-          },
-          {
-            path: "mentor-profile/:id",
-            element: <AdminMentorProfile />,
-            errorElement: <ErrorPage />,
-          },
-          {
-            path: "payments",
-            element: <PaymentList />,
-            errorElement: <ErrorPage />,
-          },
-          {
-            path: "blogs",
-            element: <BlogAdmin />,
-            errorElement: <ErrorPage />,
-          },
-          {
-            path: "timesheet-management",
-            element: <TimesheetManagement />,
-            errorElement: <ErrorPage />,
-          },
-          {
-            path: "about",
-            element: <About />,
-            errorElement: <ErrorPage />,
-          },
-          {
-            path: "term-condition",
-            element: <TermCondition />,
-            errorElement: <ErrorPage />,
-          },
-          {
-            path: "privacy-policy",
-            element: <PrivacyPolicy />,
-            errorElement: <ErrorPage />,
-          },
-          {
-            path: "pages",
-            element: <Pages />,
-            errorElement: <ErrorPage />,
-          },
-          {
-            path: "settings",
-            element: <Setting />,
-            errorElement: <ErrorPage />,
-          },
-        ],
       },
     ];
   }
@@ -607,6 +521,166 @@ const routeConfig = (token) => {
     },
   ];
 
+  const adminRoutes = [
+    {
+      path: "*",
+      element: <Navigate to={"/admin/dashboard"} replace />,
+      errorElement: <ErrorPage />, // Adding Error Page for error handling
+    },
+    {
+      path: "/admin",
+      element: <AdminLayout />,
+      errorElement: <ErrorPage />,
+      children: [
+        {
+          path: "dashboard",
+          element: <AdminDashboard />,
+          errorElement: <ErrorPage />,
+        },
+        {
+          path: "user/employers",
+          element: <AdminEmployer />,
+          errorElement: <ErrorPage />,
+        },
+        {
+          path: "user/employers/bookings/:id",
+          element: <AdminEmployerBookings />,
+          errorElement: <ErrorPage />,
+        },
+        {
+          path: "user/recruiters",
+          element: <AdminRecruiters />,
+          errorElement: <ErrorPage />,
+        },
+        {
+          path: "user/recruiters/:id",
+          element: <AdminRecruiterProfile />,
+          errorElement: <ErrorPage />,
+        },
+        {
+          path: "user/mentors",
+          element: <AdminMentors />,
+          errorElement: <ErrorPage />,
+        },
+        {
+          path: "user/mentors/review/:id",
+          element: <AdminMentorReview />,
+          errorElement: <ErrorPage />,
+        },
+        {
+          path: "user/mentors/bookings/:id",
+          element: <AdminMentorBookings />,
+          errorElement: <ErrorPage />,
+        },
+        {
+          path: "user/mentor/profile/:id",
+          element: <AdminMentorProfile />,
+          errorElement: <ErrorPage />,
+        },
+        {
+          path: "user/job-seekers",
+          element: <AdminJobSeeker />,
+          errorElement: <ErrorPage />,
+        },
+        {
+          path: "user/staffs",
+          element: <AdminStaffs />,
+          errorElement: <ErrorPage />,
+        },
+        {
+          path: "user/bookings",
+          element: <AdminBookings />,
+          errorElement: <ErrorPage />,
+        },
+        {
+          path: "industries",
+          element: <Industries />,
+          errorElement: <ErrorPage />,
+        },
+        {
+          path: "mentor-services",
+          element: <MentorServices />,
+          errorElement: <ErrorPage />,
+        },
+        {
+          path: "recruiter-services",
+          element: <RecruiterServices />,
+          errorElement: <ErrorPage />,
+        },
+        {
+          path: "languages",
+          element: <Languages />,
+          errorElement: <ErrorPage />,
+        },
+        {
+          path: "skills",
+          element: <Skills />,
+          errorElement: <ErrorPage />,
+        },
+        {
+          path: "mentor-profile-approval-requests",
+          element: <MentorProfileApprovalRequests />,
+          errorElement: <ErrorPage />,
+        },
+        {
+          path: "recruiter-profile-approval-requests",
+          element: <RecruiterProfileApprovalRequests />,
+          errorElement: <ErrorPage />,
+        },
+        {
+          path: "recruiter-profile/:id",
+          element: <AdminRecruiterProfile />,
+          errorElement: <ErrorPage />,
+        },
+        {
+          path: "mentor-profile/:id",
+          element: <AdminMentorProfile />,
+          errorElement: <ErrorPage />,
+        },
+        {
+          path: "payments",
+          element: <PaymentList />,
+          errorElement: <ErrorPage />,
+        },
+        {
+          path: "blogs",
+          element: <BlogAdmin />,
+          errorElement: <ErrorPage />,
+        },
+        {
+          path: "timesheet-management",
+          element: <TimesheetManagement />,
+          errorElement: <ErrorPage />,
+        },
+        {
+          path: "about",
+          element: <About />,
+          errorElement: <ErrorPage />,
+        },
+        {
+          path: "term-condition",
+          element: <TermCondition />,
+          errorElement: <ErrorPage />,
+        },
+        {
+          path: "privacy-policy",
+          element: <PrivacyPolicy />,
+          errorElement: <ErrorPage />,
+        },
+        {
+          path: "pages",
+          element: <Pages />,
+          errorElement: <ErrorPage />,
+        },
+        {
+          path: "settings",
+          element: <Setting />,
+          errorElement: <ErrorPage />,
+        },
+      ],
+    },
+  ];
+
   switch (role) {
     case Roles.JOB_SEEKER:
       return [...jobSeekerRoutes];
@@ -618,22 +692,24 @@ const routeConfig = (token) => {
       return [...employerRoutes];
     case Roles.STAFF_MEMBER:
       return [...staffMemberRoutes];
+    case Roles.ADMIN:
+      return [...adminRoutes];
     default:
       return [
         {
           path: "/login",
           element: <LoginForm />,
-          errorElement: <ErrorPage />, // Adding Error Page for error handling
+          errorElement: <ErrorPage />,
         },
         {
           path: "/signup",
           element: <SignUp />,
-          errorElement: <ErrorPage />, // Adding Error Page for error handling
+          errorElement: <ErrorPage />,
         },
         {
           path: "*",
           element: <Navigate to={"/login"} replace />,
-          errorElement: <ErrorPage />, // Adding Error Page for error handling
+          errorElement: <ErrorPage />,
         },
       ];
   }

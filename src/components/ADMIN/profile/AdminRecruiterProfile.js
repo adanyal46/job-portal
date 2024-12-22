@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Card, Row, Col, Typography, Flex } from "antd";
 import {
   DownloadIcon,
@@ -13,16 +13,39 @@ import LocationWithIcon from "../../locationWithIcon";
 import Rating from "../../rating";
 import Location from "../../location";
 import CustomButton from "../../customButton";
+import { fetchRecruiterProfileApi } from "../../../features/admin/user/userApi";
 
 const { Title, Text } = Typography;
 const TEXT_COLOR = {
   color: "#0C0C0C",
 };
 const AdminRecruiterProfile = () => {
-  const { id } = useParams();
+  const { id: userId } = useParams();
   const [recruiterDetail, setRecruiterDetail] = useState(null);
   const [loading, setLoading] = useState(false);
   const [showLocationModal, setShowLocationModal] = useState(false);
+  const [recruiter, setRecruiter] = useState(null);
+
+  useEffect(() => {
+    if (userId) {
+      fetchProfile(userId);
+    }
+  }, [userId]);
+
+  const fetchProfile = async (userId) => {
+    try {
+      setLoading(true);
+      const result = await fetchRecruiterProfileApi(userId);
+      if (result.success) {
+        setRecruiter(result.data[0]);
+      }
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+    }
+  };
+
+  console.log(recruiter);
 
   const profile = recruiterDetail && recruiterDetail?.Profile?.[0];
   const location = recruiterDetail && recruiterDetail?.Location?.[0];

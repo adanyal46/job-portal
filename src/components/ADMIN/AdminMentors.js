@@ -1,40 +1,73 @@
-import { Card, Dropdown, Flex, Input, Select, Table, Typography } from "antd";
+import {
+  Card,
+  Dropdown,
+  Flex,
+  Input,
+  Select,
+  Table,
+  Typography,
+  notification,
+} from "antd";
 import {
   AdminBookingIcon,
   AdminSearchIcon,
   DownloadIcon,
   MenuEmployerProfileIcon,
+  StarRatingIcon,
 } from "../../assets/svg";
 import "./admin-employer-styles.scss";
 import CustomPagination from "../customPagination";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import DownloadButton from "./components/DownloadBtn";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchMentors } from "../../features/admin/user/mentorSlice";
 const TEXT_COLOR = {
   color: "#0C0C0C",
 };
 
 const columns = [
-  { title: "#", dataIndex: "id", key: "id" },
+  { title: "#", dataIndex: "userId", key: "userId" },
   { title: "Name", dataIndex: "name", key: "name" },
   { title: "Email", dataIndex: "email", key: "email" },
-  { title: "Phone No", dataIndex: "phone", key: "phone" },
+  { title: "Phone No", dataIndex: "phoneNo", key: "phoneNo" },
   { title: "Address", dataIndex: "address", key: "address" },
   {
     title: "Booking",
     dataIndex: "booking",
     key: "booking",
-    render: () => <AdminBookingIcon />,
+    render: (_, record) => (
+      <Link to={"/admin/user/mentors/bookings/" + record.userId}>
+        <AdminBookingIcon />
+      </Link>
+    ),
+  },
+  {
+    title: "Rating",
+    dataIndex: "ratings",
+    key: "ratings",
+    render: (_, record) => (
+      <Link to={"/admin/user/mentors/review/" + record.userId}>
+        <Flex align="baseline" gap={5}>
+          <Typography.Text>{record.ratings ?? 0}</Typography.Text>{" "}
+          <StarRatingIcon />
+        </Flex>
+      </Link>
+    ),
   },
   {
     title: "Actions",
     key: "actions",
-    render: () => (
+    render: (_, record) => (
       <Dropdown
         menu={{
           items: [
             {
-              label: <Link to={"/admin/user/bookings"}> View Details</Link>,
+              label: (
+                <Link to={"/admin/user/mentor/profile/" + record.userId}>
+                  View Details
+                </Link>
+              ),
               key: "0",
             },
             {
@@ -58,139 +91,57 @@ const columns = [
   },
 ];
 
-const data = [
-  {
-    id: 1,
-    name: "Liam Brown",
-    email: "liam.brown@example.com",
-    phone: "+123456789",
-    address: "1 Pine St",
-    booking: "Yes",
-  },
-  {
-    id: 2,
-    name: "Emma Smith",
-    email: "emma.smith@example.com",
-    phone: "+987654321",
-    address: "2 Oak St",
-    booking: "No",
-  },
-  {
-    id: 3,
-    name: "Oliver White",
-    email: "oliver.white@example.com",
-    phone: "+192837465",
-    address: "3 Maple St",
-    booking: "Yes",
-  },
-  {
-    id: 4,
-    name: "Ava Blue",
-    email: "ava.blue@example.com",
-    phone: "+564738291",
-    address: "4 Birch St",
-    booking: "No",
-  },
-  {
-    id: 5,
-    name: "Sophia Black",
-    email: "sophia.black@example.com",
-    phone: "+102938475",
-    address: "5 Cedar St",
-    booking: "Yes",
-  },
-  {
-    id: 6,
-    name: "Isabella Grey",
-    email: "isabella.grey@example.com",
-    phone: "+918273645",
-    address: "6 Willow St",
-    booking: "Yes",
-  },
-  {
-    id: 7,
-    name: "Mason Purple",
-    email: "mason.purple@example.com",
-    phone: "+5647382910",
-    address: "7 Ash St",
-    booking: "No",
-  },
-  {
-    id: 8,
-    name: "Mia Red",
-    email: "mia.red@example.com",
-    phone: "+182736455",
-    address: "8 Elm St",
-    booking: "Yes",
-  },
-  {
-    id: 9,
-    name: "Lucas Orange",
-    email: "lucas.orange@example.com",
-    phone: "+374849292",
-    address: "9 Alder St",
-    booking: "No",
-  },
-  {
-    id: 10,
-    name: "Harper Yellow",
-    email: "harper.yellow@example.com",
-    phone: "+283746120",
-    address: "10 Hickory St",
-    booking: "Yes",
-  },
-  {
-    id: 11,
-    name: "Ethan Brown",
-    email: "ethan.brown@example.com",
-    phone: "+384756109",
-    address: "11 Fir St",
-    booking: "No",
-  },
-  {
-    id: 12,
-    name: "Charlotte Cyan",
-    email: "charlotte.cyan@example.com",
-    phone: "+564738392",
-    address: "12 Spruce St",
-    booking: "Yes",
-  },
-  {
-    id: 13,
-    name: "James Violet",
-    email: "james.violet@example.com",
-    phone: "+384756291",
-    address: "13 Poplar St",
-    booking: "Yes",
-  },
-  {
-    id: 14,
-    name: "Amelia Gold",
-    email: "amelia.gold@example.com",
-    phone: "+849302184",
-    address: "14 Pine St",
-    booking: "No",
-  },
-  {
-    id: 15,
-    name: "Alexander Green",
-    email: "alexander.green@example.com",
-    phone: "+937485120",
-    address: "15 Sycamore St",
-    booking: "Yes",
-  },
-];
 const AdminMentors = () => {
-  const [currentPage, setCurrentPage] = useState(1);
-  const [pageSize] = useState(10); // Items per page
-
-  const paginatedData = data.slice(
-    (currentPage - 1) * pageSize,
-    currentPage * pageSize
+  const dispatch = useDispatch();
+  const { data, pagination, loading, error } = useSelector(
+    (state) => state.mentors
   );
 
-  const handlePageChange = (page) => {
+  const [searchQuery, setSearchQuery] = useState("");
+  const [debouncedSearchQuery, setDebouncedSearchQuery] = useState("");
+  const [sortOrder, setSortOrder] = useState("asc");
+  const [currentPage, setCurrentPage] = useState(1);
+  useEffect(() => {
+    if (searchQuery.length > 3) {
+      setDebouncedSearchQuery(searchQuery);
+      setCurrentPage(1);
+    } else {
+      setDebouncedSearchQuery("");
+    }
+  }, [searchQuery]);
+
+  useEffect(() => {
+    dispatch(
+      fetchMentors({
+        page: currentPage,
+        pageSize: pagination.pageSize,
+        sortOrder,
+        search: debouncedSearchQuery ?? "",
+      })
+    );
+  }, [
+    dispatch,
+    currentPage,
+    pagination.pageSize,
+    sortOrder,
+    debouncedSearchQuery,
+  ]);
+
+  useEffect(() => {
+    if (error) {
+      notification.error({
+        message: "Error Loading Data",
+        description: error,
+      });
+    }
+  }, [error]);
+
+  const handleTableChange = (page) => {
     setCurrentPage(page);
+  };
+
+  const handleSorting = (value) => {
+    setSortOrder(value);
   };
 
   return (
@@ -206,12 +157,26 @@ const AdminMentors = () => {
               style={{ maxWidth: "400px", width: "100%" }}
               placeholder="Search"
               prefix={<AdminSearchIcon />}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              allowClear
             />
             <Select
               size="large"
               style={{ maxWidth: "200px", width: "100%" }}
               placeholder="Sort By"
               prefix={<AdminSearchIcon />}
+              defaultValue={"asc"}
+              options={[
+                {
+                  label: "Ascending",
+                  value: "asc",
+                },
+                {
+                  label: "Descending",
+                  value: "desc",
+                },
+              ]}
+              onChange={handleSorting}
             />
           </Flex>
           <Flex gap={10} flex={1} justify="end" wrap="wrap">
@@ -222,20 +187,21 @@ const AdminMentors = () => {
 
         <Table
           columns={columns}
-          dataSource={paginatedData}
+          dataSource={Array.isArray(data) && data.length > 0 ? data : []}
           bordered={false}
+          loading={loading}
           pagination={false}
           className="custom-table"
           scroll={{
             x: 200,
           }}
-          rowKey="id"
+          rowKey="userId"
         />
         <CustomPagination
-          total={data.length}
-          pageSize={pageSize}
+          total={pagination.totalItems}
+          pageSize={pagination.pageSize}
           currentPage={currentPage}
-          onChange={handlePageChange}
+          onChange={handleTableChange}
         />
       </Card>
     </div>

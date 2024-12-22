@@ -1379,7 +1379,7 @@ export const DownloadIcon = () => (
     viewBox="0 0 22 22"
     fill="none"
   >
-    <g clip-path="url(#clip0_3712_218871)">
+    <g clipPath="url(#clip0_3712_218871)">
       <path
         d="M11 12.375V2.75"
         stroke="#2F2C39"
@@ -1436,7 +1436,7 @@ export const PlusIcon = () => (
     viewBox="0 0 18 19"
     fill="none"
   >
-    <g clip-path="url(#clip0_3712_220352)">
+    <g clipPath="url(#clip0_3712_220352)">
       <path
         d="M2.8125 9.5H15.1875"
         stroke="#52595C"
@@ -1473,7 +1473,7 @@ export const TimeSheetIcon = () => (
     viewBox="0 0 24 24"
     fill="none"
   >
-    <g clip-path="url(#clip0_4858_9116)">
+    <g clipPath="url(#clip0_4858_9116)">
       <path
         d="M16.5 9.75L12 12V6.75"
         stroke="#2F2C39"
@@ -3696,6 +3696,24 @@ export function AdminBlogIcon(props) {
           <path fill="#fff" d="M0 0H24V24H0z" />
         </clipPath>
       </defs>
+    </svg>
+  );
+}
+
+export function StarRatingIcon(props) {
+  return (
+    <svg
+      width={15}
+      height={15}
+      viewBox="0 0 15 15"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <path
+        d="M6.502 1.195c.224-.69 1.202-.69 1.426 0l1.14 3.506a.75.75 0 00.712.518h3.686c.727 0 1.029.93.44 1.357l-2.98 2.166a.75.75 0 00-.273.839l1.139 3.505c.224.69-.567 1.265-1.155.838l-2.981-2.166a.75.75 0 00-.882 0l-2.982 2.166c-.588.427-1.378-.147-1.154-.838L3.777 9.58a.75.75 0 00-.272-.839L.523 6.576c-.588-.427-.286-1.357.44-1.357H4.65a.75.75 0 00.714-.518l1.139-3.506z"
+        fill="#2F2C39"
+      />
     </svg>
   );
 }

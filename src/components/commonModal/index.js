@@ -17,6 +17,7 @@ const CommonModal = (props) => {
     handleDelete,
     isDelete = true,
     loading = false,
+    saveBtnText = "Save",
   } = props;
 
   const ModalHeader = () => {
@@ -54,7 +55,7 @@ const CommonModal = (props) => {
           <CustomButton
             key="saveButton"
             category="primary"
-            name="Save"
+            name={saveBtnText}
             handleClick={handleOk}
             loading={loading}
           />,

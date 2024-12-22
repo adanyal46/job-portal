@@ -8,6 +8,7 @@ const CustomTag = ({ label, color, onClick }) => {
       style={{
         backgroundColor:
           label === "Approved" ||
+          label === "ACCEPTED" ||
           label === "Paid" ||
           label === "Session" ||
           label === "Resume Search" ||
@@ -21,6 +22,7 @@ const CustomTag = ({ label, color, onClick }) => {
             : color,
         color:
           label === "Approved" ||
+          label === "ACCEPTED" ||
           label === "Paid" ||
           label === "Session" ||
           label === "Resume Search" ||

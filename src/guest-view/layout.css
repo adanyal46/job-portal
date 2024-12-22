@@ -1,0 +1,102 @@
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap");
+
+.guest__nav {
+  min-height: 96px;
+  max-width: 1920px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 14px 40px;
+  background: #fff;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.guest__nav img {
+  width: 177px;
+  height: 65px;
+}
+.guest__nav ul {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+}
+.guest__nav li {
+  list-style: none;
+}
+.guest__nav ul > li > a {
+  color: #221810;
+  font-weight: 400;
+  font-family: "Plus Jakarta Sans", serif !important;
+  font-size: 15px;
+}
+.guest__nav .primary__btn {
+  width: 100%;
+  background: linear-gradient(287.99deg, #001f3f -20.42%, #009dd1 62.87%);
+  padding: 15px 32px;
+  color: white;
+  cursor: pointer;
+  border-radius: 10px;
+  outline: none;
+  min-width: 115px;
+  font-weight: 600;
+  font-size: 15px !important;
+  border: 0;
+}
+
+.guest__nav .secondary__btn {
+  width: 100%;
+  background: linear-gradient(white, white) padding-box,
+    linear-gradient(287.99deg, #001f3f -20.42%, #009dd1 62.87%) border-box;
+  border-radius: 0.8rem;
+  border: 0.3rem solid transparent;
+  padding: 12px 32px;
+  font-size: 15px !important;
+  font-weight: 600;
+}
+
+.guest__nav .secondary__btn > span {
+  background: -webkit-linear-gradient(
+    287.99deg,
+    #001f3f -20.42%,
+    #009dd1 62.87%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.guest__footer {
+  min-height: 700px;
+  background: linear-gradient(107.67deg, #2f484f 5.57%, #0a1417 106.67%);
+  padding: 67px 161px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 40px;
+}
+.guest__footer p {
+  margin-top: 10px;
+  color: white;
+  font-size: 20px;
+  font-family: "Plus Jakarta Sans", serif !important;
+}
+
+.guest__footer .footer__subheading {
+  color: white;
+  font-weight: 700;
+  font-family: "Plus Jakarta Sans", serif !important;
+  font-size: 26px;
+  margin-bottom: 10px;
+}
+.guest__footer .footer__items {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.guest__footer .footer__items .footer__item,
+.footer__item > a {
+  list-style: none;
+  color: white;
+  font-family: "Plus Jakarta Sans", serif !important;
+  font-size: 18px;
+  font-weight: 400;
+}

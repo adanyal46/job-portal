@@ -11,6 +11,17 @@ import earningReducer from "../features/earning/earningSlice";
 import timesheetReducer from "../features/timesheet/timesheetSlice";
 import recruiterReducer from "../features/recruiter/recruiterSlice";
 import employerDashboardReducer from "../features/employerDashboard/employerDashboardSlice";
+import dashboardReducer from "../features/admin/dashboard/dashboardSlice";
+import jobSeekerReducer from "../features/admin/user/jobSeekersSlice";
+import mentorsReducer from "../features/admin/user/mentorSlice";
+import adminMentorBookingReducer from "../features/admin/booking/bookingSlice";
+import employerReducer from "../features/admin/user/employerSlice";
+import AdminRecruiterReducer from "../features/admin/user/recruiterSlice";
+import IndustryReducer from "../features/admin/common-management/slices/industrySlice";
+import MentorServiceReducer from "../features/admin/common-management/slices/mentorServicesSlice";
+import RecruiterServiceReducer from "../features/admin/common-management/slices/recruiterServicesSlice";
+import LanguageReducer from "../features/admin/common-management/slices/languageSlice";
+import SkillReducer from "../features/admin/common-management/slices/skillSlice";
 
 export const store = configureStore({
   reducer: {
@@ -25,5 +36,16 @@ export const store = configureStore({
     timesheet: timesheetReducer,
     recruiter: recruiterReducer,
     employerDashboard: employerDashboardReducer,
+    dashboard: dashboardReducer,
+    jobSeekers: jobSeekerReducer,
+    mentors: mentorsReducer,
+    adminMentorBookings: adminMentorBookingReducer,
+    employers: employerReducer,
+    recruiters: AdminRecruiterReducer,
+    industries: IndustryReducer,
+    mentorService: MentorServiceReducer,
+    recruiterService: RecruiterServiceReducer,
+    languages: LanguageReducer,
+    skills: SkillReducer,
   },
 });
