@@ -26,6 +26,7 @@ const TEXT_COLOR = {
 const AdminDashboard = () => {
   const dispatch = useDispatch();
   const { counts, loading, error } = useSelector((state) => state.dashboard);
+
   useEffect(() => {
     dispatch(getDashboardCounts());
   }, [dispatch]);
@@ -49,12 +50,10 @@ const AdminDashboard = () => {
           height: "100vh",
         }}
       >
-        <Spin tip="Loading Dashboard Data..." size="large" />
+        <Spin size="large" />
       </div>
     );
   }
-
-  console.log(counts);
 
   let dashboardData = [
     {
@@ -128,8 +127,8 @@ const AdminDashboard = () => {
         />
       </div>
       <Row gutter={[16, 16]} style={{ marginTop: "20px" }}>
-        {dashboardData.map((item) => (
-          <Col span={6} key={item.key}>
+        {dashboardData.map((item, ind) => (
+          <Col span={6} key={ind}>
             <Card
               bordered={false}
               style={{ boxShadow: "0px 4px 18px 0px #4B465C1A" }}

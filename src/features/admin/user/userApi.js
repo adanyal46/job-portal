@@ -92,3 +92,46 @@ export const fetchRecruiterProfileApi = async (userId) => {
     throw error;
   }
 };
+export const fetchHireRecruiterApi = async ({ page, pageSize, search }) => {
+  try {
+    const response = await axiosInstance.get(
+      `/admin/getRecruiterHiring?page=${page}&pageSize=${pageSize}&search=${search}`
+    );
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const fetchProfileApprovalApi = async ({
+  role,
+  page,
+  pageSize,
+  search,
+}) => {
+  try {
+    const response = await axiosInstance.get(
+      `/admin/mentorApproval/${role}?page=${page}&pageSize=${pageSize}&search=${search}`
+    );
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+export const fetchPaymentApi = async () => {
+  try {
+    const response = await axiosInstance.get(`/admin/getPaymentDetails`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const fetchBlogApi = async () => {
+  try {
+    const response = await axiosInstance.get(`/admin/getBlogs`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};

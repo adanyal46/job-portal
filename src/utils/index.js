@@ -167,3 +167,12 @@ export const formatTimeAgo = (timestamp) => {
   const diffInYears = now.diff(time, "year");
   return diffInYears === 1 ? "1y" : `${diffInYears} y`; // Optional: handle years if needed
 };
+
+export const formatDateToShort = (date) => {
+  const formattedDate = new Intl.DateTimeFormat("en-GB", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+  }).format(new Date(date));
+  return formattedDate;
+};

@@ -4,7 +4,7 @@ import {
   Row,
   Col,
   Typography,
-  Rate,
+  Tag,
   Divider,
   Flex,
   Input,
@@ -22,12 +22,10 @@ import {
   WorkIndustriesIcon,
 } from "../../assets/svg";
 import Rating from "../../components/rating";
-import Tag from "../../components/tag";
 import ReviewCard from "../../components/reviewCard";
 import CustomPagination from "../../components/customPagination";
 import CustomButton from "../../components/customButton";
 import { Link, useParams } from "react-router-dom";
-import MentorServiceCollapse from "../../components/mentorServiceCollapse";
 import RecruiterVideoContainer from "../../components/RecruiterVideoContainer";
 import {
   getRecruiterDetailApi,
@@ -156,7 +154,7 @@ const StaffMemberProfile = () => {
                 }
                 alt="Profile"
                 style={{
-                  width: "250px",
+                  width: "200px",
                   height: "250px",
                   borderRadius: "8px",
                   objectFit: "cover",
@@ -229,8 +227,20 @@ const StaffMemberProfile = () => {
           <div style={{ marginBlock: "20px" }}>
             <Typography.Title level={3}>Hired For</Typography.Title>
             <Flex gap={6}>
-              {services?.map((item) => (
-                <Tag label={item?.name} />
+              {services?.map((item, index) => (
+                <Tag
+                  key={index}
+                  style={{
+                    borderRadius: "8px",
+                    padding: "4px 12px",
+                    backgroundColor: "#EFF3F4",
+                    color: "#2F2C39",
+                    fontSize: "14px",
+                    fontWeight: "500",
+                  }}
+                >
+                  {item?.name || item.service?.name}
+                </Tag>
               ))}
             </Flex>
           </div>

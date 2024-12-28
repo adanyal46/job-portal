@@ -3,7 +3,7 @@ import { Collapse, Checkbox, message } from "antd";
 import { ChevronUpIcon } from "../../assets/svg";
 import "./styles.scss";
 import CustomButton from "../../components/customButton";
-import { useHistory, useNavigate } from "react-router-dom"; // Import useHistory for navigation
+import { useNavigate } from "react-router-dom"; // Import useHistory for navigation
 
 const ServiceCollapse = (props) => {
   const { handleClick, services, recruiterId } = props;

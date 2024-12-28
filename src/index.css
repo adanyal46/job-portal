@@ -117,6 +117,9 @@ body {
 .admin-menu {
   padding: 10px;
 }
+.admin-menu .ant-menu-title-content {
+  font-size: 16px !important;
+}
 
 .admin-menu .ant-menu-item-selected {
   background: linear-gradient(

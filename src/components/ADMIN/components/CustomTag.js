@@ -8,6 +8,7 @@ const CustomTag = ({ label, color, onClick }) => {
       style={{
         backgroundColor:
           label === "Approved" ||
+          label === "APPROVED" ||
           label === "ACCEPTED" ||
           label === "Paid" ||
           label === "Session" ||
@@ -15,13 +16,16 @@ const CustomTag = ({ label, color, onClick }) => {
           label === "Premium" ||
           label === "Job Postings"
             ? "#DAF9E8"
-            : label === "Disapproved" || label === "Unpaid"
+            : label === "Disapproved" ||
+              label === "Unpaid" ||
+              label === "DISAPPROVED"
             ? "#F8EEED"
-            : label === "Pending"
+            : label === "Pending" || label === "PENDING"
             ? "#FAF4EE"
             : color,
         color:
           label === "Approved" ||
+          label === "APPROVED" ||
           label === "ACCEPTED" ||
           label === "Paid" ||
           label === "Session" ||
@@ -29,7 +33,9 @@ const CustomTag = ({ label, color, onClick }) => {
           label === "Premium" ||
           label === "Job Postings"
             ? "#1BBB62"
-            : label === "Disapproved" || label === "Unpaid"
+            : label === "Disapproved" ||
+              label === "DISAPPROVED" ||
+              label === "Unpaid"
             ? "#E8381A"
             : "#F9912E",
       }}

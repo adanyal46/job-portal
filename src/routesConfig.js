@@ -50,6 +50,10 @@ import ResetPassword from "./guest-view/ResetPassword";
 import ForgetPassword from "./guest-view/ForgetPassword";
 import SignUpPageUserType from "./guest-view/SignUpPageUserType";
 import RegisterForm from "./pages/signUp";
+import AdminHireRecruiter from "./components/ADMIN/AdminHireRecruiter";
+import AdminHireRecDetail from "./components/ADMIN/AdminHireRecDetail";
+import PopupInfo from "./components/ADMIN/popup-info";
+import EditPostNote from "./components/ADMIN/edit-post-note";
 
 // Lazy loaded components
 const MyProfile = lazy(() => import("./pages/myProfile"));
@@ -628,6 +632,16 @@ const routeConfig = (token) => {
           errorElement: <ErrorPage />,
         },
         {
+          path: "hire-recruiter",
+          element: <AdminHireRecruiter />,
+          errorElement: <ErrorPage />,
+        },
+        {
+          path: "hire-recruiter/:bookingId",
+          element: <AdminHireRecDetail />,
+          errorElement: <ErrorPage />,
+        },
+        {
           path: "recruiter-profile/:id",
           element: <AdminRecruiterProfile />,
           errorElement: <ErrorPage />,
@@ -670,6 +684,16 @@ const routeConfig = (token) => {
         {
           path: "pages",
           element: <Pages />,
+          errorElement: <ErrorPage />,
+        },
+        {
+          path: "popup-info",
+          element: <PopupInfo />,
+          errorElement: <ErrorPage />,
+        },
+        {
+          path: "edit-post-note",
+          element: <EditPostNote />,
           errorElement: <ErrorPage />,
         },
         {

@@ -1,12 +1,62 @@
-import { Card, Col, Divider, Flex, Form, Input, Row, Typography } from "antd";
+import {
+  Button,
+  Card,
+  Col,
+  Divider,
+  Flex,
+  Form,
+  Input,
+  Popconfirm,
+  Row,
+  Typography,
+} from "antd";
 import { AdminSearchIcon, InfoIcon } from "../../../assets/svg";
 import CustomButton from "../../customButton";
 import PhotoUpload from "../../photoUpload";
 import CommonInput from "../../commonInput";
+import { useEffect } from "react";
 
-const SettingCard = ({ type = "job-seeker", DIVIDER_COLOR, TEXT_COLOR }) => {
+const SettingCard = ({
+  type = "job-seeker",
+  DIVIDER_COLOR,
+  TEXT_COLOR,
+  searchQuery,
+  setSearchQuery,
+  handleSearch,
+  user,
+  loading,
+  updateUser,
+}) => {
+  let [form] = Form.useForm();
+  useEffect(() => {
+    if (user) {
+      form.setFieldsValue({
+        email: user.email,
+        secondaryEmail: user.secondaryEmail,
+      });
+    }
+  }, [user]);
+
+  const handleDeactivate = () => {
+    updateUser(user?.id, {
+      deActivate: !user.deActivate,
+      isActive: !user.isActive,
+      action: "updateProfile",
+    });
+  };
+
+  const handleDelete = () => {
+    updateUser(user?.id, {
+      action: "delete",
+    });
+  };
+
+  const handleSave = () => {
+    updateUser(user?.id, form.getFieldsValue());
+  };
+
   return (
-    <Card>
+    <Card loading={loading}>
       <Typography.Title level={5} style={TEXT_COLOR}>
         Manage Users Account
       </Typography.Title>
@@ -18,17 +68,25 @@ const SettingCard = ({ type = "job-seeker", DIVIDER_COLOR, TEXT_COLOR }) => {
         </Typography.Text>
       </Flex>
       <Input
+        value={searchQuery}
         size="large"
         style={{ maxWidth: "400px", width: "100%" }}
         placeholder="Search user id"
         prefix={<AdminSearchIcon />}
+        onChange={(e) => setSearchQuery(e.target.value)}
+        onKeyUp={handleSearch}
       />
       <Divider style={DIVIDER_COLOR} />
-      <PhotoUpload name="profilePic" />
-      <Form layout="vertical" style={{ marginTop: "20px" }} size="large">
+      <PhotoUpload name="profilePic" initialImageUrl={user?.avatarUrl} />
+      <Form
+        layout="vertical"
+        style={{ marginTop: "20px" }}
+        size="large"
+        form={form}
+      >
         <Row gutter={[12, 12]}>
           <Col flex={1}>
-            <Form.Item name={"primaryEmail"} label={"Primary Email"}>
+            <Form.Item name={"email"} label={"Primary Email"}>
               <CommonInput placeholder="Enter Primary Email" />
             </Form.Item>
           </Col>
@@ -71,22 +129,47 @@ const SettingCard = ({ type = "job-seeker", DIVIDER_COLOR, TEXT_COLOR }) => {
         </Typography.Title>
         <Divider style={DIVIDER_COLOR} />
         <Flex gap={6}>
-          <CustomButton
-            category="plain"
-            name="Deactivate"
-            style={{
-              backgroundColor: "#E9F0F3",
-              borderColor: "#E9F0F3",
-            }}
-          />
-          <CustomButton
-            style={{ backgroundColor: "#E8381A", color: "#fff" }}
-            category="plain"
-            name="Delete"
-          />
+          <Popconfirm
+            title="Are you sure you want to deactivate?"
+            onConfirm={handleDeactivate}
+            okText="Yes"
+            cancelText="No"
+          >
+            <Button
+              style={{
+                backgroundColor: "#E9F0F3",
+                borderColor: "#E9F0F3",
+                fontWeight: 500,
+              }}
+              disabled={!user}
+            >
+              {user?.deActivate ? "Activate" : "Deactivate"}
+            </Button>
+          </Popconfirm>
+          <Popconfirm
+            title="Are you sure you want to delete user?"
+            onConfirm={handleDelete}
+            okText="Yes"
+            cancelText="No"
+          >
+            <Button
+              style={{
+                backgroundColor: "#E8381A",
+                color: "#fff",
+                fontWeight: 500,
+              }}
+              disabled={!user}
+            >
+              Delete
+            </Button>
+          </Popconfirm>
         </Flex>
         <Flex justify="end">
-          <CustomButton category="primary" name="Save" />
+          <CustomButton
+            category="primary"
+            name="Save"
+            handleClick={handleSave}
+          />
         </Flex>
       </Form>
     </Card>

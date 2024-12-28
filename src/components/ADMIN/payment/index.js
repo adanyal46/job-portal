@@ -1,9 +1,21 @@
-import { Card, DatePicker, Input, Table, Typography, Flex, Form } from "antd";
-import React, { useState } from "react";
+import {
+  Card,
+  DatePicker,
+  Input,
+  Table,
+  Typography,
+  Flex,
+  Form,
+  notification,
+} from "antd";
+import React, { useEffect, useState } from "react";
 import CustomPagination from "../../customPagination";
 import { AdminSearchIcon, CalendarDashboardIcon } from "../../../assets/svg";
 import CustomSelect from "../../customSelect";
 import CustomTag from "../components/CustomTag";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchPaymentList } from "../../../features/admin/user/paymentSlice";
+import { formatDateToShort } from "../../../utils/index";
 const TEXT_COLOR = {
   color: "#0C0C0C",
 };
@@ -149,25 +161,44 @@ const data = [
 const columns = [
   {
     title: "Transaction No.",
-    dataIndex: "transactionNo",
-    key: "transactionNo",
+    dataIndex: "transactionId",
+    key: "transactionId",
+    render: (_, record) => {
+      return <span>{record?.transactionId ?? "-"}</span>;
+    },
   },
   {
     title: "Paid By",
-    dataIndex: "paidBy",
-    key: "paidBy",
+    dataIndex: "fullname",
+    key: "fullname",
+    render: (_, record) => {
+      if (record.fullname) {
+        return (
+          <Flex gap={2}>
+            <span>{record?.fullname}</span>
+            <strong>{"(" + record?.source.charAt(0) + ")"}</strong>
+          </Flex>
+        );
+      }
+      return <span>-</span>;
+    },
   },
   {
     title: "Paid on Date",
-    dataIndex: "paidOnDate",
-    key: "paidOnDate",
+    dataIndex: "paidOn",
+    key: "paidOn",
+    render: (_, record) => {
+      return (
+        <span>{record?.paidOn ? formatDateToShort(record?.paidOn) : "-"}</span>
+      );
+    },
   },
   {
     title: "Paid For",
     dataIndex: "paidFor",
     key: "paidFor",
-    render: (status) => {
-      return <CustomTag label={status} />;
+    render: (_, record) => {
+      return <span>{record?.paidFor ?? "-"}</span>;
     },
   },
   {
@@ -180,18 +211,30 @@ const columns = [
   },
   {
     title: "Price",
-    dataIndex: "price",
-    key: "price",
+    dataIndex: "servicePrice",
+    render: (_, record) => {
+      return <strong>${record?.servicePrice ?? "-"}</strong>;
+    },
   },
 ];
 const PaymentList = () => {
+  const dispatch = useDispatch();
+  const { data, error } = useSelector((state) => state.payment);
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize] = useState(10); // Items per page
 
-  const paginatedData = data.slice(
-    (currentPage - 1) * pageSize,
-    currentPage * pageSize
-  );
+  useEffect(() => {
+    dispatch(fetchPaymentList());
+  }, [dispatch, currentPage]);
+
+  useEffect(() => {
+    if (error) {
+      notification.error({
+        message: "Error Loading Data",
+        description: error,
+      });
+    }
+  }, [error]);
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
@@ -222,18 +265,18 @@ const PaymentList = () => {
         </Flex>
         <Table
           columns={columns}
-          dataSource={paginatedData}
+          dataSource={data ?? []}
           bordered={false}
           pagination={false}
           className="custom-table"
           scroll={{
             x: 200,
           }}
-          rowKey="id"
+          rowKey="createdAt"
         />
         <CustomPagination
-          total={data.length}
-          pageSize={pageSize}
+          total={data?.length}
+          pageSize={10}
           currentPage={currentPage}
           onChange={handlePageChange}
         />

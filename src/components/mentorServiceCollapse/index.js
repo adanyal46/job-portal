@@ -7,7 +7,7 @@ import CustomButton from "../customButton";
 const onChange = (checkedValues) => {};
 
 const MentorServiceCollapse = (props) => {
-  const { handleClick, services } = props;
+  const { handleClick, services, isStarted = true } = props;
 
   // Create items for Collapse
   const items =
@@ -17,20 +17,35 @@ const MentorServiceCollapse = (props) => {
     services?.map((service) => ({
       key: service.id,
       label: (
-        <>
-          <p className="header-text">{`${
-            service?.name.charAt(0).toUpperCase() + service?.name.slice(1)
-          } $${service?.pricing}`}</p>
+        <div
+          style={{
+            width: "100%",
+            maxWidth: "180px",
+            display: "flex",
+          }}
+        >
+          <p className="header-text">
+            {`${
+              service?.name.charAt(0).toUpperCase() + service?.name.slice(1)
+            } `}
+            <strong>{`$${service?.pricing}`}</strong>
+          </p>
           <Checkbox value={service?.id?.toString()}></Checkbox>
-        </>
+        </div>
       ),
       children: (
         <>
           <p>{service.description}</p>
+
           <CustomButton
             category="primary"
             name="Let's Get Started"
-            handleClick={() => handleClick(service.id)}
+            handleClick={() => {
+              if (isStarted) {
+                handleClick(service.id);
+                return;
+              }
+            }}
           />
         </>
       ),

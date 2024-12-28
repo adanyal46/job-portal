@@ -1,11 +1,21 @@
 import React from "react";
-import { Breadcrumb, ConfigProvider, Flex, Image, Layout, Menu } from "antd";
+import {
+  Breadcrumb,
+  ConfigProvider,
+  Flex,
+  Image,
+  Layout,
+  Menu,
+  message,
+} from "antd";
 import {
   AdminBlogIcon,
   AdminCommonManagementIcon,
   AdminDashboardIcon,
+  AdminEditPostIcon,
   AdminGeneralManagementIcon,
   AdminListIcon,
+  AdminLogoutIcon,
   AdminPageIcon,
   AdminPaymentIcon,
   AdminRequestIcon,
@@ -33,8 +43,15 @@ const items = [
   ]),
   getItem("Timesheet", "/admin/timesheet-management", <AdminTimesheetIcon />),
   getItem("Requests", "admin-request", <AdminRequestIcon />, [
-    getItem("Recruiter Requests", "/admin/recruiter-profile-approval-requests"),
-    getItem("Mentor Requests", "/admin/mentor-profile-approval-requests"),
+    getItem(
+      "Mentor Profile Requests",
+      "/admin/mentor-profile-approval-requests"
+    ),
+    getItem(
+      "Recruiter Profile Requests",
+      "/admin/recruiter-profile-approval-requests"
+    ),
+    getItem("Hire Recruiter Requests", "/admin/hire-recruiter"),
   ]),
   getItem("Pages", "/admin/pages", <AdminPageIcon />),
   getItem(
@@ -62,15 +79,26 @@ const items = [
 
   getItem("Blogs", "/admin/blogs", <AdminBlogIcon />),
   getItem("Payments", "/admin/payments", <AdminPaymentIcon />),
-  getItem("Popup Info", "admin/popup-info", <AdminTimesheetIcon />),
+  getItem("Popup Info", "/admin/popup-info", <AdminTimesheetIcon />),
+  getItem("Edit Post Note", "/admin/edit-post-note", <AdminEditPostIcon />),
   getItem("Settings", "/admin/settings", <AdminTimesheetIcon />),
+  getItem("Logout", "/admin/logout", <AdminLogoutIcon />),
 ];
 const AdminLayout = () => {
   const location = useLocation();
 
   const navigate = useNavigate();
   const handleMenuClick = (obj) => {
-    navigate(obj.key);
+    if (obj.key === "/admin/logout") {
+      localStorage.removeItem("token");
+      message.open({
+        type: "success",
+        content: "Logout Successfully!",
+      });
+      window.location.reload();
+    } else {
+      navigate(obj.key);
+    }
   };
   return (
     <div

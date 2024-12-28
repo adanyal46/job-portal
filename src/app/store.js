@@ -22,6 +22,11 @@ import MentorServiceReducer from "../features/admin/common-management/slices/men
 import RecruiterServiceReducer from "../features/admin/common-management/slices/recruiterServicesSlice";
 import LanguageReducer from "../features/admin/common-management/slices/languageSlice";
 import SkillReducer from "../features/admin/common-management/slices/skillSlice";
+import HireRecruiterReducer from "../features/admin/user/hireRecruiterSlice";
+import ProfileApprovalReducer from "../features/admin/user/profileApprovalSlice";
+import PaymentReducer from "../features/admin/user/paymentSlice";
+import BlogReducer from "../features/admin/user/blogSlice";
+import EmpStaffMemberReducer from "../features/EMPLOYER/staffMemberSlice";
 
 export const store = configureStore({
   reducer: {
@@ -47,5 +52,10 @@ export const store = configureStore({
     recruiterService: RecruiterServiceReducer,
     languages: LanguageReducer,
     skills: SkillReducer,
+    hireRecruiter: HireRecruiterReducer,
+    profileApproval: ProfileApprovalReducer,
+    payment: PaymentReducer,
+    blog: BlogReducer,
+    empStaffMember: EmpStaffMemberReducer,
   },
 });
