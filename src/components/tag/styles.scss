@@ -1,10 +1,12 @@
 .custom-tag {
   border-radius: 0.8rem;
-  background-color: #e9f0f3;
+  background-color: #EFF3F4 !important;
   padding: 0rem 0.8rem;
-  width: max-content;
+  width: 100%;
+  min-width: 100%;
+  max-width: 100% !important;
 
   font-size: 1.6rem;
   font-weight: 600;
-  color: #2f2c39;
+  color: #2F2C39 !important;
 }

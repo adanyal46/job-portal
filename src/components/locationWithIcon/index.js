@@ -8,7 +8,7 @@ const LocationWithIcon = (props) => {
   return (
     <article className="mentor-location">
       <LocationIcon />
-      <p className="location">{location}</p>
+      <p className="location">{location ?? "N/A"}</p>
     </article>
   );
 };

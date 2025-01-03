@@ -17,6 +17,7 @@ const CustomButton = (props) => {
     block = false,
     style,
   } = props;
+
   const onClick = typeof handleClick === "function" ? handleClick : () => {};
   return (
     <Switch>

@@ -6,6 +6,7 @@ import Rating from "../rating";
 import Tag from "../tag";
 
 import "./styles.scss";
+import { Typography } from "antd";
 
 const MentorCard = (props) => {
   const { icon, services, profile, certificate, mentorId } = props;
@@ -40,12 +41,14 @@ const MentorCard = (props) => {
 
         <LocationWithIcon location={profile?.location} />
 
-        {services && (
+        {services ? (
           <article className="mentor-card-tags-container">
             {services.slice(0, 3).map((experty, index) => (
               <Tag key={`mentor-card-tag-${index}`} label={experty.name} />
             ))}
           </article>
+        ) : (
+          <Typography.Paragraph>No Services Found</Typography.Paragraph>
         )}
 
         <section className="mentor-detail-button">

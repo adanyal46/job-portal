@@ -1,14 +1,19 @@
 import { Card, Col, DatePicker, Flex, Input, Row, Typography } from "antd";
 import React, { useEffect, useState } from "react";
 import CustomButton from "../../components/customButton";
-import { CalendarDashboardIcon, SearchFieldIcon } from "../../assets/svg";
+import {
+  CalendarDashboardIcon,
+  EmptyStateRecruiter,
+  SearchFieldIcon,
+} from "../../assets/svg";
 import CustomPagination from "../../components/customPagination";
 import RecruiterCard from "../employerDashboard/RecruiterCard";
 import "./styles.scss";
 import CommonInput from "../../components/commonInput";
 import CustomSelect from "../../components/customSelect";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchRecruiterList } from "../../features/employerDashboard/employerDashboardSlice";
+import { fetchTalentList } from "../../features/employerDashboard/employerDashboardSlice";
+import TalentCard from "../employerDashboard/TalentCard";
 
 const SearchFields = ({
   locationOptions,
@@ -150,11 +155,16 @@ const hiredRecruiterData = [
     services: ["Resume Review", "30-Minute Career Q&A", "Job Search Strategy"],
   },
 ];
-const EmployerTalent = () => {
+const EmployerRecruiter = () => {
   const dispatch = useDispatch();
-  const { recruiters, loading } = useSelector(
+  const { talents, loading, error } = useSelector(
     (state) => state.employerDashboard
   );
+
+  useEffect(() => {
+    dispatch(fetchTalentList());
+  }, [dispatch]);
+
   const [searchFields, setSearchFields] = useState({
     serviceName: "",
     location: null,
@@ -162,17 +172,11 @@ const EmployerTalent = () => {
     industry: null,
     yearOfExperience: null,
   });
-
-  console.log(recruiters);
-  useEffect(() => {
-    dispatch(fetchRecruiterList());
-  }, [dispatch]);
-
   const handleSearch = () => {};
   return (
     <div>
       <Typography.Title level={3} style={{ fontWeight: 400 }}>
-        Recruiter
+        Talent
       </Typography.Title>
       <SearchFields
         locationOptions={[
@@ -200,17 +204,28 @@ const EmployerTalent = () => {
         setSearchFields={setSearchFields}
       />
       <Card bordered={false} loading={loading}>
-        <Row gutter={[12, 12]} style={{ marginTop: "20px" }}>
-          {recruiters?.map((item, index) => (
-            <Col md={8} key={item.id}>
-              <RecruiterCard key={`mentor-card-${index}`} {...item} />
-            </Col>
-          ))}
-        </Row>
-        {recruiters?.length >= 10 && <CustomPagination />}
+        {Array.isArray(talents) && talents.length > 0 ? (
+          <Row gutter={[12, 12]} style={{ marginTop: "20px" }}>
+            {talents?.map((item, index) => (
+              <Col md={8} key={item.id}>
+                <TalentCard key={`mentor-card-${index}`} {...item} />
+              </Col>
+            ))}
+          </Row>
+        ) : (
+          <Flex
+            style={{ minHeight: "calc(100vh - 30.5vh)" }}
+            align="center"
+            justify="center"
+          >
+            <EmptyStateRecruiter />
+          </Flex>
+        )}
+
+        {Array.isArray(talents) && talents.length >= 10 && <CustomPagination />}
       </Card>
     </div>
   );
 };
 
-export default EmployerTalent;
+export default EmployerRecruiter;

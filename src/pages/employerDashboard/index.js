@@ -33,6 +33,7 @@ import {
   fetchEmployerDashboardData,
   fetchHireRecruiterList,
   fetchJobList,
+  fetchStaffMemberEmp,
 } from "../../features/employerDashboard/employerDashboardSlice";
 import Loader from "../../components/Loader";
 import { Link } from "react-router-dom";
@@ -54,21 +55,27 @@ const Dashboard = () => {
     loadingJobs,
     loadingActivity,
     error,
+    staffMembers,
   } = useSelector((state) => state.employerDashboard);
   const [activeTabKey, setActiveTabKey] = useState("1");
+
+  console.log(staffMembers);
 
   useEffect(() => {
     dispatch(fetchEmployerDashboardData());
     dispatch(fetchJobList());
     dispatch(fetchActivityList());
     dispatch(fetchHireRecruiterList());
-  }, [dispatch]);
+    if (user) {
+      dispatch(fetchStaffMemberEmp(user?.id));
+    }
+  }, [dispatch, user]);
 
   useEffect(() => {
     if (error) {
       message.error({
         type: "error",
-        content: "error",
+        content: error,
       });
     }
   }, [error]);
@@ -97,69 +104,6 @@ const Dashboard = () => {
       count: counts ? counts.hiredRecruiterCount : "0",
       title: "RECRUITERS HIRED",
       icon: <DashboardRecruiterHiredIcon />,
-    },
-  ];
-
-  // const jobData = [
-  //   {
-  //     id: "#A324BC",
-  //     jobTitle: "UI/UX Designer",
-  //     status: "Open",
-  //     applicationReceived: "323",
-  //     date: "11 Nov 2024",
-  //   },
-  //   {
-  //     id: "#A12324BC",
-  //     jobTitle: "UI/UX Designer",
-  //     status: "Open",
-  //     applicationReceived: "345",
-  //     date: "11 Nov 2024",
-  //   },
-  //   {
-  //     id: "#A234BC",
-  //     jobTitle: "UI/UX Designer",
-  //     status: "Open",
-  //     applicationReceived: "232",
-  //     date: "11 Nov 2024",
-  //   },
-  //   {
-  //     id: "#A454BC",
-  //     jobTitle: "UI/UX Designer",
-  //     status: "Closed",
-  //     applicationReceived: "123",
-  //     date: "11 Nov 2024",
-  //   },
-  // ];
-
-  const staffData = [
-    {
-      id: 1,
-      title: "Project Manager",
-      fullname: "Jannet Summers",
-      email: "Jannetsummers@gmail.com",
-      phone: "+1 305 3216549",
-    },
-
-    {
-      id: 2,
-      title: "Project Manager",
-      fullname: "Jannet Summers",
-      email: "Jannetsummers@gmail.com",
-      phone: "+1 305 3216549",
-    },
-    {
-      id: 3,
-      title: "Project Manager",
-      fullname: "Jannet Summers",
-      email: "Jannetsummers@gmail.com",
-      phone: "+1 305 3216549",
-    },
-    {
-      id: 4,
-      title: "Project Manager",
-      fullname: "Jannet Summers",
-      email: "Jannetsummers@gmail.com",
-      phone: "+1 305 3216549",
     },
   ];
 
@@ -262,13 +206,13 @@ const Dashboard = () => {
         <Card title="Staff Members" bordered={false}>
           <FilterTab />
           <Row gutter={[12, 12]} style={{ marginTop: "20px" }}>
-            {staffData?.map((item, index) => (
+            {staffMembers?.map((item, index) => (
               <Col md={12} key={item.id}>
                 <StaffCard key={`staff-card-${index}`} {...item} />
               </Col>
             ))}
           </Row>
-          <CustomPagination />
+          {/* <CustomPagination /> */}
         </Card>
       ),
     },

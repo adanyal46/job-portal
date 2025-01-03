@@ -8,6 +8,7 @@ import {
   getHireRecruiterList,
   getJobListApi,
   getRecruiterList,
+  getStaffMemberByEmployeeId,
   getTalentList,
 } from "./employerDashboardApi";
 
@@ -19,8 +20,19 @@ export const fetchEmployerDashboardData = createAsyncThunk(
       const response = await getCountApi();
       return response.data;
     } catch (error) {
-      const message =
-        error.response?.data?.message || "Failed to fetch dashboard data";
+      const message = error.response?.data?.message || "Internal Server Error";
+      return rejectWithValue(message);
+    }
+  }
+);
+export const fetchStaffMemberEmp = createAsyncThunk(
+  "employerStaff/EMPID",
+  async (empId, { rejectWithValue }) => {
+    try {
+      const response = await getStaffMemberByEmployeeId(empId);
+      return response.data;
+    } catch (error) {
+      const message = error?.message || "Internal Server Error";
       return rejectWithValue(message);
     }
   }
@@ -97,6 +109,7 @@ const employerDashboardSlice = createSlice({
   name: "employerDashboard",
   initialState: {
     counts: null,
+    staffMembers: [],
     jobList: null,
     activity: null,
     talents: null,
@@ -183,6 +196,18 @@ const employerDashboardSlice = createSlice({
         state.recruiters = action.payload;
       })
       .addCase(fetchHireRecruiterList.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload || "Unexpected error occurred";
+      })
+      .addCase(fetchStaffMemberEmp.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchStaffMemberEmp.fulfilled, (state, action) => {
+        state.loading = false;
+        state.staffMembers = action.payload;
+      })
+      .addCase(fetchStaffMemberEmp.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload || "Unexpected error occurred";
       });

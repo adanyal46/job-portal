@@ -18,7 +18,7 @@ const CommonInput = (props) => {
     onEnter,
     name,
     handleClear,
-    maxLength
+    maxLength,
   } = props;
 
   const handleDateChange = (date, dateString) => {
@@ -151,7 +151,7 @@ const CommonInput = (props) => {
           allowClear // Enable clear option
           onClear={handleClearInput} // Set the clear handler
           name={name || ""}
-          onKeyPress={handleKeyPress}
+          onKeyUp={handleKeyPress}
         />
       </Default>
     </Switch>

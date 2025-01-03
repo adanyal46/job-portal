@@ -1,9 +1,9 @@
 import React, { Suspense } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import AuthApp from "./AuthApp";
-import routeConfig from "./routesConfig";
 import "./App.scss";
 import Loader from "./components/Loader";
+import routeConfig from "./routes/routesConfig";
 
 const App = () => {
   const token = localStorage.getItem("token");

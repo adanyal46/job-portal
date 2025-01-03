@@ -6,7 +6,7 @@ const Rating = ({ rating = 0, reviews = 0 }) => {
   const numericRating = Number(rating);
 
   return (
-    <article className="rating-container">
+    <article className="rating-container" style={{ gap: "10px" }}>
       <h6 className="rating">{numericRating.toFixed(1)}</h6>
 
       {/* Use Ant Design Rate component */}

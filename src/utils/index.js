@@ -176,3 +176,23 @@ export const formatDateToShort = (date) => {
   }).format(new Date(date));
   return formattedDate;
 };
+
+export function calculateReadingTime(htmlString, wordsPerMinute = 200) {
+  // Remove HTML tags to get plain text
+  const plainText = htmlString.replace(/<[^>]*>/g, "");
+
+  // Count words
+  const wordCount = plainText
+    .split(/\s+/)
+    .filter((word) => word.length > 0).length;
+
+  // Calculate time in seconds
+  const readingTimeSeconds = (wordCount / wordsPerMinute) * 60;
+
+  // Convert to minutes and seconds
+  const minutes = Math.floor(readingTimeSeconds / 60);
+  const seconds = Math.round(readingTimeSeconds % 60);
+
+  // Return formatted time
+  return `${minutes > 0 ? `${minutes} min ` : ""}${seconds} sec`;
+}

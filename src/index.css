@@ -140,3 +140,23 @@ body {
 .admin-sidebar {
   border-radius: 4px 12px 12px 4px;
 }
+
+.block_page_bg {
+  background: linear-gradient(150.25deg, #eaebec -12.71%, #88b3c1 131.5%);
+}
+
+.block_page_container {
+  max-width: 1920px;
+  width: 100%;
+  margin-inline: auto;
+  padding: 32px 240px;
+}
+.block_page_container > h4 {
+  color: #0c0c0c;
+  font-family: Poppins !important;
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 36px;
+  text-align: left;
+  margin-bottom: 18px;
+}

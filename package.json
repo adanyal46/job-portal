@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@ant-design/icons": "^5.5.1",
+    "@ant-design/plots": "^2.3.3",
     "@lexical/react": "^0.17.1",
     "@reduxjs/toolkit": "^2.2.7",
     "antd": "^5.20.1",

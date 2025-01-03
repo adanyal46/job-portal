@@ -71,6 +71,7 @@ const Navbar = ({ user }) => {
           >
             <figure className="branding-logo">
               <Image
+                preview={false}
                 loading="lazy"
                 className="fuse-brand-logo"
                 src="/images/fuse-nav-icon.png"
