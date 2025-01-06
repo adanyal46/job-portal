@@ -98,7 +98,7 @@ const EmployerSetting = () => {
           {
             key: "2",
             label: "Account Admin",
-            children: <AccountAdmin />,
+            children: <AccountAdmin user={user} />,
           },
           {
             key: "3",

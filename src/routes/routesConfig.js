@@ -46,7 +46,7 @@ const routeConfig = (token) => {
       ...frontRoutes,
       {
         path: "*",
-        element: <Navigate to={"/login"} replace />,
+        element: <Navigate to={"/"} replace />,
         errorElement: <ErrorPage />,
       },
       {

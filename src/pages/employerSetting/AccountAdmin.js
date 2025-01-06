@@ -12,12 +12,23 @@ import {
   Typography,
 } from "antd";
 import CommonInput from "../../components/commonInput";
+import { Link } from "react-router-dom";
 
-const AccountAdmin = () => {
+const AccountAdmin = ({ user }) => {
+  console.log(user);
+
   return (
     <Card title="Account Admin Details">
-      <Flex style={{ marginBottom: "20px" }}>
-        <Image src="/images/no-image.jpg" width={180} preview={false} />
+      <Flex style={{ marginBottom: "20px" }} gap={15}>
+        <Image
+          src={
+            user?.Profile[0]?.avatarId
+              ? process.env.REACT_APP_MEDIA_URL + user?.Profile[0]?.avatarId
+              : "/images/no-image.jpg"
+          }
+          width={180}
+          preview={false}
+        />
         <Flex vertical>
           <Typography.Title level={4} style={{ marginBottom: "10px" }}>
             Account Admin
@@ -26,15 +37,17 @@ const AccountAdmin = () => {
             level={3}
             style={{ fontWeight: "400", marginTop: 0 }}
           >
-            Jannet Summers
+            {user?.Profile[0]?.fullname}
           </Typography.Title>
           <Typography.Text style={{ color: "#52595C" }}>
-            Jannetsummers@gmail.com
+            {user?.email}
           </Typography.Text>
           <Typography.Text style={{ color: "#52595C", marginBottom: "10px" }}>
-            +1 305 3216549
+            {user?.Profile[0]?.phnumber ?? "N/A"}
           </Typography.Text>
-          <CustomButton name="Details" category="primary" />
+          <Link to={"/employer/profile"}>
+            <CustomButton name="Details" block={true} category="primary" />
+          </Link>
         </Flex>
       </Flex>
       <Typography.Title level={4}>Transfer Account</Typography.Title>

@@ -196,3 +196,11 @@ export function calculateReadingTime(htmlString, wordsPerMinute = 200) {
   // Return formatted time
   return `${minutes > 0 ? `${minutes} min ` : ""}${seconds} sec`;
 }
+
+// export function getDaysAgo(dateString) {
+//   const date = new Date(dateString);
+//   const now = new Date();
+//   const diffTime = Math.abs(now - date); // Difference in milliseconds
+//   const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24)); // Convert to days
+//   return `${diffDays} days ago`;
+// }
