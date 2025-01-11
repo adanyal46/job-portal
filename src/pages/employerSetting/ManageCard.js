@@ -12,6 +12,7 @@ import {
   Select,
   Typography,
 } from "antd";
+import axiosInstance from "../../api/axiosInstance";
 
 const formatCardNumber = (value) => {
   const cleanValue = value?.replace(/\D/g, "") || "";
@@ -34,6 +35,9 @@ const ManageCard = ({
   handleSaveCard,
   loading,
   cards,
+  handleActiveCard,
+  activeCardId,
+  setActiveCardId,
 }) => {
   const [cardForm] = Form.useForm();
   const cardOptions = cards?.map((card) => ({
@@ -60,13 +64,22 @@ const ManageCard = ({
             handleClick={handleAddNewCardClick}
           />
           <Divider style={{ borderColor: "#DDDCE2" }} />
-          <Form layout="vertical">
+          <Form
+            layout="vertical"
+            initialValues={{
+              savedCard: activeCardId,
+            }}
+            size="large"
+          >
             <Row gutter={[12, 12]}>
               <Col span={12}>
                 <Form.Item name={"savedCard"} label={"Saved Cards"}>
                   <Select
                     placeholder="Select From Saved Cards"
                     options={cardOptions}
+                    value={activeCardId}
+                    allowClear
+                    onChange={(val) => setActiveCardId(val)}
                   />
                 </Form.Item>
               </Col>
@@ -77,7 +90,8 @@ const ManageCard = ({
               category="primary"
               name="Save"
               classes="save"
-              handleClick={() => {}}
+              handleClick={handleActiveCard}
+              loading={loading}
             />
           </Flex>
         </Card>

@@ -14,6 +14,7 @@ import { employerRoutes } from "./employerRoutes";
 import { staffMemberRoutes } from "./staffMemberRoutes";
 import { adminRoutes } from "./adminRoutes";
 import { frontRoutes } from "./frontRoutes";
+import AdminLogin from "../pages/login/AdminLogin";
 
 const SignUp = lazy(() => import("../pages/signUp"));
 const LoginForm = lazy(() => import("../pages/login"));
@@ -52,6 +53,11 @@ const routeConfig = (token) => {
       {
         path: "/login",
         element: <LoginForm />,
+        errorElement: <ErrorPage />,
+      },
+      {
+        path: "/admin/login",
+        element: <AdminLogin />,
         errorElement: <ErrorPage />,
       },
       {

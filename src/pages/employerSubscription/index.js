@@ -24,8 +24,6 @@ const EmployerSubscription = () => {
   });
   const [loading, setLoading] = useState(false);
 
-  console.log(subscriptionData);
-
   useEffect(() => {
     if (user) {
       fetchSubscriptions(user?.id);
@@ -35,7 +33,7 @@ const EmployerSubscription = () => {
   const fetchSubscriptions = async (id) => {
     try {
       setLoading(true);
-      const response = await axiosInstance("/employer/subscription/" + id);
+      const response = await axiosInstance.get("/employer/subscription/" + id);
       const result = response.data.data;
       setSubscriptionData({
         ...subscriptionData,
@@ -60,7 +58,9 @@ const EmployerSubscription = () => {
 
   const fetchDetailSubscription = async (id) => {
     try {
-      const response = await axiosInstance("/employer/buySubscription/" + id);
+      const response = await axiosInstance.get(
+        "/employer/buySubscription/" + id
+      );
       const result = response.data.data;
       setSubscriptionData((prevData) => ({
         ...prevData,

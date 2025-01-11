@@ -124,7 +124,7 @@ const EmploymentAndExperience = ({
 
   return (
     <section className="employment-and-experience-wrapper">
-      <CommonHeading heading="Employement and Experience History" />
+      <CommonHeading heading="Employment and Experience History" />
 
       <section className="experience-wrapper">
         {employmentHistorys?.map((item) => (

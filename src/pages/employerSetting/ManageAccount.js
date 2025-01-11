@@ -3,7 +3,11 @@ import React from "react";
 import CommonInput from "../../components/commonInput";
 import CustomButton from "../../components/customButton";
 
-const ManageAccount = ({ manageAcountForm }) => {
+const ManageAccount = ({
+  manageAcountForm,
+  handleSubmitManageAccount,
+  manageLoading,
+}) => {
   return (
     <Card title={"Change Email Address"}>
       <Form layout={"vertical"} size={"large"} form={manageAcountForm}>
@@ -49,12 +53,14 @@ const ManageAccount = ({ manageAcountForm }) => {
           name="Deactivate"
           classes="deactivate"
           style={{ backgroundColor: "#E9F0F3" }}
+          loading={manageLoading}
         />
         <CustomButton
           category="plain"
           name="Delete"
           classes="delete"
           style={{ backgroundColor: "#E8381A", color: "white" }}
+          loading={manageLoading}
         />
       </Flex>
       <Flex justify={"end"}>
@@ -62,7 +68,8 @@ const ManageAccount = ({ manageAcountForm }) => {
           category="primary"
           name="Save"
           classes="save"
-          handleClick={() => {}}
+          handleClick={handleSubmitManageAccount}
+          loading={manageLoading}
         />
       </Flex>
     </Card>

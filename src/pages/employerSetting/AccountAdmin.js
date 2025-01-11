@@ -14,9 +14,12 @@ import {
 import CommonInput from "../../components/commonInput";
 import { Link } from "react-router-dom";
 
-const AccountAdmin = ({ user }) => {
-  console.log(user);
-
+const AccountAdmin = ({
+  user,
+  manageAdminForm,
+  handleSubmitManageAccount,
+  manageLoading,
+}) => {
   return (
     <Card title="Account Admin Details">
       <Flex style={{ marginBottom: "20px" }} gap={15}>
@@ -52,7 +55,7 @@ const AccountAdmin = ({ user }) => {
       </Flex>
       <Typography.Title level={4}>Transfer Account</Typography.Title>
       <Divider style={{ marginTop: "5px", borderColor: "#DDDCE2" }} />
-      <Form layout="vertical" size="large">
+      <Form layout="vertical" size="large" manageAdminForm={manageAdminForm}>
         <Row gutter={[12, 12]} align={"middle"}>
           <Col flex={1}>
             <Form.Item name={"adminId"} label={"Enter New Admin ID"}>
@@ -101,12 +104,14 @@ const AccountAdmin = ({ user }) => {
           name="Deactivate"
           classes="deactivate"
           style={{ backgroundColor: "#E9F0F3" }}
+          loading={manageLoading}
         />
         <CustomButton
           category="plain"
           name="Delete"
           classes="delete"
           style={{ backgroundColor: "#E8381A", color: "white" }}
+          loading={manageLoading}
         />
       </Flex>
       <Flex justify={"end"}>
@@ -114,7 +119,8 @@ const AccountAdmin = ({ user }) => {
           category="primary"
           name="Save"
           classes="save"
-          handleClick={() => {}}
+          handleClick={handleSubmitManageAccount}
+          loading={manageLoading}
         />
       </Flex>
     </Card>

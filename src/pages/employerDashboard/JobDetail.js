@@ -10,11 +10,15 @@ import CustomButton from "../../components/customButton";
 import Tag from "../../components/tag";
 import { Link, useParams } from "react-router-dom";
 import { getJobDetailApi } from "../../features/employerDashboard/employerDashboardApi";
+import { useSelector } from "react-redux";
 
 const TEXT_STYLE = {
   color: "#2F2C39",
 };
 const JobDetail = () => {
+  const { user } = useSelector((state) => state.profile);
+  const ROLE = user?.role;
+  const route = ROLE === "STAFF_MEMBER" ? "/staff" : "/employer";
   const { id } = useParams();
   const [jobDetails, setJobDetails] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -77,7 +81,7 @@ const JobDetail = () => {
             ${jobDetails?.minPrice ?? "-"} - ${jobDetails?.maxPrice ?? "-"}
           </Typography.Text>
           <div>
-            <Link to={"/employer/job-applicants/" + jobDetails?.randomId}>
+            <Link to={route + "/job-applicants/" + jobDetails?.randomId}>
               <CustomButton name="View Job Applicants" category="primary" />
             </Link>
           </div>

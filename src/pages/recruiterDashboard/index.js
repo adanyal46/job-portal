@@ -47,7 +47,7 @@ const RecruiterDashboard = () => {
   const fetchCounts = async () => {
     try {
       const response = await axiosInstance.get(
-        "/mentor/getMentorStatsCount/" + user?.id
+        "/recruiter/getCounts/" + user?.id
       );
       setCounts(response.data.data);
     } catch (error) {
@@ -61,7 +61,7 @@ const RecruiterDashboard = () => {
   const fetchUpcomingSession = async () => {
     try {
       const response = await axiosInstance.get(
-        "/mentor/UpcomingSessions/" + user?.id
+        "/recruiter/upcommingbookings/" + user?.id
       );
       setUpcomingSession(response.data.data.todaySessions);
     } catch (error) {
@@ -74,7 +74,7 @@ const RecruiterDashboard = () => {
   const fetchReviews = async () => {
     try {
       const response = await axiosInstance.get(
-        "/mentor/getMentorReviews/" + user?.id
+        "/recruiter/getreview/" + user?.id
       );
       setReviews(response.data.data);
     } catch (error) {
@@ -87,7 +87,7 @@ const RecruiterDashboard = () => {
   const fetchEarnings = async () => {
     try {
       const response = await axiosInstance.get(
-        "/mentor/getMentorEarnings/" + user?.id
+        "/recruiter/earnings/" + user?.id
       );
       setEarning(response.data.data);
     } catch (error) {
@@ -105,7 +105,7 @@ const RecruiterDashboard = () => {
   const cardData = [
     {
       key: 1,
-      count: counts?.totalSessions ?? "_ _",
+      count: counts?.totalEmployersServed ?? "_ _",
       title: "EMPLOYERS SERVED",
       icon: <DashboardJobPostIcon />,
     },
@@ -117,7 +117,7 @@ const RecruiterDashboard = () => {
     },
     {
       key: 3,
-      count: counts?.totalReviews ?? "_ _",
+      count: counts?.reviewCount ?? "_ _",
       title: "REVIEWS RECEIVED",
       icon: <RecruiterDashboardReviewIcon />,
     },

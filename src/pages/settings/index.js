@@ -4,12 +4,17 @@ import CustomButton from "../../components/customButton";
 import "./styles.scss";
 import { updateEmail, updatePassword } from "../../features/user/userApi";
 import { Card, message } from "antd";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import axiosInstance from "../../api/axiosInstance";
+import { logout } from "../../features/auth/authSlice";
 
 const Settings = () => {
   const { user } = useSelector((state) => state.profile);
+  const dispatch = useDispatch();
   const [primaryEmail, setPrimaryEmail] = useState(user?.email || "");
-  const [secondaryEmail, setSecondaryEmail] = useState(user?.secondaryEmail || "");
+  const [secondaryEmail, setSecondaryEmail] = useState(
+    user?.secondaryEmail || ""
+  );
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -38,7 +43,10 @@ const Settings = () => {
 
     try {
       // Update email if there's a change
-      if (primaryEmail !== user.email || secondaryEmail !== user.secondaryEmail) {
+      if (
+        (primaryEmail && primaryEmail !== user.email) ||
+        (secondaryEmail && secondaryEmail !== user?.secondaryEmail)
+      ) {
         const emailResponse = await updateEmail(emailData);
         if (emailResponse.data.success) {
           message.open({
@@ -59,12 +67,72 @@ const Settings = () => {
           setConfirmPassword("");
           setCurrentPassword("");
           setNewPassword("");
-          return;
+        } else {
+          message.open({
+            type: "error",
+            content:
+              passwordResponse.data.data.message || "Internal Server Error",
+          });
         }
       }
     } catch (error) {
       console.error("Error updating account:", error);
       alert("Failed to update account. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const deactivateAccount = async () => {
+    try {
+      setLoading(true);
+      const response = await axiosInstance.put("/setting/js/deactivate");
+      if (response.data.success) {
+        if (response.data.data) {
+          message.open({
+            type: "success",
+            content: "Account deactivate successfully!",
+          });
+          return;
+        }
+
+        setTimeout(() => {
+          window.location.reload();
+        }, 500);
+      }
+    } catch (error) {
+      message.open({
+        type: "error",
+        content: error.message || "Internal Server Error",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+  const deleteAccount = async () => {
+    if (!window.confirm("Are you sure you want to delete your account?")) {
+      return;
+    }
+    try {
+      setLoading(true);
+      const response = await axiosInstance.delete("/setting/js/delete");
+      if (response.data.success) {
+        message.open({
+          type: "success",
+          content: "Account delete successfully!",
+        });
+        await dispatch(logout());
+        window.location.replace("/login");
+        setTimeout(() => {
+          window.location.reload();
+        }, 500);
+        return;
+      }
+    } catch (error) {
+      message.open({
+        type: "error",
+        content: error.message || "Internal Server Error",
+      });
     } finally {
       setLoading(false);
     }
@@ -82,12 +150,20 @@ const Settings = () => {
             <section className="form-fields-group">
               <section className="form-field-with-label-group">
                 <label className="field-label">Primary Email</label>
-                <CommonInput placeholder="Enter Primary Email" value={primaryEmail} onChange={(val) => setPrimaryEmail(val)} />
+                <CommonInput
+                  placeholder="Enter Primary Email"
+                  value={primaryEmail}
+                  onChange={(val) => setPrimaryEmail(val)}
+                />
               </section>
 
               <section className="form-field-with-label-group">
                 <label className="field-label">Secondary Email</label>
-                <CommonInput placeholder="Enter Secondary Email" value={secondaryEmail} onChange={(val) => setSecondaryEmail(val)} />
+                <CommonInput
+                  placeholder="Enter Secondary Email"
+                  value={secondaryEmail}
+                  onChange={(val) => setSecondaryEmail(val)}
+                />
               </section>
             </section>
 
@@ -97,19 +173,31 @@ const Settings = () => {
             <section className="form-fields-group">
               <section className="form-field-with-label-group half-size-field">
                 <label className="field-label">Current Password</label>
-                <CommonInput placeholder="Enter Current Password" value={currentPassword} onChange={(val) => setCurrentPassword(val)} />
+                <CommonInput
+                  placeholder="Enter Current Password"
+                  value={currentPassword}
+                  onChange={(val) => setCurrentPassword(val)}
+                />
               </section>
             </section>
 
             <section className="form-fields-group">
               <section className="form-field-with-label-group">
                 <label className="field-label">New Password</label>
-                <CommonInput placeholder="Enter New Password" value={newPassword} onChange={(val) => setNewPassword(val)} />
+                <CommonInput
+                  placeholder="Enter New Password"
+                  value={newPassword}
+                  onChange={(val) => setNewPassword(val)}
+                />
               </section>
 
               <section className="form-field-with-label-group">
                 <label className="field-label">Confirm Password</label>
-                <CommonInput placeholder="Confirm New Password" value={confirmPassword} onChange={(val) => setConfirmPassword(val)} />
+                <CommonInput
+                  placeholder="Confirm New Password"
+                  value={confirmPassword}
+                  onChange={(val) => setConfirmPassword(val)}
+                />
               </section>
             </section>
 
@@ -117,11 +205,29 @@ const Settings = () => {
             <hr className="form-divider" />
 
             <section className="removal-action-group">
-              <CustomButton category="plain" name="Deactivate" classes="deactivate" />
-              <CustomButton category="plain" name="Delete" classes="delete" />
+              <CustomButton
+                category="plain"
+                name="Deactivate"
+                classes="deactivate"
+                loading={loading}
+                handleClick={deactivateAccount}
+              />
+              <CustomButton
+                category="plain"
+                name="Delete"
+                classes="delete"
+                loading={loading}
+                handleClick={deleteAccount}
+              />
             </section>
 
-            <CustomButton loading={loading} category="primary" name="Save" classes="save" handleClick={handleSubmit} />
+            <CustomButton
+              loading={loading}
+              category="primary"
+              name="Save"
+              classes="save"
+              handleClick={handleSubmit}
+            />
           </section>
         </section>
       </Card>

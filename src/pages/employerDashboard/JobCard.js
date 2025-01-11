@@ -3,11 +3,11 @@ import React from "react";
 import { MenuEmployerProfileIcon } from "../../assets/svg";
 import { Link } from "react-router-dom";
 
-const JobCard = ({ item, TEXT_STYLE }) => {
+const JobCard = ({ item, TEXT_STYLE, route }) => {
   const menu = (
     <Menu>
       <Menu.Item key="edit">
-        <Link to={`/employer/edit-job/${item.randomId}`}>Edit Job</Link>
+        <Link to={`${route}/edit-job/${item.randomId}`}>Edit Job</Link>
       </Menu.Item>
       {/* Add more menu items as needed */}
     </Menu>
@@ -47,7 +47,7 @@ const JobCard = ({ item, TEXT_STYLE }) => {
             </Typography.Text>
           </Flex>
           <Flex flex={1}>
-            <Link to={`/employer/job-detail/${item.randomId}`}>
+            <Link to={`${route}/job-detail/${item.randomId}`}>
               <Typography.Text style={{ ...TEXT_STYLE }}>
                 {item.jobTitle}
               </Typography.Text>

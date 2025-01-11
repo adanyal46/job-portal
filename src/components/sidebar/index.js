@@ -320,7 +320,7 @@ const Sidebar = ({ user }) => {
               </Link>
             ),
           },
-        ]
+        ].filter((menuItem) => !(isStaff && menuItem.key === "employer-staffs"))
       : []),
     // Settings section for both roles
     {
@@ -364,8 +364,9 @@ const Sidebar = ({ user }) => {
             }
             alt="fuseUser"
             style={{
-              borderRadius: "100px",
-              maxHeight: "150px",
+              borderRadius: "100%",
+              maxHeight: "200px",
+              height: "135px",
               objectFit: "cover",
             }}
             preview={false}

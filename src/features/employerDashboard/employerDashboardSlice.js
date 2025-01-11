@@ -205,7 +205,7 @@ const employerDashboardSlice = createSlice({
       })
       .addCase(fetchStaffMemberEmp.fulfilled, (state, action) => {
         state.loading = false;
-        state.staffMembers = action.payload;
+        state.staffMembers = action.payload.staffMembers;
       })
       .addCase(fetchStaffMemberEmp.rejected, (state, action) => {
         state.loading = false;

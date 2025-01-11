@@ -63,11 +63,7 @@ export const staffMemberRoutes = [
         element: <EmployerHiredRecruiter />,
         errorElement: <ErrorPage />,
       },
-      {
-        path: "staffs",
-        element: <EmployerStaffs />,
-        errorElement: <ErrorPage />,
-      },
+
       {
         path: "talent",
         element: <EmployerTalent />,

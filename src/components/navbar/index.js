@@ -17,6 +17,7 @@ const Navbar = ({ user }) => {
   // const isSeeker = user?.role === "JOB_SEEKER";
   const isRecruiter = user?.role === "RECRUITER";
   const isEmployer = user?.role === "EMPLOYER";
+  const isStaff = user?.role === "STAFF_MEMBER";
   const routePrefix = isMentor
     ? "/mentor"
     : isRecruiter
@@ -109,7 +110,7 @@ const Navbar = ({ user }) => {
             </NavLink>
           )}
 
-          {user?.role !== "RECRUITER" && (
+          {!["RECRUITER", "STAFF_MEMBER", "EMPLOYER"].includes(user?.role) && (
             <NavLink className="navbar-items" to={routePrefix + "/blogs"}>
               <li className="item-name">Blogs</li>
             </NavLink>

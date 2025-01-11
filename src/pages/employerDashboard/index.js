@@ -9,6 +9,7 @@ import {
   Input,
   DatePicker,
   message,
+  Form,
 } from "antd";
 import {
   CalendarDashboardIcon,
@@ -38,6 +39,9 @@ import {
 import Loader from "../../components/Loader";
 import { Link } from "react-router-dom";
 import { formatTimeAgo, getFormattedTitleWithStrong } from "../../utils";
+import CommonModal from "../../components/commonModal";
+import CommonInput from "../../components/commonInput";
+import axiosInstance from "../../api/axiosInstance";
 
 const Dashboard = () => {
   const { user } = useSelector((state) => state.profile);
@@ -58,8 +62,17 @@ const Dashboard = () => {
     staffMembers,
   } = useSelector((state) => state.employerDashboard);
   const [activeTabKey, setActiveTabKey] = useState("1");
+  const [openInviteStaffModal, setOpenInviteStaffModal] = useState(false);
+  const [subscriptionData, setSubscriptionData] = useState({
+    buySubscription: [],
+  });
 
-  console.log(staffMembers);
+  const handleOpenInviteStaffModal = () => {
+    setOpenInviteStaffModal(true);
+  };
+  const handleCloseInviteStaffModal = () => {
+    setOpenInviteStaffModal(false);
+  };
 
   useEffect(() => {
     dispatch(fetchEmployerDashboardData());
@@ -68,6 +81,7 @@ const Dashboard = () => {
     dispatch(fetchHireRecruiterList());
     if (user) {
       dispatch(fetchStaffMemberEmp(user?.id));
+      fetchDetailSubscription(user?.id);
     }
   }, [dispatch, user]);
 
@@ -83,7 +97,20 @@ const Dashboard = () => {
   const TEXT_STYLE = {
     color: "#2F2C39",
   };
-
+  const fetchDetailSubscription = async (id) => {
+    try {
+      const response = await axiosInstance.get(
+        "/employer/buySubscription/" + id
+      );
+      const result = response.data.data;
+      setSubscriptionData({ buySubscription: result });
+    } catch (error) {
+      message.open({
+        type: "error",
+        content: error.message || "Internal Server Error",
+      });
+    }
+  };
   const handleTabChange = (key) => setActiveTabKey(key);
 
   const cardData = [
@@ -107,7 +134,7 @@ const Dashboard = () => {
     },
   ];
 
-  const FilterTab = () => {
+  const FilterTab = ({ activeTabKey }) => {
     return (
       <Row gutter={16} style={{ alignItems: "center" }}>
         <Col flex={1}>
@@ -134,9 +161,19 @@ const Dashboard = () => {
           />
         </Col>
         <Col>
-          <Link to={`${route}/add-job`}>
+          {activeTabKey === "1" ? (
+            <Link to={`${route}/add-job`}>
+              <CustomButton category="primary" name="Add" />
+            </Link>
+          ) : activeTabKey === "2" ? (
             <CustomButton category="primary" name="Add" />
-          </Link>
+          ) : (
+            <CustomButton
+              category="primary"
+              name="Add"
+              handleClick={handleOpenInviteStaffModal}
+            />
+          )}
         </Col>
       </Row>
     );
@@ -148,12 +185,12 @@ const Dashboard = () => {
       label: "Jobs",
       children: (
         <Card title="Jobs" bordered={false}>
-          <FilterTab />
+          <FilterTab activeTabKey={activeTabKey} />
           {Array.isArray(jobList) && jobList.length > 0 && (
             <Row gutter={[12, 12]} style={{ marginTop: "20px" }}>
               {(jobList || [])?.map((item) => (
                 <Col md={12} key={item.id}>
-                  <JobCard item={item} TEXT_STYLE={TEXT_STYLE} />
+                  <JobCard item={item} TEXT_STYLE={TEXT_STYLE} route={route} />
                 </Col>
               ))}
             </Row>
@@ -176,7 +213,7 @@ const Dashboard = () => {
       label: "Hired Recruiters",
       children: (
         <Card title="Hired Recruiters" bordered={false} loading={loading}>
-          <FilterTab />
+          <FilterTab activeTabKey={activeTabKey} />
           {Array.isArray(recruiters) && recruiters.length > 0 && (
             <Row gutter={[12, 12]} style={{ marginTop: "20px" }}>
               {recruiters?.map((item, index) => (
@@ -204,7 +241,7 @@ const Dashboard = () => {
       label: "Staff Members",
       children: (
         <Card title="Staff Members" bordered={false}>
-          <FilterTab />
+          <FilterTab activeTabKey={activeTabKey} />
           <Row gutter={[12, 12]} style={{ marginTop: "20px" }}>
             {staffMembers?.map((item, index) => (
               <Col md={12} key={item.id}>
@@ -212,12 +249,30 @@ const Dashboard = () => {
               </Col>
             ))}
           </Row>
-          {/* <CustomPagination /> */}
+          {staffMembers?.length === 0 && (
+            <Flex
+              style={{ paddingBlock: "20px", minHeight: "40vh" }}
+              align="center"
+              justify="center"
+            >
+              <EmptyStateRecruiter />
+            </Flex>
+          )}
+          {staffMembers?.length >= 10 && <CustomPagination />}{" "}
         </Card>
       ),
     },
   ];
-
+  const jobSlotSetting =
+    subscriptionData?.buySubscription.length > 0 &&
+    subscriptionData?.buySubscription.filter(
+      (buySub) => buySub.jobSlots !== null && buySub.jobSlots > 0
+    );
+  const resumeSlotSetting =
+    subscriptionData?.buySubscription.length > 0 &&
+    subscriptionData?.buySubscription.filter(
+      (buySub) => buySub.resumeSearches !== null && buySub.resumeSearches > 0
+    );
   if (loadingCounts || loadingJobs || loadingActivity) {
     return <Loader />;
   }
@@ -292,70 +347,125 @@ const Dashboard = () => {
           </Card>
           {/* Two Small Cards Below the Activity Section */}
           <Row gutter={[16, 16]} style={{ marginTop: "16px" }}>
-            <Col span={12}>
-              <Card
-                bordered={false}
-                style={{ boxShadow: "0px 4px 18px 0px #4B465C1A" }}
-              >
-                <Flex vertical>
-                  <Flex justify="space-between">
-                    <Flex vertical gap={0}>
-                      <div class="permium-tag">
-                        <div className="content-wrapper">Premium</div>
-                      </div>
-                      <Typography.Title level={4} style={{ fontWeight: "400" }}>
-                        16 / <strong>25</strong>
-                      </Typography.Title>
-                    </Flex>
-                    <DashboardPremiumOne />
-                  </Flex>
-                  <Typography.Text
-                    style={{ color: "#52595C", marginBottom: "10px" }}
+            <Col lg={12}>
+              {Array.isArray(resumeSlotSetting) &&
+                resumeSlotSetting.length > 0 &&
+                resumeSlotSetting?.map((item, index) => (
+                  <Card
+                    key={index}
+                    bordered={false}
+                    style={{
+                      boxShadow: "0px 4px 18px 0px #4B465C1A",
+                      marginBottom: "20px",
+                    }}
                   >
-                    Resume Searches
-                  </Typography.Text>
-                  <CustomButton name="Upgrade" />
-                </Flex>
-              </Card>
+                    <Flex vertical>
+                      <Flex justify="space-between">
+                        <Flex vertical gap={0}>
+                          <div class="permium-tag">
+                            <div className="content-wrapper">{item?.name}</div>
+                          </div>
+                          <Typography.Title
+                            level={4}
+                            style={{ fontWeight: "400" }}
+                          >
+                            {item?.resumeSearches} /{" "}
+                            <strong>{item?.toalResumeSerarches}</strong>
+                          </Typography.Title>
+                        </Flex>
+                        <DashboardPremiumOne />
+                      </Flex>
+                      <Typography.Text
+                        style={{ color: "#52595C", marginBottom: "10px" }}
+                      >
+                        Resume Searches
+                      </Typography.Text>
+                      <CustomButton name="Upgrade" />
+                    </Flex>
+                  </Card>
+                ))}
             </Col>
-            <Col span={12}>
-              <Card
-                bordered={false}
-                style={{ boxShadow: "0px 4px 18px 0px #4B465C1A" }}
-              >
-                <Flex vertical>
-                  <Flex justify="space-between">
-                    <Flex vertical gap={0}>
-                      <div class="permium-tag">
-                        <div className="content-wrapper">Premium</div>
-                      </div>
-                      <Typography.Title level={4} style={{ fontWeight: "400" }}>
-                        2 / <strong>5</strong>
-                      </Typography.Title>
-                    </Flex>
-                    <DashboardPremiumTwo />
-                  </Flex>
-                  <Typography.Text
-                    style={{ color: "#52595C", marginBottom: "10px" }}
+            <Col lg={12}>
+              {Array.isArray(jobSlotSetting) &&
+                jobSlotSetting.length > 0 &&
+                jobSlotSetting?.map((item, index) => (
+                  <Card
+                    key={index}
+                    bordered={false}
+                    style={{
+                      boxShadow: "0px 4px 18px 0px #4B465C1A",
+                      marginBottom: "20px",
+                    }}
                   >
-                    Job Postings
-                  </Typography.Text>
-                  <CustomButton name="Upgrade" />
-                </Flex>
-              </Card>
+                    <Flex vertical>
+                      <Flex justify="space-between">
+                        <Flex vertical gap={0}>
+                          <div class="permium-tag">
+                            <div className="content-wrapper">{item?.name}</div>
+                          </div>
+                          <Typography.Title
+                            level={4}
+                            style={{ fontWeight: "400" }}
+                          >
+                            {item?.jobSlots} /{" "}
+                            <strong>{item?.totalJobSlots}</strong>
+                          </Typography.Title>
+                        </Flex>
+                        <DashboardPremiumTwo />
+                      </Flex>
+                      <Typography.Text
+                        style={{ color: "#52595C", marginBottom: "10px" }}
+                      >
+                        Job Postings
+                      </Typography.Text>
+                      <CustomButton name="Upgrade" />
+                    </Flex>
+                  </Card>
+                ))}
             </Col>
           </Row>
         </Col>
 
         <Col span={16}>
           <CustomTabs
-            items={tabItems}
+            items={tabItems.filter((item) =>
+              ROLE === "STAFF_MEMBER" ? item.key !== "3" : item
+            )}
             defaultActiveKey={activeTabKey}
             handleChange={handleTabChange}
             centered={true}
           />
         </Col>
       </Row>
+
+      <CommonModal
+        isModalOpen={openInviteStaffModal}
+        isDelete={false}
+        saveBtnText="Send Invite"
+        handleClose={handleCloseInviteStaffModal}
+      >
+        <Flex vertical align="center" style={{ width: "100%" }}>
+          <Typography.Title
+            level={3}
+            style={{
+              fontSize: "20px",
+              color: "#0C0C0C",
+              fontWeight: 500,
+              marginBottom: "12px",
+            }}
+          >
+            Invite Staff Member
+          </Typography.Title>
+          <Typography.Text style={{ color: "#2F2C39" }}>
+            Invite Staff Members to Join Your Company Profile
+          </Typography.Text>
+        </Flex>
+        <Form layout="vertical" size="large">
+          <Form.Item label="Email" name={"email"}>
+            <CommonInput placeholder="Enter Email" />
+          </Form.Item>
+        </Form>
+      </CommonModal>
     </div>
   );
 };
