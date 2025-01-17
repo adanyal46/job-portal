@@ -1,4 +1,3 @@
-import { Flex, Layout, Menu } from "antd";
 import React from "react";
 import { Link, Outlet } from "react-router-dom";
 import "./layout.css";
@@ -7,59 +6,12 @@ import {
   SocialLinkdinIcon,
   SocialTwitterIcon,
 } from "../assets/svg";
-const items = [
-  {
-    key: "jobs",
-    label: "Jobs",
-    link: "/jobs/view",
-  },
-  {
-    key: "mentorship",
-    label: "Mentorship",
-    link: "/mentorship",
-  },
-  {
-    key: "partners",
-    label: "Partners",
-    link: "/partners",
-  },
-  {
-    key: "employers",
-    label: "Employers",
-    link: "/employers",
-  },
-  {
-    key: "blogs",
-    label: "Blogs",
-  },
-];
+import Navbar from "./includes/Navbar";
+
 const GuestLayout = () => {
   return (
     <div>
-      <nav className="guest__nav">
-        <Link to={"/"}>
-          <img src="/guest/logo.svg" alt="logo" />
-        </Link>
-        <ul>
-          {items?.map((item, index) => (
-            <li key={index}>
-              <Link to={item.link}>{item.label}</Link>
-            </li>
-          ))}
-        </ul>
-        <Flex gap={20} align="center">
-          <Link to={"/login"}>
-            <button className="secondary__btn">
-              <span>Login</span>
-            </button>
-          </Link>
-          <Link to={"/signup-type"}>
-            <button className="primary__btn">
-              <span>Sign up</span>
-            </button>
-          </Link>
-        </Flex>
-      </nav>
+      <Navbar />
       <Outlet />
       <footer>
         <div className="container">

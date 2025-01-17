@@ -1,4 +1,4 @@
-.custom-tag {
+.custom-tag-admin {
     display: inline-block;
     max-width: 150px;
     width: 100%;
@@ -9,7 +9,7 @@
     cursor: pointer;
     margin-right: 5px;
     transition: background-color 0.3s;
-
+    font-weight: 500;
     &:hover {
         opacity: 0.8; // Optional hover effect
     }

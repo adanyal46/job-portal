@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Table, Card, Row, Col, Typography, Flex, message } from "antd";
 import { useParams } from "react-router-dom";
-import { getTimesheetDetailApi } from "../../features/employerDashboard/employerDashboardApi";
+import axiosInstance from "../../../api/axiosInstance";
 
 const { Text, Title } = Typography;
 
@@ -104,7 +104,12 @@ const columns = [
   { title: "Hours", dataIndex: "hours", key: "hours" },
 ];
 
-const FooterContent = ({ totalHours, totalFee, timesheetDetail }) => (
+const FooterContent = ({
+  totalHours,
+  totalAmountDue,
+  totalPayableAmount,
+  timesheetDetail,
+}) => (
   <Card
     styles={{
       body: {
@@ -127,7 +132,7 @@ const FooterContent = ({ totalHours, totalFee, timesheetDetail }) => (
           <Title level={5}>Total Amount Due</Title>
         </Col>
         <Col>
-          <Text>${totalFee}</Text>
+          <Text>${totalAmountDue}</Text>
         </Col>
       </Row>
       <Row justify="space-between">
@@ -138,7 +143,7 @@ const FooterContent = ({ totalHours, totalFee, timesheetDetail }) => (
           <Title level={5}>Fuse Commission (10%)</Title>
         </Col>
         <Col>
-          <Text>${totalFee}</Text>
+          <Text>${totalPayableAmount}</Text>
         </Col>
       </Row>
     </Flex>
@@ -168,21 +173,23 @@ const FooterContent = ({ totalHours, totalFee, timesheetDetail }) => (
   </Card>
 );
 
-const ViewTimeSheetRecruiter = () => {
+const ViewTimeSheet = () => {
   const { id } = useParams();
   const [timesheetDetail, setTimesheetDetail] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (id) {
-      fetchTimesheetDetail();
+      fetchTimesheetDetail(id);
     }
   }, [id]);
 
-  const fetchTimesheetDetail = async () => {
+  const fetchTimesheetDetail = async (id) => {
     try {
       setLoading(true);
-      const response = await getTimesheetDetailApi(id);
+      const response = await axiosInstance.get("/admin/getTimesheetById/" + id);
+      console.log(response.data);
+
       setTimesheetDetail(response.data);
     } catch (error) {
       console.log(error);
@@ -217,8 +224,9 @@ const ViewTimeSheetRecruiter = () => {
           pagination={false}
           footer={() => (
             <FooterContent
-              totalHours={totalHour}
-              totalFee={totalFee}
+              totalHours={timesheetDetail?.totalHourWorked ?? 0}
+              totalAmountDue={timesheetDetail?.totalAmountDue ?? 0}
+              totalPayableAmount={timesheetDetail?.totalPayableAmount ?? 0}
               timesheetDetail={timesheetDetail}
             />
           )}
@@ -228,4 +236,4 @@ const ViewTimeSheetRecruiter = () => {
   );
 };
 
-export default ViewTimeSheetRecruiter;
+export default ViewTimeSheet;

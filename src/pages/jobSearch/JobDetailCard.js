@@ -34,24 +34,24 @@ const JobDetailCard = ({
               alt="JobCompanyIcon"
             />
           </figure>
-          <h4 className="name">{jobData?.companyName || "N/A"}</h4>
+          <h4 className="name">{jobData?.title || "N/A"}</h4>
         </article>
         <article className="current-job-company-link">
           <p className="name">{jobData?.companyName || "N/A"}</p>
           <ExternalLinkIcon />
         </article>
         <p className="current-job-location" style={{ marginBottom: "10px" }}>
-          {jobData?.location ?? "N/A"}
+          {jobData?.city ?? "N/A"}
         </p>
         <Tag label={"$" + jobData?.minPrice + " - " + "$" + jobData.maxPrice} />
-        {jobData?.applied && (
+        {jobData?.jobApply && (
           <section className="current-job-applied">
             <JobAppliedIcon />
             <p className="applied-time">Applied</p>
           </section>
         )}
         <section className="current-job-actions">
-          {!jobData?.applied && (
+          {!jobData?.jobApply && (
             <a
               href={jobData?.applicationLink}
               target="_blank"
@@ -66,7 +66,7 @@ const JobDetailCard = ({
               />
             </a>
           )}
-          {jobData?.saved ? (
+          {jobData?.saveJob ? (
             <p className="saved-job-text">Job Saved</p>
           ) : (
             <CustomButton
@@ -109,6 +109,22 @@ const JobDetailCard = ({
             <p className="detail-label">{jobData?.location ?? "N/A"}</p>
           </article>
         </section>
+        <h4 className="section-heading">Full job description</h4>
+        <h4
+          className="section-heading"
+          style={{ fontSize: "22px", fontWeight: 600 }}
+        >
+          Full job description: {jobData?.title}
+        </h4>
+        <h4
+          className="section-heading"
+          style={{ fontSize: "22px", fontWeight: 600 }}
+        >
+          Summary:
+        </h4>
+        <p style={{ color: "#2F2C39", fontSize: "14px" }}>
+          {jobData?.description}
+        </p>
       </section>
     </section>
   );

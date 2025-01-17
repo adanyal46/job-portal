@@ -33,6 +33,8 @@ import EditPostNote from "../components/ADMIN/edit-post-note";
 import ErrorPage from "../ErrorPage";
 import { Navigate } from "react-router-dom";
 import AdminEditBlog from "../components/ADMIN/blogs/AdminEditBlog";
+import ViewTimeSheet from "../components/ADMIN/timsheet-management/ViewTimeSheet";
+import AdminNotification from "../components/ADMIN/AdminNotification";
 export const adminRoutes = [
   {
     path: "*",
@@ -47,6 +49,11 @@ export const adminRoutes = [
       {
         path: "dashboard",
         element: <AdminDashboard />,
+        errorElement: <ErrorPage />,
+      },
+      {
+        path: "notifications",
+        element: <AdminNotification />,
         errorElement: <ErrorPage />,
       },
       {
@@ -177,6 +184,11 @@ export const adminRoutes = [
       {
         path: "timesheet-management",
         element: <TimesheetManagement />,
+        errorElement: <ErrorPage />,
+      },
+      {
+        path: "timesheet/view/:id",
+        element: <ViewTimeSheet />,
         errorElement: <ErrorPage />,
       },
       {

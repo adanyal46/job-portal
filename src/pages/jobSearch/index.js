@@ -4,15 +4,15 @@ import CustomTabs from "../../components/customTabs";
 import CommonInput from "../../components/commonInput";
 import JobCard from "../../components/jobCard";
 import CustomSelect from "../../components/customSelect";
-import { DatePicker } from "antd";
+import { DatePicker, message } from "antd";
 import dayjs from "dayjs";
 import "dayjs/plugin/advancedFormat";
 import "./styles.scss";
-import { useDispatch, useSelector } from "react-redux";
-import { jobApplied, jobList, saveJob } from "../../features/job/jobSlice";
+import { useSelector } from "react-redux";
 import { FaSync } from "react-icons/fa";
 import Loader from "../../components/Loader";
 import JobDetailCard from "./JobDetailCard";
+import axiosInstance from "../../api/axiosInstance";
 
 const EmptyStateCard = () => {
   return (
@@ -29,7 +29,13 @@ const EmptyStateCard = () => {
   );
 };
 
-const SearchFields = ({ searchParams, setSearchParams }) => {
+const SearchFields = ({
+  searchParams,
+  setSearchParams,
+  jobTypes,
+  locations,
+  companys,
+}) => {
   const handleInputChange = (key) => (value) => {
     setSearchParams((prev) => ({ ...prev, [key]: value }));
   };
@@ -49,12 +55,10 @@ const SearchFields = ({ searchParams, setSearchParams }) => {
         onChange={handleInputChange("jobTitle")}
       />
       <CustomSelect
-        options={[
-          { label: "Berlin", value: "berlin" },
-          { label: "New York", value: "new york" },
-          { label: "London", value: "london" },
-          { label: "Kotli", value: "kotli" },
-        ]}
+        options={locations?.map((item) => ({
+          label: item,
+          value: item,
+        }))}
         value={searchParams.location}
         placeholder="Location"
         name="location"
@@ -62,12 +66,10 @@ const SearchFields = ({ searchParams, setSearchParams }) => {
         onChange={(value) => handleInputChange("location")(value)}
       />
       <CustomSelect
-        options={[
-          { label: "Full-Time", value: "fulltime" },
-          { label: "Remote", value: "remote" },
-          { label: "Contract", value: "contract" },
-          { label: "Internship", value: "internship" },
-        ]}
+        options={jobTypes?.map((item) => ({
+          label: item,
+          value: item,
+        }))}
         value={searchParams.jobType}
         placeholder="Job Type"
         name="jobType"
@@ -87,6 +89,17 @@ const SearchFields = ({ searchParams, setSearchParams }) => {
         placeholder="Pay Range"
         onChange={(value) => handleInputChange("pay")(value)}
         handleClear={handleClear}
+      />
+      <CustomSelect
+        options={companys?.map((item) => ({
+          label: item,
+          value: item,
+        }))}
+        value={searchParams.company}
+        placeholder="Company"
+        name="company"
+        handleClear={handleClear}
+        onChange={(value) => handleInputChange("company")(value)}
       />
       <DatePicker.RangePicker
         value={
@@ -118,13 +131,19 @@ const Search = ({
   setSearchParams,
   jobs,
   loading,
-  selectedJob,
   setSelectedJob,
   appliedLoading,
+  jobTypes,
+  locations,
+  companys,
+  fetchJobDetail,
+  jobDetail,
+  jobDetailLoading,
+  user,
+  setJobDetail,
 }) => {
-  const dispatch = useDispatch();
   const handleCardClick = (job) => {
-    setSelectedJob(job);
+    fetchJobDetail(job?.jobId);
   };
 
   const handleCloseCard = () => {
@@ -132,19 +151,26 @@ const Search = ({
   };
 
   const handleApplyNow = async () => {
-    if (!selectedJob) return;
+    if (!jobDetail) return;
     try {
-      await dispatch(jobApplied({ jobId: selectedJob.id })).unwrap();
+      const response = await axiosInstance.post("/job/apply", {
+        jobId: jobDetail?.jobId,
+        userId: user?.id,
+      });
+      setJobDetail(response.data.data);
     } catch (error) {
       console.error("Error applying for job:", error);
     }
   };
 
   const handleSaveNow = async () => {
-    if (!selectedJob) return;
+    if (!jobDetail) return;
     try {
-      await dispatch(saveJob({ jobId: selectedJob.id })).unwrap();
-      window.location.reload();
+      const response = await axiosInstance.post("/job/save", {
+        jobId: jobDetail?.jobId,
+        userId: user?.id,
+      });
+      setJobDetail(response.data.data);
     } catch (error) {
       console.error("Error saving job:", error);
     }
@@ -155,6 +181,9 @@ const Search = ({
       <SearchFields
         searchParams={searchParams}
         setSearchParams={setSearchParams}
+        jobTypes={jobTypes}
+        locations={locations}
+        companys={companys}
       />
       {loading ? (
         <Loader />
@@ -162,9 +191,9 @@ const Search = ({
         <section className="jobs-wrapper">
           <section className="jobs-list-container">
             {jobs?.length > 0 ? (
-              jobs.map((job) => (
+              jobs?.map((job) => (
                 <JobCard
-                  key={job.id}
+                  key={job.jobId}
                   job={job}
                   handleClick={() => handleCardClick(job)}
                 />
@@ -173,14 +202,18 @@ const Search = ({
               <EmptyStateCard />
             )}
           </section>
-          {selectedJob && (
-            <JobDetailCard
-              jobData={selectedJob}
-              appliedLoading={appliedLoading}
-              handleCloseCard={handleCloseCard}
-              handleApplyNow={handleApplyNow}
-              handleSaveNow={handleSaveNow}
-            />
+          {jobDetailLoading ? (
+            <Loader />
+          ) : (
+            jobDetail !== null && (
+              <JobDetailCard
+                jobData={jobDetail}
+                appliedLoading={appliedLoading}
+                handleCloseCard={handleCloseCard}
+                handleApplyNow={handleApplyNow}
+                handleSaveNow={handleSaveNow}
+              />
+            )
           )}
         </section>
       )}
@@ -190,42 +223,113 @@ const Search = ({
 
 const JobSearch = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.profile);
   const [searchParamsss] = useSearchParams(); // Get search params
   const jobType = searchParamsss.get("type");
-  const { jobs, loading, appliedLoading } = useSelector((state) => state.job);
   const [activeTab, setActiveTab] = useState("search");
+  const [jobs, setJobs] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [appliedLoading, setAppliedLoading] = useState(false);
   const [searchParams, setSearchParams] = useState({
     jobTitle: "",
     location: "",
     jobType: "",
     pay: "",
+    company: "",
     dateRange: "",
   });
   const [selectedJob, setSelectedJob] = useState(null);
+  const [jobDetail, setJobDetail] = useState(null);
+  const [jobDetailLoading, setJobDetailLoading] = useState(null);
+  const [jobTypes, setJobTypes] = useState([]);
+  const [locations, setLocations] = useState([]);
+  const [companys, setCompanys] = useState([]);
 
   useEffect(() => {
     setActiveTab(jobType);
     navigate(`/job-seeker/jobs/search?type=${jobType}`);
+    fetchJobTypes();
+    fetchCities();
+    fetchCompanies();
   }, [jobType, navigate]);
 
   useEffect(() => {
-    const filterCount = Object.values(searchParams).filter(
-      (param) => param
-    ).length;
-    if (filterCount > 0) {
-      dispatch(jobList(searchParams));
-      setSelectedJob(null);
-    } else {
-      dispatch(jobList());
+    if (user) {
+      fetchJobs();
     }
-  }, [dispatch, searchParams]);
+  }, [searchParams, user]);
+
+  const fetchJobTypes = async () => {
+    try {
+      const response = await axiosInstance.get("/job/type");
+      setJobTypes(response.data.data);
+    } catch (error) {}
+  };
+  const fetchCities = async () => {
+    try {
+      const response = await axiosInstance.get("/job/city");
+      setLocations(response.data.data);
+    } catch (error) {}
+  };
+  const fetchCompanies = async () => {
+    try {
+      const response = await axiosInstance.get("/job/compnaynames");
+      setCompanys(response.data.data);
+    } catch (error) {}
+  };
+
+  const fetchJobs = async () => {
+    setLoading(true);
+
+    try {
+      const { dateRange, ...otherParams } = searchParams;
+      const [startDate, endDate] = dateRange ? dateRange.split(",") : ["", ""];
+      const queryParams = {
+        ...otherParams,
+      };
+      // Only add startDate and endDate if dateRange is present
+      if (startDate && endDate) {
+        queryParams.startDate = startDate;
+        queryParams.endDate = endDate;
+      }
+      const query = new URLSearchParams(queryParams).toString();
+      const response = await axiosInstance.get(
+        `/job/post?userId=${user?.id}&${query}`
+      );
+      setJobs(response.data);
+    } catch (error) {
+      message.open({
+        type: "error",
+        content:
+          error.message || "Failed to fetch jobs. Please try again later.",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const fetchJobDetail = async (id) => {
+    try {
+      setJobDetailLoading(false);
+      const response = await axiosInstance.get(
+        "/job/jobDetials/" + id + "?userId=" + user?.id
+      );
+      setJobDetail(response.data.data);
+    } catch (error) {
+      message.open({
+        type: "error",
+        content: "Failed to fetch job details. Please try again later.",
+      });
+    } finally {
+      setJobDetailLoading(false);
+    }
+  };
 
   return (
     <section className="main-layout-container">
       <CustomTabs
         handleChange={(key) => {
-          setSelectedJob(null);
+          setJobDetail(null);
           setActiveTab(key);
           navigate(`/job-seeker/jobs/search?type=${key}`);
         }}
@@ -238,11 +342,19 @@ const JobSearch = () => {
               <Search
                 searchParams={searchParams}
                 setSearchParams={setSearchParams}
-                jobs={jobs}
+                jobs={jobs?.jobs}
                 loading={loading}
                 selectedJob={selectedJob}
                 setSelectedJob={setSelectedJob}
                 appliedLoading={appliedLoading}
+                jobTypes={jobTypes}
+                locations={locations}
+                companys={companys}
+                fetchJobDetail={fetchJobDetail}
+                jobDetail={jobDetail}
+                jobDetailLoading={jobDetailLoading}
+                user={user}
+                setJobDetail={setJobDetail}
               />
             ),
           },
@@ -253,11 +365,19 @@ const JobSearch = () => {
               <Search
                 searchParams={searchParams}
                 setSearchParams={setSearchParams}
-                jobs={jobs?.filter((item) => item.applied === true)}
+                jobs={jobs?.savedJobs}
                 loading={loading}
                 selectedJob={selectedJob}
                 setSelectedJob={setSelectedJob}
                 appliedLoading={appliedLoading}
+                jobTypes={jobTypes}
+                locations={locations}
+                companys={companys}
+                fetchJobDetail={fetchJobDetail}
+                jobDetail={jobDetail}
+                jobDetailLoading={jobDetailLoading}
+                user={user}
+                setJobDetail={setJobDetail}
               />
             ),
           },
@@ -268,11 +388,19 @@ const JobSearch = () => {
               <Search
                 searchParams={searchParams}
                 setSearchParams={setSearchParams}
-                jobs={jobs?.filter((item) => item.saved === true)}
+                jobs={jobs?.appliedJobs}
                 loading={loading}
                 selectedJob={selectedJob}
                 setSelectedJob={setSelectedJob}
                 appliedLoading={appliedLoading}
+                jobTypes={jobTypes}
+                locations={locations}
+                companys={companys}
+                fetchJobDetail={fetchJobDetail}
+                jobDetail={jobDetail}
+                jobDetailLoading={jobDetailLoading}
+                user={user}
+                setJobDetail={setJobDetail}
               />
             ),
           },

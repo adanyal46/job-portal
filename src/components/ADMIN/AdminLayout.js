@@ -16,6 +16,7 @@ import {
   AdminGeneralManagementIcon,
   AdminListIcon,
   AdminLogoutIcon,
+  AdminNotificationIcon,
   AdminPageIcon,
   AdminPaymentIcon,
   AdminRequestIcon,
@@ -34,6 +35,7 @@ function getItem(label, key, icon, children) {
 }
 const items = [
   getItem("Dashboard", "/admin/dashboard", <AdminDashboardIcon />),
+  getItem("Notifications", "/admin/notifications", <AdminNotificationIcon />),
   getItem("User Management", "user-management", <AdminUserMangIcon />, [
     getItem("Employers", "/admin/user/employers"),
     getItem("Recruiters", "/admin/user/recruiters"),

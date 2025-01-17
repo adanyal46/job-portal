@@ -169,7 +169,7 @@ const AdminLogin = () => {
                 style={{ marginBottom: "20px", width: "100%" }}
               >
                 <Title level={2} style={{ color: "#001F3F" }}>
-                  Login
+                  Admin Login
                 </Title>
                 <Typography.Text style={{ color: "#2F2F2F" }}>
                   Login to your account and continue

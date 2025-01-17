@@ -4,7 +4,7 @@ import "./styles.scss";
 const CustomTag = ({ label, color, onClick }) => {
   return (
     <span
-      className="custom-tag"
+      className="custom-tag-admin"
       style={{
         backgroundColor:
           label === "Approved" ||

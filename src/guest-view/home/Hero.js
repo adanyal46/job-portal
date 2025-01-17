@@ -4,7 +4,7 @@ const Hero = () => {
   return (
     <div className="home-bg">
       <Row gutter={[24, 24]}>
-        <Col xs={24} md={14}>
+        <Col xs={24} md={14} lg={14}>
           <div
             style={{
               maxWidth: "700px",
@@ -100,8 +100,9 @@ const Hero = () => {
           <div style={{ maxWidth: "600px", position: "relative" }}>
             <Image
               src="/guest/home-right-img.svg"
-              width={500}
+              width="100%"
               preview={false}
+              style={{ maxWidth: "500px" }}
             />
 
             <div style={{ position: "absolute", right: "-60px", top: "-20px" }}>

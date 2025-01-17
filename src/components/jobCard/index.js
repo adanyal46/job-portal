@@ -22,11 +22,11 @@ const JobCard = (props) => {
 
         <article className="job-company-details">
           <p className="name">{job?.companyName ?? "N/A"}</p>
-          <p className="location">{job?.location ?? "N/A"}</p>
+          <p className="location">{job?.city ?? "N/A"}</p>
         </article>
       </section>
 
-      <h5 className="job-main-title">{job?.jobTitle ?? "N/A"}</h5>
+      <h5 className="job-main-title">{job?.title ?? "N/A"}</h5>
 
       <Tag label={"$" + job?.minPrice + " - " + "$" + job.maxPrice} />
 

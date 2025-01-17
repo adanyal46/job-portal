@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import {
-  AdminDashboardArrowRight,
-  AdminDashboardDollarIcon,
   AdminSearchIcon,
   CalendarDashboardIcon,
   MenuEmployerProfileIcon,
@@ -19,84 +17,12 @@ import {
 import CustomButton from "../../customButton";
 import CustomTag from "../components/CustomTag";
 import CustomPagination from "../../customPagination";
+import TimesheetCounts from "./TimesheetCounts";
+import TimesheetList from "./TimesheetList";
 const TEXT_COLOR = {
   color: "#0C0C0C",
 };
 
-const cardData = [
-  {
-    id: 1,
-    title: "PENDING FOR PAYMENT",
-    count: 16,
-    icon: <AdminDashboardDollarIcon />,
-    isArrow: true,
-  },
-  {
-    id: 2,
-    title: "PENDING FOR APPROVAL",
-    count: 10,
-    icon: <AdminDashboardDollarIcon />,
-    isArrow: true,
-  },
-  {
-    id: 3,
-    title: "RECRUITERS",
-    count: 102,
-    icon: <AdminDashboardDollarIcon />,
-    isArrow: false,
-  },
-  {
-    id: 4,
-    title: "EMPLOYERS",
-    count: 20,
-    icon: <AdminDashboardDollarIcon />,
-    isArrow: false,
-  },
-];
-
-const columns = [
-  { title: "Timesheet No", dataIndex: "timesheetNo", key: "timesheetNo" },
-  { title: "Booking ID", dataIndex: "bookingId", key: "bookingId" },
-  { title: "Recruiter Name", dataIndex: "recruiterName", key: "recruiterName" },
-  { title: "Company Name", dataIndex: "companyName", key: "companyName" },
-  { title: "Date", dataIndex: "date", key: "date" },
-  { title: "Total Amount", dataIndex: "totalAmount", key: "totalAmount" },
-  {
-    title: "Recruiter Amount",
-    dataIndex: "recruiterAmount",
-    key: "recruiterAmount",
-  },
-  {
-    title: "Status",
-    dataIndex: "status",
-    key: "status",
-    render: (status) => <CustomTag label={status} />,
-  },
-  {
-    title: "Payment Status",
-    dataIndex: "paymentStatus",
-    key: "paymentStatus",
-    render: (status) => <CustomTag label={status} />,
-  },
-  {
-    title: "Invoice No",
-    dataIndex: "invoiceNo",
-    key: "invoiceNo",
-    render: () => (
-      <CustomButton
-        style={{ backgroundColor: "white", borderColor: "#AEACB4" }}
-        category="plain"
-        name="Add Invoice No."
-      />
-    ),
-  },
-  {
-    title: "Actions",
-    dataIndex: "actions",
-    key: "actions",
-    render: () => <MenuEmployerProfileIcon />,
-  },
-];
 const data = [
   {
     key: "1",
@@ -313,74 +239,8 @@ const TimesheetManagement = () => {
         Timesheet Management
       </Typography.Title>
       <Row gutter={[16, 16]} style={{ marginTop: "20px" }}>
-        {cardData.map((item) => (
-          <Col span={6} key={item.key}>
-            <Card
-              bordered={false}
-              style={{ boxShadow: "0px 4px 18px 0px #4B465C1A" }}
-            >
-              <Flex className="w-100" justify="space-between" align="center">
-                <Flex vertical gap={0}>
-                  <Typography.Title level={3} style={{ color: "#2F2C39" }}>
-                    {item.count}
-                  </Typography.Title>
-                  <Typography.Text style={{ color: "#52595C" }}>
-                    {item.title}
-                  </Typography.Text>
-                </Flex>
-                <Flex align="center" gap={6}>
-                  {item.icon}
-                  {item.isArrow && <AdminDashboardArrowRight />}
-                </Flex>
-              </Flex>
-            </Card>
-          </Col>
-        ))}
-        <Col xs={24}>
-          <Card>
-            <Flex gap={10} align="center" wrap="wrap">
-              <Input
-                size="large"
-                style={{ flex: 2, width: "100%" }}
-                placeholder="Search"
-                prefix={<AdminSearchIcon />}
-              />
-              <DatePicker
-                style={{ flex: 1 }}
-                placeholder="Select From"
-                size="large"
-                suffixIcon={<CalendarDashboardIcon />}
-              />
-              <DatePicker
-                style={{ flex: 1 }}
-                placeholder="Select To"
-                size="large"
-                suffixIcon={<CalendarDashboardIcon />}
-              />
-              {/* <Flex gap={10} flex={1} justify="end" wrap="wrap">
-            <DownloadButton title="Download CVS" icon={<DownloadIcon />} />
-            <DownloadButton title="Download PDF" icon={<DownloadIcon />} />
-          </Flex> */}
-            </Flex>
-            <Table
-              columns={columns}
-              dataSource={paginatedData}
-              scroll={{
-                x: 200,
-              }}
-              bordered={false}
-              pagination={false}
-              className="custom-table"
-              rowKey="id"
-            />
-            <CustomPagination
-              total={data.length}
-              pageSize={pageSize}
-              currentPage={currentPage}
-              onChange={handlePageChange}
-            />
-          </Card>
-        </Col>
+        <TimesheetCounts />
+        <TimesheetList />
       </Row>
     </div>
   );
