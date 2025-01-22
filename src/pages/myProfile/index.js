@@ -65,6 +65,7 @@ const MyProfile = () => {
           showDocumentsModal={showDocumentsModal}
           setShowDocumentsModal={setShowDocumentsModal}
           document={document}
+          user={user}
         />
 
         <Certifications certificates={certificates} profile={profile} />

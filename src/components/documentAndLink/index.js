@@ -29,7 +29,7 @@ const Documents = ({ document }) => {
         </article>
       </section>
 
-      <DetailsIcon />
+      {/* <DetailsIcon /> */}
     </section>
   );
 };
@@ -46,7 +46,7 @@ const Links = ({ document }) => {
         </article>
       </section>
 
-      <DetailsIcon />
+      {/* <DetailsIcon /> */}
     </section>
   );
 };
@@ -55,6 +55,7 @@ const DocumentAndLink = ({
   showDocumentsModal,
   setShowDocumentsModal,
   document,
+  user,
 }) => {
   const dispatch = useDispatch();
   const [documentData, setDocumentData] = useState({
@@ -81,8 +82,7 @@ const DocumentAndLink = ({
 
   const handleSubmit = () => {
     if (
-      !documentData.resume ||
-      !documentData.portfolio ||
+      !(documentData.resume || documentData.portfolio) ||
       !documentData.additionalLink ||
       !documentData.websiteLink
     ) {
@@ -93,6 +93,7 @@ const DocumentAndLink = ({
       return;
     }
     const formData = new FormData();
+    documentData["userId"] = user?.id;
     Object.keys(documentData).forEach((key) => {
       formData.append(key, documentData[key]);
     });
