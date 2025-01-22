@@ -8,6 +8,7 @@ import routeConfig from "./routes/routesConfig";
 const App = () => {
   const token = localStorage.getItem("token");
   const routes = routeConfig(token);
+  console.log(process.env.REACT_APP_API_URL);
 
   return (
     <Suspense fallback={<Loader />}>
