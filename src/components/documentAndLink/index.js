@@ -81,17 +81,17 @@ const DocumentAndLink = ({
   };
 
   const handleSubmit = () => {
-    if (
-      !(documentData.resume || documentData.portfolio) ||
-      !documentData.additionalLink ||
-      !documentData.websiteLink
-    ) {
-      message.open({
-        type: "error",
-        content: "Please fill all fields",
-      });
-      return;
-    }
+    // if (
+    //   !(documentData.resume || documentData.portfolio) ||
+    //   !documentData.additionalLink ||
+    //   !documentData.websiteLink
+    // ) {
+    //   message.open({
+    //     type: "error",
+    //     content: "Please fill all fields",
+    //   });
+    //   return;
+    // }
     const formData = new FormData();
     documentData["userId"] = user?.id;
     Object.keys(documentData).forEach((key) => {
