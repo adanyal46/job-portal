@@ -1,41 +1,24 @@
 import { Card, Col, Image, Row, Typography } from "antd";
 import React from "react";
+import "./WhyFuse.css"; // Import the CSS file
 
 const WhyFuse = () => {
   return (
     <div className="why-fuse-bg">
-      <Row gutter={0}>
-        <Col span={14} style={{ marginBlock: "122px", marginLeft: "100px" }}>
+      <Row gutter={[16, 16]}>
+        <Col xs={24} md={14} lg={16}>
           <Image
+            className="why-fuse-image"
             src="guest/dashboard.png"
             preview={false}
-            width={1019}
-            height={623}
           />
         </Col>
-        <Col span={7}>
-          <Card
-            style={{
-              backgroundColor: "#E7EDEF",
-              borderRadius: 0,
-              height: "100%",
-            }}
-            styles={{
-              body: {
-                paddingInline: "96px",
-                placeContent: "center",
-                height: "100%",
-                display: "grid",
-              },
-            }}
-          >
-            <Typography.Title
-              level={2}
-              style={{ color: "#1D91B6", fontWeight: 600, fontSize: "72px" }}
-            >
+        <Col xs={24} md={10} lg={8}>
+          <Card className="why-fuse-card">
+            <Typography.Title level={2} className="why-fuse-title">
               Why Fuse
             </Typography.Title>
-            <Typography.Text style={{ color: "#14282F", fontSize: "24px" }}>
+            <Typography.Text className="why-fuse-text">
               Fuse is your digital job search platform designed to support
               employers and job seekers with the right tools to make meaningful
               employment connections.

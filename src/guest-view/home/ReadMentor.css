@@ -1,0 +1,90 @@
+/* Parent container */
+.read-mentor-container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 50px 20px;
+  text-align: left;
+}
+
+/* Title styling */
+.read-mentor-title {
+  font-size: 32px;
+  font-weight: bold;
+  color: #1d91b6;
+  margin-bottom: 30px;
+}
+
+/* Card styling */
+.read-mentor-card {
+  border-color: #b5b5b5;
+  border-radius: 16px;
+  transition: transform 0.3s ease-in-out;
+}
+
+.read-mentor-card:hover {
+  transform: translateY(-5px);
+}
+
+/* Image styling */
+.read-mentor-image img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+/* Card title */
+.read-mentor-card-title {
+  color: #333 !important;
+  font-size: 20px;
+  margin-top: 10px;
+}
+
+/* Card text */
+.read-mentor-card-text {
+  font-size: 16px;
+  color: #333;
+}
+
+/* Button styling */
+.read-mentor-button {
+  margin-top: 15px;
+  border: 1px solid #1d91b6;
+  border-radius: 10px;
+  color: #1d91b6;
+  background: none;
+  transition: all 0.3s ease;
+}
+
+.read-mentor-button:hover {
+  background-color: #1d91b6;
+  color: #fff;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .read-mentor-title {
+    font-size: 26px;
+  }
+
+  .read-mentor-container {
+    padding: 30px 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .read-mentor-title {
+    font-size: 22px;
+  }
+
+  .read-mentor-card-title {
+    font-size: 18px;
+  }
+
+  .read-mentor-card-text {
+    font-size: 14px;
+  }
+
+  .read-mentor-button {
+    font-size: 14px;
+  }
+}

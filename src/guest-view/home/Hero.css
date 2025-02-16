@@ -1,0 +1,138 @@
+.home-bg {
+  background: linear-gradient(136.2deg, #eff2f4 50.59%, #88b3c1 113.23%);
+  min-height: 350px;
+  padding: 80px;
+}
+
+.hero-content {
+  max-width: 700px;
+  margin: auto;
+  min-height: 600px;
+  display: flex;
+  align-items: center;
+}
+
+.hero-title {
+  font-size: 48px !important;
+  color: #001f3f;
+  font-weight: 700;
+}
+
+.hero-text {
+  color: #2f2f2f;
+  font-size: 18px;
+}
+
+.hero-buttons {
+  width: 100%;
+}
+
+/* Buttons */
+.job-seeker-btn {
+  min-height: 45px;
+  min-width: 150px;
+  background: linear-gradient(100.34deg, #2a7fb7 -1.76%, #2b4054 107.85%);
+  color: white;
+}
+
+.mentor-btn {
+  min-height: 45px;
+  min-width: 150px;
+  background: linear-gradient(290.86deg, #2a6f5b -4.11%, #a5e51c 136.14%);
+  color: white;
+}
+
+.recruiter-btn {
+  min-height: 45px;
+  min-width: 150px;
+  background: linear-gradient(102.27deg, #35cba5 -1.17%, #007e5f 101.77%);
+  color: white;
+}
+
+.employer-btn {
+  min-height: 45px;
+  min-width: 150px;
+  background: linear-gradient(287.99deg, #001f3f -20.42%, #009dd1 62.87%);
+  color: white;
+}
+
+/* Image Container */
+.hero-image-container {
+  max-width: 600px;
+  position: relative;
+  z-index: 7;
+}
+
+.hero-main-image {
+  max-width: 500px;
+}
+
+.hero-arrow {
+  position: absolute;
+  right: calc(100% - 86%);
+  top: -20px;
+  z-index: 1;
+}
+
+.hero-arrow-img {
+  display: none;
+}
+
+/* Responsive Styles */
+@media (max-width: 1200px) {
+  .home-bg {
+    padding: 60px;
+  }
+  .hero-title {
+    font-size: 42px !important;
+  }
+}
+
+@media (max-width: 992px) {
+  .home-bg {
+    padding: 40px;
+  }
+  .hero-title {
+    font-size: 36px !important;
+  }
+  .hero-text {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 768px) {
+  .home-bg {
+    padding: 20px;
+  }
+  .hero-title {
+    font-size: 32px !important;
+  }
+  .hero-text {
+    font-size: 14px;
+  }
+  .hero-buttons {
+    flex-direction: column;
+    gap: 10px;
+  }
+  .hero-arrow-img {
+    display: block;
+  }
+}
+
+@media (max-width: 576px) {
+  .home-bg {
+    padding: 20px;
+  }
+  .hero-title {
+    font-size: 24px !important;
+  }
+  .hero-text {
+    font-size: 12px;
+  }
+  .job-seeker-btn,
+  .mentor-btn,
+  .recruiter-btn,
+  .employer-btn {
+    min-width: 100%;
+  }
+}

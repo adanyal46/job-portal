@@ -1,0 +1,187 @@
+.home_testimonial {
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.testimonial_title {
+  font-size: 64px !important;
+  font-weight: 700;
+  line-height: 96px;
+  text-align: center;
+  color: #253c5f !important;
+  margin-bottom: 30px !important;
+}
+
+.testimonial_rating {
+  font-size: 18px;
+}
+
+.testimonial_stars {
+  font-size: 24px;
+}
+
+.testimonial_text {
+  color: #4b465c;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.testimonial_card {
+  position: relative;
+  border: 1px solid #dbdade;
+  max-width: 354px;
+  margin: auto;
+  padding: 0px !important;
+  border-radius: 10px;
+  transition: transform 0.3s ease-in-out;
+}
+
+.testimonial_card:hover {
+  transform: scale(1.03);
+}
+
+.btn_testimonial_Mentor {
+  background: linear-gradient(290.86deg, #2a6f5b -4.11%, #a5e51c 136.14%);
+  font-size: 16px;
+  color: white;
+  border: none;
+  border-radius: 48px;
+  padding: 6px 20px;
+  position: absolute;
+  top: -15px;
+  left: -10px;
+}
+
+.btn_testimonial_Job_Seeker {
+  background: linear-gradient(100.34deg, #2a7fb7 -1.76%, #2b4054 107.85%);
+  font-size: 16px;
+  color: white;
+  border: none;
+  border-radius: 48px;
+  padding: 6px 20px;
+  position: absolute;
+  top: -15px;
+  left: -10px;
+}
+
+.btn_testimonial_Recruiter {
+  background: linear-gradient(102.27deg, #35cba5 -1.17%, #007e5f 101.77%);
+  font-size: 16px;
+  color: white;
+  border: none;
+  border-radius: 48px;
+  padding: 6px 20px;
+  position: absolute;
+  top: -15px;
+  left: -10px;
+}
+
+.mentor {
+  background-color: #ff6f61;
+}
+
+.job-seeker {
+  background-color: #1e90ff;
+}
+
+.recruiter {
+  background-color: #32cd32;
+}
+
+.testimonial_header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.testimonial_info {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.testimonial_name {
+  font-size: 18px;
+  font-weight: 500;
+  color: #4b465c;
+}
+
+.testimonial_rating {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.rating_number {
+  font-size: 16px;
+}
+
+.rating_stars {
+  font-size: 20px;
+}
+
+.testimonial_text {
+  color: #4b465c;
+  font-size: 14px;
+  line-height: 1.5;
+  display: block;
+  text-align: left;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .testimonial_title {
+    font-size: 48px !important;
+    line-height: 72px;
+  }
+
+  .testimonial_card {
+    max-width: 90%;
+  }
+}
+
+@media (max-width: 768px) {
+  .testimonial_title {
+    font-size: 36px !important;
+    line-height: 54px;
+  }
+
+  .testimonial_card {
+    max-width: 100%;
+  }
+
+  .testimonial_header {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .btn_testimonial_Mentor,
+  .btn_testimonial_JobSeeker,
+  .btn_testimonial_Recruiter {
+    font-size: 14px;
+    padding: 4px 16px;
+    /* position: relative; */
+    /* top: 0;
+    left: 0; */
+  }
+}
+
+@media (max-width: 480px) {
+  .testimonial_title {
+    font-size: 28px !important;
+    line-height: 42px;
+  }
+
+  .testimonial_text {
+    font-size: 12px;
+  }
+
+  .btn_testimonial_Mentor,
+  .btn_testimonial_Job_Seeker,
+  .btn_testimonial_Recruiter {
+    font-size: 12px;
+    padding: 3px 12px;
+  }
+}

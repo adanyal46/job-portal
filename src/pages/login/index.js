@@ -200,7 +200,10 @@ const LoginForm = () => {
                 <Flex justify="space-between" align="center">
                   <Typography.Text>
                     Don’t have an account?
-                    <Link to={"/signup-type"}> Register Now</Link>
+                    <Link to={"/signup-type"} style={{ fontSize: "14px" }}>
+                      {" "}
+                      Register Now
+                    </Link>
                   </Typography.Text>
                   <Flex gap={10} justify="center">
                     <Link to={"/"}>

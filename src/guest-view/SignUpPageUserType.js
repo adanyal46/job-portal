@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { Button, Card, Typography } from "antd";
+import { Button, Card, Flex, Typography } from "antd";
 import "./ResetPassword.css";
 import "./main.css";
 import { useNavigate } from "react-router-dom";
+import GradientButton from "../components/customComponents/GradientButton";
 
 const SignUpPageUserType = () => {
   const navigate = useNavigate();
@@ -19,10 +20,54 @@ const SignUpPageUserType = () => {
   };
 
   const btnList = [
-    { id: 1, type: "JOB_SEEKER", title: "Job Seeker" },
-    { id: 2, type: "MENTOR", title: "Mentor" },
-    { id: 3, type: "RECRUITER", title: "Recruiter" },
-    { id: 4, type: "EMPLOYER", title: "Employer" },
+    {
+      id: 1,
+      type: "JOB_SEEKER",
+      title: "Job Seeker",
+      styles: {
+        textGradient:
+          "linear-gradient(100.34deg, #2A7FB7 -1.76%, #2B4054 107.85%)",
+        borderRadius: "40px",
+        borderGradient:
+          "linear-gradient(100.34deg, #2A7FB7 -1.76%, #2B4054 107.85%)",
+      },
+    },
+    {
+      id: 2,
+      type: "MENTOR",
+      title: "Mentor",
+      styles: {
+        textGradient:
+          "linear-gradient(290.86deg, #2A6F5B -4.11%, #A5E51C 136.14%)",
+        borderRadius: "40px",
+        borderGradient:
+          "linear-gradient(290.86deg, #2A6F5B -4.11%, #A5E51C 136.14%)",
+      },
+    },
+    {
+      id: 3,
+      type: "RECRUITER",
+      title: "Recruiter",
+      styles: {
+        textGradient:
+          "linear-gradient(102.27deg, #35CBA5 -1.17%, #007E5F 101.77%)",
+        borderRadius: "40px",
+        borderGradient:
+          "linear-gradient(102.27deg, #35CBA5 -1.17%, #007E5F 101.77%)",
+      },
+    },
+    {
+      id: 4,
+      type: "EMPLOYER",
+      title: "Employer",
+      styles: {
+        textGradient:
+          "linear-gradient(287.99deg, #001F3F -20.42%, #009DD1 62.87%)",
+        borderRadius: "40px",
+        borderGradient:
+          "linear-gradient(287.99deg, #001F3F -20.42%, #009DD1 62.87%)",
+      },
+    },
   ];
 
   return (
@@ -40,28 +85,20 @@ const SignUpPageUserType = () => {
             },
           }}
         >
-          <div style={{ display: "flex", gap: "10px" }}>
+          <Flex gap={20} wrap>
             {btnList.map((btn) => (
-              <Button
+              <GradientButton
+                {...btn.styles}
                 key={btn.id}
                 onClick={() => {
                   setActiveBtn(btn.id);
                   navigate("/register/" + btn.type);
                 }}
-                style={{
-                  ...styles,
-                  background:
-                    activeBtn === btn.id
-                      ? "linear-gradient(100deg, #2A7FB7 -1.76%, #2B4054 107.85%)"
-                      : styles.backgroundColor,
-                  color: activeBtn === btn.id ? "white" : styles.color,
-                  border: activeBtn === btn.id ? "none" : styles.border,
-                }}
               >
                 {btn.title}
-              </Button>
+              </GradientButton>
             ))}
-          </div>
+          </Flex>
         </Card>
       </div>
     </div>

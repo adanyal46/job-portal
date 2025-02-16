@@ -129,6 +129,19 @@ const Sidebar = ({ user }) => {
     ...(isMentor || isRecruiter
       ? [
           {
+            key: "mentor-dashboard",
+            showArrow: false,
+            collapsible: "header",
+            label: (
+              <Link to={`${routePrefix}/dashboard`}>
+                <section className="collapse-header-wrapper">
+                  <DashboardEmployerSidebarIcon />
+                  <h5 className="collapse-heading">Dashboard</h5>
+                </section>
+              </Link>
+            ),
+          },
+          {
             key: "1",
             label: (
               <section className="collapse-header-wrapper">

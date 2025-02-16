@@ -1,18 +1,19 @@
 import { Flex, Image } from "antd";
 import React from "react";
+import "./LogoList2.css"; // Import CSS file for styling
 
 const LogoList2 = () => {
   return (
     <div className="home_logo_list_2">
-      <Flex gap={56} align="center" justify="center">
-        <Image src="/guest/sba.png" width={137} height={96} preview={false} />
-        <Image
-          src="/guest/minority.png"
-          width={102}
-          height={91}
-          preview={false}
-        />
-        <Image src="/guest/webnc.png" width={266} height={73} preview={false} />
+      <Flex
+        className="logo_list_wrapper"
+        gap={56}
+        align="center"
+        justify="center"
+      >
+        <Image className="logo_img" src="/guest/sba.png" preview={false} />
+        <Image className="logo_img" src="/guest/minority.png" preview={false} />
+        <Image className="logo_img" src="/guest/webnc.png" preview={false} />
       </Flex>
     </div>
   );

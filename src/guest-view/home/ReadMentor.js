@@ -1,12 +1,13 @@
 import { Button, Card, List, Typography } from "antd";
 import React from "react";
+import "./ReadMentor.css"; // Import the CSS file
 
 const data = [
   {
-    image_url: "guest/read-mentor.png", // Replace with actual image URL
+    image_url: "guest/read-mentor.png",
     title: "How To Become a Recruiter: A 9-Step Practical Guide",
     description: "10 mins read",
-    link: "read_more_link1", // Replace with actual link
+    link: "read_more_link1",
   },
   {
     image_url: "guest/read-mentor.png",
@@ -30,102 +31,76 @@ const data = [
     image_url: "guest/read-mentor.png",
     title: "How To Become a Recruiter: A 9-Step Practical Guide",
     description: "10 mins read",
-    link: "read_more_link5",
+    link: "read_more_link4",
   },
   {
     image_url: "guest/read-mentor.png",
     title: "How To Become a Recruiter: A 9-Step Practical Guide",
     description: "10 mins read",
-    link: "read_more_link6",
+    link: "read_more_link4",
   },
   {
     image_url: "guest/read-mentor.png",
     title: "How To Become a Recruiter: A 9-Step Practical Guide",
     description: "10 mins read",
-    link: "read_more_link7",
+    link: "read_more_link4",
   },
   {
     image_url: "guest/read-mentor.png",
     title: "How To Become a Recruiter: A 9-Step Practical Guide",
     description: "10 mins read",
-    link: "read_more_link8",
+    link: "read_more_link4",
   },
   {
     image_url: "guest/read-mentor.png",
     title: "How To Become a Recruiter: A 9-Step Practical Guide",
     description: "10 mins read",
-    link: "read_more_link9",
+    link: "read_more_link4",
   },
   {
     image_url: "guest/read-mentor.png",
     title: "How To Become a Recruiter: A 9-Step Practical Guide",
     description: "10 mins read",
-    link: "read_more_link10",
+    link: "read_more_link4",
   },
 ];
 
 const ReadMentor = () => {
   return (
-    <div className="read_mentor">
-      <h2>Read what our mentors have to share</h2>
+    <div className="read-mentor-container">
+      <h2 className="read-mentor-title">Read what our mentors have to share</h2>
       <List
         grid={{
-          gutter: 16, // Spacing between items
-          column: 5, // Number of columns per row
+          gutter: 24,
+          xs: 1, // 1 column on extra small screens
+          sm: 2, // 2 columns on small screens
+          md: 3, // 3 columns on medium screens
+          lg: 3, // 4 columns on large screens
+          xl: 5, // 5 columns on extra large screens
+          xxl: 5,
         }}
         dataSource={data}
         renderItem={(item) => (
           <List.Item>
             <Card
-              bordered
-              style={{
-                borderColor: "#B5B5B5",
-                borderRadius: "16px",
-              }}
+              className="read-mentor-card"
               styles={{
                 body: {
-                  padding: "12px 16px",
+                  padding: "16px",
                 },
               }}
             >
-              <div style={{ textAlign: "center" }}>
-                {/* Image inside padding */}
-                <img
-                  alt={item.title}
-                  src={item.image_url}
-                  style={{
-                    width: "100%", // Full width
-                    height: "auto", // Maintain aspect ratio
-                    borderRadius: "8px", // Optional border radius
-                  }}
-                />
+              <div className="read-mentor-image">
+                <img alt={item.title} src={item.image_url} />
               </div>
-              <Typography.Title
-                level={4}
-                style={{ color: "#333333", fontSize: "20px" }}
-              >
+              <Typography.Title level={4} className="read-mentor-card-title">
                 {item.title}
               </Typography.Title>
-              <Typography.Text
-                style={{
-                  fontSize: "16px",
-                  color: "#333333",
-                }}
-              >
+              <Typography.Text className="read-mentor-card-text">
                 {item.description}
               </Typography.Text>
               <br />
-              <Button
-                size="large"
-                style={{
-                  marginTop: "15px",
-                  borderColor: "#1D91B6",
-                  borderRadius: "10px",
-                  color: "#1D91B6",
-                }}
-              >
-                Read More
-              </Button>
+              <Button className="read-mentor-button">Read More</Button>
             </Card>
           </List.Item>
         )}

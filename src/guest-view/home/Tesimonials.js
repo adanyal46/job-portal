@@ -1,5 +1,7 @@
 import React from "react";
 import { Card, Rate, Row, Col, Image, Flex, Typography } from "antd";
+import "./Testimonials.css"; // Import the CSS file
+
 const testimonialsData = [
   {
     role: "Mentor",
@@ -7,10 +9,7 @@ const testimonialsData = [
     rating: 4.6,
     image: "guest/testimonial.png",
     testimonial:
-      "Lorem ipsum dolor sit amet consectetur. In sit et a augue arcu orci erat feugiat. Amet dolor eget mi ut enim vitae. Mi risus amet ullamcorper eget viverra enim mauris venenatis. Quam ultrices ornare sed cras ipsum scelerisque in.",
-    style: {
-      marginTop: "20px",
-    },
+      "Lorem ipsum dolor sit amet consectetur. In sit et a augue arcu orci erat feugiat. Amet dolor eget mi ut enim vitae. Mi risus amet ullamcorper eget viverra enim mauris venenatis.",
   },
   {
     role: "Job Seeker",
@@ -18,10 +17,15 @@ const testimonialsData = [
     rating: 4.8,
     image: "guest/testimonial.png",
     testimonial:
-      "Lorem ipsum dolor sit amet consectetur. In sit et a augue arcu orci erat feugiat. Amet dolor eget mi ut enim vitae. Mi risus amet ullamcorper eget viverra enim mauris venenatis. Quam ultrices ornare sed cras ipsum scelerisque in.",
-    style: {
-      marginTop: "24px",
-    },
+      "Lorem ipsum dolor sit amet consectetur. In sit et a augue arcu orci erat feugiat. Amet dolor eget mi ut enim vitae. Mi risus amet ullamcorper eget viverra enim mauris venenatis.",
+  },
+  {
+    role: "Recruiter",
+    name: "Alina Smith",
+    rating: 4.8,
+    image: "guest/testimonial.png",
+    testimonial:
+      "Lorem ipsum dolor sit amet consectetur. In sit et a augue arcu orci erat feugiat. Amet dolor eget mi ut enim vitae. Mi risus amet ullamcorper eget viverra enim mauris venenatis.",
   },
   {
     role: "Job Seeker",
@@ -29,10 +33,7 @@ const testimonialsData = [
     rating: 4.8,
     image: "guest/testimonial.png",
     testimonial:
-      "Lorem ipsum dolor sit amet consectetur. In sit et a augue arcu orci erat feugiat. Amet dolor eget mi ut enim vitae. Mi risus amet ullamcorper eget viverra enim mauris venenatis. Quam ultrices ornare sed cras ipsum scelerisque in.",
-    style: {
-      marginTop: "30px",
-    },
+      "Lorem ipsum dolor sit amet consectetur. In sit et a augue arcu orci erat feugiat. Amet dolor eget mi ut enim vitae. Mi risus amet ullamcorper eget viverra enim mauris venenatis.",
   },
   {
     role: "Mentor",
@@ -40,10 +41,7 @@ const testimonialsData = [
     rating: 4.6,
     image: "guest/testimonial.png",
     testimonial:
-      "Lorem ipsum dolor sit amet consectetur. In sit et a augue arcu orci erat feugiat. Amet dolor eget mi ut enim vitae. Mi risus amet ullamcorper eget viverra enim mauris venenatis. Quam ultrices ornare sed cras ipsum scelerisque in.",
-    style: {
-      marginTop: "-20px",
-    },
+      "Lorem ipsum dolor sit amet consectetur. In sit et a augue arcu orci erat feugiat. Amet dolor eget mi ut enim vitae. Mi risus amet ullamcorper eget viverra enim mauris venenatis.",
   },
   {
     role: "Recruiter",
@@ -51,35 +49,15 @@ const testimonialsData = [
     rating: 4.8,
     image: "guest/testimonial.png",
     testimonial:
-      "Lorem ipsum dolor sit amet consectetur. In sit et a augue arcu orci erat feugiat. Amet dolor eget mi ut enim vitae. Mi risus amet ullamcorper eget viverra enim mauris venenatis. Quam ultrices ornare sed cras ipsum scelerisque in.",
-    style: {
-      marginLeft: "20px",
-      marginTop: "20px",
-    },
+      "Lorem ipsum dolor sit amet consectetur. In sit et a augue arcu orci erat feugiat. Amet dolor eget mi ut enim vitae. Mi risus amet ullamcorper eget viverra enim mauris venenatis.",
   },
   {
-    role: "Recruiter",
+    role: "Job Seeker",
     name: "Alina Smith",
     rating: 4.8,
     image: "guest/testimonial.png",
     testimonial:
-      "Lorem ipsum dolor sit amet consectetur. In sit et a augue arcu orci erat feugiat. Amet dolor eget mi ut enim vitae. Mi risus amet ullamcorper eget viverra enim mauris venenatis. Quam ultrices ornare sed cras ipsum scelerisque in.",
-    style: {
-      marginLeft: "20px",
-      marginTop: "20px",
-    },
-  },
-  {
-    role: "Recruiter",
-    name: "Alina Smith",
-    rating: 4.8,
-    image: "guest/testimonial.png",
-    testimonial:
-      "Lorem ipsum dolor sit amet consectetur. In sit et a augue arcu orci erat feugiat. Amet dolor eget mi ut enim vitae. Mi risus amet ullamcorper eget viverra enim mauris venenatis. Quam ultrices ornare sed cras ipsum scelerisque in.",
-    style: {
-      marginLeft: "20px",
-      marginTop: "20px",
-    },
+      "Lorem ipsum dolor sit amet consectetur. In sit et a augue arcu orci erat feugiat. Amet dolor eget mi ut enim vitae. Mi risus amet ullamcorper eget viverra enim mauris venenatis.",
   },
   {
     role: "Mentor",
@@ -87,65 +65,24 @@ const testimonialsData = [
     rating: 4.6,
     image: "guest/testimonial.png",
     testimonial:
-      "Lorem ipsum dolor sit amet consectetur. In sit et a augue arcu orci erat feugiat. Amet dolor eget mi ut enim vitae. Mi risus amet ullamcorper eget viverra enim mauris venenatis. Quam ultrices ornare sed cras ipsum scelerisque in.",
-    style: {
-      marginLeft: "20px",
-      marginTop: "-20px",
-    },
-  },
-  {
-    role: "Job Seeker",
-    name: "Alina Smith",
-    rating: 4.6,
-    image: "guest/testimonial.png",
-    testimonial:
-      "Lorem ipsum dolor sit amet consectetur. In sit et a augue arcu orci erat feugiat. Amet dolor eget mi ut enim vitae. Mi risus amet ullamcorper eget viverra enim mauris venenatis. Quam ultrices ornare sed cras ipsum scelerisque in.",
-    style: {
-      marginLeft: "-10px",
-      marginTop: "20px",
-    },
-  },
-  {
-    role: "Recruiter",
-    name: "Alina Smith",
-    rating: 4.6,
-    image: "guest/testimonial.png",
-    testimonial:
-      "Lorem ipsum dolor sit amet consectetur. In sit et a augue arcu orci erat feugiat. Amet dolor eget mi ut enim vitae. Mi risus amet ullamcorper eget viverra enim mauris venenatis. Quam ultrices ornare sed cras ipsum scelerisque in.",
-
-    style: {
-      marginTop: "16px",
-    },
-  },
-  {
-    role: "Job Seeker",
-    name: "Alina Smith",
-    rating: 4.6,
-    image: "guest/testimonial.png",
-    testimonial:
-      "Lorem ipsum dolor sit amet consectetur. In sit et a augue arcu orci erat feugiat. Amet dolor eget mi ut enim vitae. Mi risus amet ullamcorper eget viverra enim mauris venenatis. Quam ultrices ornare sed cras ipsum scelerisque in.",
-    style: {
-      marginTop: "16px",
-      marginLeft: "-15px",
-    },
+      "Lorem ipsum dolor sit amet consectetur. In sit et a augue arcu orci erat feugiat. Amet dolor eget mi ut enim vitae. Mi risus amet ullamcorper eget viverra enim mauris venenatis.",
   },
 ];
+
 const Testimonials = () => {
   return (
     <div className="home_testimonial">
-      <h2>What Our Clients Say</h2>
-      <Row gutter={[16, 16]}>
+      <h2 className="testimonial_title">What Our Clients Say</h2>
+      <Row gutter={[40, 40]}>
         {testimonialsData.map((testimonial, index) => (
-          <Col key={index} xs={24} sm={12} md={8} lg={6}>
-            <Card
-              style={{
-                position: "relative",
-                borderColor: "#DBDADE",
-                maxWidth: "354px",
-                ...testimonial.style,
-              }}
-            >
-              <button className={"btn_testimonial_" + testimonial.role}>
+          <Col key={index} xs={24} sm={12} md={8} lg={8} xl={6}>
+            <Card className="testimonial_card">
+              <button
+                className={`btn_testimonial_${testimonial.role.replace(
+                  " ",
+                  "_"
+                )}`}
+              >
                 {testimonial.role}
               </button>
               <Flex gap={10} style={{ marginBottom: "10px" }}>
@@ -157,28 +94,22 @@ const Testimonials = () => {
                   alt={testimonial.name}
                 />
                 <Flex vertical gap={5}>
-                  <Typography.Text
-                    style={{
-                      fontSize: "22px",
-                      color: "#4B465C",
-                      fontWeight: 500,
-                    }}
-                  >
-                    Alina Smith
+                  <Typography.Text className="testimonial_name">
+                    {testimonial.name}
                   </Typography.Text>
                   <Flex gap={5}>
-                    <Typography.Text style={{ fontSize: "18px" }}>
+                    <Typography.Text className="testimonial_rating">
                       {testimonial.rating}
                     </Typography.Text>
                     <Rate
-                      style={{ fontSize: "24px" }}
+                      className="testimonial_stars"
                       disabled
                       defaultValue={testimonial.rating}
                     />
                   </Flex>
                 </Flex>
               </Flex>
-              <Typography.Text style={{ color: "#4B465C" }}>
+              <Typography.Text className="testimonial_text">
                 {testimonial.testimonial}
               </Typography.Text>
             </Card>
