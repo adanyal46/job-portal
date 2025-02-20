@@ -196,6 +196,14 @@ export const updateOtherInfoApi = async (formData) => {
   const response = await axiosInstance.post(route, formData);
   return response.data;
 };
+
+export const updatePointOfContact = async (formData) => {
+  const response = await axiosInstance.put(
+    "/employer/pointofcontact",
+    formData
+  );
+  return response.data;
+};
 export const uploadMentorVideoApi = async (formData) => {
   const route = uploadVideoRoute();
   const response = await axiosInstance.post(route, formData);

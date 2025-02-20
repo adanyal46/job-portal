@@ -52,9 +52,7 @@ const CommonInput = (props) => {
 
   const handleInputChange = (e) => {
     const inputValue = e.target.value;
-    const capitalizedValue =
-      inputValue.charAt(0).toUpperCase() + inputValue.slice(1);
-    onChange(capitalizedValue);
+    onChange(inputValue);
   };
 
   const handleKeyPress = (e) => {

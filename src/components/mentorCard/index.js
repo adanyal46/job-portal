@@ -13,14 +13,7 @@ const MentorCard = (props) => {
   const navigate = useNavigate();
 
   const handleDetailsClick = () => {
-    navigate("/job-seeker/mentor/mentorDetail", {
-      state: {
-        services,
-        profile,
-        certificate,
-        mentorId,
-      },
-    });
+    navigate("/job-seeker/mentor/mentorDetail/" + mentorId);
   };
 
   return (

@@ -43,8 +43,8 @@ const AddJob = () => {
         companyName: values.companyName,
         location: values.jobLocation,
         applicationLink: values.applicationLink,
-        minPrice: values.minPay.toString(),
-        maxPrice: values.maxPay.toString(),
+        minPrice: parseInt(values.minPay),
+        maxPrice: parseInt(values.maxPay),
         description: values.description,
       };
 
@@ -115,12 +115,14 @@ const AddJob = () => {
                 <Select
                   placeholder="Select Job Type"
                   options={[
-                    { value: "full-time", label: "Full Time" },
-                    { value: "part-time", label: "Part Time" },
-                    { value: "contract", label: "Contract" },
-                    { value: "internship", label: "Internship" },
-                    { value: "remote", label: "Remote" },
-                    { value: "on-site", label: "On-site" },
+                    { value: "FULL_TIME", label: "Full Time" },
+                    { value: "PART_TIME", label: "Part Time" },
+                    { value: "CONTRACT", label: "Contract" },
+                    { value: "INTERNSHIP", label: "Internship" },
+                    { value: "FREELANCE", label: "Freelance" },
+                    { value: "REMOTE", label: "Remote" },
+                    { value: "TEMPORARY", label: "Temporary" },
+                    { value: "VOLUNTEER", label: "Volunteer" },
                   ]}
                 />
               </Form.Item>

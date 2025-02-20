@@ -58,7 +58,7 @@ export const jobSeekerRoutes = [
         errorElement: <ErrorPage />,
       },
       {
-        path: "mentor/mentorDetail",
+        path: "mentor/mentorDetail/:id",
         element: <MentorDetails />,
         errorElement: <ErrorPage />,
       },

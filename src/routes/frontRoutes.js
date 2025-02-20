@@ -1,3 +1,4 @@
+import Callback from "../Callback";
 import ErrorPage from "../ErrorPage";
 import AboutUs from "../guest-view/AboutUs";
 import Employer from "../guest-view/Employer";
@@ -55,5 +56,10 @@ export const frontRoutes = [
         errorElement: <ErrorPage />,
       },
     ],
+  },
+  {
+    path: "/callback",
+    element: <Callback />,
+    errorElement: <ErrorPage />,
   },
 ];

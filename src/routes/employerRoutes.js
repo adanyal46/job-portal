@@ -64,12 +64,12 @@ export const employerRoutes = [
         errorElement: <ErrorPage />,
       },
       {
-        path: "talent",
+        path: "recruiter",
         element: <EmployerTalent />,
         errorElement: <ErrorPage />,
       },
       {
-        path: "recruiter",
+        path: "talent",
         element: <EmployerRecruiter />,
         errorElement: <ErrorPage />,
       },

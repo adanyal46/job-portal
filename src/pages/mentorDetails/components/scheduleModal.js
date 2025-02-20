@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { Checkbox, message } from "antd";
 
@@ -22,6 +22,15 @@ import {
 import "./scheduleModal.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { bookSession } from "../../../features/booking/bookingSlice";
+import { useLocation, useParams } from "react-router-dom";
+import {
+  createEventType,
+  getEventTypeUri,
+  getToken,
+  getUserUri,
+  scheduleEvent,
+  storeCalendlyToken,
+} from "../../../utils/calendly";
 
 const ModalStep = (props) => {
   const { active, ActiveIcon, Icon, title, description } = props;
@@ -118,6 +127,9 @@ const ScheduleModal = (props) => {
   const [currentStep, setCurrentStep] = useState(1);
   const findServ = services?.find((item) => item.id === selectedServiceId);
   const { user } = useSelector((state) => state.profile);
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const code = queryParams.get("code"); // Get the `code` from the URL
 
   const handleNextStep = async () => {
     if (!selectedDate || !selectedTime) {
@@ -184,6 +196,103 @@ const ScheduleModal = (props) => {
 
   const modalTitle = handleTitleChange(currentStep);
   const modalDescription = handleDescriptionChange(currentStep);
+  const handleScheduleClick = () => {
+    if (!mentorId) {
+      console.error("Mentor ID is missing");
+      return;
+    }
+
+    const mentorIdString = String(mentorId);
+    const calendlyAuthUrl = `https://auth.calendly.com/oauth/authorize?client_id=${
+      process.env.REACT_APP_CLIENT_ID
+    }&response_type=code&redirect_uri=${encodeURIComponent(
+      process.env.REACT_APP_CALENDLY_REDIRECT_URI
+    )}&state=${encodeURIComponent(mentorIdString)}`; // Ensure it's a string
+
+    console.log("Redirecting to Calendly with Mentor ID:", mentorIdString);
+
+    window.location.href = calendlyAuthUrl; // Redirects user
+  };
+
+  const exchangeCodeForToken = async (code) => {
+    try {
+      // Check if a valid token already exists
+      const existingToken = await getToken();
+      if (existingToken) {
+        console.log("Using existing Calendly access token.");
+        return {
+          accessToken: existingToken,
+          userUri: await getUserUri(existingToken),
+        };
+      }
+
+      // Ensure code is only used once
+      if (!code) {
+        console.error("No authorization code provided.");
+        return null;
+      }
+
+      const response = await fetch("https://auth.calendly.com/oauth/token", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          grant_type: "authorization_code",
+          client_id: process.env.REACT_APP_CLIENT_ID,
+          client_secret: process.env.REACT_APP_CLIENT_SECRET,
+          redirect_uri: process.env.REACT_APP_CALENDLY_REDIRECT_URI,
+          code,
+        }),
+      });
+
+      const data = await response.json();
+      console.log("Token Response:", data);
+
+      if (data.access_token) {
+        console.log("New Access Token Received:", data);
+        storeCalendlyToken(data); // Store token in localStorage
+
+        const userUri = data.owner;
+        console.log("userUri", userUri);
+
+        const eventTypeUri = await getEventTypeUri(data.access_token, userUri);
+        console.log("Event Type URI:", eventTypeUri);
+
+        return { accessToken: data.access_token, userUri };
+      } else {
+        console.error("Error: No access token received.", data);
+        return null;
+      }
+    } catch (error) {
+      console.error("Error exchanging code for token:", error);
+      return null;
+    }
+  };
+
+  const scheduleMentorSession = async () => {
+    const { accessToken, userUri } = await exchangeCodeForToken(code);
+    if (!accessToken || !userUri) {
+      console.error("Failed to get access token or user URI.");
+      return;
+    }
+
+    // Try to get an existing event type
+    let eventTypeUri = await getEventTypeUri(accessToken, userUri);
+
+    // If no event type exists, create one
+    if (!eventTypeUri) {
+      console.log("⚠️ No event types found. Creating a new one...");
+      eventTypeUri = await createEventType(accessToken, userUri);
+    }
+
+    console.log("✅ Event Type URI:", eventTypeUri);
+
+    if (!eventTypeUri) {
+      console.error("Failed to create or fetch event type.");
+      return;
+    }
+
+    // Now, you can schedule an event using `eventTypeUri`
+  };
 
   return (
     <CommonModal
@@ -256,9 +365,24 @@ const ScheduleModal = (props) => {
               </section>
 
               <section className="time-slots-container">
-                <TimeSlot timeSlot="03:00 PM-04:00 PM" />
+                {/* <TimeSlot timeSlot="03:00 PM-04:00 PM" />
                 <TimeSlot timeSlot="04:00 PM-05:00 PM" />
-                <TimeSlot timeSlot="07:00 PM-08:00 PM" />
+                <TimeSlot timeSlot="07:00 PM-08:00 PM" /> */}
+                {code === null ? (
+                  <CustomButton
+                    category="primary"
+                    classes="apply-voucher-button"
+                    name="Connect Calendly"
+                    handleClick={handleScheduleClick}
+                  />
+                ) : (
+                  <CustomButton
+                    category="primary"
+                    classes="apply-voucher-button"
+                    name="Schedule Meeting"
+                    handleClick={scheduleMentorSession}
+                  />
+                )}
               </section>
 
               <ScheduleButtons

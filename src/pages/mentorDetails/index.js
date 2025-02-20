@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import MentorServiceCollapse from "../../components/mentorServiceCollapse";
 import CustomPagination from "../../components/customPagination";
@@ -18,17 +18,37 @@ import {
   PlusIcon,
 } from "../../assets/svg";
 import "./styles.scss";
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import MentorVideoContainer from "../../components/MentorVideoContainer";
-import { Typography } from "antd";
+import { message, Typography } from "antd";
+import axiosInstance from "../../api/axiosInstance";
 
 const MentorDetails = () => {
   const location = useLocation();
-  const { services, profile, certificate, mentorId } = location.state || {};
+  const { id } = useParams();
   const [showScheduleModal, setShowScheduleModal] = useState(false);
   const [selectedServiceId, setSelectedServiceId] = useState(null);
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedTime, setSelectedTime] = useState(null);
+  const [mentorDetail, setMentorDetail] = useState(null);
+
+  useEffect(() => {
+    if (id) {
+      fetchMentorDetail(id);
+    }
+  }, [id]);
+
+  const fetchMentorDetail = async (id) => {
+    try {
+      const response = await axiosInstance.get("/getMentorforJs/" + id);
+      setMentorDetail(response.data.data);
+    } catch (error) {
+      message.open({
+        type: "error",
+        content: error.message || "Internal Server Error",
+      });
+    }
+  };
 
   const handleShowScheduleModal = () => {
     setShowScheduleModal(() => true);
@@ -42,6 +62,9 @@ const MentorDetails = () => {
     setSelectedServiceId(serviceId);
     handleShowScheduleModal();
   };
+
+  const profile = mentorDetail?.Profile?.[0];
+  const mentorId = mentorDetail?.id;
 
   return (
     <section className="mentor-detail-layout-container">
@@ -102,7 +125,10 @@ const MentorDetails = () => {
 
           <hr className="mentor-detail-divider" />
 
-          <Certifications certificates={certificate} profile={profile} />
+          <Certifications
+            certificates={mentorDetail?.Certificate || []}
+            profile={profile}
+          />
 
           <hr className="mentor-detail-divider" />
 
@@ -142,7 +168,7 @@ const MentorDetails = () => {
 
             <MentorServiceCollapse
               handleClick={handleServiceClick}
-              services={services}
+              services={mentorDetail?.services || []}
             />
 
             {/* <p className="info-content">
@@ -173,7 +199,7 @@ const MentorDetails = () => {
           selectedTime={selectedTime}
           setSelectedTime={setSelectedTime}
           mentorId={mentorId}
-          services={services}
+          services={mentorDetail?.services}
           setSelectedServiceId={setSelectedServiceId}
         />
       )}
