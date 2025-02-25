@@ -66,7 +66,7 @@ const Navbar = ({ user }) => {
       <nav className="fuse-navbar">
         <picture className="navbar-branding">
           <NavLink
-            to="/"
+            to={routePrefix + "/profile"}
             onClick={() => window.scrollTo(0, 0)}
             className="navbar-branding-link"
           >

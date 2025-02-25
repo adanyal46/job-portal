@@ -10,6 +10,8 @@ import { Typography } from "antd";
 
 const MentorCard = (props) => {
   const { icon, services, profile, certificate, mentorId } = props;
+  console.log(profile);
+
   const navigate = useNavigate();
 
   const handleDetailsClick = () => {

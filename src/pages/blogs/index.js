@@ -93,14 +93,16 @@ const Blogs = () => {
           onKeyUp={handleSearch}
           onClear={() => fetchBlogs("")}
         />
-        <CustomButton
-          handleClick={() => navigate(`/${route}/blogs/write`)}
-          category="primary"
-          name="Add Blog"
-          style={{
-            minHeight: "48px",
-          }}
-        />
+        {ROLE !== "JOB_SEEKER" && (
+          <CustomButton
+            handleClick={() => navigate(`/${route}/blogs/write`)}
+            category="primary"
+            name="Add Blog"
+            style={{
+              minHeight: "48px",
+            }}
+          />
+        )}
       </Flex>
 
       <Card
