@@ -14,6 +14,7 @@ import employerDashboardReducer from "../features/employerDashboard/employerDash
 import dashboardReducer from "../features/admin/dashboard/dashboardSlice";
 import jobSeekerReducer from "../features/admin/user/jobSeekersSlice";
 import mentorsReducer from "../features/admin/user/mentorSlice";
+import StaffsReducer from "../features/admin/user/staffSlice";
 import adminMentorBookingReducer from "../features/admin/booking/bookingSlice";
 import employerReducer from "../features/admin/user/employerSlice";
 import AdminRecruiterReducer from "../features/admin/user/recruiterSlice";
@@ -47,6 +48,7 @@ export const store = configureStore({
     adminMentorBookings: adminMentorBookingReducer,
     employers: employerReducer,
     recruiters: AdminRecruiterReducer,
+    staffs: StaffsReducer,
     industries: IndustryReducer,
     mentorService: MentorServiceReducer,
     recruiterService: RecruiterServiceReducer,

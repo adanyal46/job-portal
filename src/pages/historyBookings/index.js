@@ -15,16 +15,14 @@ const BookingsListingMentor = ({ bookingSession }) => {
       Array.isArray(bookingSession) &&
       bookingSession.length > 0 ? (
         bookingSession.map((booking) => (
-          <section className="booking-listing-wrapper">
-            <BookingCard
-              mentor
-              status={booking?.status}
-              serviceName={booking?.serviceName}
-              mentorName={booking?.jobSeekerName}
-              date={booking?.date}
-              time={booking?.time}
-            />
-          </section>
+          <BookingCard
+            mentor
+            status={booking?.status}
+            serviceName={booking?.serviceName}
+            mentorName={booking?.jobSeekerName}
+            date={booking?.date}
+            time={booking?.time}
+          />
         ))
       ) : (
         <NoBooking />
@@ -103,9 +101,13 @@ const HistoryBookings = () => {
             children:
               bookingSession.length > 0 ? (
                 USER_ROLE !== "RECRUITER" ? (
-                  <BookingsListingMentor bookingSession={bookingSession} />
+                  <section className="booking-listing-wrapper">
+                    <BookingsListingMentor bookingSession={bookingSession} />
+                  </section>
                 ) : (
-                  <BookingsListingRecruiter bookingSession={bookingSession} />
+                  <section className="booking-listing-wrapper">
+                    <BookingsListingRecruiter bookingSession={bookingSession} />
+                  </section>
                 )
               ) : (
                 <NoBooking />

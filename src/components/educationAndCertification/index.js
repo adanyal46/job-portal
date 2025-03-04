@@ -26,6 +26,7 @@ const EducationAndCertification = ({
   setShowCertificationModal,
   education,
   certificates,
+  action = true,
 }) => {
   const dispatch = useDispatch();
   const [educationData, setEducationData] = useState({
@@ -282,16 +283,18 @@ const EducationAndCertification = ({
             key={item.id}
             id={item.id}
             handleActionMenu={handleActionMenu}
+            action={action}
           />
         ))}
       </section>
-
-      <CustomButton
-        category="additional"
-        name="Add"
-        icon={<AddCircleIcon />}
-        handleClick={handleShowEducationModal}
-      />
+      {action && (
+        <CustomButton
+          category="additional"
+          name="Add"
+          icon={<AddCircleIcon />}
+          handleClick={handleShowEducationModal}
+        />
+      )}
 
       <section className="education-wrapper">
         {certificates?.map((certificate) => (
@@ -302,14 +305,14 @@ const EducationAndCertification = ({
           />
         ))}
       </section>
-
-      <CustomButton
-        category="additional"
-        name="Add"
-        icon={<AddCircleIcon />}
-        handleClick={handleShowCertificationModal}
-      />
-
+      {action && (
+        <CustomButton
+          category="additional"
+          name="Add"
+          icon={<AddCircleIcon />}
+          handleClick={handleShowCertificationModal}
+        />
+      )}
       {showEducationModal && (
         <EducationModal
           educationData={educationData}

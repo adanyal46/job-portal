@@ -34,21 +34,24 @@ import CustomPagination from "../../customPagination";
 import CustomButton from "../../customButton";
 import axiosInstance from "../../../api/axiosInstance";
 import MentorServiceCollapse from "../../mentorServiceCollapse";
+import { getTimesheetListByRecruiter } from "../../../features/employerDashboard/employerDashboardApi";
 
 const { Title, Text } = Typography;
 
-const AdminMentorProfile = () => {
+const AdminRecruiterProfileS = () => {
   const { id } = useParams();
   const [recruiterDetail, setRecruiterDetail] = useState(null);
   const [loading, setLoading] = useState(true);
   const [timesheetLoading, setTimesheetLoading] = useState(true);
   const [timsheets, setTimesheets] = useState([]);
 
+  console.log(recruiterDetail);
+
   useEffect(() => {
     const fetchRecruiterInfo = async () => {
       try {
-        const result = await axiosInstance.get("/admin/mentorProfile/" + id);
-        setRecruiterDetail(result.data.data?.[0]);
+        const result = await axiosInstance.get("/admin/getRecDetail/" + id);
+        setRecruiterDetail(result.data.data);
       } catch (error) {
         message.error(
           error.message || "Failed to fetch job details. Please try again."
@@ -67,8 +70,8 @@ const AdminMentorProfile = () => {
   const fetchTimesheetList = async () => {
     try {
       setTimesheetLoading(true);
-      // const response = await getTimesheetListByRecruiter(id);
-      // setTimesheets(response.data);
+      const response = await getTimesheetListByRecruiter(id);
+      setTimesheets(response.data);
     } catch (error) {
       console.log(error);
       message.open({
@@ -260,7 +263,7 @@ const AdminMentorProfile = () => {
             )}
             {recruiterDetail?.review?.length >= 10 && <CustomPagination />}
           </article>
-          {/* <Typography.Title level={3}>Timesheet</Typography.Title>
+          <Typography.Title level={3}>Timesheet</Typography.Title>
           {timsheets?.length > 0 ? (
             <>
               <Typography.Title level={3}>${totalPrice}</Typography.Title>
@@ -291,7 +294,7 @@ const AdminMentorProfile = () => {
             </>
           ) : (
             <Empty description="No Timesheet found" />
-          )} */}
+          )}
         </Card>
       </Col>
 
@@ -328,4 +331,4 @@ const AdminMentorProfile = () => {
   );
 };
 
-export default AdminMentorProfile;
+export default AdminRecruiterProfileS;

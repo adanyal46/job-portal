@@ -56,6 +56,7 @@ const DocumentAndLink = ({
   setShowDocumentsModal,
   document,
   user,
+  action = true,
 }) => {
   const dispatch = useDispatch();
   const [documentData, setDocumentData] = useState({
@@ -109,13 +110,14 @@ const DocumentAndLink = ({
           <Documents document={item} />
         ))}
       </section>
-
-      <CustomButton
-        category="additional"
-        name="Add"
-        icon={<AddCircleIcon />}
-        handleClick={handleShowDocumentsModal}
-      />
+      {action && (
+        <CustomButton
+          category="additional"
+          name="Add"
+          icon={<AddCircleIcon />}
+          handleClick={handleShowDocumentsModal}
+        />
+      )}
 
       <section className="document-links-wrapper">
         {document?.map((item) => (

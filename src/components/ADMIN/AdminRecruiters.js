@@ -68,7 +68,11 @@ const columns = [
               label: (
                 <Link
                   to={"/admin/user/recruiters/" + record.userId}
-                  style={{ color: "#2F2C39", fontWeight: "500" }}
+                  style={{
+                    color: "#2F2C39",
+                    fontWeight: "500",
+                    fontSize: "14px",
+                  }}
                 >
                   View Details
                 </Link>

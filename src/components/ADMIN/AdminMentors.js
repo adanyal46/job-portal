@@ -64,7 +64,10 @@ const columns = [
           items: [
             {
               label: (
-                <Link to={"/admin/user/mentor/profile/" + record.userId}>
+                <Link
+                  to={"/admin/user/mentor/profile/" + record.userId}
+                  style={{ fontSize: "14px" }}
+                >
                   View Details
                 </Link>
               ),

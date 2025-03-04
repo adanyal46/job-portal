@@ -26,17 +26,40 @@ const TEXT_COLOR = {
 };
 
 const columns = [
-  { title: "#", dataIndex: "userId", key: "userId" },
-  { title: "Name", dataIndex: "name", key: "name" },
-  { title: "Email", dataIndex: "email", key: "email" },
-  { title: "Phone No", dataIndex: "phoneNo", key: "phoneNo" },
-  { title: "State", dataIndex: "address", key: "address" },
-  { title: "City", dataIndex: "city", key: "city" },
   {
-    title: "Purchased Plan",
-    dataIndex: "plan",
-    key: "plan",
-    render: (text) => <AdminNotepadIcon />,
+    title: "#",
+    dataIndex: "userId",
+    key: "userId",
+  },
+  {
+    title: "Name",
+    dataIndex: "name",
+    key: "name",
+    render: (text) => text || "N/A",
+  },
+  {
+    title: "Email",
+    dataIndex: "email",
+    key: "email",
+    render: (text) => text || "N/A",
+  },
+  {
+    title: "Phone No",
+    dataIndex: "phoneNo",
+    key: "phoneNo",
+    render: (text) => text || "N/A",
+  },
+  {
+    title: "State",
+    dataIndex: "address",
+    key: "address",
+    render: (text) => text || "N/A",
+  },
+  {
+    title: "City",
+    dataIndex: "city",
+    key: "city",
+    render: (text) => text || "N/A",
   },
   {
     title: "Resume",
@@ -47,32 +70,42 @@ const columns = [
   {
     title: "Actions",
     key: "actions",
-    render: () => (
-      <Dropdown
-        menu={{
-          items: [
-            {
-              label: <Link to={"/admin/user/bookings"}> View Details</Link>,
-              key: "0",
-            },
-            {
-              label: "Edit ",
-              key: "1",
-            },
-            {
-              type: "divider",
-            },
-            {
-              label: "Delete",
-              key: "3",
-            },
-          ],
-        }}
-        trigger={["click"]}
-      >
-        <MenuEmployerProfileIcon />
-      </Dropdown>
-    ),
+    render: (_, record) => {
+      return (
+        <Dropdown
+          menu={{
+            items: [
+              {
+                label: (
+                  <Link
+                    to={"/admin/user/job-seeker/" + record?.userId}
+                    style={{ fontSize: "14px" }}
+                  >
+                    {" "}
+                    View Details
+                  </Link>
+                ),
+                key: "0",
+              },
+              {
+                label: "Edit ",
+                key: "1",
+              },
+              {
+                type: "divider",
+              },
+              {
+                label: "Delete",
+                key: "3",
+              },
+            ],
+          }}
+          trigger={["click"]}
+        >
+          <MenuEmployerProfileIcon />
+        </Dropdown>
+      );
+    },
   },
 ];
 

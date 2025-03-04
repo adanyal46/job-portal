@@ -31,6 +31,16 @@ export const fetchMentorsApi = async ({
     throw error;
   }
 };
+export const fetchStaffApi = async ({ page, pageSize, sortOrder, search }) => {
+  try {
+    const response = await axiosInstance.get(
+      `/admin/getallFS?page=${page}&pageSize=${pageSize}&sortOrder=${sortOrder}&search=${search}`
+    );
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
 
 export const fetchMentorProfileApi = async (userId) => {
   try {

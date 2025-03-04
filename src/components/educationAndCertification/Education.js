@@ -9,6 +9,7 @@ const Education = ({
   startFrom,
   endIn,
   handleActionMenu,
+  action = true,
 }) => {
   const educationItem = [
     {
@@ -33,17 +34,19 @@ const Education = ({
           </p>
         </article>
       </section>
-      <Dropdown
-        menu={{
-          items: educationItem,
-          onClick: (event) => handleClick(event),
-        }}
-        trigger={["click"]}
-        placement="bottom"
-        overlayStyle={{ width: "150px" }}
-      >
-        <DetailsIcon style={{ cursor: "pointer" }} />
-      </Dropdown>
+      {action && (
+        <Dropdown
+          menu={{
+            items: educationItem,
+            onClick: (event) => handleClick(event),
+          }}
+          trigger={["click"]}
+          placement="bottom"
+          overlayStyle={{ width: "150px" }}
+        >
+          <DetailsIcon style={{ cursor: "pointer" }} />
+        </Dropdown>
+      )}
     </section>
   );
 };

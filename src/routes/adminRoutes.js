@@ -35,6 +35,9 @@ import { Navigate } from "react-router-dom";
 import AdminEditBlog from "../components/ADMIN/blogs/AdminEditBlog";
 import ViewTimeSheet from "../components/ADMIN/timsheet-management/ViewTimeSheet";
 import AdminNotification from "../components/ADMIN/AdminNotification";
+import AdminJobSeekerProfile from "../components/ADMIN/AdminJobSeekerProfile";
+import AdminEmployerPayment from "../components/ADMIN/AdminEmployerPayment";
+import AdminRecruiterProfileS from "../components/ADMIN/profile/AdminRecruiterProfileS";
 export const adminRoutes = [
   {
     path: "*",
@@ -67,13 +70,18 @@ export const adminRoutes = [
         errorElement: <ErrorPage />,
       },
       {
+        path: "user/employers/payment/:id",
+        element: <AdminEmployerPayment />,
+        errorElement: <ErrorPage />,
+      },
+      {
         path: "user/recruiters",
         element: <AdminRecruiters />,
         errorElement: <ErrorPage />,
       },
       {
         path: "user/recruiters/:id",
-        element: <AdminRecruiterProfile />,
+        element: <AdminRecruiterProfileS />,
         errorElement: <ErrorPage />,
       },
       {
@@ -99,6 +107,11 @@ export const adminRoutes = [
       {
         path: "user/job-seekers",
         element: <AdminJobSeeker />,
+        errorElement: <ErrorPage />,
+      },
+      {
+        path: "user/job-seeker/:id",
+        element: <AdminJobSeekerProfile />,
         errorElement: <ErrorPage />,
       },
       {

@@ -17,6 +17,7 @@ const EmploymentAndExperience = ({
   showEmployementModal,
   setShowEmployementModal,
   employmentHistorys,
+  action = true,
 }) => {
   const [employData, setEmployData] = useState({
     company: "",
@@ -136,12 +137,14 @@ const EmploymentAndExperience = ({
         ))}
       </section>
 
-      <CustomButton
-        category="additional"
-        name="Add"
-        icon={<AddCircleIcon />}
-        handleClick={handleShowEmployementModal}
-      />
+      {action && (
+        <CustomButton
+          category="additional"
+          name="Add"
+          icon={<AddCircleIcon />}
+          handleClick={handleShowEmployementModal}
+        />
+      )}
 
       {showEmployementModal && (
         <EmploymentModal

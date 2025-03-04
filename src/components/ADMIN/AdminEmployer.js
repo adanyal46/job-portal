@@ -44,10 +44,31 @@ const items = [
 ];
 const columns = [
   { title: "#", dataIndex: "userId", key: "userId" },
+  {
+    title: "Company Name",
+    dataIndex: "companyName",
+    key: "companyName",
+    render: (text) => text || "N/A",
+  },
   { title: "Contact Name", dataIndex: "name", key: "name" },
-  { title: "Email", dataIndex: "email", key: "email" },
-  { title: "Phone No", dataIndex: "phoneNo", key: "phoneNo" },
-  { title: "Address", dataIndex: "address", key: "address" },
+  {
+    title: "Email",
+    dataIndex: "email",
+    key: "email",
+    render: (text) => text || "N/A",
+  },
+  {
+    title: "Phone No",
+    dataIndex: "phoneNo",
+    key: "phoneNo",
+    render: (text) => text || "N/A",
+  },
+  {
+    title: "Address",
+    dataIndex: "address",
+    key: "address",
+    render: (text) => text || "N/A",
+  },
   {
     title: "Booking",
     dataIndex: "booking",
@@ -62,7 +83,11 @@ const columns = [
     title: "Purchased Plan",
     dataIndex: "plan",
     key: "plan",
-    render: () => <AdminNotepadIcon />,
+    render: (_, record) => (
+      <Link to={"/admin/user/employers/payment/" + record.userId}>
+        <AdminNotepadIcon />
+      </Link>
+    ),
   },
   {
     title: "Actions",

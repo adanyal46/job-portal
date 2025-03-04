@@ -13,7 +13,12 @@ import { profileUpdate } from "../../features/profile/profileSlice";
 import { Image, message } from "antd";
 import { getRelativePath } from "../../utils";
 
-const ProfileHeader = ({ user, showInfoModal, setShowInfoModal }) => {
+const ProfileHeader = ({
+  user,
+  showInfoModal,
+  setShowInfoModal,
+  action = true,
+}) => {
   const dispatch = useDispatch();
   const profile = user?.Profile[0];
   const serverUrl =
@@ -84,6 +89,7 @@ const ProfileHeader = ({ user, showInfoModal, setShowInfoModal }) => {
             loading="lazy"
             width={200}
             height={200}
+            preview={false}
             className="user-profile-image"
             src={imageUrl || "/images/no-image.jpg"} // Use imageUrl state
             alt="UserProfileImage"
@@ -93,12 +99,14 @@ const ProfileHeader = ({ user, showInfoModal, setShowInfoModal }) => {
 
         <article className="profile-user-details">
           <section className="edit-profile-button">
-            <CustomButton
-              category="iconed"
-              shape="circle"
-              icon={<EditProfileIcon />}
-              handleClick={handleShowInfoModal}
-            />
+            {action && (
+              <CustomButton
+                category="iconed"
+                shape="circle"
+                icon={<EditProfileIcon />}
+                handleClick={handleShowInfoModal}
+              />
+            )}
           </section>
 
           <h2 className="profile-user-name">{profile?.fullname || "Guest"}</h2>
