@@ -128,7 +128,6 @@ const CommonInput = (props) => {
 
       <Case condition={category === "textarea"}>
         <TextArea
-          maxLength={maxLength || 200}
           className={`common-textarea-field ${classes}`}
           onChange={handleInputChange}
           placeholder={placeholder}

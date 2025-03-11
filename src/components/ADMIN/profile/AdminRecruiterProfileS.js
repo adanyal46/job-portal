@@ -35,23 +35,25 @@ import CustomButton from "../../customButton";
 import axiosInstance from "../../../api/axiosInstance";
 import MentorServiceCollapse from "../../mentorServiceCollapse";
 import { getTimesheetListByRecruiter } from "../../../features/employerDashboard/employerDashboardApi";
+import ProfileStatus from "../components/ProfileStatus";
 
 const { Title, Text } = Typography;
 
-const AdminRecruiterProfileS = () => {
+const AdminRecruiterProfileS = ({ action = false }) => {
+  console.log("action", action);
+
   const { id } = useParams();
   const [recruiterDetail, setRecruiterDetail] = useState(null);
   const [loading, setLoading] = useState(true);
   const [timesheetLoading, setTimesheetLoading] = useState(true);
   const [timsheets, setTimesheets] = useState([]);
-
-  console.log(recruiterDetail);
+  const [statusLoading, setStatusLoading] = useState(false);
 
   useEffect(() => {
     const fetchRecruiterInfo = async () => {
       try {
-        const result = await axiosInstance.get("/admin/getRecDetail/" + id);
-        setRecruiterDetail(result.data.data);
+        const result = await axiosInstance.get("/admin/recProfile/" + id);
+        setRecruiterDetail(result.data.data?.[0]);
       } catch (error) {
         message.error(
           error.message || "Failed to fetch job details. Please try again."
@@ -140,7 +142,34 @@ const AdminRecruiterProfileS = () => {
     .map((item) => item.service.pricing);
 
   const totalPrice = servicePricing.reduce((acc, curr) => acc + curr, 0);
+  const updateProfileStatus = async (status) => {
+    if (status === recruiterDetail.profilestatus) {
+      message.open({
+        type: "info",
+        content: "Status is already " + status,
+      });
+      return;
+    }
 
+    setStatusLoading(true);
+    try {
+      const response = await axiosInstance.put("/admin/updateUserStatus", {
+        userId: recruiterDetail.id,
+        userStatus: status,
+      });
+      message.open({
+        type: "success",
+        content: response.data.message || "Status Updated!",
+      });
+      setTimeout(() => {
+        window.location.reload();
+      }, 500);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setStatusLoading(false);
+    }
+  };
   return (
     <Row gutter={16}>
       {/* Left Card - Profile Details */}
@@ -180,10 +209,7 @@ const AdminRecruiterProfileS = () => {
                 <Text block style={{ ...TEXT_STYLE, color: "#52595C" }}>
                   {recruiterDetail?.phoneNumber ?? "-"}
                 </Text>
-                <a href="#" className="verified-profile">
-                  <VerifiedIcon />
-                  Verified
-                </a>
+                <ProfileStatus profileStatus={recruiterDetail?.profileStatus} />
               </Flex>
             </Col>
           </Row>
@@ -327,6 +353,27 @@ const AdminRecruiterProfileS = () => {
           )}
         </Card>
       </Col>
+      {action && (
+        <Col xs={24} style={{ marginTop: "20px" }}>
+          <CustomButton
+            name="Approve"
+            category="primary"
+            handleClick={() => updateProfileStatus("APPROVED")}
+            loading={statusLoading}
+          />
+          <CustomButton
+            name="Disapprove"
+            category="plain"
+            handleClick={() => updateProfileStatus("DISAPPROVED")}
+            loading={statusLoading}
+            style={{
+              backgroundColor: "#E9F0F3",
+              color: "#2F2C39",
+              marginLeft: "20px",
+            }}
+          />
+        </Col>
+      )}
     </Row>
   );
 };

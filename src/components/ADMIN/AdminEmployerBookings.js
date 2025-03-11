@@ -20,54 +20,10 @@ import {
   getMentorBookings,
 } from "../../features/admin/booking/bookingSlice";
 import { useParams } from "react-router-dom";
+import EBookingStatusDropDown from "./components/EBookingStatusDropDown";
 const TEXT_COLOR = {
   color: "#0C0C0C",
 };
-const columns = [
-  {
-    title: "Booking ID",
-    dataIndex: "bookingId",
-    key: "bookingId",
-  },
-  {
-    title: "Company Name",
-    dataIndex: "companyName",
-    key: "companyName",
-  },
-  {
-    title: "Email",
-    dataIndex: "email",
-    key: "email",
-  },
-  {
-    title: "Phone No.",
-    dataIndex: "phnNumber",
-    key: "phnNumber",
-  },
-  {
-    title: "State",
-    dataIndex: "state",
-    key: "state",
-  },
-  {
-    title: "Recruiter Name",
-    dataIndex: "recruiterName",
-    key: "recruiterName",
-  },
-  {
-    title: "Recruiter Serivce",
-    dataIndex: "recruiterService",
-    key: "recruiterService",
-  },
-  {
-    title: "Status",
-    dataIndex: "bookingStatus",
-    key: "bookingStatus",
-    render: (status) => {
-      return <CustomTag label={status} />;
-    },
-  },
-];
 
 const AdminEmployerBookings = () => {
   const { id: userId } = useParams();
@@ -113,6 +69,63 @@ const AdminEmployerBookings = () => {
 
   const handleSorting = (value) => {
     setSortOrder(value);
+  };
+
+  const columns = [
+    {
+      title: "Booking ID",
+      dataIndex: "bookingId",
+      key: "bookingId",
+    },
+    {
+      title: "Company Name",
+      dataIndex: "companyName",
+      key: "companyName",
+    },
+    {
+      title: "Email",
+      dataIndex: "email",
+      key: "email",
+    },
+    {
+      title: "Phone No.",
+      dataIndex: "phnumber",
+      key: "phnumber",
+    },
+    {
+      title: "State",
+      dataIndex: "state",
+      key: "state",
+    },
+    {
+      title: "Recruiter Name",
+      dataIndex: "recruiterName",
+      key: "recruiterName",
+    },
+    {
+      title: "Recruiter Serivce",
+      dataIndex: "recruiterService",
+      key: "recruiterService",
+    },
+    {
+      title: "Status",
+      dataIndex: "status",
+      key: "status",
+      render: (status, record, index) => {
+        return (
+          <EBookingStatusDropDown
+            value={status}
+            onChange={(newValue) =>
+              handleStatusChange(record.bookingId, newValue)
+            }
+          />
+        );
+      },
+    },
+  ];
+
+  const handleStatusChange = (key, value) => {
+    console.log(key, value);
   };
 
   return (

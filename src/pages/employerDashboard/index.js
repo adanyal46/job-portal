@@ -166,7 +166,9 @@ const Dashboard = () => {
               <CustomButton category="primary" name="Add" />
             </Link>
           ) : activeTabKey === "2" ? (
-            <CustomButton category="primary" name="Add" />
+            <Link to={`${route}/recruiter`}>
+              <CustomButton category="primary" name="Add" />
+            </Link>
           ) : (
             <CustomButton
               category="primary"

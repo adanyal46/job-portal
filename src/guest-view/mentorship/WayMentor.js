@@ -2,6 +2,8 @@ import { Card, Col, Flex, Image, Row } from "antd";
 import React from "react";
 import { Link } from "react-router-dom";
 import CustomButton from "../../components/customButton";
+import "./styles/WayMentor.css"; // Import the CSS file
+
 const cards = [
   {
     icon: "/guest/way-mentor.png",
@@ -28,6 +30,7 @@ const cards = [
     link: "#",
   },
 ];
+
 const WayMentor = () => {
   return (
     <div className="mentorship_way_mentor">
@@ -38,21 +41,11 @@ const WayMentor = () => {
             Gain the advantage of personalized guidance to make the most of your
             job opportunities!
           </p>
-          <Row gutter={[24, 24]} align={"middle"}>
+          <Row gutter={[24, 24]} justify="center">
             {cards.map((card, index) => (
-              <Col key={index} span={6}>
+              <Col key={index} xs={24} sm={12} md={12} lg={6}>
                 <Link to={card.link}>
-                  <Card
-                    bordered
-                    style={{
-                      width: "100%",
-                      maxWidth: "354px",
-                      minHeight: "386px",
-                      maxHeight: "420px",
-                      height: "100%",
-                      borderColor: "#DBDADE",
-                    }}
-                  >
+                  <Card bordered className="mentor-card">
                     <Image preview={false} src={card.icon} alt={card.title} />
                     <span>{card.title}</span>
                     <p>{card.description}</p>
@@ -60,17 +53,12 @@ const WayMentor = () => {
                 </Link>
               </Col>
             ))}
-            <Col span={24}>
+            <Col span={24} className="btn-container">
               <CustomButton
                 category="primary"
                 name="Get Started"
                 size="large"
-                style={{
-                  minWidth: "180px",
-                  height: "62px",
-                  marginTop: "40px",
-                  fontSize: "20px",
-                }}
+                className="mentor-button"
               />
             </Col>
           </Row>

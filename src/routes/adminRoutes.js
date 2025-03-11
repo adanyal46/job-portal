@@ -12,7 +12,6 @@ import Languages from "../components/ADMIN/common-management/Languages";
 import Skills from "../components/ADMIN/common-management/Skills";
 import MentorProfileApprovalRequests from "../components/ADMIN/requests/MentorProfileApprovalRequests";
 import RecruiterProfileApprovalRequests from "../components/ADMIN/requests/RecruiterProfileApprovalRequests";
-import AdminRecruiterProfile from "../components/ADMIN/profile/AdminRecruiterProfile";
 import AdminMentorProfile from "../components/ADMIN/profile/AdminMentorProfile";
 import TimesheetManagement from "../components/ADMIN/timsheet-management";
 import Setting from "../components/ADMIN/setting";
@@ -38,6 +37,8 @@ import AdminNotification from "../components/ADMIN/AdminNotification";
 import AdminJobSeekerProfile from "../components/ADMIN/AdminJobSeekerProfile";
 import AdminEmployerPayment from "../components/ADMIN/AdminEmployerPayment";
 import AdminRecruiterProfileS from "../components/ADMIN/profile/AdminRecruiterProfileS";
+import AdminEmployerProfile from "../components/ADMIN/AdminEmployerProfile";
+
 export const adminRoutes = [
   {
     path: "*",
@@ -62,6 +63,11 @@ export const adminRoutes = [
       {
         path: "user/employers",
         element: <AdminEmployer />,
+        errorElement: <ErrorPage />,
+      },
+      {
+        path: "user/employer/profile/:id",
+        element: <AdminEmployerProfile />,
         errorElement: <ErrorPage />,
       },
       {
@@ -171,12 +177,12 @@ export const adminRoutes = [
       },
       {
         path: "recruiter-profile/:id",
-        element: <AdminRecruiterProfile />,
+        element: <AdminRecruiterProfileS action={true} />,
         errorElement: <ErrorPage />,
       },
       {
         path: "mentor-profile/:id",
-        element: <AdminMentorProfile />,
+        element: <AdminMentorProfile action={true} />,
         errorElement: <ErrorPage />,
       },
       {

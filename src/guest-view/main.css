@@ -108,71 +108,7 @@
   font-weight: 400;
   line-height: 27px;
 }
-.mentorship_way_mentor {
-  background-image: url("../../public/guest/why-mentoship.svg");
-  background-size: cover;
-  background-position: center;
-  height: 100%;
-  position: relative; /* To position the text on top */
-  display: flex;
-  align-items: center;
-}
-.mentorship_way_mentor .container {
-  padding: 48px 80px;
-  max-width: 1760px;
-  width: 100%;
-  margin-inline: auto;
-  text-align: center;
-}
-.mentorship_way_mentor h2 {
-  background: linear-gradient(290.86deg, #2a6f5b -4.11%, #a5e51c 136.14%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  font-family: Poppins !important;
-  font-size: 72px;
-  font-weight: 600;
-  line-height: 108px;
-}
 
-.mentorship_way_mentor p {
-  font-family: Poppins !important;
-  font-size: 24px;
-  font-weight: 400;
-  line-height: 36px;
-  margin-bottom: 64px;
-  color: #14282f;
-  max-width: 950px;
-  width: 100%;
-  margin-inline: auto;
-}
-.mentorship_way_mentor button {
-  background: linear-gradient(
-    290.86deg,
-    #2a6f5b -4.11%,
-    #a5e51c 136.14%
-  ) !important;
-}
-.mentorship_way_mentor .ant-card .ant-card-body .ant-image {
-  margin-bottom: 24px;
-}
-.mentorship_way_mentor .ant-card .ant-card-body span {
-  background: #e2f3f9;
-  padding: 4px 17px 4px 17px;
-  border-radius: 48px;
-  color: #0077a6;
-  font-family: Poppins !important;
-  font-size: 20px;
-  font-weight: 400;
-  line-height: 30px;
-}
-.mentorship_way_mentor .ant-card .ant-card-body p {
-  margin-top: 24px;
-  color: #4b465c;
-  font-family: Poppins !important;
-  font-size: 18px;
-  font-weight: 400;
-  line-height: 27px;
-}
 .job_hero_bg {
   background-image: url("../../public/guest/hero-job-bg.svg");
   background-size: cover;
@@ -206,44 +142,6 @@
   text-align: left;
   color: #2f2c39;
   margin-bottom: 20px;
-}
-.mentoship-hero-bg {
-  background-image: url("../../public/guest/mentorship-hero-bg.svg");
-  background-size: cover;
-  background-position: center;
-  min-height: 880px;
-  height: 100%; /* Adjust height as needed */
-  position: relative; /* To position the text on top */
-  display: flex;
-  align-items: center;
-}
-.mentoship-hero-bg .container {
-  padding: 80px;
-  max-width: 850px;
-  width: 100%;
-}
-.mentoship-hero-bg .container h2 {
-  font-family: Poppins !important;
-  font-size: 56px;
-  font-weight: 600;
-  line-height: 84px;
-  text-align: left;
-  color: #2f2c39;
-}
-.mentoship-hero-bg .container h2 > span {
-  font-family: Poppins !important;
-  font-size: 56px;
-  font-weight: 600;
-  line-height: 84px;
-  text-align: left;
-  color: #0077a6;
-}
-.mentoship-hero-bg .container button {
-  background: linear-gradient(
-    290.86deg,
-    #2a6f5b -4.11%,
-    #a5e51c 136.14%
-  ) !important;
 }
 
 .how-it-works-container {
@@ -284,48 +182,6 @@
   text-align: left;
   color: #2f2c39;
   margin-top: 8px;
-}
-
-.mentorship_mentor {
-  background: #f2f7f9;
-}
-.mentorship_mentor_container {
-  max-width: 1696px;
-  width: 100%;
-  margin-inline: auto;
-  padding-block: 80px 120px;
-  padding-inline: 20px;
-}
-.mentorship_mentor h2 {
-  background: linear-gradient(290.86deg, #2a6f5b -4.11%, #a5e51c 136.14%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  font-family: Poppins !important;
-  font-size: 72px;
-  font-weight: 600;
-  line-height: 108px;
-  text-align: left;
-}
-.mentorship_mentor p {
-  font-family: Poppins !important;
-  font-size: 24px;
-  font-weight: 400;
-  line-height: 36px;
-  text-align: left;
-  color: #14282f;
-  margin-bottom: 55px;
-}
-
-.mentorship_mentor_container .ant-row .ant-col .ant-card button {
-  background: linear-gradient(
-    290.86deg,
-    #2a6f5b -4.11%,
-    #a5e51c 136.14%
-  ) !important;
-  -webkit-background-clip: text;
-  font-size: 16px;
-  font-weight: 600;
-  line-height: 20.16px;
 }
 
 .employer_hero_bg {
@@ -546,8 +402,8 @@
   gap: 120px;
 }
 
-.partner_hero_container .mentor > h2,
-.partner_hero_container .recruiter > h2 {
+.partner_hero_container .partner_mentor > h2,
+.partner_hero_container .partner_recruiter > h2 {
   color: #2f2c39;
   font-family: Poppins !important;
   font-size: 56px;
@@ -555,8 +411,8 @@
   line-height: 84px;
   text-align: left;
 }
-.partner_hero_container .mentor > p,
-.partner_hero_container .recruiter > p {
+.partner_hero_container .partner_mentor > p,
+.partner_hero_container .partner_recruiter > p {
   color: #2f2c39;
   font-family: Poppins !important;
   font-size: 18px;
@@ -564,7 +420,7 @@
   line-height: 27px;
   text-align: left;
 }
-.partner_hero_container .mentor > button {
+.partner_hero_container .partner_mentor > button {
   background: linear-gradient(
     290.86deg,
     #2a6f5b -4.11%,
@@ -572,7 +428,7 @@
   ) !important;
 }
 
-.partner_hero_container .recruiter > button {
+.partner_hero_container .partner_recruiter > button {
   background: linear-gradient(
     102.27deg,
     #35cba5 -1.17%,

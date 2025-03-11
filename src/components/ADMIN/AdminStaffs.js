@@ -2,6 +2,7 @@ import {
   Card,
   Flex,
   Input,
+  message,
   notification,
   Select,
   Table,
@@ -21,22 +22,12 @@ import { useEffect, useState } from "react";
 import DownloadButton from "./components/DownloadBtn";
 import { fetchStaffs } from "../../features/admin/user/staffSlice";
 import { useDispatch, useSelector } from "react-redux";
+import StaffStatusDropdown from "./components/StaffStatusDropdown";
+import axiosInstance from "../../api/axiosInstance";
 
 const TEXT_COLOR = {
   color: "#0C0C0C",
 };
-
-const columns = [
-  { title: "ID#", dataIndex: "userId", key: "userId" },
-  { title: "Name", dataIndex: "name", key: "name" },
-  { title: "Email", dataIndex: "email", key: "email" },
-  { title: "Employer", dataIndex: "employer", key: "employer" },
-  {
-    title: "Status",
-    dataIndex: "status",
-    key: "status",
-  },
-];
 
 const AdminStaffs = () => {
   const dispatch = useDispatch();
@@ -48,6 +39,7 @@ const AdminStaffs = () => {
   const [debouncedSearchQuery, setDebouncedSearchQuery] = useState("");
   const [sortOrder, setSortOrder] = useState("asc");
   const [currentPage, setCurrentPage] = useState(1);
+
   useEffect(() => {
     if (searchQuery.length > 3) {
       setDebouncedSearchQuery(searchQuery);
@@ -83,6 +75,46 @@ const AdminStaffs = () => {
     }
   }, [error]);
 
+  const columns = [
+    { title: "ID#", dataIndex: "userId", key: "userId" },
+    { title: "Name", dataIndex: "name", key: "name" },
+    { title: "Email", dataIndex: "email", key: "email" },
+    { title: "Employer", dataIndex: "employer", key: "employer" },
+    {
+      title: "Status",
+      dataIndex: "staffStatus",
+      key: "staffStatus",
+      render: (staffStatus, record, index) => {
+        return (
+          <StaffStatusDropdown
+            value={staffStatus}
+            onChange={(newValue) => handleStatusChange(record.userId, newValue)}
+          />
+        );
+      },
+    },
+  ];
+  const handleStatusChange = async (key, newStatus) => {
+    try {
+      const response = await axiosInstance.put("/admin/SFstatus/" + key, {
+        staffStatus: newStatus,
+      });
+      message.open({
+        type: "success",
+        content: response.data.message || "Status Updated!",
+      });
+      dispatch(
+        fetchStaffs({
+          page: currentPage,
+          pageSize: pagination.pageSize,
+          sortOrder,
+          search: debouncedSearchQuery ?? "",
+        })
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const handleTableChange = (page) => {
     setCurrentPage(page);
   };

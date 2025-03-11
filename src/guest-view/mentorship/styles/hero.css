@@ -1,0 +1,108 @@
+.mentoship-hero-bg {
+  background-image: url("../../../../public/guest/mentorship-hero-bg.svg");
+  background-size: cover;
+  background-position: center;
+  min-height: 880px;
+  height: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  text-align: center;
+}
+
+.mentoship-hero-bg .container {
+  padding: 80px;
+  max-width: 850px;
+  width: 100%;
+}
+
+.mentoship-hero-bg .container h2 {
+  font-family: Poppins, sans-serif !important;
+  font-size: 56px;
+  font-weight: 600;
+  line-height: 84px;
+  text-align: left;
+  color: #2f2c39;
+}
+
+.mentoship-hero-bg .container h2 > span {
+  font-family: Poppins, sans-serif !important;
+  font-size: 56px;
+  font-weight: 600;
+  line-height: 84px;
+  text-align: left;
+  color: #0077a6;
+}
+
+.mentoship-hero-bg .container button {
+  background: linear-gradient(
+    290.86deg,
+    #2a6f5b -4.11%,
+    #a5e51c 136.14%
+  ) !important;
+  min-width: 180px;
+  max-width: 180px;
+  height: 62px;
+  font-size: 20px;
+  margin-top: 40px;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  /* Tablets */
+  .mentoship-hero-bg {
+    min-height: 600px;
+  }
+
+  .mentoship-hero-bg .container {
+    padding: 60px;
+    max-width: 700px;
+  }
+
+  .mentoship-hero-bg .container h2 {
+    font-size: 42px;
+    line-height: 64px;
+  }
+
+  .mentoship-hero-bg .container h2 > span {
+    font-size: 42px;
+    line-height: 64px;
+  }
+
+  .mentoship-hero-bg .container button {
+    min-width: 160px;
+    max-width: 160px;
+    height: 54px;
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 768px) {
+  /* Mobile */
+  .mentoship-hero-bg {
+    min-height: 500px;
+    padding: 20px;
+  }
+
+  .mentoship-hero-bg .container {
+    padding: 40px;
+    max-width: 90%;
+  }
+
+  .mentoship-hero-bg .container h2 {
+    font-size: 26px;
+    line-height: 40px;
+  }
+
+  .mentoship-hero-bg .container h2 > span {
+    font-size: 32px;
+    line-height: 48px;
+  }
+
+  .mentoship-hero-bg .container button {
+    min-width: 140px;
+    max-width: 140px;
+    height: 50px;
+    font-size: 16px;
+  }
+}

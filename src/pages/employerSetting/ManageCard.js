@@ -12,7 +12,6 @@ import {
   Select,
   Typography,
 } from "antd";
-import axiosInstance from "../../api/axiosInstance";
 
 const formatCardNumber = (value) => {
   const cleanValue = value?.replace(/\D/g, "") || "";
@@ -207,8 +206,15 @@ const ManageCard = ({
               ]}
             >
               <Checkbox>
-                I have read and agreed to the <a href="#">Terms & Conditions</a>{" "}
-                and <a href="#">Privacy Policy</a>.
+                I have read and agreed to the{" "}
+                <a href="#" style={{ fontSize: "14px", color: "#0077a6" }}>
+                  Terms & Conditions
+                </a>{" "}
+                and{" "}
+                <a href="#" style={{ fontSize: "14px", color: "#0077a6" }}>
+                  Privacy Policy
+                </a>
+                .
               </Checkbox>
             </Form.Item>
             <Flex justify={"end"} gap={10}>

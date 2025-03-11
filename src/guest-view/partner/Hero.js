@@ -5,7 +5,7 @@ const Hero = () => {
   return (
     <div className="partner_hero_bg">
       <div className="partner_hero_container">
-        <div className="mentor">
+        <div className="partner_mentor">
           <h2>Mentors</h2>
           <p>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum
@@ -26,7 +26,7 @@ const Hero = () => {
             }}
           />
         </div>
-        <div className="recruiter">
+        <div className="partner_recruiter">
           <h2>Recruiters</h2>
           <p>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum

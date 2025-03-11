@@ -1,7 +1,7 @@
 import { Flex } from "antd";
 import React from "react";
 import CustomButton from "../../components/customButton";
-
+import "./styles/hero.css";
 const Hero = () => {
   return (
     <div className="mentoship-hero-bg">

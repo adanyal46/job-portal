@@ -68,7 +68,6 @@ const StaffMemberProfile = () => {
       const response = await getTimesheetListByRecruiter(id);
       setTimesheets(response.data);
     } catch (error) {
-      console.log(error);
       message.open({
         type: "error",
         content: error.message || "Server Error",
@@ -139,6 +138,7 @@ const StaffMemberProfile = () => {
     .map((item) => item.service.pricing);
 
   const totalPrice = servicePricing.reduce((acc, curr) => acc + curr, 0);
+
   return (
     <Row gutter={16}>
       {/* Left Card - Profile Details */}
@@ -164,19 +164,19 @@ const StaffMemberProfile = () => {
             <Col span={18}>
               <Flex vertical gap={8}>
                 <Title level={3} style={{ marginBottom: 0 }}>
-                  {profile?.fullname ?? "-"}
+                  {profile?.fullname ?? "N/A"}
                 </Title>
                 <Rating rating={0} reviews={0} />
-                <LocationWithIcon location={profile?.location ?? "-"} />
+                <LocationWithIcon location={profile?.location ?? "N/A"} />
 
                 <Text block style={{ ...TEXT_STYLE, color: "#333333" }}>
-                  Recruiter at Atos
+                  {profile?.tagline ?? "N/A"}
                 </Text>
                 <Text block style={{ ...TEXT_STYLE, color: "#52595C" }}>
-                  {recruiterDetail?.email ?? "-"}
+                  {recruiterDetail?.email ?? "N/A"}
                 </Text>
                 <Text block style={{ ...TEXT_STYLE, color: "#52595C" }}>
-                  {profile?.phnumber ?? "-"}
+                  {profile?.phnumber ?? "N/A"}
                 </Text>
                 <a href="#" className="verified-profile">
                   <VerifiedIcon />

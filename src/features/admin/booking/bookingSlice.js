@@ -72,7 +72,7 @@ const adminMentorBookings = createSlice({
       })
       .addCase(getEmployerBookings.fulfilled, (state, action) => {
         state.loading = false;
-        state.data = action.payload;
+        state.data = action.payload.data;
       })
       .addCase(getEmployerBookings.rejected, (state, action) => {
         state.loading = false;

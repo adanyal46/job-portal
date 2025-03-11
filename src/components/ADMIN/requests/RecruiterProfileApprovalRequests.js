@@ -84,7 +84,7 @@ const columns = [
     width: 500,
 
     render: (text, record) => (
-      <Link to={"/admin/mentor-profile/" + record.userId}>
+      <Link to={"/admin/recruiter-profile/" + record.userId}>
         <Button style={{ width: "200px" }} size="large">
           View Profile
         </Button>

@@ -7,7 +7,12 @@ const JobCard = ({ item, TEXT_STYLE, route }) => {
   const menu = (
     <Menu>
       <Menu.Item key="edit">
-        <Link to={`${route}/edit-job/${item.randomId}`}>Edit Job</Link>
+        <Link
+          to={`${route}/edit-job/${item.randomId}`}
+          style={{ fontSize: "14px" }}
+        >
+          Edit Job
+        </Link>
       </Menu.Item>
       {/* Add more menu items as needed */}
     </Menu>

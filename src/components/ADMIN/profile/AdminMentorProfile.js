@@ -34,13 +34,15 @@ import CustomPagination from "../../customPagination";
 import CustomButton from "../../customButton";
 import axiosInstance from "../../../api/axiosInstance";
 import MentorServiceCollapse from "../../mentorServiceCollapse";
+import ProfileStatus from "../components/ProfileStatus";
 
 const { Title, Text } = Typography;
 
-const AdminMentorProfile = () => {
+const AdminMentorProfile = ({ action = false }) => {
   const { id } = useParams();
   const [recruiterDetail, setRecruiterDetail] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [statusLoading, setStatusLoading] = useState(false);
   const [timesheetLoading, setTimesheetLoading] = useState(true);
   const [timsheets, setTimesheets] = useState([]);
 
@@ -136,7 +138,34 @@ const AdminMentorProfile = () => {
     ?.flatMap((timesheet) => timesheet.recruiterHiring.hiredServices)
     .map((item) => item.service.pricing);
 
-  const totalPrice = servicePricing.reduce((acc, curr) => acc + curr, 0);
+  const updateProfileStatus = async (status) => {
+    if (status === recruiterDetail.profilestatus) {
+      message.open({
+        type: "info",
+        content: "Status is already " + status,
+      });
+      return;
+    }
+
+    setStatusLoading(true);
+    try {
+      const response = await axiosInstance.put("/admin/updateUserStatus", {
+        userId: recruiterDetail.id,
+        userStatus: status,
+      });
+      message.open({
+        type: "success",
+        content: response.data.message || "Status Updated!",
+      });
+      setTimeout(() => {
+        window.location.reload();
+      }, 500);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setStatusLoading(false);
+    }
+  };
 
   return (
     <Row gutter={16}>
@@ -185,43 +214,47 @@ const AdminMentorProfile = () => {
             </Col>
           </Row>
           <hr className="mentor-detail-divider" />
-          <Flex
-            vertical
-            gap={"small"}
-            className="I-can-do-container"
-            style={{ marginBlock: "20px" }}
-          >
-            {recruiterDetail?.language && (
-              <Flex align="center" gap={"small"}>
+          <article className="I-can-do-container">
+            <p className="i-can-do-item">
+              <span
+                style={{
+                  position: "relative",
+                  top: "7px",
+                  marginRight: "10px",
+                }}
+              >
                 <MentorTranslateIcon />
+              </span>
+              I can Speak{" "}
+              <strong>{recruiterDetail?.language ?? "English"}</strong>{" "}
+              (Conversational)
+            </p>
+
+            {recruiterDetail?.services &&
+              Array.isArray(recruiterDetail?.services) &&
+              recruiterDetail?.services.length > 0 && (
                 <p className="i-can-do-item">
-                  I can Speak <strong>{recruiterDetail?.language}</strong>{" "}
-                  (Conversational)
+                  <span
+                    style={{
+                      position: "relative",
+                      top: "7px",
+                      marginRight: "10px",
+                    }}
+                  >
+                    <MentorBriefcaseIcon />
+                  </span>
+                  I can help you{" "}
+                  <>
+                    {recruiterDetail?.services?.map((service) => (
+                      <strong key={service.id}>{service.name},</strong>
+                    ))}
+                  </>
+                  and more
                 </p>
-              </Flex>
-            )}
+              )}
+          </article>
 
-            <Flex align="center" gap={"small"}>
-              <MentorBriefcaseIcon />
-              <p className="i-can-do-item">
-                I can help you{" "}
-                <strong>
-                  Interview prep, Resume Review, Job Search Strategy,
-                </strong>{" "}
-                and more
-              </p>
-            </Flex>
-
-            <Flex align="center" gap={"small"}>
-              <WorkIndustriesIcon />
-              <p className="i-can-do-item">
-                I work in <strong> FMCG, Supply Chain, Logistics,</strong>{" "}
-                industries
-              </p>
-            </Flex>
-          </Flex>
-
-          <hr className="mentor-detail-divider" />
+          <hr className="mentor-detail-divider" style={{ marginTop: "10px" }} />
 
           <div style={{ marginBlock: "20px" }}>
             <Typography.Title level={3}>Hired For</Typography.Title>
@@ -324,6 +357,27 @@ const AdminMentorProfile = () => {
           )}
         </Card>
       </Col>
+      {action && (
+        <Col xs={24} style={{ marginTop: "20px" }}>
+          <CustomButton
+            name="Approve"
+            category="primary"
+            handleClick={() => updateProfileStatus("APPROVED")}
+            loading={statusLoading}
+          />
+          <CustomButton
+            name="Disapprove"
+            category="plain"
+            handleClick={() => updateProfileStatus("DISAPPROVED")}
+            loading={statusLoading}
+            style={{
+              backgroundColor: "#E9F0F3",
+              color: "#2F2C39",
+              marginLeft: "20px",
+            }}
+          />
+        </Col>
+      )}
     </Row>
   );
 };

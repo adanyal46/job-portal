@@ -1,4 +1,14 @@
-import { Card, Col, DatePicker, Empty, Flex, Input, message, Row, Typography } from "antd";
+import {
+  Card,
+  Col,
+  DatePicker,
+  Empty,
+  Flex,
+  Input,
+  message,
+  Row,
+  Typography,
+} from "antd";
 import React, { useEffect } from "react";
 import CustomButton from "../../components/customButton";
 import { CalendarDashboardIcon, EmptyStateRecruiter } from "../../assets/svg";
@@ -11,13 +21,27 @@ const FilterTab = () => {
   return (
     <Row gutter={16} style={{ alignItems: "center" }}>
       <Col flex={1}>
-        <Input.Search size="large" placeholder="Search" onSearch={(value) => console.log(value)} />
+        <Input.Search
+          size="large"
+          placeholder="Search"
+          onSearch={(value) => console.log(value)}
+        />
       </Col>
       <Col flex={1}>
-        <DatePicker size="large" className="w-100" suffixIcon={<CalendarDashboardIcon />} placeholder="Date Range" />
+        <DatePicker
+          size="large"
+          className="w-100"
+          suffixIcon={<CalendarDashboardIcon />}
+          placeholder="Date Range"
+        />
       </Col>
       <Col flex={1}>
-        <DatePicker size="large" className="w-100" suffixIcon={<CalendarDashboardIcon />} placeholder="Date Range" />
+        <DatePicker
+          size="large"
+          className="w-100"
+          suffixIcon={<CalendarDashboardIcon />}
+          placeholder="Date Range"
+        />
       </Col>
       <Col>
         <Link to={"/employer/add-job"}>
@@ -30,8 +54,12 @@ const FilterTab = () => {
 
 const Jobs = () => {
   const dispatch = useDispatch();
-  const { jobList, loadingJobs, error } = useSelector((state) => state.employerDashboard);
-
+  const { jobList, loadingJobs, error } = useSelector(
+    (state) => state.employerDashboard
+  );
+  const { user } = useSelector((state) => state.profile);
+  const ROLE = user?.role;
+  const route = ROLE === "STAFF_MEMBER" ? "/staff" : "/employer";
   useEffect(() => {
     dispatch(fetchJobList());
   }, [dispatch]);
@@ -57,14 +85,22 @@ const Jobs = () => {
         <Row gutter={[12, 12]} style={{ marginTop: "20px" }}>
           {jobList?.map((item) => (
             <Col md={8} key={item.id}>
-              <JobCard item={item} TEXT_STYLE={TEXT_STYLE} />
+              <JobCard item={item} TEXT_STYLE={TEXT_STYLE} route={route} />
             </Col>
           ))}
         </Row>
         {jobList?.length >= 10 && <CustomPagination />}
         {jobList?.length === 0 && (
-          <Flex style={{ minHeight: "calc(100vh - 32vh)" }} align="center" justify="center">
-            <Flex style={{ minHeight: "calc(100vh - 30.5vh)" }} align="center" justify="center">
+          <Flex
+            style={{ minHeight: "calc(100vh - 32vh)" }}
+            align="center"
+            justify="center"
+          >
+            <Flex
+              style={{ minHeight: "calc(100vh - 30.5vh)" }}
+              align="center"
+              justify="center"
+            >
               <EmptyStateRecruiter />
             </Flex>
           </Flex>

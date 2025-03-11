@@ -1,8 +1,28 @@
-import { Card, Typography } from "antd";
-import React from "react";
+import { Card, message, Typography } from "antd";
+import React, { useEffect } from "react";
 import CustomButton from "../customButton";
+import axiosInstance from "../../api/axiosInstance";
 
 const AdminNotification = () => {
+  // adminNotification
+
+  useEffect(() => {
+    fetchNotifications();
+  }, []);
+
+  const fetchNotifications = async () => {
+    try {
+      const response = await axiosInstance.get("/admin/adminNotification/");
+      console.log("response", response);
+
+      // setData(response.data.data.subscriptionsBought || []);
+    } catch (error) {
+      message.open({
+        type: "error",
+        content: error.message || "Internal Server Error",
+      });
+    }
+  };
   return (
     <div style={{ maxWidth: "970px", width: "100%", marginInline: "auto" }}>
       <Typography.Title

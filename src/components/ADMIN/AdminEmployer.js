@@ -92,12 +92,20 @@ const columns = [
   {
     title: "Actions",
     key: "actions",
-    render: () => (
+    render: (_, record) => (
       <Dropdown
         menu={{
           items: [
             {
-              label: <Link to={"/admin/user/bookings"}> View Details</Link>,
+              label: (
+                <Link
+                  to={"/admin/user/employer/profile/" + record.userId}
+                  style={{ fontSize: "14px" }}
+                >
+                  {" "}
+                  View Details
+                </Link>
+              ),
               key: "0",
             },
             {
@@ -145,7 +153,7 @@ const AdminEmployer = () => {
     dispatch(
       fetchEmployers({
         page: currentPage,
-        pageSize: pagination.pageSize,
+        pageSize: pagination?.pageSize || 10,
         sortOrder,
         search: debouncedSearchQuery ?? "",
       })
@@ -229,7 +237,7 @@ const AdminEmployer = () => {
         />
         <CustomPagination
           total={pagination.totalItems}
-          pageSize={pagination.pageSize}
+          pageSize={pagination?.pageSize || 10}
           currentPage={currentPage}
           onChange={handleTableChange}
         />

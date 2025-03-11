@@ -17,7 +17,6 @@ import { isTokenValid } from "../../utils"; // Utility function to check if toke
 import Loader from "../../components/Loader";
 import "./login.css";
 import "../../guest-view/main.css";
-
 const { Title } = Typography;
 
 const AdminLogin = () => {
@@ -218,6 +217,18 @@ const AdminLogin = () => {
                   </Flex>
                 </Flex>
               </Form>
+              {/* Version display */}
+              <Typography.Text
+                style={{
+                  color: "#999",
+                  position: "absolute",
+                  bottom: "10px",
+                  right: "10px",
+                  fontSize: "12px",
+                }}
+              >
+                v 1.0
+              </Typography.Text>
             </div>
           </div>
         </Col>

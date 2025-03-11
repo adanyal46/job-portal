@@ -1,0 +1,151 @@
+.mentorship_way_mentor {
+  background-image: url("../../../../public/guest/why-mentoship.svg");
+  background-size: cover;
+  background-position: center;
+  height: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.mentorship_way_mentor .container {
+  padding: 48px 80px;
+  max-width: 1760px;
+  width: 100%;
+  margin-inline: auto;
+  text-align: center;
+}
+
+.mentorship_way_mentor h2 {
+  background: linear-gradient(290.86deg, #2a6f5b -4.11%, #a5e51c 136.14%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-family: Poppins, sans-serif !important;
+  font-size: 72px;
+  font-weight: 600;
+  line-height: 108px;
+}
+
+.mentorship_way_mentor p {
+  font-family: Poppins, sans-serif !important;
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 36px;
+  margin-bottom: 64px;
+  color: #14282f;
+  max-width: 950px;
+  width: 100%;
+  margin-inline: auto;
+}
+
+.mentor-button {
+  background: linear-gradient(
+    290.86deg,
+    #2a6f5b -4.11%,
+    #a5e51c 136.14%
+  ) !important;
+  min-width: 180px;
+  height: 62px;
+  font-size: 20px;
+  margin-top: 40px;
+}
+
+.mentorship_way_mentor .ant-card {
+  border-color: #dbdade;
+  width: 100%;
+  max-width: 354px;
+  min-height: 386px;
+  height: 100%;
+  text-align: left;
+}
+
+.mentorship_way_mentor .ant-card .ant-card-body {
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  text-align: left;
+}
+
+.mentorship_way_mentor .ant-card .ant-card-body .ant-image {
+  margin-bottom: 24px;
+}
+
+.mentorship_way_mentor .ant-card .ant-card-body span {
+  background: #e2f3f9;
+  padding: 4px 17px;
+  border-radius: 48px;
+  color: #0077a6;
+  font-family: Poppins, sans-serif !important;
+  font-size: 20px;
+  text-align: left;
+  line-height: 30px;
+  min-width: 180px;
+  max-width: 200px;
+}
+
+.mentorship_way_mentor .ant-card .ant-card-body p {
+  margin-top: 24px;
+  color: #4b465c;
+  font-family: Poppins, sans-serif !important;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 27px;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  /* Tablets */
+  .mentorship_way_mentor {
+    padding: 40px 20px;
+  }
+
+  .mentorship_way_mentor h2 {
+    font-size: 56px;
+    line-height: 84px;
+  }
+
+  .mentorship_way_mentor p {
+    font-size: 20px;
+    line-height: 32px;
+    margin-bottom: 40px;
+  }
+
+  .mentor-button {
+    min-width: 160px;
+    height: 54px;
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 768px) {
+  /* Mobile */
+  .mentorship_way_mentor {
+    padding: 20px;
+    text-align: left;
+  }
+
+  .mentorship_way_mentor .container {
+    padding: 24px;
+  }
+
+  .mentorship_way_mentor h2 {
+    font-size: 36px;
+    line-height: 48px;
+  }
+
+  .mentorship_way_mentor p {
+    font-size: 18px;
+    line-height: 28px;
+    margin-bottom: 24px;
+  }
+
+  .mentorship_way_mentor .ant-card {
+    max-width: 100%;
+  }
+
+  .mentor-button {
+    min-width: 140px;
+    height: 50px;
+    font-size: 16px;
+  }
+}

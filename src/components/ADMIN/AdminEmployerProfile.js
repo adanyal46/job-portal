@@ -5,31 +5,21 @@ import {
   Divider,
   Flex,
   Form,
-  Input,
-  InputNumber,
   message,
   Row,
   Space,
   Typography,
 } from "antd";
-import skypeLogo from "../../assets/skype.svg";
 import {
-  AddCircleIcon,
-  EditEmployerProfileIcon,
   LinkEmployerProfileIcon,
-  MenuEmployerProfileIcon,
   UserEmployerProfileIcon,
 } from "../../assets/svg";
-import Location from "./Location";
-import CustomButton from "../../components/customButton";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
-import CommonModal from "../../components/commonModal";
-import CommonInput from "../../components/commonInput";
 
-import PhotoUpload from "../../components/photoUpload";
 import { updateOtherInfo } from "../../features/profile/profileSlice";
 import { updatePointOfContact } from "../../features/profile/profileApi";
+import Location from "../location";
 
 const TEXT_COLOR = "#4B465C";
 
@@ -42,7 +32,7 @@ const DIVIDER_STYLE = {
   height: "1.4em",
 };
 
-const Index = () => {
+const AdminEmployerProfile = () => {
   let [form] = Form.useForm();
   let [pForm] = Form.useForm();
   const dispatch = useDispatch();
@@ -72,7 +62,7 @@ const Index = () => {
     const formData = new FormData();
     formData.append("fullname", values.fullname || "");
     formData.append("email", values.email || "");
-    formData.append("phnumber", values?.phnumber || "");
+    formData.append("phnumber", parseInt(values?.phnumber) || "");
     formData.append("companyName", values.companyName || "");
     formData.append("companySize", values.companySize || "");
     formData.append("companyLink", values.companyLink || "");
@@ -104,7 +94,7 @@ const Index = () => {
     const formData = new FormData();
     formData.append("name", values.fullname || "");
     formData.append("email", values.email || "");
-    formData.append("contactNumber", values?.phnumber || "");
+    formData.append("contactNumber", parseInt(values?.phnumber) || "");
     formData.append("jobRole", values.jobRole || "");
     if (imgFile && imgFile instanceof File) {
       formData.append("profilePic", imgFile);
@@ -151,7 +141,7 @@ const Index = () => {
   return (
     <div style={{ margin: "0 auto", maxWidth: "900px", width: "100%" }}>
       <Typography.Title level={3} style={{ fontWeight: "400" }}>
-        My Profile
+        Employer Profile
       </Typography.Title>
       <Card style={{ width: "100%" }}>
         <Row gutter={16}>
@@ -174,10 +164,6 @@ const Index = () => {
                 <Typography.Title level={2} style={{ margin: 0 }}>
                   {profileData?.companyName ?? "-"}
                 </Typography.Title>
-                <EditEmployerProfileIcon
-                  style={{ cursor: "pointer" }}
-                  onClick={handleShowInfoModal}
-                />
               </Row>
               <Typography.Text style={TEXT_STYLE}>
                 Company Size: {profileData?.companySize ?? "-"}
@@ -223,6 +209,7 @@ const Index = () => {
           TEXT_STYLE={TEXT_STYLE}
           setShowLocationModal={setShowLocationModal}
           showLocationModal={showLocationModal}
+          btnShow={false}
         />
 
         <Typography.Title
@@ -243,8 +230,8 @@ const Index = () => {
                 {user?.EmployerPointOfContact?.[0]?.jobRole ?? "N/A"}
               </Typography.Text>
               <Typography.Text style={TEXT_STYLE}>
-                {user?.EmployerPointOfContact?.[0]?.contactNumber
-                  ? `${user.EmployerPointOfContact[0].contactNumber}`
+                {user?.Profile?.[0]?.phnumber
+                  ? `${user.Profile[0].phnumber}`
                   : "N/A"}
               </Typography.Text>
               <Typography.Text style={TEXT_STYLE}>
@@ -254,115 +241,9 @@ const Index = () => {
             {/* <MenuEmployerProfileIcon /> */}
           </Flex>
         </Flex>
-
-        <CustomButton
-          category="additional"
-          name="Edit"
-          icon={<AddCircleIcon />}
-          handleClick={() => setShowPModal(true)}
-        />
-        <Divider style={{ ...DIVIDER_STYLE, marginBottom: "5px" }} />
-        <CustomButton
-          name="Apply to be Company Account Administrator"
-          category="primary"
-        />
       </Card>
-      {showPModal && (
-        <CommonModal
-          title="Point Of Contact"
-          description="Enter your basic information"
-          isModalOpen={showPModal}
-          isDelete={false}
-          handleClose={handleClosePModal}
-          handleOk={handleOkP}
-          loading={loading}
-        >
-          {" "}
-          <Form layout="vertical" form={pForm}>
-            <Flex gap={"large"} className="w-100">
-              <PhotoUpload
-                initialImageUrl={
-                  profileData?.avatarId
-                    ? process.env.REACT_APP_MEDIA_URL + profileData?.avatarId
-                    : "/images/no-image.jpg"
-                }
-                onChange={(name, file) => setImgFile(file)}
-                name="profilePic"
-              />
-
-              <Flex vertical className="w-100" gap={"large"}>
-                <Flex gap={"large"}>
-                  <Form.Item label="Full Name" name={"fullname"}>
-                    <CommonInput placeholder="Enter Full Name" />
-                  </Form.Item>
-
-                  <Form.Item label="Email" name={"email"}>
-                    <CommonInput placeholder="Enter Email" />
-                  </Form.Item>
-                </Flex>
-                <Flex gap={"large"} className="w-100">
-                  <Form.Item label="Contact Number" name={"phnumber"}>
-                    <Input placeholder="Enter Contact Number" />
-                  </Form.Item>
-                  <Form.Item label="Job Role" name={"jobRole"}>
-                    <CommonInput placeholder="Enter Job Role" />
-                  </Form.Item>
-                </Flex>
-              </Flex>
-            </Flex>
-          </Form>
-        </CommonModal>
-      )}
-      {showInfoModal && (
-        <CommonModal
-          title="Edit Profile"
-          description="Update your information"
-          isModalOpen={showInfoModal}
-          handleClose={handleCloseInfoModal}
-          handleOk={handleOk}
-          loading={loading}
-        >
-          <Form layout="vertical" form={form}>
-            <section className="basic-info-inner-wrapper">
-              <PhotoUpload
-                initialImageUrl={
-                  profileData?.avatarId
-                    ? process.env.REACT_APP_MEDIA_URL + profileData?.avatarId
-                    : "/images/no-image.jpg"
-                }
-                onChange={(name, file) => setImgFile(file)}
-                name="profilePic"
-              />
-
-              <section className="basic-info-form-wrapper">
-                <Form.Item label="Full Name" name={"fullname"}>
-                  <CommonInput placeholder="Enter Full Name" />
-                </Form.Item>
-
-                <Form.Item label="Email" name={"email"}>
-                  <CommonInput placeholder="Enter Email" />
-                </Form.Item>
-
-                <Form.Item label="Contact Number" name={"phnumber"}>
-                  <Input placeholder="Enter Contact Number" />
-                </Form.Item>
-
-                <Form.Item label="Company Name" name={"companyName"}>
-                  <CommonInput placeholder="Enter Company Name" />
-                </Form.Item>
-                <Form.Item label="Company Size" name={"companySize"}>
-                  <CommonInput placeholder="e.g 100-200" />
-                </Form.Item>
-                <Form.Item label="Company Link" name={"companyLink"}>
-                  <CommonInput placeholder="e.g skype.com/company-name" />
-                </Form.Item>
-              </section>
-            </section>
-          </Form>
-        </CommonModal>
-      )}
     </div>
   );
 };
 
-export default Index;
+export default AdminEmployerProfile;
