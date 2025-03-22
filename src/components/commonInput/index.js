@@ -146,9 +146,9 @@ const CommonInput = (props) => {
           value={value}
           style={styles}
           allowClear // Enable clear option
-          onClear={handleClearInput} // Set the clear handler
+          // onClear={handleClearInput} // Set the clear handler
           name={name || ""}
-          onKeyUp={handleKeyPress}
+          // onKeyUp={handleKeyPress}
         />
       </Default>
     </Switch>

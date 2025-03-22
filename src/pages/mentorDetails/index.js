@@ -201,6 +201,7 @@ const MentorDetails = () => {
           mentorId={mentorId}
           services={mentorDetail?.services}
           setSelectedServiceId={setSelectedServiceId}
+          mentorDetail={mentorDetail}
         />
       )}
     </section>

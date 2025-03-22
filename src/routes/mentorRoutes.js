@@ -5,7 +5,7 @@ import UpcomingBookings from "../pages/upcomingBookings";
 import HistoryBookings from "../pages/historyBookings";
 import Notifications from "../pages/notifications";
 import Reviews from "../pages/reviews";
-import Settings from "../pages/settings";
+import MentorSettings from "../pages/settings/MentorSettings";
 import Earnings from "../pages/earnings";
 import Blogs from "../pages/blogs";
 import Layout from "../Layout";
@@ -70,7 +70,7 @@ export const mentorRoutes = [
       },
       {
         path: "settings",
-        element: <Settings />,
+        element: <MentorSettings />,
         errorElement: <ErrorPage />,
       },
       {
