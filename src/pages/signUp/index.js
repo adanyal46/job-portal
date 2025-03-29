@@ -50,11 +50,7 @@ const RegisterForm = () => {
     setIsLoading(true);
     try {
       const response = await axiosInstance.post("/auth/signup", formData);
-      if (
-        response.status === 201 &&
-        response.statusText === "Created" &&
-        response.data
-      ) {
+      if (response.status === 201 && response.data) {
         message.open({
           type: "success",
           content: "Register Successfully",
