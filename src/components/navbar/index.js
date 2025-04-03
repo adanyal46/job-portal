@@ -1,23 +1,40 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import "./styles.scss";
-import { Dropdown, Image, message } from "antd";
+import { Dropdown, Image, message, Menu, Button, Space, Avatar } from "antd";
+import {
+  MenuOutlined,
+  BellOutlined,
+  UserOutlined,
+  DownOutlined,
+} from "@ant-design/icons";
 import { useDispatch } from "react-redux";
 import { logout } from "../../features/auth/authSlice";
 import { getRelativePath } from "../../utils";
 
-const Navbar = ({ user }) => {
+const Navbar = ({ user, onToggleSidebar, sidebarOpen }) => {
   const profileData =
     user && user.Profile && user.Profile.length > 0 ? user.Profile[0] : null;
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [toggleNav, setToggleNav] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+
+  // Check window size on resize
+  useEffect(() => {
+    const handleResize = () => {
+      const mobile = window.innerWidth < 768;
+      setIsMobile(mobile);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const isMentor = user?.role === "MENTOR";
-  // const isSeeker = user?.role === "JOB_SEEKER";
   const isRecruiter = user?.role === "RECRUITER";
   const isEmployer = user?.role === "EMPLOYER";
   const isStaff = user?.role === "STAFF_MEMBER";
+  const isJobSeeker = user?.role === "JOB_SEEKER";
   const routePrefix = isMentor
     ? "/mentor"
     : isRecruiter
@@ -27,139 +44,184 @@ const Navbar = ({ user }) => {
     : "/job-seeker";
 
   const goToNotificationsPage = () => {
-    const route = routePrefix + "/notifications"; // Set the route to save
-    navigate(route); // Navigate to the notifications page
+    const route = routePrefix + "/notifications";
+    navigate(route);
   };
 
-  const navbarHideAndShow = () => {
-    setToggleNav((st) => !st);
+  const handleLogout = async () => {
+    await dispatch(logout());
+    window.location.replace("/login");
+    message.success("Logout Successfully!");
   };
 
-  const items = [
-    {
-      label: <Link to={routePrefix + "/profile"}>Profile</Link>,
-      key: "0",
-    },
-    {
-      type: "divider",
-    },
-    {
-      label: "Logout",
-      key: "logout",
-      danger: true,
-    },
-  ];
+  // Dropdown menu for user profile
+  const userMenu = (
+    <Menu
+      items={[
+        {
+          key: "profile",
+          label: <Link to={routePrefix + "/profile"}>Profile</Link>,
+        },
+        {
+          key: "logout",
+          danger: true,
+          label: <span onClick={handleLogout}>Logout</span>,
+        },
+      ]}
+    />
+  );
 
-  const handleClick = async (event) => {
-    if (event.key === "logout") {
-      await dispatch(logout());
-      window.location.replace("/login");
-      message.open({
-        type: "success",
-        content: "Logout Successfully!",
-      });
-    }
-  };
+  // Navigation menu for top navigation
+  const navItems = [];
+
+  if (isJobSeeker) {
+    navItems.push(
+      {
+        key: "jobs",
+        label: <NavLink to="/job-seeker/jobs/search?type=search">Jobs</NavLink>,
+      },
+      {
+        key: "mentors",
+        label: (
+          <NavLink to="/job-seeker/mentors?type=myMentors">Mentors</NavLink>
+        ),
+      }
+    );
+  }
+
+  if (!["RECRUITER", "STAFF_MEMBER", "EMPLOYER"].includes(user?.role)) {
+    navItems.push({
+      key: "blogs",
+      label: <NavLink to={routePrefix + "/blogs"}>Blogs</NavLink>,
+    });
+  }
+
+  // Mobile menu
+  const mobileMenu = (
+    <Menu
+      items={[
+        ...(isJobSeeker
+          ? [
+              {
+                key: "jobs",
+                label: (
+                  <NavLink to="/job-seeker/jobs/search?type=search">
+                    Jobs
+                  </NavLink>
+                ),
+              },
+              {
+                key: "mentors",
+                label: (
+                  <NavLink to="/job-seeker/mentors?type=myMentors">
+                    Mentors
+                  </NavLink>
+                ),
+              },
+            ]
+          : []),
+        ...(!["RECRUITER", "STAFF_MEMBER", "EMPLOYER"].includes(user?.role)
+          ? [
+              {
+                key: "blogs",
+                label: <NavLink to={routePrefix + "/blogs"}>Blogs</NavLink>,
+              },
+            ]
+          : []),
+        {
+          key: "notifications",
+          label: <span onClick={goToNotificationsPage}>Notifications</span>,
+        },
+        {
+          key: "profile",
+          label: <Link to={routePrefix + "/profile"}>Profile</Link>,
+        },
+        {
+          key: "logout",
+          danger: true,
+          label: <span onClick={handleLogout}>Logout</span>,
+        },
+      ]}
+    />
+  );
 
   return (
-    <header className="fuse-nav-container">
-      <nav className="fuse-navbar">
-        <picture className="navbar-branding">
-          <NavLink
-            to={routePrefix + "/profile"}
-            onClick={() => window.scrollTo(0, 0)}
-            className="navbar-branding-link"
-          >
-            <figure className="branding-logo">
-              <Image
-                preview={false}
-                loading="lazy"
-                className="fuse-brand-logo"
-                src="/images/fuse-nav-icon.png"
-                alt="FuseWW"
-              />
-            </figure>
+    <header className="ant-navbar-container">
+      <div className="ant-navbar">
+        <div className="logo-section">
+          {isMobile && (
+            <Button
+              type="text"
+              icon={<MenuOutlined />}
+              onClick={onToggleSidebar}
+              className={`sidebar-toggle ${sidebarOpen ? "active" : ""}`}
+            />
+          )}
+
+          <NavLink to={routePrefix + "/profile"} className="logo-link">
+            <img
+              src="/images/fuse-nav-icon.svg"
+              alt="FuseWW"
+              className="logo-image"
+            />
           </NavLink>
-        </picture>
+        </div>
 
-        <button
-          className={`menu-toggle-button ${toggleNav && "show-nav"}`}
-          onClick={navbarHideAndShow}
-        >
-          <span className="toggle-menu-bar" />
-          <span className="toggle-menu-bar" />
-          <span className="toggle-menu-bar" />
-        </button>
+        <div className="navbar-right">
+          {/* Desktop Navigation */}
+          {!isMobile && (
+            <Menu
+              mode="horizontal"
+              className="nav-menu"
+              selectedKeys={[]}
+              items={navItems}
+            />
+          )}
 
-        <ul className="navbar-links-wrapper">
-          {user?.role === "JOB_SEEKER" && (
-            <NavLink
-              className="navbar-items"
-              to="/job-seeker/jobs/search?type=search"
+          {/* Notifications */}
+          <Button
+            type="text"
+            icon={<BellOutlined />}
+            onClick={goToNotificationsPage}
+            className="notification-btn"
+          />
+
+          {/* User Profile Dropdown */}
+          {!isMobile ? (
+            <Dropdown
+              overlay={userMenu}
+              trigger={["click"]}
+              placement="bottomRight"
             >
-              <li className="item-name">Jobs</li>
-            </NavLink>
-          )}
-
-          {user?.role === "JOB_SEEKER" && (
-            <NavLink
-              className="navbar-items"
-              to="/job-seeker/mentors?type=myMentors"
-            >
-              <li className="item-name">Mentors</li>
-            </NavLink>
-          )}
-
-          {!["RECRUITER", "STAFF_MEMBER", "EMPLOYER"].includes(user?.role) && (
-            <NavLink className="navbar-items" to={routePrefix + "/blogs"}>
-              <li className="item-name">Blogs</li>
-            </NavLink>
-          )}
-
-          <li className="navbar-items">
-            <figure className="notifications-icon">
-              <img
-                loading="lazy"
-                className="bell-icon"
-                src="/images/bell-icon.png"
-                alt="fuseUser"
-                onClick={goToNotificationsPage}
-              />
-            </figure>
-          </li>
-
-          <li className="navbar-items">
-            <figure className="fuse-user-icon">
-              <Dropdown
-                menu={{
-                  items,
-                  onClick: handleClick,
-                }}
-                trigger={["click"]}
-                overlayStyle={{
-                  width: "200px",
-                }}
-              >
-                <Image
-                  loading="lazy"
-                  style={{ width: "40px", height: "40px", objectFit: "cover" }}
-                  className="user-icon"
+              <Space className="user-dropdown">
+                <Avatar
                   src={
                     process.env.REACT_APP_MEDIA_URL + profileData?.avatarId ||
                     "/images/no-image.jpg"
                   }
-                  alt="fuseUser"
-                  preview={false}
+                  size="small"
                 />
-              </Dropdown>
-
-              <figcaption className="user-name">
-                {profileData?.fullname || "Guest"}
-              </figcaption>
-            </figure>
-          </li>
-        </ul>
-      </nav>
+                <span className="username">
+                  {profileData?.fullname || "Guest"}
+                </span>
+                <DownOutlined />
+              </Space>
+            </Dropdown>
+          ) : (
+            <Dropdown
+              overlay={mobileMenu}
+              trigger={["click"]}
+              placement="bottomRight"
+            >
+              <Button
+                type="text"
+                icon={<MenuOutlined />}
+                className="mobile-menu-btn"
+              />
+            </Dropdown>
+          )}
+        </div>
+      </div>
     </header>
   );
 };

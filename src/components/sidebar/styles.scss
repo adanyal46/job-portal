@@ -5,11 +5,11 @@
   background-color: #fff;
   padding: 1.5rem;
   overflow-y: auto;
-  height: calc(100vh - 12.5rem);
+  height: calc(100vh - 85px);
+;
 
-  display: none;
-
-  @media (min-width: 768px) {
+  @media (max-width: 767px) {
+    height: auto;
     display: flex;
     flex-direction: column;
     justify-content: space-between;

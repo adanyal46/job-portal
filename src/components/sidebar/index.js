@@ -20,7 +20,7 @@ import "./styles.scss";
 import { Image } from "antd";
 import { getRelativePath } from "../../utils";
 
-const Sidebar = ({ user }) => {
+const Sidebar = ({ user, onClose }) => {
   let query = useQuery();
   const location = useLocation();
   const profile =
@@ -43,6 +43,13 @@ const Sidebar = ({ user }) => {
     ? "/staff"
     : "/job-seeker";
 
+  // Handle navigation for mobile - close drawer if needed
+  const handleNavigation = () => {
+    if (onClose) {
+      onClose();
+    }
+  };
+
   const items = [
     // Jobs section only for job seekers
     ...(!isMentor && !isRecruiter && !isEmployer && !isStaff
@@ -57,7 +64,10 @@ const Sidebar = ({ user }) => {
             ),
             children: (
               <ul className="collpase-items-list">
-                <Link to={`${routePrefix}/jobs/search?type=search`}>
+                <Link
+                  to={`${routePrefix}/jobs/search?type=search`}
+                  onClick={handleNavigation}
+                >
                   <li
                     className={`collpase-item ${
                       searchParams === "search" && "active"
@@ -67,7 +77,10 @@ const Sidebar = ({ user }) => {
                   </li>
                 </Link>
 
-                <Link to={`${routePrefix}/jobs/search?type=applied`}>
+                <Link
+                  to={`${routePrefix}/jobs/search?type=applied`}
+                  onClick={handleNavigation}
+                >
                   <li
                     className={`collpase-item ${
                       searchParams === "applied" && "active"
@@ -77,7 +90,10 @@ const Sidebar = ({ user }) => {
                   </li>
                 </Link>
 
-                <Link to={`${routePrefix}/jobs/search?type=saved`}>
+                <Link
+                  to={`${routePrefix}/jobs/search?type=saved`}
+                  onClick={handleNavigation}
+                >
                   <li
                     className={`collpase-item ${
                       searchParams === "saved" && "active"
@@ -99,7 +115,10 @@ const Sidebar = ({ user }) => {
             ),
             children: (
               <ul className="collpase-items-list">
-                <Link to={`${routePrefix}/mentors?type=myMentors`}>
+                <Link
+                  to={`${routePrefix}/mentors?type=myMentors`}
+                  onClick={handleNavigation}
+                >
                   <li
                     className={`collpase-item ${
                       searchParams === "myMentors" && "active"
@@ -109,7 +128,7 @@ const Sidebar = ({ user }) => {
                   </li>
                 </Link>
 
-                <Link to={`${routePrefix}/bookings`}>
+                <Link to={`${routePrefix}/bookings`} onClick={handleNavigation}>
                   <li
                     className={`collpase-item ${
                       location.pathname === `${routePrefix}/bookings` &&
@@ -133,7 +152,7 @@ const Sidebar = ({ user }) => {
             showArrow: false,
             collapsible: "header",
             label: (
-              <Link to={`${routePrefix}/dashboard`}>
+              <Link to={`${routePrefix}/dashboard`} onClick={handleNavigation}>
                 <section className="collapse-header-wrapper">
                   <DashboardEmployerSidebarIcon />
                   <h5 className="collapse-heading">Dashboard</h5>
@@ -151,7 +170,10 @@ const Sidebar = ({ user }) => {
             ),
             children: (
               <ul className="collpase-items-list">
-                <Link to={`${routePrefix}/upcoming-bookings`}>
+                <Link
+                  to={`${routePrefix}/upcoming-bookings`}
+                  onClick={handleNavigation}
+                >
                   <li
                     className={`collpase-item ${
                       location.pathname ===
@@ -162,7 +184,10 @@ const Sidebar = ({ user }) => {
                   </li>
                 </Link>
 
-                <Link to={`${routePrefix}/history-bookings`}>
+                <Link
+                  to={`${routePrefix}/history-bookings`}
+                  onClick={handleNavigation}
+                >
                   <li
                     className={`collpase-item ${
                       location.pathname === `${routePrefix}/history-bookings` &&
@@ -181,7 +206,7 @@ const Sidebar = ({ user }) => {
             showArrow: false,
             collapsible: "header",
             label: (
-              <Link to={`${routePrefix}/earnings`}>
+              <Link to={`${routePrefix}/earnings`} onClick={handleNavigation}>
                 <section className="collapse-header-wrapper">
                   <EarningsIcon />
                   <h5 className="collapse-heading">Earnings</h5>
@@ -196,9 +221,10 @@ const Sidebar = ({ user }) => {
             label: (
               <Link
                 to={`${routePrefix}/reviews`}
-                onClick={() =>
-                  localStorage.setItem("lastRoute", `${routePrefix}/reviews`)
-                }
+                onClick={() => {
+                  localStorage.setItem("lastRoute", `${routePrefix}/reviews`);
+                  handleNavigation();
+                }}
               >
                 <section className="collapse-header-wrapper">
                   <ReviewIcon />
@@ -216,7 +242,7 @@ const Sidebar = ({ user }) => {
             showArrow: false,
             collapsible: "header",
             label: (
-              <Link to={`${routePrefix}/jobseekers`}>
+              <Link to={`${routePrefix}/jobseekers`} onClick={handleNavigation}>
                 <section className="collapse-header-wrapper">
                   <JobSeekerIcon />
                   <h5 className="collapse-heading">Job Seeker</h5>
@@ -229,7 +255,7 @@ const Sidebar = ({ user }) => {
             showArrow: false,
             collapsible: "header",
             label: (
-              <Link to={"/recruiter/timesheet"}>
+              <Link to={"/recruiter/timesheet"} onClick={handleNavigation}>
                 <section className="collapse-header-wrapper">
                   <JobSeekerIcon />
                   <h5 className="collapse-heading">Timesheet</h5>
@@ -246,7 +272,7 @@ const Sidebar = ({ user }) => {
             showArrow: false,
             collapsible: "header",
             label: (
-              <Link to={`${routePrefix}/dashboard`}>
+              <Link to={`${routePrefix}/dashboard`} onClick={handleNavigation}>
                 <section className="collapse-header-wrapper">
                   <DashboardEmployerSidebarIcon />
                   <h5 className="collapse-heading">Dashboard</h5>
@@ -259,7 +285,10 @@ const Sidebar = ({ user }) => {
             showArrow: false,
             collapsible: "header",
             label: (
-              <Link to={`${routePrefix}/subscriptions`}>
+              <Link
+                to={`${routePrefix}/subscriptions`}
+                onClick={handleNavigation}
+              >
                 <section className="collapse-header-wrapper">
                   <SubscriptionDashboardIcon />
                   <h5 className="collapse-heading">Subscriptions &Upgrades</h5>
@@ -273,7 +302,7 @@ const Sidebar = ({ user }) => {
             showArrow: false,
             collapsible: "header",
             label: (
-              <Link to={`${routePrefix}/talent`}>
+              <Link to={`${routePrefix}/talent`} onClick={handleNavigation}>
                 <section className="collapse-header-wrapper">
                   <JobListIcon />
                   <h5 className="collapse-heading">Talent</h5>
@@ -286,7 +315,7 @@ const Sidebar = ({ user }) => {
             showArrow: false,
             collapsible: "header",
             label: (
-              <Link to={`${routePrefix}/recruiter`}>
+              <Link to={`${routePrefix}/recruiter`} onClick={handleNavigation}>
                 <section className="collapse-header-wrapper">
                   <DashboardRecruiterIcon />
                   <h5 className="collapse-heading">Recruiter</h5>
@@ -299,7 +328,7 @@ const Sidebar = ({ user }) => {
             showArrow: false,
             collapsible: "header",
             label: (
-              <Link to={`${routePrefix}/jobs`}>
+              <Link to={`${routePrefix}/jobs`} onClick={handleNavigation}>
                 <section className="collapse-header-wrapper">
                   <JobListIcon />
                   <h5 className="collapse-heading">Jobs</h5>
@@ -312,7 +341,10 @@ const Sidebar = ({ user }) => {
             showArrow: false,
             collapsible: "header",
             label: (
-              <Link to={`${routePrefix}/hired-recruiter`}>
+              <Link
+                to={`${routePrefix}/hired-recruiter`}
+                onClick={handleNavigation}
+              >
                 <section className="collapse-header-wrapper">
                   <JobListIcon />
                   <h5 className="collapse-heading">Hired Recruiter</h5>
@@ -325,7 +357,7 @@ const Sidebar = ({ user }) => {
             showArrow: false,
             collapsible: "header",
             label: (
-              <Link to={`${routePrefix}/staffs`}>
+              <Link to={`${routePrefix}/staffs`} onClick={handleNavigation}>
                 <section className="collapse-header-wrapper">
                   <JobListIcon />
                   <h5 className="collapse-heading">Staff Member</h5>
@@ -343,9 +375,10 @@ const Sidebar = ({ user }) => {
       label: (
         <Link
           to={`${routePrefix}/settings`}
-          onClick={() =>
-            localStorage.setItem("lastRoute", `${routePrefix}/settings`)
-          }
+          onClick={() => {
+            localStorage.setItem("lastRoute", `${routePrefix}/settings`);
+            handleNavigation();
+          }}
         >
           <section className="collapse-header-wrapper">
             <SettingIcon />
@@ -360,12 +393,6 @@ const Sidebar = ({ user }) => {
 
   return (
     <aside className="fuse-main-sidebar-wrapper">
-      <button className="menu-toggle-button">
-        <span className="toggle-menu-bar" />
-        <span className="toggle-menu-bar" />
-        <span className="toggle-menu-bar" />
-      </button>
-
       <section className="fuse-main-container">
         <figure className="fuse-user-sidebar-icon">
           <Image
@@ -378,8 +405,10 @@ const Sidebar = ({ user }) => {
             alt="fuseUser"
             style={{
               borderRadius: "100%",
-              maxHeight: "200px",
-              height: "135px",
+              maxHeight: "135px",
+              maxWidth: "135px",
+              width: "100%",
+              height: "auto",
               objectFit: "cover",
             }}
             preview={false}
@@ -390,8 +419,15 @@ const Sidebar = ({ user }) => {
           </figcaption>
         </figure>
 
-        <Link to={`${routePrefix}/profile`}>
-          <CustomButton name="My Profile" />
+        <Link
+          to={`${routePrefix}/profile`}
+          style={{ width: "100%" }}
+          onClick={handleNavigation}
+        >
+          <CustomButton
+            name="My Profile"
+            style={{ width: "100%", marginBottom: "1rem" }}
+          />
         </Link>
 
         <CustomCollapse items={items} onChange={onChange} />

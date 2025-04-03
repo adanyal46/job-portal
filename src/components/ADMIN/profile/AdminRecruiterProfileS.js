@@ -14,6 +14,7 @@ import {
   Collapse,
   Checkbox,
   Button,
+  Grid,
 } from "antd";
 
 import { Link, useParams } from "react-router-dom";
@@ -38,16 +39,16 @@ import { getTimesheetListByRecruiter } from "../../../features/employerDashboard
 import ProfileStatus from "../components/ProfileStatus";
 
 const { Title, Text } = Typography;
+const { useBreakpoint } = Grid;
 
 const AdminRecruiterProfileS = ({ action = false }) => {
-  console.log("action", action);
-
   const { id } = useParams();
   const [recruiterDetail, setRecruiterDetail] = useState(null);
   const [loading, setLoading] = useState(true);
   const [timesheetLoading, setTimesheetLoading] = useState(true);
   const [timsheets, setTimesheets] = useState([]);
   const [statusLoading, setStatusLoading] = useState(false);
+  const screens = useBreakpoint();
 
   useEffect(() => {
     const fetchRecruiterInfo = async () => {
@@ -85,10 +86,15 @@ const AdminRecruiterProfileS = ({ action = false }) => {
     }
   };
 
-  const TEXT_STYLE = { fontSize: "16px" };
+  const TEXT_STYLE = { fontSize: screens.xs ? "14px" : "16px" };
 
   const columns = [
-    { title: "ID", dataIndex: "id", key: "id" },
+    {
+      title: "ID",
+      dataIndex: "id",
+      key: "id",
+      responsive: ["md"],
+    },
     {
       title: "Date",
       dataIndex: "createdAt",
@@ -137,11 +143,13 @@ const AdminRecruiterProfileS = ({ action = false }) => {
       ),
     },
   ];
+
   const servicePricing = timsheets
     ?.flatMap((timesheet) => timesheet.recruiterHiring.hiredServices)
     .map((item) => item.service.pricing);
 
   const totalPrice = servicePricing.reduce((acc, curr) => acc + curr, 0);
+
   const updateProfileStatus = async (status) => {
     if (status === recruiterDetail.profilestatus) {
       message.open({
@@ -170,49 +178,140 @@ const AdminRecruiterProfileS = ({ action = false }) => {
       setStatusLoading(false);
     }
   };
-  return (
-    <Row gutter={16}>
-      {/* Left Card - Profile Details */}
-      <Col span={16}>
-        <Card style={{ height: "100%" }} loading={loading}>
-          <Row gutter={16} style={{ marginBottom: "20px" }}>
-            <Col span={6}>
-              <img
-                src={
-                  recruiterDetail?.avatarId
-                    ? recruiterDetail?.avatarId
-                    : "/images/no-image.jpg"
-                }
-                alt="Profile"
-                style={{
-                  width: "200px",
-                  height: "250px",
-                  borderRadius: "8px",
-                  objectFit: "cover",
-                }}
-              />
-            </Col>
-            <Col span={18}>
-              <Flex vertical gap={8}>
-                <Title level={3} style={{ marginBottom: 0 }}>
-                  {(recruiterDetail?.fullName || recruiterDetail?.name) ?? "-"}
-                </Title>
-                <Rating rating={0} reviews={0} />
-                <LocationWithIcon location={recruiterDetail?.location ?? "-"} />
 
-                <Text block style={{ ...TEXT_STYLE, color: "#333333" }}>
-                  Recruiter at Atos
-                </Text>
-                <Text block style={{ ...TEXT_STYLE, color: "#52595C" }}>
-                  {recruiterDetail?.email ?? "-"}
-                </Text>
-                <Text block style={{ ...TEXT_STYLE, color: "#52595C" }}>
-                  {recruiterDetail?.phoneNumber ?? "-"}
-                </Text>
-                <ProfileStatus profileStatus={recruiterDetail?.profileStatus} />
-              </Flex>
-            </Col>
-          </Row>
+  return (
+    <Row gutter={[16, 16]}>
+      {/* Left Card - Profile Details */}
+      <Col xs={24} md={24} lg={14}>
+        <Card style={{ height: "100%" }} loading={loading}>
+          {/* Profile section - Modified for better responsive layout */}
+          <div style={{ marginBottom: "20px" }}>
+            {/* Mobile View - Stack image on top of details */}
+            {screens.xs && (
+              <>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    marginBottom: "20px",
+                  }}
+                >
+                  <img
+                    src={
+                      recruiterDetail?.avatarId
+                        ? recruiterDetail?.avatarId
+                        : "/images/no-image.jpg"
+                    }
+                    alt="Profile"
+                    style={{
+                      maxWidth: "150px",
+                      width: "100%",
+                      height: "200px",
+                      borderRadius: "8px",
+                      objectFit: "cover",
+                    }}
+                  />
+                </div>
+                <Flex vertical gap={8} align="center">
+                  <Title
+                    level={4}
+                    style={{ marginBottom: 0, textAlign: "center" }}
+                  >
+                    {(recruiterDetail?.fullName || recruiterDetail?.name) ??
+                      "-"}
+                  </Title>
+                  <Rating rating={0} reviews={0} />
+                  <LocationWithIcon
+                    location={recruiterDetail?.location ?? "-"}
+                  />
+                  <Text
+                    block
+                    style={{
+                      ...TEXT_STYLE,
+                      color: "#333333",
+                      textAlign: "center",
+                    }}
+                  >
+                    Recruiter at Atos
+                  </Text>
+                  <Text
+                    block
+                    style={{
+                      ...TEXT_STYLE,
+                      color: "#52595C",
+                      textAlign: "center",
+                    }}
+                  >
+                    {recruiterDetail?.email ?? "-"}
+                  </Text>
+                  <Text
+                    block
+                    style={{
+                      ...TEXT_STYLE,
+                      color: "#52595C",
+                      textAlign: "center",
+                    }}
+                  >
+                    {recruiterDetail?.phoneNumber ?? "-"}
+                  </Text>
+                  <ProfileStatus
+                    profileStatus={recruiterDetail?.profileStatus}
+                  />
+                </Flex>
+              </>
+            )}
+
+            {/* Tablet and Desktop View - Side by side layout */}
+            {!screens.xs && (
+              <Row gutter={[16, 16]}>
+                <Col sm={8} md={6}>
+                  <div
+                    style={{ display: "flex", justifyContent: "flex-start" }}
+                  >
+                    <img
+                      src={
+                        recruiterDetail?.avatarId
+                          ? recruiterDetail?.avatarId
+                          : "/images/no-image.jpg"
+                      }
+                      alt="Profile"
+                      style={{
+                        maxWidth: "180px",
+                        height: "180px",
+                        borderRadius: "8px",
+                        objectFit: "cover",
+                      }}
+                    />
+                  </div>
+                </Col>
+                <Col sm={16} md={18}>
+                  <Flex vertical gap={8} align="start">
+                    <Title level={3} style={{ marginBottom: 0 }}>
+                      {(recruiterDetail?.fullName || recruiterDetail?.name) ??
+                        "-"}
+                    </Title>
+                    <Rating rating={0} reviews={0} />
+                    <LocationWithIcon
+                      location={recruiterDetail?.location ?? "-"}
+                    />
+                    <Text block style={{ ...TEXT_STYLE, color: "#333333" }}>
+                      Recruiter at Atos
+                    </Text>
+                    <Text block style={{ ...TEXT_STYLE, color: "#52595C" }}>
+                      {recruiterDetail?.email ?? "-"}
+                    </Text>
+                    <Text block style={{ ...TEXT_STYLE, color: "#52595C" }}>
+                      {recruiterDetail?.phoneNumber ?? "-"}
+                    </Text>
+                    <ProfileStatus
+                      profileStatus={recruiterDetail?.profileStatus}
+                    />
+                  </Flex>
+                </Col>
+              </Row>
+            )}
+          </div>
+
           <hr className="mentor-detail-divider" />
           <Flex
             vertical
@@ -221,7 +320,11 @@ const AdminRecruiterProfileS = ({ action = false }) => {
             style={{ marginBlock: "20px" }}
           >
             {recruiterDetail?.language && (
-              <Flex align="center" gap={"small"}>
+              <Flex
+                align="center"
+                gap={"small"}
+                wrap={screens.xs ? "wrap" : "nowrap"}
+              >
                 <MentorTranslateIcon />
                 <p className="i-can-do-item">
                   I can Speak <strong>{recruiterDetail?.language}</strong>{" "}
@@ -230,7 +333,11 @@ const AdminRecruiterProfileS = ({ action = false }) => {
               </Flex>
             )}
 
-            <Flex align="center" gap={"small"}>
+            <Flex
+              align="center"
+              gap={"small"}
+              wrap={screens.xs ? "wrap" : "nowrap"}
+            >
               <MentorBriefcaseIcon />
               <p className="i-can-do-item">
                 I can help you{" "}
@@ -241,7 +348,11 @@ const AdminRecruiterProfileS = ({ action = false }) => {
               </p>
             </Flex>
 
-            <Flex align="center" gap={"small"}>
+            <Flex
+              align="center"
+              gap={"small"}
+              wrap={screens.xs ? "wrap" : "nowrap"}
+            >
               <WorkIndustriesIcon />
               <p className="i-can-do-item">
                 I work in <strong> FMCG, Supply Chain, Logistics,</strong>{" "}
@@ -253,8 +364,10 @@ const AdminRecruiterProfileS = ({ action = false }) => {
           <hr className="mentor-detail-divider" />
 
           <div style={{ marginBlock: "20px" }}>
-            <Typography.Title level={3}>Hired For</Typography.Title>
-            <Flex gap={6}>
+            <Typography.Title level={screens.xs ? 4 : 3}>
+              Hired For
+            </Typography.Title>
+            <Flex gap={6} wrap="wrap">
               {recruiterDetail?.services?.map((item, index) => (
                 <Tag
                   key={index}
@@ -265,6 +378,7 @@ const AdminRecruiterProfileS = ({ action = false }) => {
                     color: "#2F2C39",
                     fontSize: "14px",
                     fontWeight: "500",
+                    marginBottom: "8px",
                   }}
                 >
                   {item?.name || item.service?.name}
@@ -279,9 +393,11 @@ const AdminRecruiterProfileS = ({ action = false }) => {
             className="about-mentor-container"
             style={{ marginBlock: "20px" }}
           >
-            <Typography.Title level={3}>Reviews</Typography.Title>
+            <Typography.Title level={screens.xs ? 4 : 3}>
+              Reviews
+            </Typography.Title>
             {recruiterDetail?.review?.length > 0 ? (
-              <Flex className="review-cards-layout" gap={"small"}>
+              <Flex className="review-cards-layout" gap={"small"} wrap="wrap">
                 <ReviewCard />
               </Flex>
             ) : (
@@ -289,10 +405,14 @@ const AdminRecruiterProfileS = ({ action = false }) => {
             )}
             {recruiterDetail?.review?.length >= 10 && <CustomPagination />}
           </article>
-          <Typography.Title level={3}>Timesheet</Typography.Title>
+          <Typography.Title level={screens.xs ? 4 : 3}>
+            Timesheet
+          </Typography.Title>
           {timsheets?.length > 0 ? (
             <>
-              <Typography.Title level={3}>${totalPrice}</Typography.Title>
+              <Typography.Title level={screens.xs ? 4 : 3}>
+                ${totalPrice}
+              </Typography.Title>
               <Typography.Title level={5}>
                 You Earning after fuse platform fee
               </Typography.Title>
@@ -303,20 +423,23 @@ const AdminRecruiterProfileS = ({ action = false }) => {
 
               <Divider />
               <Input.Search
-                size="large"
+                size={screens.xs ? "middle" : "large"}
                 placeholder="Search"
-                style={{ maxWidth: "50%" }}
+                style={{ width: "100%", maxWidth: screens.xs ? "100%" : "50%" }}
               />
               <Divider />
 
-              <Table
-                loading={timesheetLoading}
-                dataSource={timsheets}
-                size="small"
-                columns={columns}
-                pagination={false}
-                rowKey={"id"}
-              />
+              <div style={{ overflowX: "auto" }}>
+                <Table
+                  loading={timesheetLoading}
+                  dataSource={timsheets}
+                  size={screens.xs ? "small" : "middle"}
+                  columns={columns}
+                  pagination={false}
+                  rowKey={"id"}
+                  scroll={{ x: "max-content" }}
+                />
+              </div>
             </>
           ) : (
             <Empty description="No Timesheet found" />
@@ -325,13 +448,13 @@ const AdminRecruiterProfileS = ({ action = false }) => {
       </Col>
 
       {/* Right Card - Additional Content */}
-      <Col span={8}>
+      <Col xs={24} lg={10}>
         <RecruiterVideoContainer canUpload={false} />
         <Card loading={loading} style={{ marginTop: "10px" }}>
           <Flex gap={5}>
             <BriefcaseIcon />
             <Typography.Title
-              level={4}
+              level={screens.xs ? 5 : 4}
               style={{ ...TEXT_STYLE, fontWeight: "400" }}
             >
               Services
@@ -354,7 +477,13 @@ const AdminRecruiterProfileS = ({ action = false }) => {
         </Card>
       </Col>
       {action && (
-        <Col xs={24} style={{ marginTop: "20px" }}>
+        <Col
+          xs={24}
+          style={{
+            marginTop: "20px",
+            textAlign: screens.xs ? "center" : "left",
+          }}
+        >
           <CustomButton
             name="Approve"
             category="primary"
@@ -369,7 +498,7 @@ const AdminRecruiterProfileS = ({ action = false }) => {
             style={{
               backgroundColor: "#E9F0F3",
               color: "#2F2C39",
-              marginLeft: "20px",
+              marginLeft: screens.xs ? "10px" : "20px",
             }}
           />
         </Col>

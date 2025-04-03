@@ -56,7 +56,7 @@ function TimesheetCounts() {
   return (
     <>
       {cardData.map((item, index) => (
-        <Col span={6} key={index}>
+        <Col xs={24} md={12} lg={6} key={index}>
           <Card
             loading={loading}
             bordered={false}

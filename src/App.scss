@@ -1,39 +1,279 @@
-@import "./styles/commons";
-
+/* Main Layout Styles */
 .app-wrapper {
   min-height: 100vh;
   background: linear-gradient(150.25deg, #eaebec -12.71%, #88b3c1 131.5%);
 
   .fuse-main-wrapper {
     min-height: 100vh;
+    position: relative;
 
     .fuse-main-body {
       margin-top: 1.3rem;
-      height: calc(100vh - 12.5rem);
-
-      display: grid;
-      column-gap: 2.5rem;
-      grid-template-columns: 1fr;
-
-      overflow-y: hidden; 
-      > * { 
-        overflow-y: auto; 
-        scrollbar-width: thin; /* For Firefox */
-        scrollbar-color: transparent transparent; /* For Firefox */
-        height: 100%; 
-      }
-
+      height: calc(100vh - 6rem);
+      display: flex;
+      overflow: hidden;
       padding: 1.2rem 1.6rem;
+      position: relative;
+      transition: all 0.3s ease;
 
-      @media (min-width: 768px) {
-        grid-template-columns: 23rem 1fr;
-        padding: 1.2rem 2.4rem;
+      .sidebar-container {
+        width: 100%;
+        max-width: 270px;
+        min-width: 270px;
+        height: 100%;
+        overflow-y: auto;
+        scrollbar-width: thin;
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.95);
+        margin-right: 2rem;
       }
 
-      @media (min-width: 1024px) {
-        grid-template-columns: 27rem 1fr;
+      .content-container {
+        flex: 1;
+        width: 100%;
+        overflow-y: auto;
+        scrollbar-width: thin;
+        transition: all 0.3s ease;
+      }
+    }
+
+    /* Tablet and Desktop styles */
+    @media (min-width: 768px) {
+      .fuse-main-body {
         padding: 1.2rem 2.4rem;
       }
+    }
+
+    @media (min-width: 1024px) {
+      .fuse-main-body {
+        .sidebar-container {
+          max-width: 300px;
+          min-width: 300px;
+        }
+      }
+    }
+  }
+}
+
+/* Sidebar Drawer Container */
+.sidebar-drawer-container {
+  height: 100%;
+  background: white;
+  overflow-y: auto;
+}
+
+/* Ant Design Drawer Custom Styles */
+.ant-drawer {
+  .ant-drawer-content-wrapper {
+    box-shadow: none;
+  }
+  
+  .ant-drawer-content {
+    background-color: transparent;
+    overflow: visible;
+  }
+  
+  .ant-drawer-body {
+    padding: 0;
+    height: 100%;
+    background-color: white;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+  
+  /* Force the drawer to be on top of content */
+  &.ant-drawer-open {
+    z-index: 999;
+  }
+}
+
+/* Navbar Responsive Styles */
+.fuse-nav-container {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  width: 100%;
+  background-color: #ffffff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+
+  .fuse-navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.8rem 1.6rem;
+    height: 6rem;
+
+    .navbar-branding {
+      display: flex;
+      align-items: center;
+
+      .fuse-brand-logo {
+        height: 40px;
+        width: auto;
+      }
+    }
+
+    .menu-toggle-button {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 30px;
+      height: 20px;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      z-index: 101;
+
+      .toggle-menu-bar {
+        width: 100%;
+        height: 3px;
+        background-color: #333;
+        border-radius: 3px;
+        transition: all 0.3s ease;
+      }
+
+      &.show-nav .toggle-menu-bar {
+        &:nth-child(1) {
+          transform: translateY(8px) rotate(45deg);
+        }
+        &:nth-child(2) {
+          opacity: 0;
+        }
+        &:nth-child(3) {
+          transform: translateY(-8px) rotate(-45deg);
+        }
+      }
+    }
+
+    .navbar-links-wrapper {
+      position: fixed;
+      top: 6rem;
+      right: -100%;
+      width: 250px;
+      height: calc(100vh - 6rem);
+      background-color: #ffffff;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 1.5rem;
+      transition: right 0.3s ease;
+      box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+      z-index: 99;
+
+      &.show {
+        right: 0;
+      }
+
+      .navbar-items {
+        margin-bottom: 1.2rem;
+        width: 100%;
+        
+        .item-name {
+          font-size: 1rem;
+          font-weight: 500;
+          color: #333;
+        }
+      }
+
+      .notifications-icon, .fuse-user-icon {
+        display: flex;
+        align-items: center;
+        
+        img {
+          width: 24px;
+          height: 24px;
+          object-fit: cover;
+        }
+      }
+      
+      .fuse-user-icon {
+        display: flex;
+        align-items: center;
+        
+        .user-name {
+          margin-left: 0.5rem;
+          font-size: 0.9rem;
+          font-weight: 500;
+        }
+      }
+    }
+
+    @media (min-width: 768px) {
+      padding: 0.8rem 2.4rem;
+
+      .menu-toggle-button {
+        display: none;
+      }
+
+      .navbar-links-wrapper {
+        position: static;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-end;
+        padding: 0;
+        height: auto;
+        width: auto;
+        background-color: transparent;
+        box-shadow: none;
+
+        .navbar-items {
+          margin-left: 2rem;
+          margin-bottom: 0;
+          width: auto;
+        }
+      }
+    }
+  }
+}
+
+/* Sidebar Styles */
+.fuse-main-sidebar-wrapper {
+  background-color: white;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem 1rem;
+
+  .fuse-user-sidebar-icon {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 1.5rem;
+
+    .sidebar-user-icon {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 0.5rem;
+    }
+
+    .sidebar-user-name {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #333;
+      text-align: center;
+    }
+  }
+
+  .fuse-main-container {
+    flex: 1;
+    overflow-y: auto;
+  }
+
+  .contact-fuse-footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid #eee;
+    font-size: 0.9rem;
+    color: #666;
+    
+    svg {
+      margin-right: 0.5rem;
     }
   }
 }

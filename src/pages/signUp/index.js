@@ -61,7 +61,7 @@ const RegisterForm = () => {
     } catch (error) {
       message.open({
         type: "error",
-        content: "Login failed. Please try again.",
+        content: error.message || "Internal Server Error.",
       });
       setIsLoading(false);
     }

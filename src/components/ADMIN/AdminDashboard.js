@@ -7,6 +7,7 @@ import {
   Spin,
   Typography,
   notification,
+  Grid,
 } from "antd";
 import {
   AdminDashboardArrowRight,
@@ -18,14 +19,19 @@ import {
   CalendarDashboardIcon,
 } from "../../assets/svg";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getDashboardCounts } from "../../features/admin/dashboard/dashboardSlice";
+
+const { useBreakpoint } = Grid;
+
 const TEXT_COLOR = {
   color: "#0C0C0C",
 };
+
 const AdminDashboard = () => {
   const dispatch = useDispatch();
   const { counts, loading, error } = useSelector((state) => state.dashboard);
+  const screens = useBreakpoint();
 
   useEffect(() => {
     dispatch(getDashboardCounts());
@@ -113,36 +119,79 @@ const AdminDashboard = () => {
       isArrow: false,
     },
   ];
+
   return (
-    <div>
-      <Typography.Title level={3} className="fw-400" style={TEXT_COLOR}>
+    <div style={{ padding: screens.xs ? "10px" : "20px" }}>
+      <Typography.Title
+        level={screens.xs ? 4 : 3}
+        className="fw-400"
+        style={TEXT_COLOR}
+      >
         Dashboard
       </Typography.Title>
       <div>
         <DatePicker
-          size="large"
+          size={screens.xs ? "middle" : "large"}
           placeholder="Date Range"
-          style={{ width: "100%", maxWidth: "369px", marginTop: "10px" }}
+          style={{
+            width: "100%",
+            maxWidth: screens.xs ? "100%" : "369px",
+            marginTop: "10px",
+          }}
           suffixIcon={<CalendarDashboardIcon />}
         />
       </div>
       <Row gutter={[16, 16]} style={{ marginTop: "20px" }}>
         {dashboardData.map((item, ind) => (
-          <Col span={6} key={ind}>
+          <Col
+            xs={24} // 1 card per row on extra small screens
+            sm={12} // 2 cards per row on small screens
+            md={8} // 3 cards per row on medium screens
+            lg={8} // 4 cards per row on large screens
+            xl={6} // 4 cards per row on extra large screens
+            key={ind}
+          >
             <Card
               bordered={false}
-              style={{ boxShadow: "0px 4px 18px 0px #4B465C1A" }}
+              style={{
+                boxShadow: "0px 4px 18px 0px #4B465C1A",
+                height: "100%",
+              }}
             >
-              <Flex className="w-100" justify="space-between" align="center">
-                <Flex vertical gap={0}>
-                  <Typography.Title level={3} style={{ color: "#2F2C39" }}>
+              <Flex
+                className="w-100"
+                justify="space-between"
+                align="center"
+                wrap={screens.xs ? "wrap" : "nowrap"}
+              >
+                <Flex
+                  vertical
+                  gap={0}
+                  style={{
+                    marginBottom: screens.xs ? "10px" : 0,
+                    width: screens.xs ? "100%" : "auto",
+                  }}
+                >
+                  <Typography.Title
+                    level={screens.xs ? 4 : 3}
+                    style={{
+                      color: "#2F2C39",
+                      margin: screens.xs ? "0 0 5px 0" : undefined,
+                    }}
+                  >
                     {item.count}
                   </Typography.Title>
                   <Typography.Text style={{ color: "#52595C" }}>
                     {item.title}
                   </Typography.Text>
                 </Flex>
-                <Flex align="center" gap={6}>
+                <Flex
+                  align="center"
+                  gap={6}
+                  style={{
+                    marginLeft: screens.xs ? "auto" : 0,
+                  }}
+                >
                   {item.icon}
                   {item.isArrow && <AdminDashboardArrowRight />}
                 </Flex>
