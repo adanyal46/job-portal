@@ -1,16 +1,39 @@
 .reviews-main-layout-container {
-  padding: 2.4rem 3.2rem;
+  padding: 1.6rem;
   border-radius: 0.6rem;
   background-color: #ffffff;
   overflow-y: auto;
 
   display: flex;
   flex-direction: column;
-  gap: 3.2rem;
+  gap: 2rem;
+
+  /* Increase padding on larger screens */
+  @media (min-width: 768px) {
+    padding: 2rem;
+    gap: 2.4rem;
+  }
+
+  @media (min-width: 1024px) {
+    padding: 2.4rem 3.2rem;
+    gap: 3.2rem;
+  }
 
   .review-cards-list-wrapper {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 2.4rem;
+    grid-template-columns: 1fr; /* Default 1 column for mobile */
+    gap: 1.6rem;
+    
+    /* Tablet: 2 cards per row */
+    @media (min-width: 768px) {
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+    
+    /* Desktop: 3 cards per row */
+    @media (min-width: 1024px) {
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 2.4rem;
+    }
   }
 }

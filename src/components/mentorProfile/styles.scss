@@ -1,72 +1,214 @@
-.main-layout-container {
+/* Mentor Profile Styles */
+.mentor-profile-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+  width: 100%;
+  overflow-x: hidden;
+  box-sizing: border-box;
+  padding: 1.5rem;
+  
+  /* Main profile content section */
+  .mentor-main-section {
+    flex: 1;
+    max-width: 65%;
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
     gap: 2rem;
-  
-    &::-webkit-scrollbar {
-      width: 0;
-      height: 0;
+    background: #fff; /* Add white background */
+    padding: 1.5rem;
+    border-radius: 1.2rem;
+    box-shadow: 0 0.2rem 0.4rem rgba(165, 163, 174, 0.3);
+    
+    .profile-title {
+      margin-bottom: 0;
     }
-  
-    &::-webkit-scrollbar-track {
-      -webkit-box-shadow: none;
-      box-shadow: none;
-      border-radius: 1rem;
-      background: #ccc;
-    }
-  
-    &::-webkit-scrollbar-thumb {
-      background-color: #ccc;
-      outline: 1px solid transparent;
-      border-radius: 1rem;
-    }
-  
-    // Firefox support
-    scrollbar-color: #ccc transparent;
-    scrollbar-width: thin;
-  
-    .profile-main-wrapper {
-      width: 65%; // Left section taking 70% of the container
-      display: flex;
-      flex-direction: column;
-      gap: 2rem; // Gap between profile sections
-      height: auto;
-    }
-  
-    .mentor-actions-container {
-      width: 35%; // Right section taking 30% of the container
-      display: flex;
-      flex-direction: column;
-      gap: 2rem;
-  
-      .mentor-video-container,
-      .mentor-get-started-container {
-        padding: 2.4rem;
-        border-radius: 1.2rem;
-        background: #fff;
-        box-shadow: 0 0.2rem 0.4rem rgba(165, 163, 174, 0.3);
+    
+    .skills-container {
+      margin: 1rem 0;
+      
+      .skill-item {
+        display: flex;
+        align-items: flex-start;
+        margin-bottom: 1rem;
+        
+        .skill-icon {
+          margin-right: 10px;
+          position: relative;
+          top: 7px;
+        }
       }
+    }
+    
+    .section-divider {
+      width: 100%;
+      margin: 1rem 0;
+      border: none;
+      border-top: 1px solid #b5b5b5;
+    }
+    
+    .about-section {
+      .section-heading {
+        font-size: 1.2rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+      }
+      
+      .section-content {
+        color: #555;
+        line-height: 1.6;
+      }
+    }
+  }
   
-      .mentor-services-wrapper {
+  /* Sidebar content section */
+  .mentor-side-section {
+    width: 35%;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    
+    /* Style for video container */
+    .ant-mentor-video-container,
+    > div:first-child {
+      width: 100%;
+      border-radius: 1.2rem;
+      overflow: hidden;
+      background: #fff;
+      box-shadow: 0 0.2rem 0.4rem rgba(165, 163, 174, 0.3);
+      
+      img, video {
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+        border-radius: 0.8rem;
+      }
+    }
+    
+    /* Style for services section */
+    .mentor-services-section {
+      width: 100%;
+      padding: 2.4rem;
+      border-radius: 1.2rem;
+      background: #fff;
+      box-shadow: 0 0.2rem 0.4rem rgba(165, 163, 174, 0.3);
+      box-sizing: border-box;
+      
+      .services-header {
         display: flex;
         justify-content: space-between;
         align-items: center;
-  
-        .mentor-services {
+        margin-bottom: 1.5rem;
+        
+        .services-title {
           display: flex;
           align-items: center;
           gap: 0.5rem;
           font-weight: 500;
+          margin: 0;
         }
       }
-  
-      .info-content {
+      
+      .services-info {
+        margin-top: 10px;
         line-height: 2rem;
-  
-        > svg {
+        color: #666;
+        
+        svg {
           vertical-align: bottom;
         }
       }
     }
   }
   
+  /* Responsive styles */
+  @media (max-width: 1200px) {
+    .mentor-main-section {
+      max-width: 60%;
+    }
+    
+    .mentor-side-section {
+      width: 40%;
+    }
+  }
+  
+  @media (max-width: 900px) {
+    flex-direction: column;
+    
+    .mentor-main-section,
+    .mentor-side-section {
+      max-width: 100%;
+      width: 100%;
+    }
+    
+    /* Keep normal order on mobile */
+    .mentor-main-section {
+      order: 1;
+    }
+    
+    .mentor-side-section {
+      order: 2;
+    }
+  }
+  
+  @media (max-width: 600px) {
+    padding: 1rem;
+    gap: 1.5rem;
+    
+    .mentor-main-section {
+      padding: 1rem;
+    }
+    
+    .mentor-side-section {
+      .mentor-services-section {
+        padding: 1.5rem;
+        
+        .services-header {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 1rem;
+        }
+      }
+    }
+    
+    .mentor-main-section {
+      gap: 1.5rem;
+      
+      .section-heading {
+        font-size: 1.1rem;
+      }
+    }
+  }
+  
+  @media (max-width: 480px) {
+    padding: 0.8rem;
+    
+    .mentor-main-section {
+      padding: 0.8rem;
+    }
+    
+    .mentor-side-section {
+      .mentor-services-section {
+        padding: 1.2rem;
+      }
+    }
+  }
+}
+
+/* Additional styles to ensure nested components inherit proper sizing */
+.education-certification-container,
+.employment-experience-container,
+.location-container,
+.document-link-container,
+.certifications-container {
+  width: 100%;
+}
+
+/* Fix for Ant Design button styles on mobile */
+.ant-btn {
+  @media (max-width: 480px) {
+    font-size: 12px;
+    padding: 4px 10px;
+    height: auto;
+  }
+}

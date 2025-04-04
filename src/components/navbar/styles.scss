@@ -42,6 +42,45 @@
       display: flex;
       align-items: center;
       
+      /* Custom menu styles to replace Ant Design Menu */
+      .custom-nav-menu {
+        display: flex;
+        align-items: center;
+        height: 100%;
+        border-bottom: none;
+        background: transparent;
+        line-height: 64px;
+        
+        .menu-item {
+          padding: 0 16px;
+          height: 100%;
+          display: flex;
+          align-items: center;
+          position: relative;
+          
+          a {
+            color: rgba(0, 0, 0, 0.88);
+            text-decoration: none;
+            transition: color 0.3s;
+            
+            &:hover, &.active {
+              color: #1890ff;
+            }
+            
+            &.active::after {
+              content: '';
+              position: absolute;
+              left: 16px;
+              right: 16px;
+              bottom: 0;
+              height: 2px;
+              background-color: #1890ff;
+            }
+          }
+        }
+      }
+      
+      /* Original Ant Menu styles - keeping for reference */
       .ant-menu-horizontal {
         border-bottom: none;
         background: transparent;
@@ -61,6 +100,11 @@
               border-bottom: 2px solid #1890ff;
             }
           }
+        }
+        
+        /* Hide the Ant Design overflow indicator */
+        .ant-menu-overflow-item-rest {
+          display: none !important;
         }
       }
       

@@ -1,16 +1,10 @@
 import { useState, useEffect } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import "./styles.scss";
-import { Dropdown, Image, message, Menu, Button, Space, Avatar } from "antd";
-import {
-  MenuOutlined,
-  BellOutlined,
-  UserOutlined,
-  DownOutlined,
-} from "@ant-design/icons";
+import { Dropdown, message, Menu, Button, Space, Avatar } from "antd";
+import { MenuOutlined, BellOutlined, DownOutlined } from "@ant-design/icons";
 import { useDispatch } from "react-redux";
 import { logout } from "../../features/auth/authSlice";
-import { getRelativePath } from "../../utils";
 
 const Navbar = ({ user, onToggleSidebar, sidebarOpen }) => {
   const profileData =
@@ -71,7 +65,7 @@ const Navbar = ({ user, onToggleSidebar, sidebarOpen }) => {
     />
   );
 
-  // Navigation menu for top navigation
+  // Navigation menu items
   const navItems = [];
 
   if (isJobSeeker) {
@@ -168,14 +162,15 @@ const Navbar = ({ user, onToggleSidebar, sidebarOpen }) => {
         </div>
 
         <div className="navbar-right">
-          {/* Desktop Navigation */}
+          {/* Desktop Navigation - REPLACED WITH CUSTOM MENU */}
           {!isMobile && (
-            <Menu
-              mode="horizontal"
-              className="nav-menu"
-              selectedKeys={[]}
-              items={navItems}
-            />
+            <div className="custom-nav-menu">
+              {navItems.map((item) => (
+                <div key={item.key} className="menu-item">
+                  {item.label}
+                </div>
+              ))}
+            </div>
           )}
 
           {/* Notifications */}

@@ -7,10 +7,10 @@ import { VideoIconProfile } from "../assets/svg";
 
 const RecruiterVideoContainer = ({ mentorvideolink, canUpload = false }) => {
   const dispatch = useDispatch();
-  const { videoLoading } = useSelector((state) => state.profile);
+  const { user, videoLoading } = useSelector((state) => state.profile);
   const [videoFile, setVideoFile] = useState(null);
   const [isUploadModalVisible, setIsUploadModalVisible] = useState(false);
-
+  const fullname = user?.Profile?.[0]?.fullname || "Unknown";
   const handleVideoChange = (info) => {
     if (info.fileList) {
       setVideoFile(info.fileList.at(-1).originFileObj);
@@ -43,11 +43,11 @@ const RecruiterVideoContainer = ({ mentorvideolink, canUpload = false }) => {
       <Flex gap={5}>
         <VideoIconProfile />
         <Typography.Text style={{ fontSize: "16px", color: "#2F2C39" }}>
-          Olivia’s Introductory video clip{" "}
+          {fullname} Introductory video clip{" "}
         </Typography.Text>
       </Flex>
       <Typography.Text style={{ fontSize: "16px", color: "#2F2C39" }}>
-        Get to know Olivia in a better way
+        Get to know {fullname} in a better way
       </Typography.Text>
 
       {/* Video Display Area */}

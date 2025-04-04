@@ -7,9 +7,8 @@ import {
   Typography,
   Select,
   Image,
-  Pagination,
-  message,
   Divider,
+  message,
 } from "antd";
 import {
   AdminDashboardDollarIcon,
@@ -129,10 +128,10 @@ const MentorDashboard = () => {
       <Typography.Title level={2} style={{ color: "#0C0C0C" }}>
         Dashboard
       </Typography.Title>
-      {/* First Row: Three Cards */}
-      <Row gutter={[24, 24]}>
+      {/* First Row: Three Cards with responsive breakpoints */}
+      <Row gutter={[16, 16]}>
         {cardData.map((item) => (
-          <Col span={8} key={item.key}>
+          <Col xs={24} sm={24} md={12} lg={8} xl={8} key={item.key}>
             <Card
               loading={loading}
               bordered={false}
@@ -156,10 +155,10 @@ const MentorDashboard = () => {
         ))}
       </Row>
 
-      {/* Second Row: Two Cards (Left: 30%, Right: Custom Tabs) */}
-      <Row gutter={[24, 24]} style={{ marginTop: "24px" }}>
-        <Col span={8}>
-          {/* Activity Card */}
+      {/* Second Row: Two Cards with responsive breakpoints */}
+      <Row gutter={[16, 16]} style={{ marginTop: "24px" }}>
+        {/* Upcoming Bookings and Reviews - Takes full width on small screens */}
+        <Col xs={24} sm={24} md={24} lg={8} xl={8}>
           <Card
             loading={loading}
             title={
@@ -272,7 +271,8 @@ const MentorDashboard = () => {
           </Card>
         </Col>
 
-        <Col span={16}>
+        {/* Earnings Chart - Takes full width on small screens */}
+        <Col xs={24} sm={24} md={24} lg={16} xl={16}>
           <Card loading={loading}>
             <Typography.Title
               level={3}
@@ -280,7 +280,7 @@ const MentorDashboard = () => {
             >
               Upcoming Bookings
             </Typography.Title>
-            <Flex align="baseline" gap={10}>
+            <Flex align="baseline" gap={10} style={{ flexWrap: "wrap" }}>
               <Typography.Title
                 level={2}
                 style={{
@@ -301,7 +301,15 @@ const MentorDashboard = () => {
                 Revenue Breakdown
               </span>
             </Flex>
-            <Flex justify="space-between" align="center">
+            <Flex
+              justify="space-between"
+              align="center"
+              style={{
+                flexDirection: "row",
+                flexWrap: "wrap",
+                gap: "10px",
+              }}
+            >
               <Typography.Text style={{ color: "#7A8488", fontSize: "14px" }}>
                 Showing earnings or the month{" "}
                 <strong style={{ color: TEXT_STYLE.color }}>Oct, 2024</strong>

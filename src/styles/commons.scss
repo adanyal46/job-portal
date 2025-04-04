@@ -16,14 +16,8 @@
 .main-layout-container {
   @include hide-scrollbar();
 
-  // justify-self: center;
   width: 100%;
-  // max-width: 130.5rem;
   overflow-y: auto;
-
-  // @media (min-width: 1360px) {
-  //   max-width: 60%;
-  // }
 
   .layout-main-heading {
     font-size: 2rem;
@@ -70,11 +64,21 @@
   @extend .common-booking-container-styles;
 
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr; /* Default 1 column for mobile */
   gap: 3rem 1.6rem;
+  
+  /* Tablet: 2 cards per row */
+  @media (min-width: 768px) {
+    grid-template-columns: 1fr 1fr;
+  }
+  
+  /* Desktop: 3 cards per row */
+  @media (min-width: 1024px) {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
 
   .ant-pagination.custom-pagination {
-    grid-column: 1/4;
+    grid-column: 1/-1; /* Span all columns regardless of count */
   }
 }
 

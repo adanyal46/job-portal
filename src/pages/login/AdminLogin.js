@@ -227,7 +227,7 @@ const AdminLogin = () => {
                   fontSize: "12px",
                 }}
               >
-                v 1.2
+                v 1.3
               </Typography.Text>
             </div>
           </div>

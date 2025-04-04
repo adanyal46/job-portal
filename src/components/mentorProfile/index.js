@@ -17,6 +17,7 @@ import MentorProfileService from "../mentorProfileService";
 import CustomButton from "../customButton";
 import { useOutletContext } from "react-router-dom";
 import MentorVideoContainer from "../MentorVideoContainer";
+import CommonHeading from "../commonHeading";
 
 const MentorProfile = () => {
   const user = useOutletContext();
@@ -42,11 +43,13 @@ const MentorProfile = () => {
   };
 
   return (
-    <section className="main-layout-container">
-      <section className="profile-main-wrapper" style={{ overflow: "auto" }}>
-        <Typography.Title level={3} style={{ marginBottom: "0px" }}>
+    <div className="mentor-profile-container">
+      {/* Main profile section */}
+      <div className="mentor-main-section">
+        <Typography.Title level={3} className="profile-title">
           My Profile
         </Typography.Title>
+
         <MentorProfileHeader
           user={user}
           showInfoModal={showInfoModal}
@@ -55,47 +58,40 @@ const MentorProfile = () => {
           setShowCertificationModal={setShowCertificationModal}
         />
 
-        <article className="I-can-do-container">
-          <p className="i-can-do-item">
-            <span
-              style={{ position: "relative", top: "7px", marginRight: "10px" }}
-            >
+        <div className="skills-container">
+          <p className="skill-item">
+            <span className="skill-icon">
               <MentorTranslateIcon />
             </span>
-            I can Speak <strong>{profile?.language ?? "English"}</strong>{" "}
+            I can Speak&nbsp;&nbsp;
+            <strong>{profile?.language ?? "English"}</strong>&nbsp;
             (Conversational)
           </p>
 
           {services && Array.isArray(services) && services.length > 0 && (
-            <p className="i-can-do-item">
-              <span
-                style={{
-                  position: "relative",
-                  top: "7px",
-                  marginRight: "10px",
-                }}
-              >
+            <p className="skill-item">
+              <span className="skill-icon">
                 <MentorBriefcaseIcon />
               </span>
-              I can help you{" "}
+              I can help you&nbsp;&nbsp;
               <>
                 {serviceNames?.map((name) => (
-                  <strong key={name}>{name},</strong>
+                  <strong key={name}>{name}, </strong>
                 ))}
               </>
               and more
             </p>
           )}
-        </article>
+        </div>
 
-        <hr className="mentor-detail-divider" />
+        <hr className="section-divider" />
 
-        <article className="about-mentor-container">
-          <h4 className="section-heading">About</h4>
+        <div className="about-section">
+          <CommonHeading heading="About" />
           <p className="section-content">{profile?.about ?? "-"}</p>
-        </article>
+        </div>
 
-        <hr className="mentor-detail-divider" />
+        <hr className="section-divider" />
 
         <EducationAndCertification
           education={education}
@@ -125,34 +121,17 @@ const MentorProfile = () => {
         />
 
         <Certifications certificates={certificates} profile={profile} />
-      </section>
+      </div>
 
-      <section className="mentor-actions-container">
+      {/* Services and video section */}
+      <div className="mentor-side-section">
         <MentorVideoContainer
           mentorvideolink={profile?.mentorvideolink}
           canUpload={true}
         />
-        {/* <article className="mentor-video-container">
-          <p>Olivia Introductory video clip</p>
-          <p>Get to know Olivia in a better way</p>
-          <figure>
-            <img
-              src="/images/mentors/mentor-1.png"
-              alt="mentor icon"
-              style={{
-                width: "100%",
-                height: "280px",
-                objectFit: "cover",
-                borderRadius: "20px",
-                marginBlock: "20px",
-              }}
-            />
-          </figure>
-         
-        </article> */}
-        <section className="mentor-get-started-container">
-          <section className="mentor-services-wrapper">
-            <h6 className="mentor-services">
+        <div className="mentor-services-section">
+          <div className="services-header">
+            <h6 className="services-title">
               <BriefcaseIcon /> Services
             </h6>
             <CustomButton
@@ -160,9 +139,9 @@ const MentorProfile = () => {
               name="Add Service"
               handleClick={showModal}
             />
-          </section>
+          </div>
 
-          <p className="info-content" style={{ marginTop: "10px" }}>
+          <p className="services-info">
             <InfoIcon /> Please click on the checkboxes to select a service
           </p>
 
@@ -172,9 +151,9 @@ const MentorProfile = () => {
             setIsModalVisible={setIsModalVisible}
             mentorId={user?.id}
           />
-        </section>
-      </section>
-    </section>
+        </div>
+      </div>
+    </div>
   );
 };
 

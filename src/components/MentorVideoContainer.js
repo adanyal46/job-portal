@@ -8,9 +8,11 @@ import CustomButton from "./customButton";
 
 const MentorVideoContainer = ({ mentorvideolink, canUpload = false }) => {
   const dispatch = useDispatch();
-  const { videoLoading } = useSelector((state) => state.profile);
+  const { user, videoLoading } = useSelector((state) => state.profile);
   const [videoFile, setVideoFile] = useState(null);
   const [isUploadModalVisible, setIsUploadModalVisible] = useState(false);
+
+  const fullname = user?.Profile?.[0]?.fullname || "Unknown";
 
   const handleVideoChange = (info) => {
     if (info.fileList) {
@@ -41,9 +43,9 @@ const MentorVideoContainer = ({ mentorvideolink, canUpload = false }) => {
 
   return (
     <article className="mentor-video-container">
-      <h4 className="title">Olivia's Introductory Video Clip</h4>
+      <h4 className="title">{fullname} Introductory Video Clip</h4>
       <p className="description">
-        Get to know Olivia better through her video introduction.
+        Get to know {fullname} better through her video introduction.
       </p>
 
       {/* Video Display Area */}
