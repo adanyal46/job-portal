@@ -23,6 +23,7 @@ const RegisterForm = () => {
   const { role } = useParams();
   const [isLoading, setIsLoading] = useState(false);
   const [profilePic, setProfilePic] = useState(null);
+  const [form] = Form.useForm();
 
   // Handle login submission
   const handleSubmit = async (values) => {
@@ -41,9 +42,15 @@ const RegisterForm = () => {
       });
       return;
     }
-    formData.append("fullname", values["fullName"]);
-    formData.append("email", values["email"]);
-    formData.append("password", values["password"]);
+
+    // Combine first and last name
+    const fullName = `${values.firstName} ${values.lastName}`.trim();
+
+    formData.append("fullname", fullName);
+    formData.append("firstName", values.firstName);
+    formData.append("lastName", values.lastName);
+    formData.append("email", values.email);
+    formData.append("password", values.password);
     formData.append("profilePic", profilePic);
     formData.append("role", role);
 
@@ -140,14 +147,19 @@ const RegisterForm = () => {
                 style={{ marginBottom: "20px", width: "100%" }}
               >
                 <Title level={2} style={{ color: "#001F3F" }}>
-                  Let’s get started
+                  Let's get started
                 </Title>
                 <Typography.Text style={{ color: "#2F2F2F" }}>
                   Enter the information mentioned below to create your account.
                 </Typography.Text>
               </Flex>
 
-              <Form layout="vertical" onFinish={handleSubmit} size="large">
+              <Form
+                layout="vertical"
+                onFinish={handleSubmit}
+                size="large"
+                form={form}
+              >
                 <Row gutter={[12, 12]} justify={"center"}>
                   <Col xs={24} style={{ textAlign: "center" }}>
                     <Form.Item name={"avatar"}>
@@ -158,20 +170,35 @@ const RegisterForm = () => {
                   </Col>
                   <Col xs={24} md={12}>
                     <Form.Item
-                      name={"fullName"}
-                      label="Full Name"
+                      name={"firstName"}
+                      label="First Name"
                       rules={[
                         {
                           required: true,
-                          message: "Please enter full name",
+                          message: "Please enter your first name",
                         },
                       ]}
                     >
-                      <Input placeholder="Enter your full name" />
+                      <Input placeholder="Enter your first name" />
                     </Form.Item>
                   </Col>
 
                   <Col xs={24} md={12}>
+                    <Form.Item
+                      name={"lastName"}
+                      label="Last Name"
+                      rules={[
+                        {
+                          required: true,
+                          message: "Please enter your last name",
+                        },
+                      ]}
+                    >
+                      <Input placeholder="Enter your last name" />
+                    </Form.Item>
+                  </Col>
+
+                  <Col xs={24}>
                     <Form.Item
                       name={"email"}
                       label="Email"
@@ -192,6 +219,10 @@ const RegisterForm = () => {
                       label="Password"
                       rules={[
                         { required: true, message: "Please enter password" },
+                        {
+                          min: 6,
+                          message: "Password must be at least 6 characters",
+                        },
                       ]}
                     >
                       <Input.Password placeholder="Enter your Password" />
@@ -200,12 +231,26 @@ const RegisterForm = () => {
                   <Col xs={24} md={12}>
                     <Form.Item
                       name={"password_confirmation"}
-                      label="Re-Enter Password*"
+                      label="Confirm Password"
+                      dependencies={["password"]}
                       rules={[
-                        { required: true, message: "Please re-enter password" },
+                        {
+                          required: true,
+                          message: "Please confirm your password",
+                        },
+                        ({ getFieldValue }) => ({
+                          validator(_, value) {
+                            if (!value || getFieldValue("password") === value) {
+                              return Promise.resolve();
+                            }
+                            return Promise.reject(
+                              new Error("Passwords do not match!")
+                            );
+                          },
+                        }),
                       ]}
                     >
-                      <Input.Password placeholder="Enter Re-Enter Password" />
+                      <Input.Password placeholder="Confirm your password" />
                     </Form.Item>
                   </Col>
                 </Row>
