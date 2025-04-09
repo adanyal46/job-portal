@@ -68,7 +68,7 @@ const RegisterForm = () => {
     } catch (error) {
       message.open({
         type: "error",
-        content: error.message || "Internal Server Error.",
+        content: error.message || error.error || "Internal Server Error.",
       });
       setIsLoading(false);
     }
