@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
 import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
-import { message, Upload, Modal } from "antd";
+import { message, Upload, Modal, Slider, Typography } from "antd";
 import { UploadUserIcon } from "../../assets/svg";
 import ReactCrop from "react-image-crop";
 import "react-image-crop/dist/ReactCrop.css";
 import "./styles.scss";
+
+const { Text } = Typography;
 
 const getBase64 = (img, callback) => {
   const reader = new FileReader();
@@ -12,7 +14,12 @@ const getBase64 = (img, callback) => {
   reader.readAsDataURL(img);
 };
 
-const PhotoUpload = ({ initialImageUrl, onChange, name = "avatarUrl" }) => {
+const PhotoUpload = ({
+  initialImageUrl,
+  onChange,
+  name = "avatarUrl",
+  maxSizeMB = 1,
+}) => {
   const [loading, setLoading] = useState(false);
   const [imageUrl, setImageUrl] = useState(initialImageUrl);
   const [previewImage, setPreviewImage] = useState("");
@@ -21,6 +28,9 @@ const PhotoUpload = ({ initialImageUrl, onChange, name = "avatarUrl" }) => {
   const [completedCrop, setCompletedCrop] = useState(null);
   const [imageRef, setImageRef] = useState(null);
   const [rawFile, setRawFile] = useState(null);
+  const [compressionQuality, setCompressionQuality] = useState(80);
+  const [originalFileSize, setOriginalFileSize] = useState(0);
+  const [compressedFileSize, setCompressedFileSize] = useState(0);
 
   useEffect(() => {
     setImageUrl(initialImageUrl);
@@ -32,12 +42,18 @@ const PhotoUpload = ({ initialImageUrl, onChange, name = "avatarUrl" }) => {
       message.error("You can only upload JPG/PNG file!");
       return false;
     }
-    const isLt2M = file.size / 1024 / 1024 < 10;
-    if (!isLt2M) {
-      message.error("Image must be smaller than 10MB!");
-      return false;
+
+    // Allow file for preview but warn if over size limit
+    const isLt10M = file.size / 1024 / 1024 < 10;
+    if (!isLt10M) {
+      message.warning(
+        `Image is larger than 10MB. It will be compressed before upload.`
+      );
     }
+
+    setOriginalFileSize(file.size);
     setRawFile(file);
+
     // Show cropping interface
     getBase64(file, (url) => {
       setPreviewImage(url);
@@ -53,44 +69,60 @@ const PhotoUpload = ({ initialImageUrl, onChange, name = "avatarUrl" }) => {
     }
   };
 
-  // Handle the cropped image
-  const getCroppedImg = (image, crop) => {
-    if (!crop || !image) return null;
-
-    const canvas = document.createElement("canvas");
-    const scaleX = image.naturalWidth / image.width;
-    const scaleY = image.naturalHeight / image.height;
-    canvas.width = crop.width;
-    canvas.height = crop.height;
-
-    const ctx = canvas.getContext("2d");
-    ctx.drawImage(
-      image,
-      crop.x * scaleX,
-      crop.y * scaleY,
-      crop.width * scaleX,
-      crop.height * scaleY,
-      0,
-      0,
-      crop.width,
-      crop.height
-    );
-
+  // Compress image using canvas
+  const compressImage = (image, quality) => {
     return new Promise((resolve) => {
+      const canvas = document.createElement("canvas");
+      const ctx = canvas.getContext("2d");
+
+      // Use the crop dimensions or the full image
+      const width = completedCrop ? completedCrop.width : image.width;
+      const height = completedCrop ? completedCrop.height : image.height;
+
+      canvas.width = width;
+      canvas.height = height;
+
+      // Draw the cropped/full image on the canvas
+      if (completedCrop) {
+        const scaleX = image.naturalWidth / image.width;
+        const scaleY = image.naturalHeight / image.height;
+
+        ctx.drawImage(
+          image,
+          completedCrop.x * scaleX,
+          completedCrop.y * scaleY,
+          completedCrop.width * scaleX,
+          completedCrop.height * scaleY,
+          0,
+          0,
+          width,
+          height
+        );
+      } else {
+        ctx.drawImage(image, 0, 0, width, height);
+      }
+
+      // Convert to blob with compression
       canvas.toBlob(
         (blob) => {
           if (!blob) {
-            console.error("Canvas is empty");
+            message.error("Failed to compress image");
             return;
           }
-          blob.name = rawFile.name;
-          const fileFromBlob = new File([blob], rawFile.name, {
-            type: blob.type,
-          });
-          resolve(fileFromBlob);
+
+          // Create a new file from the blob
+          const fileName = rawFile.name;
+          const fileType =
+            rawFile.type === "image/png" ? "image/png" : "image/jpeg";
+          const newFile = new File([blob], fileName, { type: fileType });
+
+          // Update compressed size for display
+          setCompressedFileSize(blob.size);
+
+          resolve(newFile);
         },
-        "image/jpeg",
-        1
+        rawFile.type, // Use original type
+        quality / 100 // Convert percentage to 0-1 range
       );
     });
   };
@@ -100,23 +132,37 @@ const PhotoUpload = ({ initialImageUrl, onChange, name = "avatarUrl" }) => {
   };
 
   const handleOk = async () => {
-    if (!completedCrop || !imageRef) {
-      message.error("Please complete cropping the image");
+    if (!imageRef) {
+      message.error("Image not loaded properly");
       return;
     }
 
     setLoading(true);
     try {
-      const croppedFile = await getCroppedImg(imageRef, completedCrop);
-      getBase64(croppedFile, (url) => {
+      // Compress the image with the current quality setting
+      const processedFile = await compressImage(imageRef, compressionQuality);
+
+      // Check if the compressed file is still too large
+      const fileSizeMB = processedFile.size / 1024 / 1024;
+      if (fileSizeMB > maxSizeMB) {
+        message.warning(
+          `Image is still ${fileSizeMB.toFixed(
+            2
+          )}MB after compression. Maximum allowed is ${maxSizeMB}MB.`
+        );
+        // You could auto-adjust quality here or let user try again
+      }
+
+      // Get base64 for preview
+      getBase64(processedFile, (url) => {
         setImageUrl(url);
-        onChange(name, croppedFile);
+        onChange(name, processedFile);
         setShowCropModal(false);
         setLoading(false);
       });
     } catch (err) {
       console.error(err);
-      message.error("Failed to crop image");
+      message.error("Failed to process image");
       setLoading(false);
     }
   };
@@ -125,6 +171,17 @@ const PhotoUpload = ({ initialImageUrl, onChange, name = "avatarUrl" }) => {
     setShowCropModal(false);
     setRawFile(null);
     setPreviewImage("");
+    setCompressedFileSize(0);
+    setOriginalFileSize(0);
+  };
+
+  // Format file size for display
+  const formatFileSize = (bytes) => {
+    if (bytes === 0) return "0 Bytes";
+    const k = 1024;
+    const sizes = ["Bytes", "KB", "MB", "GB"];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + " " + sizes[i];
   };
 
   const uploadButton = (
@@ -166,7 +223,7 @@ const PhotoUpload = ({ initialImageUrl, onChange, name = "avatarUrl" }) => {
       </Upload>
 
       <Modal
-        title="Crop Image"
+        title="Crop & Compress Image"
         open={showCropModal}
         onOk={handleOk}
         onCancel={handleCancel}
@@ -190,6 +247,50 @@ const PhotoUpload = ({ initialImageUrl, onChange, name = "avatarUrl" }) => {
             style={{ maxWidth: "100%" }}
           />
         </ReactCrop>
+
+        <div style={{ marginTop: 20 }}>
+          <Text strong>Image Quality</Text>
+          <Slider
+            min={10}
+            max={100}
+            value={compressionQuality}
+            onChange={setCompressionQuality}
+            step={5}
+            marks={{
+              10: "Low",
+              50: "Medium",
+              100: "High",
+            }}
+          />
+
+          {originalFileSize > 0 && (
+            <div style={{ marginTop: 10 }}>
+              <Text>Original size: {formatFileSize(originalFileSize)}</Text>
+              {compressedFileSize > 0 && (
+                <>
+                  <br />
+                  <Text>
+                    Estimated size after compression:{" "}
+                    {formatFileSize(compressedFileSize)}
+                  </Text>
+                  <br />
+                  <Text
+                    style={{
+                      color:
+                        compressedFileSize > maxSizeMB * 1024 * 1024
+                          ? "red"
+                          : "green",
+                    }}
+                  >
+                    {compressedFileSize > maxSizeMB * 1024 * 1024
+                      ? `Image exceeds the maximum limit of ${maxSizeMB}MB. Please reduce quality further.`
+                      : `Image is within the ${maxSizeMB}MB limit.`}
+                  </Text>
+                </>
+              )}
+            </div>
+          )}
+        </div>
       </Modal>
     </>
   );

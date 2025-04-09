@@ -9,6 +9,7 @@ import {
   Image,
   Flex,
   Button,
+  Alert,
 } from "antd";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import "../login/login.css";
@@ -25,6 +26,9 @@ const RegisterForm = () => {
   const [profilePic, setProfilePic] = useState(null);
   const [form] = Form.useForm();
 
+  // Set maximum profile picture size in MB
+  const MAX_PROFILE_PIC_SIZE = 1; // 1MB after compression
+
   // Handle login submission
   const handleSubmit = async (values) => {
     const formData = new FormData();
@@ -40,6 +44,17 @@ const RegisterForm = () => {
         type: "error",
         content: "Profile Image is required!",
       });
+      return;
+    }
+
+    // Check if the image size is within limits after compression
+    const profilePicSizeMB = profilePic.size / (1024 * 1024);
+    if (profilePicSizeMB > MAX_PROFILE_PIC_SIZE) {
+      message.error(
+        `Profile image is too large (${profilePicSizeMB.toFixed(
+          2
+        )}MB). Maximum allowed is ${MAX_PROFILE_PIC_SIZE}MB.`
+      );
       return;
     }
 
@@ -68,9 +83,30 @@ const RegisterForm = () => {
     } catch (error) {
       message.open({
         type: "error",
-        content: error.message || error.error || "Internal Server Error.",
+        content: error.message || "Internal Server Error.",
       });
       setIsLoading(false);
+    }
+  };
+
+  // Handle profile pic change
+  const handleProfilePicChange = (name, file) => {
+    setProfilePic(file);
+
+    // Show file size information
+    const fileSizeMB = file.size / (1024 * 1024);
+    if (fileSizeMB > MAX_PROFILE_PIC_SIZE) {
+      message.warning(
+        `Image size (${fileSizeMB.toFixed(
+          2
+        )}MB) exceeds the limit of ${MAX_PROFILE_PIC_SIZE}MB.`
+      );
+    } else {
+      message.success(
+        `Image size: ${fileSizeMB.toFixed(
+          2
+        )}MB (Max: ${MAX_PROFILE_PIC_SIZE}MB)`
+      );
     }
   };
 
@@ -80,6 +116,7 @@ const RegisterForm = () => {
         <Col xs={0} md={10}>
           <div className="left-container">
             <div className="left-content">
+              {/* Left content (unchanged) */}
               <Flex vertical gap={20}>
                 <Image
                   src="/guest/login-logo.svg"
@@ -153,6 +190,14 @@ const RegisterForm = () => {
                   Enter the information mentioned below to create your account.
                 </Typography.Text>
               </Flex>
+              {/* 
+              <Alert
+                message="Profile Picture Requirements"
+                description={`Please upload a profile picture (max ${MAX_PROFILE_PIC_SIZE}MB after compression). Larger images will be automatically compressed.`}
+                type="info"
+                showIcon
+                style={{ marginBottom: 20 }}
+              /> */}
 
               <Form
                 layout="vertical"
@@ -164,7 +209,8 @@ const RegisterForm = () => {
                   <Col xs={24} style={{ textAlign: "center" }}>
                     <Form.Item name={"avatar"}>
                       <PhotoUpload
-                        onChange={(_, file) => setProfilePic(file)}
+                        onChange={handleProfilePicChange}
+                        maxSizeMB={MAX_PROFILE_PIC_SIZE}
                       />
                     </Form.Item>
                   </Col>
