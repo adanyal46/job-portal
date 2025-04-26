@@ -1,3 +1,4 @@
+
 import { lazy } from "react";
 import JobDetail from "../pages/employerDashboard/JobDetail";
 import ViewJobApplicantList from "../pages/employerDashboard/ViewJobApplicantList";

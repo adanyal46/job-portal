@@ -12,6 +12,10 @@ import {
   Alert,
 } from "antd";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import {
+  GoogleReCaptchaProvider,
+  useGoogleReCaptcha,
+} from "react-google-recaptcha-v3";
 import "../login/login.css";
 import "../../guest-view/main.css";
 import PhotoUpload from "../../components/photoUpload";
@@ -19,18 +23,41 @@ import axiosInstance from "../../api/axiosInstance";
 
 const { Title } = Typography;
 
-const RegisterForm = () => {
+// Get reCAPTCHA site key from environment variables
+const RECAPTCHA_SITE_KEY =
+  process.env.REACT_APP_RECAPTCHA_SITE_KEY ||
+  "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"; // Fallback to test key
+
+// Inner form component that uses the reCAPTCHA hook
+const RegisterFormContent = () => {
   const navigate = useNavigate();
   const { role } = useParams();
   const [isLoading, setIsLoading] = useState(false);
   const [profilePic, setProfilePic] = useState(null);
+  // const { executeRecaptcha } = useGoogleReCaptcha();
   const [form] = Form.useForm();
 
   // Set maximum profile picture size in MB
   const MAX_PROFILE_PIC_SIZE = 1; // 1MB after compression
 
-  // Handle login submission
+  // Handle form submission - with safe reCAPTCHA execution
   const handleSubmit = async (values) => {
+    // Safely execute reCAPTCHA
+    let recaptchaToken = "";
+
+    // if (executeRecaptcha) {
+    //   try {
+    //     const token = await executeRecaptcha("register_submit");
+    //     recaptchaToken = token;
+    //     console.log("reCAPTCHA token obtained:", token ? "Yes" : "No");
+    //   } catch (error) {
+    //     console.error("Error while executing reCAPTCHA:", error);
+    //     recaptchaToken = ""; // Fallback to empty token
+    //   }
+    // } else {
+    //   console.warn("executeRecaptcha not available.");
+    // }
+
     const formData = new FormData();
     if (values["password"] !== values["password_confirmation"]) {
       message.open({
@@ -68,6 +95,11 @@ const RegisterForm = () => {
     formData.append("password", values.password);
     formData.append("profilePic", profilePic);
     formData.append("role", role);
+
+    // // Only append token if we got one
+    // if (recaptchaToken) {
+    //   formData.append("recaptchaToken", recaptchaToken);
+    // }
 
     setIsLoading(true);
     try {
@@ -190,14 +222,6 @@ const RegisterForm = () => {
                   Enter the information mentioned below to create your account.
                 </Typography.Text>
               </Flex>
-              {/* 
-              <Alert
-                message="Profile Picture Requirements"
-                description={`Please upload a profile picture (max ${MAX_PROFILE_PIC_SIZE}MB after compression). Larger images will be automatically compressed.`}
-                type="info"
-                showIcon
-                style={{ marginBottom: 20 }}
-              /> */}
 
               <Form
                 layout="vertical"
@@ -299,6 +323,17 @@ const RegisterForm = () => {
                       <Input.Password placeholder="Confirm your password" />
                     </Form.Item>
                   </Col>
+
+                  {/* reCAPTCHA notice */}
+                  {/* <Col xs={24}>
+                    <Alert
+                      message="Protected by reCAPTCHA"
+                      description="This form is protected by Google reCAPTCHA v3 to ensure you are not a robot."
+                      type="info"
+                      showIcon
+                      style={{ marginBottom: 20 }}
+                    />
+                  </Col> */}
                 </Row>
 
                 <Flex justify="space-between" align="center">
@@ -331,6 +366,22 @@ const RegisterForm = () => {
         </Col>
       </Row>
     </div>
+  );
+};
+
+// Wrapper component that provides reCAPTCHA context with simplified settings
+const RegisterForm = () => {
+  return (
+    // <GoogleReCaptchaProvider
+    //   reCaptchaKey={RECAPTCHA_SITE_KEY}
+    //   scriptProps={{
+    //     async: true,
+    //     defer: true,
+    //     appendTo: "head",
+    //   }}
+    // >
+    <RegisterFormContent />
+    // </GoogleReCaptchaProvider>
   );
 };
 

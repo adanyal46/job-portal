@@ -11,13 +11,12 @@ import {
 } from "../../assets/svg";
 import { useState } from "react";
 import "./styles.scss";
-import { Typography } from "antd";
+import { Button, Typography } from "antd";
 import MentorProfileHeader from "../mentorProfileHeader";
-import MentorProfileService from "../mentorProfileService";
-import CustomButton from "../customButton";
 import { useOutletContext } from "react-router-dom";
 import MentorVideoContainer from "../MentorVideoContainer";
 import CommonHeading from "../commonHeading";
+import MentorServiceList from "./MentorServiceList";
 
 const MentorProfile = () => {
   const user = useOutletContext();
@@ -42,6 +41,40 @@ const MentorProfile = () => {
     setIsModalVisible(true);
   };
 
+  const displayLanguages = () => {
+    if (!profile?.language) return "N/A";
+
+    try {
+      let languages = [];
+      try {
+        languages = JSON.parse(profile.language);
+      } catch {
+        // If not valid JSON, try to parse from string format
+        languages = profile.language.split(",").map((lang) => {
+          const parts = lang.trim().split("-");
+          return {
+            language: parts[0]?.trim() || "",
+            proficiency: parts[1]?.trim() || "conversational",
+          };
+        });
+      }
+
+      if (!Array.isArray(languages)) {
+        languages = [
+          { language: profile.language, proficiency: "conversational" },
+        ];
+      }
+
+      return languages.map((lang, index) => (
+        <div key={index}>
+          {lang.language} - {lang.proficiency}
+        </div>
+      ));
+    } catch {
+      return profile.language || "N/A";
+    }
+  };
+
   return (
     <div className="mentor-profile-container">
       {/* Main profile section */}
@@ -63,9 +96,11 @@ const MentorProfile = () => {
             <span className="skill-icon">
               <MentorTranslateIcon />
             </span>
-            I can Speak&nbsp;&nbsp;
-            <strong>{profile?.language ?? "English"}</strong>&nbsp;
-            (Conversational)
+            I can Speak&nbsp;
+            <strong style={{ display: "flex", gap: "10px" }}>
+              {displayLanguages()}
+            </strong>
+            &nbsp;
           </p>
 
           {services && Array.isArray(services) && services.length > 0 && (
@@ -128,28 +163,69 @@ const MentorProfile = () => {
         <MentorVideoContainer
           mentorvideolink={profile?.mentorvideolink}
           canUpload={true}
+          user={user}
         />
         <div className="mentor-services-section">
           <div className="services-header">
             <h6 className="services-title">
               <BriefcaseIcon /> Services
             </h6>
-            <CustomButton
-              category="primary"
-              name="Add Service"
-              handleClick={showModal}
-            />
+            <Button
+              style={{
+                color: "#52595C",
+                fontSize: "14px",
+                fontWeight: 600,
+                borderColor: "#AEACB4",
+              }}
+              onClick={showModal}
+            >
+              Add{" "}
+              <svg
+                width="18"
+                height="19"
+                viewBox="0 0 18 19"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <g clip-path="url(#clip0_3712_220352)">
+                  <path
+                    d="M2.8125 9.5H15.1875"
+                    stroke="#52595C"
+                    stroke-width="1.125"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M9 3.3125V15.6875"
+                    stroke="#52595C"
+                    stroke-width="1.125"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </g>
+                <defs>
+                  <clipPath id="clip0_3712_220352">
+                    <rect
+                      width="18"
+                      height="18"
+                      fill="white"
+                      transform="translate(0 0.5)"
+                    />
+                  </clipPath>
+                </defs>
+              </svg>
+            </Button>
           </div>
 
           <p className="services-info">
             <InfoIcon /> Please click on the checkboxes to select a service
           </p>
-
-          <MentorProfileService
+          <MentorServiceList
             services={services}
             isModalVisible={isModalVisible}
             setIsModalVisible={setIsModalVisible}
             mentorId={user?.id}
+            user={user}
           />
         </div>
       </div>

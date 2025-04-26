@@ -43,8 +43,6 @@ const recruitersSlice = createSlice({
         state.error = null;
       })
       .addCase(fetchRecruiters.fulfilled, (state, action) => {
-        console.log(action.payload);
-
         state.loading = false;
         state.data = action.payload.recruiter; // Adjust this line based on the API response structure
         state.pagination = action.payload.pagination;

@@ -1,12 +1,21 @@
 import Tag from "../tag";
-
 import { DetailsIcon } from "../../assets/svg";
-
 import "./styles.scss";
 import { getDaysAgo } from "../../utils";
 
 const JobCard = (props) => {
   const { classes, handleClick, job } = props;
+
+  // Function to truncate description text to a specific number of characters
+  const truncateDescription = (text, maxLength = 100) => {
+    if (!text) return "N/A";
+
+    // Remove HTML tags for clean text
+    const cleanText = text.replace(/<\/?[^>]+(>|$)/g, "");
+
+    if (cleanText.length <= maxLength) return cleanText;
+    return cleanText.substring(0, maxLength) + "...";
+  };
 
   return (
     <section
@@ -17,7 +26,17 @@ const JobCard = (props) => {
 
       <section className="job-company-container">
         <figure className="company-logo">
-          <img loading="lazy" src="/images/job-icon.png" alt="JobCompanyIcon" />
+          <img
+            loading="lazy"
+            style={{
+              width: "50px",
+              height: "50px",
+              borderRadius: "10px",
+              objectFit: "cover",
+            }}
+            src={job.companyIcon || "/images/job-icon.png"}
+            alt="JobCompanyIcon"
+          />
         </figure>
 
         <article className="job-company-details">
@@ -30,12 +49,9 @@ const JobCard = (props) => {
 
       <Tag label={"$" + job?.minPrice + " - " + "$" + job.maxPrice} />
 
-      <ul className="job-description-list">
-        <li
-          className="list-item"
-          dangerouslySetInnerHTML={{ __html: job?.description ?? "N/A" }}
-        />
-      </ul>
+      <p className="job-description-compact">
+        {truncateDescription(job?.description)}
+      </p>
 
       <p className="activity-status">{getDaysAgo(job?.createdAt)}</p>
     </section>

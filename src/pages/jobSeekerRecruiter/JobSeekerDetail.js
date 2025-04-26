@@ -21,8 +21,6 @@ const JobSeekerDetail = () => {
   const [talentDetail, setTalentDetail] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  console.log(talentDetail);
-
   useEffect(() => {
     if (id) {
       fetchTalentDetail(id);

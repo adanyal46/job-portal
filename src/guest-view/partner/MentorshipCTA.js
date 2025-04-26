@@ -7,37 +7,41 @@ const MentorshipCTA = () => {
         <div className="mentorship_cta_child">
           <h2>Mentors</h2>
           <p>
-            Gorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc
-            vulputate libero et velit interdum, ac aliquet odio mattis. Class
-            aptent taciti sociosqu ad litora torquent per conubia nostra, per
-            inceptos himenaeos.
+            Join our platform to share your expertise, build meaningful
+            connections, and unlock new opportunities. Share your knowledge,
+            guide aspiring professionals, and help them achieve their career
+            goals. Our platform provides you with the tools to mentor
+            effectively and get rewarded for your expertise.
           </p>
           <div className="mentorship_cta_items">
             <div>
-              <h5>inceptos himenaeos.</h5>
+              <h5>Expand Your Influence</h5>
               <span>
-                Gorem ipsum dolor sit amet, consectetur adipiscing elit.{" "}
+                Position yourself as a thought leader in your industry and
+                enhance your credibility.
               </span>
             </div>
             <div>
-              <h5>inceptos himenaeos.</h5>
+              <h5>Personal Growth</h5>
               <span>
-                Gorem ipsum dolor sit amet, consectetur adipiscing elit.{" "}
+                Refine your leadership, communication, and mentor skills while
+                engaging with diverse mentees.
               </span>
             </div>
             <div>
-              <h5>inceptos himenaeos.</h5>
+              <h5>Meaningful Connections</h5>
               <span>
-                Gorem ipsum dolor sit amet, consectetur adipiscing elit.{" "}
+                Network with ambitious professionals and industry leaders to
+                open new opportunities.
               </span>
             </div>
           </div>
           <hr />
           <ul className="mentorship_cta_item-2">
-            <h4> Inceptos Himenaeos</h4>
-            <li>Gorem ipsum dolor sit amet, consectetur adipiscing elit. </li>
-            <li>Gorem ipsum dolor sit amet, consectetur adipiscing elit. </li>
-            <li>Gorem ipsum dolor sit amet, consectetur adipiscing elit. </li>
+            <h4> Benefits of Joining as a Mentor: </h4>
+            <li>Gain recognition as an industry expert.</li>
+            <li>Expand your professional network.</li>
+            <li>Earn while making a positive impact.</li>
           </ul>
         </div>
       </div>

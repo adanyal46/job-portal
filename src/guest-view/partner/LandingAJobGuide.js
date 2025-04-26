@@ -3,37 +3,37 @@ import React from "react";
 const jobGuides = [
   {
     step: 1,
-    title: "Create an Account",
+    title: "Get Started",
     description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, dolor sit amet, consectetur.",
+      "Unlock new opportunities to guide talent and connect with top employers. As a mentor or recruiter, you’ll play a key role in shaping careers and building successful teams. Create an account today.",
     imageUrl: "/guest/land-job1.png",
   },
   {
     step: 2,
     title: "Get Reviewed",
     description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, dolor sit amet, consectetur.",
+      "At Fuse, we uphold the highest standards of quality and credibility. Each profile is carefully reviewed to ensure it meets our expectations. Once approved, your profile will be visible to those seeking your expertise.",
     imageUrl: "/guest/land-job2.png",
   },
   {
     step: 3,
     title: "Get Discovered",
     description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, dolor sit amet, consectetur.",
+      "A well-crafted profile helps attract the right opportunities, and adding a video can further showcase your expertise and stand out to those who need your services. Employers seeking recruiters or individuals looking for mentorship can find you easily with a detailed profile. Adding a video elevates your profile, making it easier for others to connect with you.",
     imageUrl: "/guest/land-job3.png",
   },
   {
     step: 4,
-    title: "Start Working",
+    title: "Get Working",
     description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, dolor sit amet, consectetur.",
+      "1 - You're now Fuse-activated! Engage with professionals and/or employers, schedule sessions, and share your expertise. Build relationships, offer guidance, and make an impact today! 2- You're now Fuse-activated! Connect, schedule sessions, and provide mentorship or recruitment support.",
     imageUrl: "/guest/land-job4.png",
   },
   {
     step: 5,
     title: "Get Paid",
     description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, dolor sit amet, consectetur.",
+      "We ensure seamless transactions, so you can focus on what you do best—helping others succeed. Our all-in-one dashboard tracks payments, reviews, and past transactions for easy management. We ensure seamless transactions, allowing you to focus on helping others succeed. Our all-in-one dashboard tracks sessions, reviews, and payments for easy management.",
     imageUrl: "/guest/land-job5.png",
   },
 ];
@@ -43,7 +43,11 @@ const LandingAJobGuide = () => {
     <div className="landing_job_guide_bg">
       <div className="landing_job_guide_container">
         <h2>How it works</h2>
-        <p>Land a job in these easy steps.</p>
+        <p>
+          Fuse connects experienced professionals with individuals and companies
+          looking for mentorship and recruitment services. Here’s how you can
+          get started:
+        </p>
         <Row gutter={[24, 24]} justify={"space-between"}>
           {jobGuides?.map((job, index) => (
             <Col
@@ -66,7 +70,7 @@ const LandingAJobGuide = () => {
                 <Card>
                   <h4>{job.title}</h4>
                   <p>{job.description}</p>
-                  <Image src={job.imageUrl} alt={job.title} />
+                  <Image preview={false} src={job.imageUrl} alt={job.title} />
                 </Card>
               </React.Fragment>
             </Col>

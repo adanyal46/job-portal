@@ -13,8 +13,6 @@ const AdminNotification = () => {
   const fetchNotifications = async () => {
     try {
       const response = await axiosInstance.get("/admin/adminNotification/");
-      console.log("response", response);
-
       // setData(response.data.data.subscriptionsBought || []);
     } catch (error) {
       message.open({

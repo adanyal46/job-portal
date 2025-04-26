@@ -398,18 +398,15 @@ const Sidebar = ({ user, onClose }) => {
           <Image
             loading="lazy"
             className="sidebar-user-icon"
-            src={
-              process.env.REACT_APP_MEDIA_URL + profile?.avatarId ||
-              "/images/no-image.jpg"
-            }
+            src={profile?.avatarId || "/images/no-image.jpg"}
             alt="fuseUser"
             style={{
               borderRadius: "100%",
-              maxHeight: "135px",
-              maxWidth: "135px",
+              minHeight: "135px",
+              maxWidth: "150px",
               width: "100%",
               height: "auto",
-              objectFit: "cover",
+              objectFit: "center",
             }}
             preview={false}
           />
@@ -433,9 +430,26 @@ const Sidebar = ({ user, onClose }) => {
         <CustomCollapse items={items} onChange={onChange} />
       </section>
 
-      <p className="contact-fuse-footer">
-        <ContactFuseIcon /> Contact Fuse
-      </p>
+      <a
+        href="mailto:info@fuseww.com"
+        style={{
+          textDecoration: "none",
+          color: "inherit",
+          cursor: "pointer",
+        }}
+      >
+        <div
+          style={{
+            textAlign: "center",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            gap: "10px",
+          }}
+        >
+          <ContactFuseIcon /> Contact Fuse
+        </div>
+      </a>
     </aside>
   );
 };

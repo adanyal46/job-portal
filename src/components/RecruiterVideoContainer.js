@@ -5,9 +5,13 @@ import { uploadMentorVideo } from "../features/profile/profileSlice";
 import noVideoImage from "../assets/no-video.jpg"; // Path to your "No Video" image
 import { VideoIconProfile } from "../assets/svg";
 
-const RecruiterVideoContainer = ({ mentorvideolink, canUpload = false }) => {
+const RecruiterVideoContainer = ({
+  mentorvideolink,
+  canUpload = false,
+  user,
+}) => {
   const dispatch = useDispatch();
-  const { user, videoLoading } = useSelector((state) => state.profile);
+  const [videoLoading, setVideoLoading] = useState(false);
   const [videoFile, setVideoFile] = useState(null);
   const [isUploadModalVisible, setIsUploadModalVisible] = useState(false);
   const fullname = user?.Profile?.[0]?.fullname || "Unknown";

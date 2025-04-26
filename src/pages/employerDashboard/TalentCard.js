@@ -25,11 +25,7 @@ const TalentCard = (props) => {
         <img
           loading="lazy"
           style={{ objectFit: "cover", height: "200px" }}
-          src={
-            profile?.avatarId
-              ? process.env.REACT_APP_MEDIA_URL + profile?.avatarId
-              : "/images/no-image.jpg"
-          }
+          src={profile?.avatarId ? profile?.avatarId : "/images/no-image.jpg"}
           alt={profile?.fullname || "Guest"}
           className="mentor-icon"
         />

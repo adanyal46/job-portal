@@ -55,7 +55,6 @@ export const BookingCardRecruiter = ({
 };
 
 const BookingCard = ({ mentorName, status, serviceName, date, time }) => {
-  console.log(status);
   return (
     <section className="booking-card-container">
       <h5 className="booking-card-heading">

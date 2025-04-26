@@ -21,10 +21,6 @@ const ProfileHeader = ({
 }) => {
   const dispatch = useDispatch();
   const profile = user?.Profile[0];
-  const serverUrl =
-    process.env.REACT_APP_NODE_ENV === "development"
-      ? "http://54.144.76.160:5000"
-      : "https://jobportal-fuse.netlify.app"; // Use window.origin for production
 
   const [profileData, setProfileData] = useState({
     fullname: profile?.fullname || "",
@@ -36,11 +32,7 @@ const ProfileHeader = ({
   const [imageUrl, setImageUrl] = useState(null);
 
   useEffect(() => {
-    setImageUrl(
-      profile?.avatarId
-        ? process.env.REACT_APP_MEDIA_URL + profile?.avatarId
-        : "/images/no-image.jpg"
-    );
+    setImageUrl(profile?.avatarId ? profile?.avatarId : "/images/no-image.jpg");
   }, [profile]);
 
   const handleShowInfoModal = () => {
@@ -88,12 +80,11 @@ const ProfileHeader = ({
           <Image
             loading="lazy"
             width={200}
-            height={200}
             preview={false}
             className="user-profile-image"
             src={imageUrl || "/images/no-image.jpg"} // Use imageUrl state
             alt="UserProfileImage"
-            style={{ objectFit: "cover" }}
+            style={{ objectFit: "cover", height: "200px" }}
           />
         </figure>
 

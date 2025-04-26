@@ -8,8 +8,8 @@ const Hero = () => {
         <div className="partner_mentor">
           <h2>Mentors</h2>
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum
-            dolor sit amet, consectetur adipiscing elit.
+            Expand your network, grow your practice, and make a lasting impact
+            while reaching new heights in your career.
           </p>
           <CustomButton
             category="primary"
@@ -29,8 +29,9 @@ const Hero = () => {
         <div className="partner_recruiter">
           <h2>Recruiters</h2>
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum
-            dolor sit amet, consectetur adipiscing elit.
+            Unlock exciting opportunities! Connect with employers eager to work
+            with industry-focused recruiters like you, who can tap into your
+            talent pool—all while enjoying the freedom to set your own schedule.
           </p>
           <CustomButton
             category="primary"

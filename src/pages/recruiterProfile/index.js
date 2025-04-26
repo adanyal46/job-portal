@@ -17,6 +17,8 @@ import RecruiterProfileHeader from "../../components/recruiterProfileHeader";
 import RecruiterVideoContainer from "../../components/RecruiterVideoContainer";
 import MentorProfileService from "../../components/mentorProfileService";
 import CustomButton from "../../components/customButton";
+import MentorServiceList from "../../components/mentorProfile/MentorServiceList";
+import { Button } from "antd/es/radio";
 
 const RecruiterProfile = () => {
   const user = useOutletContext();
@@ -40,7 +42,39 @@ const RecruiterProfile = () => {
   const showModal = () => {
     setIsModalVisible(true);
   };
+  const displayLanguages = () => {
+    if (!profile?.language) return "N/A";
 
+    try {
+      let languages = [];
+      try {
+        languages = JSON.parse(profile.language);
+      } catch {
+        // If not valid JSON, try to parse from string format
+        languages = profile.language.split(",").map((lang) => {
+          const parts = lang.trim().split("-");
+          return {
+            language: parts[0]?.trim() || "",
+            proficiency: parts[1]?.trim() || "conversational",
+          };
+        });
+      }
+
+      if (!Array.isArray(languages)) {
+        languages = [
+          { language: profile.language, proficiency: "conversational" },
+        ];
+      }
+
+      return languages.map((lang, index) => (
+        <div key={index}>
+          {lang.language} - {lang.proficiency}
+        </div>
+      ));
+    } catch {
+      return profile.language || "N/A";
+    }
+  };
   return (
     <section className="main-layout-container">
       <section className="profile-main-wrapper" style={{ overflow: "auto" }}>
@@ -56,14 +90,18 @@ const RecruiterProfile = () => {
         />
 
         <article className="I-can-do-container">
-          <p className="i-can-do-item">
+          <p className="i-can-do-item" style={{ display: "flex" }}>
             <span
               style={{ position: "relative", top: "7px", marginRight: "10px" }}
             >
               <MentorTranslateIcon />
             </span>
-            I can Speak <strong>{profile?.language ?? "English"}</strong>{" "}
-            (Conversational)
+            <div style={{ display: "flex", gap: "6px" }}>
+              I can Speak{" "}
+              <strong style={{ display: "flex", gap: "10px" }}>
+                {displayLanguages()}
+              </strong>{" "}
+            </div>
           </p>
 
           {services && Array.isArray(services) && services.length > 0 && (
@@ -131,6 +169,7 @@ const RecruiterProfile = () => {
         <RecruiterVideoContainer
           mentorvideolink={profile?.mentorvideolink}
           canUpload={true}
+          user={user}
         />
         {/* <article className="mentor-video-container">
           <p>Olivia Introductory video clip</p>
@@ -155,22 +194,64 @@ const RecruiterProfile = () => {
             <h6 className="mentor-services">
               <BriefcaseIcon /> Services
             </h6>
-            <CustomButton
-              category="primary"
-              name="Add Service"
-              handleClick={showModal}
-            />
+            <Button
+              style={{
+                color: "#52595C",
+                fontSize: "14px",
+                fontWeight: 600,
+                borderColor: "#AEACB4",
+                borderRadius: "8px",
+              }}
+              onClick={showModal}
+            >
+              Add{" "}
+              <svg
+                width="18"
+                height="19"
+                viewBox="0 0 18 19"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <g clip-path="url(#clip0_3712_220352)">
+                  <path
+                    d="M2.8125 9.5H15.1875"
+                    stroke="#52595C"
+                    stroke-width="1.125"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M9 3.3125V15.6875"
+                    stroke="#52595C"
+                    stroke-width="1.125"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </g>
+                <defs>
+                  <clipPath id="clip0_3712_220352">
+                    <rect
+                      width="18"
+                      height="18"
+                      fill="white"
+                      transform="translate(0 0.5)"
+                    />
+                  </clipPath>
+                </defs>
+              </svg>
+            </Button>
           </section>
 
           <p className="info-content" style={{ marginTop: "10px" }}>
             <InfoIcon /> Please click on the checkboxes to select a service
           </p>
 
-          <MentorProfileService
+          <MentorServiceList
             services={services}
             isModalVisible={isModalVisible}
             setIsModalVisible={setIsModalVisible}
             mentorId={user?.id}
+            user={user}
           />
         </section>
       </section>

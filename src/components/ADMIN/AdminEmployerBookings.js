@@ -124,9 +124,7 @@ const AdminEmployerBookings = () => {
     },
   ];
 
-  const handleStatusChange = (key, value) => {
-    console.log(key, value);
-  };
+  const handleStatusChange = (key, value) => {};
 
   return (
     <div>

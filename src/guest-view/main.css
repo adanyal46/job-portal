@@ -401,6 +401,9 @@
   align-items: center;
   gap: 120px;
 }
+.partner_hero_container .partner_recruiter {
+  max-width: 700px;
+}
 
 .partner_hero_container .partner_mentor > h2,
 .partner_hero_container .partner_recruiter > h2 {

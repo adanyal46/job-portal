@@ -68,7 +68,6 @@ const Index = () => {
 
   const handleOk = async () => {
     const values = form.getFieldsValue();
-    console.log(values);
     const formData = new FormData();
     formData.append("fullname", values.fullname || "");
     formData.append("email", values.email || "");
@@ -113,7 +112,6 @@ const Index = () => {
     try {
       setLoading(true);
       const resultAction = await updatePointOfContact(formData);
-      console.log(resultAction);
 
       if (resultAction.success) {
         message.open({
@@ -160,7 +158,7 @@ const Index = () => {
             <img
               src={
                 profileData?.avatarId
-                  ? process.env.REACT_APP_MEDIA_URL + profileData?.avatarId
+                  ? profileData?.avatarId
                   : "/images/no-image.jpg"
               }
               alt="Company Logo"
@@ -190,7 +188,7 @@ const Index = () => {
               </Typography.Text>
               <Flex gap={3} align="center">
                 <Typography.Text style={TEXT_STYLE}>
-                  Skype: {profileData?.companyLink ?? "N/A"}
+                  {profileData?.companyLink ?? "N/A"}
                 </Typography.Text>
                 {profileData?.companyLink && (
                   <Link
@@ -283,7 +281,7 @@ const Index = () => {
               <PhotoUpload
                 initialImageUrl={
                   profileData?.avatarId
-                    ? process.env.REACT_APP_MEDIA_URL + profileData?.avatarId
+                    ? profileData?.avatarId
                     : "/images/no-image.jpg"
                 }
                 onChange={(name, file) => setImgFile(file)}

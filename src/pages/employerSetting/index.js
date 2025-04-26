@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import { Form, message, Typography } from "antd";
 import CustomTabs from "../../components/customTabs";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import ManageAccount from "./ManageAccount";
 import AccountAdmin from "./AccountAdmin";
 import ManageCard from "./ManageCard";
 import axiosInstance from "../../api/axiosInstance";
+import { logout } from "../../features/auth/authSlice";
 
 const saveCardApi = async (values) => {
   try {
@@ -38,6 +39,7 @@ const getCards = async () => {
 };
 
 const EmployerSetting = () => {
+  const dispatch = useDispatch();
   let [manageAcountForm] = Form.useForm();
   let [manageAdminForm] = Form.useForm();
   const { user } = useSelector((state) => state.profile);
@@ -179,8 +181,6 @@ const EmployerSetting = () => {
         return;
       }
     } catch (error) {
-      console.log(error);
-
       message.open({
         type: "error",
         content: error.message || "Internal Server Error",
@@ -189,7 +189,64 @@ const EmployerSetting = () => {
       setLoading(false);
     }
   };
+  const deactivateAccount = async () => {
+    try {
+      setLoading(true);
+      const response = await axiosInstance.put("/setting/js/deactivate");
+      if (response.data.success) {
+        if (response.data.data) {
+          message.open({
+            type: "success",
+            content: "Account deactivate successfully!",
+          });
+          setTimeout(async () => {
+            await dispatch(logout());
+            window.location.replace("/login");
+          }, 500);
+          return;
+        }
 
+        setTimeout(() => {
+          window.location.reload();
+        }, 500);
+      }
+    } catch (error) {
+      message.open({
+        type: "error",
+        content: error.message || "Internal Server Error",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+  const deleteAccount = async () => {
+    if (!window.confirm("Are you sure you want to delete your account?")) {
+      return;
+    }
+    try {
+      setLoading(true);
+      const response = await axiosInstance.delete("/setting/js/delete");
+      if (response.data.success) {
+        message.open({
+          type: "success",
+          content: "Account delete successfully!",
+        });
+
+        setTimeout(async () => {
+          await dispatch(logout());
+          window.location.replace("/login");
+        }, 500);
+        return;
+      }
+    } catch (error) {
+      message.open({
+        type: "error",
+        content: error.error || error.message || "Internal Server Error",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
   return (
     <div style={{ maxWidth: "969px", margin: "0 auto", width: "100%" }}>
       <Typography.Title
@@ -209,6 +266,9 @@ const EmployerSetting = () => {
                 manageAcountForm={manageAcountForm}
                 handleSubmitManageAccount={handleSubmitManageAccount}
                 manageLoading={manageLoading}
+                deactivateAccount={deactivateAccount}
+                deleteAccount={deleteAccount}
+                loading={loading}
               />
             ),
           },

@@ -71,8 +71,6 @@ const AdminEmployerPayment = () => {
   const [pageSize] = useState(10); // Items per page
   const [data, setData] = useState([]);
 
-  console.log(data);
-
   useEffect(() => {
     fetchPlans(id);
   }, [id]);

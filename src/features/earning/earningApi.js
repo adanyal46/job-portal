@@ -33,7 +33,6 @@ const getEarningRoute = (
 
 // Fetch earnings data from the API with optional startDate and endDate parameters
 export const getEarningApi = async (startDate, endDate) => {
-  console.log(startDate, endDate);
 
   try {
     // `route` will already include startDate and endDate if they are provided

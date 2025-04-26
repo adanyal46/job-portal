@@ -200,6 +200,23 @@ const TimesheetForm = ({ onSubmit, roleDetail, loading, jobId }) => {
     timeSheetForm.setFieldValue("totalPayableAmount", totalFee);
   };
 
+  // Add useEffect to initialize form with default row for today
+  useEffect(() => {
+    // Initialize timesheet with a default row for today
+    timeSheetForm.setFieldsValue({
+      weeklyTimesheet: [
+        {
+          projectName: "",
+          projectDescription: "",
+          industries: undefined,
+          services: undefined,
+          serviceFee: null,
+          hours: null,
+        },
+      ],
+    });
+  }, [timeSheetForm]);
+
   const handleSubmit = () => {
     timeSheetForm
       .validateFields()

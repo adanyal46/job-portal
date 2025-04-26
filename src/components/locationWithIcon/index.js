@@ -6,7 +6,7 @@ const LocationWithIcon = (props) => {
   const { location } = props;
 
   return (
-    <article className="mentor-location">
+    <article className="mentor-location" style={{ marginBlock: "10px" }}>
       <LocationIcon />
       <p className="location">{location ?? "N/A"}</p>
     </article>

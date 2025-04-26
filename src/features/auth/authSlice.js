@@ -56,6 +56,7 @@ const authSlice = createSlice({
       state.token = null;
       localStorage.removeItem("token"); // Remove token on logout
       localStorage.removeItem("lastRoute");
+      sessionStorage.removeItem("welcomeMessageShown");
     },
     clearMessage: (state) => {
       state.error = null;

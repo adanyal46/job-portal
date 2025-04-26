@@ -222,7 +222,6 @@ const ScheduleModal = (props) => {
         cardCode: billingForm.cvv,
       });
 
-      console.log(result);
       // Return success for demo purposes
       return { success: true };
     } catch (error) {

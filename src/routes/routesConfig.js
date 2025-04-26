@@ -25,11 +25,11 @@ const routeConfig = (token) => {
   // Common routes (available to all users)
   const commonRoutes = [
     {
-      path: "/reset-password",
+      path: "/reset-password/:resetToken",
       element: <ResetPassword />,
     },
     {
-      path: "/forget-password",
+      path: "/forgot-password",
       element: <ForgetPassword />,
     },
     {

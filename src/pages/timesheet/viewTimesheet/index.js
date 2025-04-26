@@ -83,6 +83,35 @@ const columns = [
   },
   {
     title: "Company Name",
+    dataIndex: "CompanyName",
+    key: "CompanyName",
+  },
+  {
+    title: "Date",
+    dataIndex: "date",
+    key: "date",
+  },
+  {
+    title: "Actions",
+    dataIndex: "actions",
+    key: "actions",
+    render: (_, record) => {
+      return (
+        <Link to={"/recruiter/create-timesheet/" + record?.bookingId}>
+          <CustomButton category="additional" name="Add Timesheet" />
+        </Link>
+      );
+    },
+  },
+];
+const addTimeSheetColumns = [
+  {
+    title: "Booking ID",
+    dataIndex: "bookingId",
+    key: "bookingId",
+  },
+  {
+    title: "Company Name",
     dataIndex: "companyName",
     key: "companyName",
   },
@@ -160,11 +189,11 @@ const data = [
 
 const AllRoles = (props) => {
   const { role, tableData = [], loading = false } = props;
-  console.log(tableData);
 
   const tableColumns = (arg) => {
     if (arg === "view-timesheet") return viewTimesheetColumns;
     else if (arg === "in-progress-roles") return InprogressRolesColumns;
+    else if (arg === "add-timesheet-role") return addTimeSheetColumns;
 
     return columns;
   };
@@ -209,11 +238,8 @@ const ViewTimesheet = () => {
     } else if (activeKey === "viewTimesheets") {
       dispatch(fetchRecruiterViewTimesheetList());
     } else {
-      console.log("Key not found");
     }
   }, [dispatch, activeKey]);
-
-  console.log(viewTimeSheetList);
 
   const handleTabChange = (key) => {
     setActiveKey(key);
@@ -259,7 +285,11 @@ const ViewTimesheet = () => {
             label: "Add Timesheet",
             children: (
               <Card>
-                <AllRoles tableData={addTimeSheetList} loading={adlLoading} />
+                <AllRoles
+                  role="add-timesheet-role"
+                  tableData={addTimeSheetList}
+                  loading={adlLoading}
+                />
               </Card>
             ),
           },

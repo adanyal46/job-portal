@@ -26,7 +26,6 @@ const PopupInfo = () => {
       setLoading(true);
       const response = await axiosInstance.post("/admin/AdminSettings", values);
       if (response.status === 200 && response.data) {
-        console.log(response);
       }
     } catch (error) {
       message.open({

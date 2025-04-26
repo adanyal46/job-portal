@@ -45,8 +45,6 @@ const AdminRecruiterProfile = () => {
     }
   };
 
-  console.log(recruiter);
-
   const profile = recruiterDetail && recruiterDetail?.Profile?.[0];
   const location = recruiterDetail && recruiterDetail?.Location?.[0];
 

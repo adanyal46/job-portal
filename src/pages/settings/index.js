@@ -93,6 +93,8 @@ const Settings = () => {
             type: "success",
             content: "Account deactivate successfully!",
           });
+          await dispatch(logout());
+          window.location.replace("/login");
           return;
         }
 
@@ -131,7 +133,7 @@ const Settings = () => {
     } catch (error) {
       message.open({
         type: "error",
-        content: error.message || "Internal Server Error",
+        content: error.error || error.message || "Internal Server Error",
       });
     } finally {
       setLoading(false);

@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { getProfile } from "./features/profile/profileSlice";
 import Loader from "./components/Loader";
-import { Drawer } from "antd";
+import { Drawer, message } from "antd";
 
 const Layout = () => {
   const { user, loading } = useSelector((state) => state.profile);
@@ -16,6 +16,25 @@ const Layout = () => {
   useEffect(() => {
     dispatch(getProfile());
   }, [dispatch]);
+
+  // Show welcome message when user data loads
+  useEffect(() => {
+    if (user && !loading) {
+      // Check if welcome message has been shown in this session
+      const welcomeShown = sessionStorage.getItem("welcomeMessageShown");
+
+      if (!welcomeShown) {
+        // Show a simple welcome message with the user's name
+        message.success(
+          `Welcome, ${user?.Profile?.[0]?.fullname || "User"}!`,
+          3
+        );
+
+        // Mark welcome message as shown for this session
+        sessionStorage.setItem("welcomeMessageShown", "true");
+      }
+    }
+  }, [user, loading]);
 
   useEffect(() => {
     const handleResize = () => {

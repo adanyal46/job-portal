@@ -58,7 +58,6 @@ const AdminEmployerProfile = () => {
 
   const handleOk = async () => {
     const values = form.getFieldsValue();
-    console.log(values);
     const formData = new FormData();
     formData.append("fullname", values.fullname || "");
     formData.append("email", values.email || "");
@@ -103,8 +102,6 @@ const AdminEmployerProfile = () => {
     try {
       setLoading(true);
       const resultAction = await updatePointOfContact(formData);
-      console.log(resultAction);
-
       if (resultAction.success) {
         message.open({
           type: "success",

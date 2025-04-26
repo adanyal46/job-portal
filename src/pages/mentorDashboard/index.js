@@ -22,6 +22,7 @@ import ReviewCard from "../../components/reviewCard";
 import CustomButton from "../../components/customButton";
 import axiosInstance from "../../api/axiosInstance";
 import { formatDateToShort } from "../../utils";
+import { Link } from "react-router-dom";
 
 const MentorDashboard = () => {
   const { user } = useSelector((state) => state.profile);
@@ -251,11 +252,13 @@ const MentorDashboard = () => {
                 >
                   Reviews
                 </Typography.Title>
-                <CustomButton
-                  style={{ fontWeight: 600, color: "#2F2C39" }}
-                  category="plain"
-                  name="View All"
-                />
+                <Link to={"/mentor/reviews"}>
+                  <CustomButton
+                    style={{ fontWeight: 600, color: "#2F2C39" }}
+                    category="plain"
+                    name="View All"
+                  />
+                </Link>
               </Flex>
             }
             bordered={false}
@@ -278,7 +281,7 @@ const MentorDashboard = () => {
               level={3}
               style={{ color: TEXT_STYLE.color, fontSize: "20px" }}
             >
-              Upcoming Bookings
+              My Earnings
             </Typography.Title>
             <Flex align="baseline" gap={10} style={{ flexWrap: "wrap" }}>
               <Typography.Title

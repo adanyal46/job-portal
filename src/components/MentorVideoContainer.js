@@ -6,9 +6,9 @@ import { uploadMentorVideo } from "../features/profile/profileSlice";
 import noVideoImage from "../assets/no-video.jpg"; // Path to your "No Video" image
 import CustomButton from "./customButton";
 
-const MentorVideoContainer = ({ mentorvideolink, canUpload = false }) => {
+const MentorVideoContainer = ({ mentorvideolink, canUpload = false, user }) => {
   const dispatch = useDispatch();
-  const { user, videoLoading } = useSelector((state) => state.profile);
+  const [videoLoading, setVideoLoading] = useState(false);
   const [videoFile, setVideoFile] = useState(null);
   const [isUploadModalVisible, setIsUploadModalVisible] = useState(false);
 

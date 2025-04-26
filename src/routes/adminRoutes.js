@@ -38,6 +38,9 @@ import AdminJobSeekerProfile from "../components/ADMIN/AdminJobSeekerProfile";
 import AdminEmployerPayment from "../components/ADMIN/AdminEmployerPayment";
 import AdminRecruiterProfileS from "../components/ADMIN/profile/AdminRecruiterProfileS";
 import AdminEmployerProfile from "../components/ADMIN/AdminEmployerProfile";
+import { createRequire } from 'module';
+
+const require = createRequire(import.meta.url);
 
 export const adminRoutes = [
   {

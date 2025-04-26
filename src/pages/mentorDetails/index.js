@@ -65,7 +65,39 @@ const MentorDetails = () => {
 
   const profile = mentorDetail?.Profile?.[0];
   const mentorId = mentorDetail?.id;
+  const displayLanguages = () => {
+    if (!profile?.language) return "N/A";
 
+    try {
+      let languages = [];
+      try {
+        languages = JSON.parse(profile.language);
+      } catch {
+        // If not valid JSON, try to parse from string format
+        languages = profile.language.split(",").map((lang) => {
+          const parts = lang.trim().split("-");
+          return {
+            language: parts[0]?.trim() || "",
+            proficiency: parts[1]?.trim() || "conversational",
+          };
+        });
+      }
+
+      if (!Array.isArray(languages)) {
+        languages = [
+          { language: profile.language, proficiency: "conversational" },
+        ];
+      }
+
+      return languages.map((lang, index) => (
+        <div key={index}>
+          {lang.language} - {lang.proficiency}
+        </div>
+      ));
+    } catch {
+      return profile.language || "N/A";
+    }
+  };
   return (
     <section className="mentor-detail-layout-container">
       <Typography.Title level={5}>Mentors / Mentor Details</Typography.Title>
@@ -76,7 +108,7 @@ const MentorDetails = () => {
               <img
                 loading="lazy"
                 src={
-                  profile?.avatarUrl || "/images/mentors/mentor-detail-card.png"
+                  profile?.avatarId || "/images/mentors/mentor-detail-card.png"
                 }
                 className="mentor-card-image"
                 alt="mentor-detail-card-icon"
@@ -102,9 +134,12 @@ const MentorDetails = () => {
           <hr className="mentor-detail-divider" />
 
           <article className="I-can-do-container">
-            <p className="i-can-do-item">
+            <p
+              className="i-can-do-item"
+              style={{ display: "flex", alignItems: "center", gap: "5px" }}
+            >
               <MentorTranslateIcon /> I can Speak{" "}
-              <strong>{profile?.language ?? "-"}</strong> (Conversational)
+              <strong>{displayLanguages()}</strong> (Conversational)
             </p>
 
             <p className="i-can-do-item">
@@ -145,7 +180,10 @@ const MentorDetails = () => {
         </section>
 
         <section className="mentor-actions-container">
-          <MentorVideoContainer mentorvideolink={profile?.mentorvideolink} />
+          <MentorVideoContainer
+            mentorvideolink={profile?.mentorvideolink}
+            user={mentorDetail}
+          />
           <section className="mentor-get-started-container">
             <section className="mentor-services-wrapper">
               <h6 className="mentor-services">

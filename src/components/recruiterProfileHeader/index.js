@@ -5,40 +5,109 @@ import PhotoUpload from "../photoUpload";
 import CommonInput from "../commonInput";
 import CustomButton from "../customButton";
 
-import { EditProfileIcon } from "../../assets/svg";
+import { EditProfileIcon, VerifiedIcon } from "../../assets/svg";
 
 import "./styles.scss";
 import { useDispatch } from "react-redux";
-import { updateOtherInfo } from "../../features/profile/profileSlice";
-import { Image, message, Input } from "antd";
+import {
+  updateOtherInfo,
+  profile as profileRefresh,
+} from "../../features/profile/profileSlice";
+import {
+  Image,
+  message,
+  Input,
+  InputNumber,
+  Select,
+  Button,
+  Space,
+} from "antd";
 import Rating from "../rating";
 import LocationWithIcon from "../locationWithIcon";
+import { getRelativePath } from "../../utils";
+import { PlusOutlined, DeleteOutlined } from "@ant-design/icons";
 
 const RecruiterProfileHeader = ({ user, showInfoModal, setShowInfoModal }) => {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   const profile = user && user?.Profile[0];
 
+  // Languages proficiency levels
+  const proficiencyLevels = [
+    { value: "basic", label: "Basic" },
+    { value: "conversational", label: "Conversational" },
+    { value: "fluent", label: "Fluent" },
+    { value: "native", label: "Native" },
+  ];
+
+  // Initialize state for profile data
   const [profileData, setProfileData] = useState({
     fullname: profile?.fullname || "",
     email: user?.email || "",
     phnumber: profile?.phnumber || "",
     profilePic: profile?.avatarId || "",
     location: profile?.location || "",
-    companyName: profile?.industry || "",
     description: profile?.about || "",
     tagline: profile?.tagline || "",
-    speak: profile?.language || "",
+    languages: [], // Will store array of { language, proficiency }
   });
 
   const [imageUrl, setImageUrl] = useState(null);
 
   useEffect(() => {
-    setImageUrl(
-      profile?.avatarId
-        ? process.env.REACT_APP_MEDIA_URL + profile?.avatarId
-        : "/images/no-image.jpg"
-    );
+    setImageUrl(profile?.avatarId ? profile?.avatarId : "/images/no-image.jpg");
+
+    // Parse languages from profile if available
+    if (profile?.language) {
+      try {
+        // Try to parse as JSON first
+        let languagesArray = [];
+        try {
+          languagesArray = JSON.parse(profile.language);
+        } catch (e) {
+          // If not valid JSON, treat as a comma-separated string
+          languagesArray = profile.language.split(",").map((lang) => {
+            const parts = lang.trim().split("-");
+            return {
+              language: parts[0]?.trim() || "",
+              proficiency: parts[1]?.trim() || "conversational", // Default to conversational
+            };
+          });
+        }
+
+        // Ensure it's an array and has the right structure
+        if (!Array.isArray(languagesArray)) {
+          languagesArray = [
+            {
+              language: profile.language,
+              proficiency: "conversational",
+            },
+          ];
+        }
+
+        setProfileData((prev) => ({
+          ...prev,
+          languages:
+            languagesArray.length > 0
+              ? languagesArray
+              : [{ language: "", proficiency: "conversational" }],
+        }));
+      } catch (e) {
+        // Fallback to a single default entry
+        setProfileData((prev) => ({
+          ...prev,
+          languages: [
+            { language: profile.language || "", proficiency: "conversational" },
+          ],
+        }));
+      }
+    } else {
+      // Initialize with one empty language field
+      setProfileData((prev) => ({
+        ...prev,
+        languages: [{ language: "", proficiency: "conversational" }],
+      }));
+    }
   }, [profile]);
 
   const handleShowInfoModal = () => {
@@ -56,16 +125,60 @@ const RecruiterProfileHeader = ({ user, showInfoModal, setShowInfoModal }) => {
     }));
   };
 
+  // Handle language change
+  const handleLanguageChange = (index, field, value) => {
+    setProfileData((prevData) => {
+      const updatedLanguages = [...prevData.languages];
+      updatedLanguages[index] = {
+        ...updatedLanguages[index],
+        [field]: value,
+      };
+      return {
+        ...prevData,
+        languages: updatedLanguages,
+      };
+    });
+  };
+
+  // Add a new language field
+  const addLanguage = () => {
+    setProfileData((prevData) => ({
+      ...prevData,
+      languages: [
+        ...prevData.languages,
+        { language: "", proficiency: "conversational" },
+      ],
+    }));
+  };
+
+  // Remove a language field
+  const removeLanguage = (index) => {
+    setProfileData((prevData) => {
+      const updatedLanguages = [...prevData.languages];
+      updatedLanguages.splice(index, 1);
+      return {
+        ...prevData,
+        languages:
+          updatedLanguages.length > 0
+            ? updatedLanguages
+            : [{ language: "", proficiency: "conversational" }],
+      };
+    });
+  };
+
   const handleOk = async () => {
     const formData = new FormData();
     formData.append("fullname", profileData.fullname);
     formData.append("email", profileData.email);
     formData.append("phnumber", profileData.phnumber);
     formData.append("location", profileData.location);
-    formData.append("industry", profileData.companyName);
     formData.append("about", profileData.description);
     formData.append("tagline", profileData.tagline);
-    formData.append("language", profileData.speak);
+
+    // Format languages for backend
+    const languagesJson = JSON.stringify(profileData.languages);
+    formData.append("language", languagesJson);
+
     if (profileData.profilePic && profileData.profilePic instanceof File) {
       formData.append("profilePic", profileData.profilePic);
     }
@@ -94,21 +207,35 @@ const RecruiterProfileHeader = ({ user, showInfoModal, setShowInfoModal }) => {
             width={200}
             height={200}
             className="user-profile-image"
-            src={imageUrl || "/images/no-image.jpg"}
+            src={imageUrl || "/images/user-profile-image.png"}
             alt="UserProfileImage"
             style={{ objectFit: "cover" }}
+            preview={false}
           />
         </figure>
 
         <article className="mentor-card-details-container">
           <article className="mentor-card-details">
-            <h2 className="mentor-name">{profile?.fullname || "Guest"}</h2>
-            <Rating rating={4} reviews={7} />
-            {/* <LocationWithIcon location={profile?.location || "N/A"} /> */}
-            <p className="mentor-expertise">{profile?.industry || "N/A"}</p>
-            {/* <p className="mentor-tagline">
+            <h2 className="mentor-name" style={{ marginBottom: "12px" }}>
+              {profile?.fullname || "Guest"}
+            </h2>
+            <Rating rating={0} reviews={0} />
+            <LocationWithIcon location={profile?.location || "N/A"} />
+            <p className="mentor-tagline" style={{ marginBottom: "12px" }}>
               {profile?.tagline || "No tagline available"}
-            </p> */}
+            </p>
+            <span
+              style={{
+                backgroundColor: "#E2F3F9",
+                color: "#0077A6",
+                fontSize: "16px",
+                fontWeight: "600",
+                padding: "6px",
+                borderRadius: "6px",
+              }}
+            >
+              ID: #{user?.id}
+            </span>
           </article>
         </article>
         <CustomButton
@@ -157,57 +284,88 @@ const RecruiterProfileHeader = ({ user, showInfoModal, setShowInfoModal }) => {
               <section className="field-container">
                 <span className="label">Contact Number</span>
                 <CommonInput
+                  className="w-100"
+                  // maxLength={10}
                   placeholder="Enter Contact Number"
                   value={profileData.phnumber}
                   onChange={(val) => handleChange("phnumber", val)}
                 />
               </section>
 
-              {/* <section className="field-container">
+              <section className="field-container">
                 <span className="label">Location</span>
                 <CommonInput
                   placeholder="Enter Location"
                   value={profileData.location}
                   onChange={(val) => handleChange("location", val)}
                 />
-              </section> */}
-
-              <section className="field-container">
-                <span className="label">Company Name</span>
-                <CommonInput
-                  placeholder="Enter Company Name"
-                  value={profileData.companyName}
-                  onChange={(val) => handleChange("companyName", val)}
-                />
               </section>
 
-              {/* <section className="field-container">
+              <section className="field-container">
                 <span className="label">Tagline</span>
                 <CommonInput
                   placeholder="Enter Tagline"
                   value={profileData.tagline}
                   onChange={(val) => handleChange("tagline", val)}
                 />
-              </section> */}
+              </section>
 
               <section className="field-container">
-                <span className="label">Description</span>
+                <span className="label">About</span>
                 <CommonInput
                   category="textarea"
+                  maxLength={1000}
                   placeholder="Enter Description"
                   value={profileData.description}
-                  maxLength={1000}
                   onChange={(val) => handleChange("description", val)}
                 />
               </section>
 
               <section className="field-container">
-                <span className="label">Speak Input</span>
-                <Input.TextArea
-                  value={profileData.speak}
-                  onChange={(e) => handleChange("speak", e.target.value)}
-                  placeholder="Enter Speak Input"
-                />
+                <span className="label">Languages</span>
+                {profileData.languages.map((langItem, index) => (
+                  <Space
+                    key={index}
+                    style={{ display: "flex", marginBottom: "10px" }}
+                    align="baseline"
+                  >
+                    <div style={{ flex: 1 }}>
+                      <CommonInput
+                        placeholder="Enter Language"
+                        value={langItem.language}
+                        onChange={(val) =>
+                          handleLanguageChange(index, "language", val)
+                        }
+                      />
+                    </div>
+                    <div style={{ width: "150px" }}>
+                      <Select
+                        style={{ width: "100%" }}
+                        value={langItem.proficiency}
+                        onChange={(val) =>
+                          handleLanguageChange(index, "proficiency", val)
+                        }
+                        options={proficiencyLevels}
+                      />
+                    </div>
+                    {profileData.languages.length > 1 && (
+                      <Button
+                        type="text"
+                        icon={<DeleteOutlined />}
+                        onClick={() => removeLanguage(index)}
+                        danger
+                      />
+                    )}
+                  </Space>
+                ))}
+                <Button
+                  type="dashed"
+                  onClick={addLanguage}
+                  icon={<PlusOutlined />}
+                  style={{ width: "100%", marginTop: "8px" }}
+                >
+                  Add Language
+                </Button>
               </section>
             </section>
           </section>

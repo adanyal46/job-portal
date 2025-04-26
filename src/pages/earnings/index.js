@@ -137,10 +137,14 @@ const LifeTimeEarnings = ({ monthly, weekly, custom }) => {
               Total Billed{" "}
               <span className="amount">
                 $
-                {earningList.reduce((total, item) => {
-                  const earning = parseFloat(item.earningPrice) || 0; // Handle "N/A" cases
-                  return total + earning;
-                }, 0) - (10).toFixed(2)}
+                {earningList.length > 0
+                  ? (
+                      earningList.reduce((total, item) => {
+                        const earning = parseFloat(item.earningPrice) || 0; // Handle "N/A" cases
+                        return total + earning;
+                      }, 0) - 10
+                    ).toFixed(2)
+                  : (0).toFixed(2)}
               </span>
             </p>
 

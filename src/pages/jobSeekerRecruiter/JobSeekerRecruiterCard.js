@@ -18,7 +18,7 @@ const JobSeekerRecruiterCard = (props) => {
       <figure className="mentor-icon-container">
         <img
           loading="lazy"
-          src={profile?.avatarUrl || "/images/no-image.jpg"}
+          src={profile?.avatarId || "/images/no-image.jpg"}
           alt={profile?.fullname || "Guest"}
           className="mentor-icon"
           style={{ objectFit: "cover" }}

@@ -426,7 +426,6 @@ export const updateOtherInfo = createAsyncThunk(
   async (formData, { rejectWithValue }) => {
     try {
       const response = await updateOtherInfoApi(formData);
-      console.log("response", response);
       return response;
     } catch (error) {
       return rejectWithValue(error.message);

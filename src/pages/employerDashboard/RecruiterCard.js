@@ -19,11 +19,7 @@ const RecruiterCard = (props) => {
         {/* Left Side Image */}
         <img
           alt="profile"
-          src={
-            profile?.avatarId
-              ? process.env.REACT_APP_MEDIA_URL + profile?.avatarId
-              : "/images/no-image.jpg"
-          }
+          src={profile?.avatarId ? profile?.avatarId : "/images/no-image.jpg"}
           style={{
             width: "140px",
             height: "272px",

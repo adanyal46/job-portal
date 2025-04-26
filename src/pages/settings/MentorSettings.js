@@ -164,6 +164,7 @@ const ConnectedAppsTabContent = ({
 const MentorSettings = () => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.profile);
+
   const [primaryEmail, setPrimaryEmail] = useState(user?.email || "");
   const [secondaryEmail, setSecondaryEmail] = useState(
     user?.secondaryEmail || ""
@@ -304,12 +305,12 @@ const MentorSettings = () => {
             type: "success",
             content: "Account deactivate successfully!",
           });
+          await dispatch(logout());
+          setTimeout(() => {
+            window.location.reload();
+          }, 500);
           return;
         }
-
-        setTimeout(() => {
-          window.location.reload();
-        }, 500);
       }
     } catch (error) {
       message.open({

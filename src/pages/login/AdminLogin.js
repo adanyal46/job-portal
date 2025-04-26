@@ -66,7 +66,6 @@ const AdminLogin = () => {
       const response = await dispatch(
         adminLogin({ email: values.email, password: values.password })
       ).unwrap();
-      console.log(response);
 
       if (response.token) {
         const { token, user } = response;
@@ -227,7 +226,7 @@ const AdminLogin = () => {
                   fontSize: "12px",
                 }}
               >
-                v 1.4
+                v 1.5
               </Typography.Text>
             </div>
           </div>

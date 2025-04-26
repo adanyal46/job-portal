@@ -18,7 +18,7 @@ import Loader from "../../components/Loader";
 import "./login.css";
 import "../../guest-view/main.css";
 
-const { Title } = Typography;
+const { Title, Text } = Typography;
 
 const LoginForm = () => {
   const dispatch = useDispatch();
@@ -197,9 +197,22 @@ const LoginForm = () => {
                 >
                   <Input.Password placeholder="Enter your Password" />
                 </Form.Item>
+
+                {/* Forgot Password Link */}
+                <Form.Item style={{ marginBottom: "15px" }}>
+                  <Flex justify="flex-end">
+                    <Link
+                      to="/forgot-password"
+                      style={{ fontSize: "14px", color: "#1677ff" }}
+                    >
+                      Forgot Password?
+                    </Link>
+                  </Flex>
+                </Form.Item>
+
                 <Flex justify="space-between" align="center">
                   <Typography.Text>
-                    Don’t have an account?
+                    Don't have an account?
                     <Link to={"/signup-type"} style={{ fontSize: "14px" }}>
                       {" "}
                       Register Now

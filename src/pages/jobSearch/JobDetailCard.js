@@ -30,7 +30,7 @@ const JobDetailCard = ({
           <figure className="company-logo">
             <img
               loading="lazy"
-              src="/images/job-icon.png"
+              src={jobData.companyIcon || "/images/job-icon.png"}
               alt="JobCompanyIcon"
             />
           </figure>
@@ -87,7 +87,9 @@ const JobDetailCard = ({
               <p className="detail-label">Pay</p>
             </article>
             <article className="detail-tags-container">
-              <Tag label={jobData?.salary ?? "N/A"} />
+              <Tag
+                label={"$" + jobData?.minPrice + " - " + "$" + jobData.maxPrice}
+              />
             </article>
           </section>
           <section className="detail-field-wrapper">
@@ -106,10 +108,9 @@ const JobDetailCard = ({
         <section className="detail-field-wrapper">
           <article className="detail-label-wrapper">
             <LocationIcon />
-            <p className="detail-label">{jobData?.location ?? "N/A"}</p>
+            <p className="detail-label">{jobData?.city ?? "N/A"}</p>
           </article>
         </section>
-        <h4 className="section-heading">Full job description</h4>
         <h4
           className="section-heading"
           style={{ fontSize: "22px", fontWeight: 600 }}
@@ -122,9 +123,16 @@ const JobDetailCard = ({
         >
           Summary:
         </h4>
-        <p style={{ color: "#2F2C39", fontSize: "14px" }}>
-          {jobData?.description}
-        </p>
+        <div
+          className="job-description-content"
+          style={{
+            color: "#2F2C39",
+            fontSize: "14px",
+            lineHeight: "1.5",
+            margin: "8px 0",
+          }}
+          dangerouslySetInnerHTML={{ __html: jobData?.description || "N/A" }}
+        />
       </section>
     </section>
   );

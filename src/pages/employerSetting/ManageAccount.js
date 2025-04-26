@@ -7,6 +7,9 @@ const ManageAccount = ({
   manageAcountForm,
   handleSubmitManageAccount,
   manageLoading,
+  deactivateAccount,
+  deleteAccount,
+  loading,
 }) => {
   return (
     <Card title={"Change Email Address"}>
@@ -53,14 +56,16 @@ const ManageAccount = ({
           name="Deactivate"
           classes="deactivate"
           style={{ backgroundColor: "#E9F0F3" }}
-          loading={manageLoading}
+          loading={manageLoading || loading}
+          handleClick={deactivateAccount}
         />
         <CustomButton
           category="plain"
           name="Delete"
           classes="delete"
           style={{ backgroundColor: "#E8381A", color: "white" }}
-          loading={manageLoading}
+          loading={manageLoading || loading}
+          handleClick={deleteAccount}
         />
       </Flex>
       <Flex justify={"end"}>
@@ -69,7 +74,7 @@ const ManageAccount = ({
           name="Save"
           classes="save"
           handleClick={handleSubmitManageAccount}
-          loading={manageLoading}
+          loading={manageLoading || loading}
         />
       </Flex>
     </Card>

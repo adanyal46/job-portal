@@ -190,11 +190,8 @@ const Navbar = ({ user, onToggleSidebar, sidebarOpen }) => {
             >
               <Space className="user-dropdown">
                 <Avatar
-                  src={
-                    process.env.REACT_APP_MEDIA_URL + profileData?.avatarId ||
-                    "/images/no-image.jpg"
-                  }
-                  size="small"
+                  src={profileData?.avatarId || "/images/no-image.jpg"}
+                  size="large"
                 />
                 <span className="username">
                   {profileData?.fullname || "Guest"}

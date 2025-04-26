@@ -138,14 +138,46 @@ const StaffMemberProfile = () => {
     .map((item) => item.service.pricing);
 
   const totalPrice = servicePricing.reduce((acc, curr) => acc + curr, 0);
+  const displayLanguages = () => {
+    if (!profile?.language) return "N/A";
 
+    try {
+      let languages = [];
+      try {
+        languages = JSON.parse(profile.language);
+      } catch {
+        // If not valid JSON, try to parse from string format
+        languages = profile.language.split(",").map((lang) => {
+          const parts = lang.trim().split("-");
+          return {
+            language: parts[0]?.trim() || "",
+            proficiency: parts[1]?.trim() || "conversational",
+          };
+        });
+      }
+
+      if (!Array.isArray(languages)) {
+        languages = [
+          { language: profile.language, proficiency: "conversational" },
+        ];
+      }
+
+      return languages.map((lang, index) => (
+        <div key={index}>
+          {lang.language} - {lang.proficiency}
+        </div>
+      ));
+    } catch {
+      return profile.language || "N/A";
+    }
+  };
   return (
     <Row gutter={16}>
       {/* Left Card - Profile Details */}
       <Col span={16}>
         <Card style={{ height: "100%" }} loading={loading}>
-          <Row gutter={16} style={{ marginBottom: "20px" }}>
-            <Col span={6}>
+          <Row gutter={[24, 24]} style={{ marginBottom: "20px" }}>
+            <Col span={7}>
               <img
                 src={
                   profile?.avatarId
@@ -154,14 +186,13 @@ const StaffMemberProfile = () => {
                 }
                 alt="Profile"
                 style={{
-                  width: "200px",
-                  height: "250px",
+                  maxWidth: "200px",
                   borderRadius: "8px",
                   objectFit: "cover",
                 }}
               />
             </Col>
-            <Col span={18}>
+            <Col span={17}>
               <Flex vertical gap={8}>
                 <Title level={3} style={{ marginBottom: 0 }}>
                   {profile?.fullname ?? "N/A"}
@@ -178,10 +209,12 @@ const StaffMemberProfile = () => {
                 <Text block style={{ ...TEXT_STYLE, color: "#52595C" }}>
                   {profile?.phnumber ?? "N/A"}
                 </Text>
-                <a href="#" className="verified-profile">
-                  <VerifiedIcon />
-                  Verified
-                </a>
+                {!(recruiterDetail?.profileStatus === "UNVARIFIED") && (
+                  <a href="#" className="verified-profile">
+                    <VerifiedIcon />
+                    Verified
+                  </a>
+                )}
               </Flex>
             </Col>
           </Row>
@@ -195,9 +228,11 @@ const StaffMemberProfile = () => {
             {profile?.language && (
               <Flex align="center" gap={"small"}>
                 <MentorTranslateIcon />
-                <p className="i-can-do-item">
-                  I can Speak <strong>{profile?.language}</strong>{" "}
-                  (Conversational)
+                <p
+                  className="i-can-do-item"
+                  style={{ display: "flex", alignItems: "center", gap: "5px" }}
+                >
+                  I can Speak <strong>{displayLanguages()}</strong>{" "}
                 </p>
               </Flex>
             )}
@@ -261,44 +296,49 @@ const StaffMemberProfile = () => {
             )}
             {review?.length >= 10 && <CustomPagination />}
           </article>
-          <Typography.Title level={3}>Timesheet</Typography.Title>
-          {timsheets?.length > 0 ? (
+          {timsheets?.length > 0 && (
             <>
-              <Typography.Title level={3}>${totalPrice}</Typography.Title>
-              <Typography.Title level={5}>
-                You Earning after fuse platform fee
-              </Typography.Title>
-              <Typography.Title level={5}>
-                Total Bill {totalPrice}$
-              </Typography.Title>
-              <Typography.Title level={5}>Total Fee 0$</Typography.Title>
+              {" "}
+              <Typography.Title level={3}>Timesheet</Typography.Title>
+              {timsheets?.length > 0 ? (
+                <>
+                  <Typography.Title level={3}>${totalPrice}</Typography.Title>
+                  <Typography.Title level={5}>
+                    You Earning after fuse platform fee
+                  </Typography.Title>
+                  <Typography.Title level={5}>
+                    Total Bill {totalPrice}$
+                  </Typography.Title>
+                  <Typography.Title level={5}>Total Fee 0$</Typography.Title>
 
-              <Divider />
-              <Input.Search
-                size="large"
-                placeholder="Search"
-                style={{ maxWidth: "50%" }}
-              />
-              <Divider />
+                  <Divider />
+                  <Input.Search
+                    size="large"
+                    placeholder="Search"
+                    style={{ maxWidth: "50%" }}
+                  />
+                  <Divider />
 
-              <Table
-                loading={timesheetLoading}
-                dataSource={timsheets}
-                size="small"
-                columns={columns}
-                pagination={false}
-                rowKey={"id"}
-              />
+                  <Table
+                    loading={timesheetLoading}
+                    dataSource={timsheets}
+                    size="small"
+                    columns={columns}
+                    pagination={false}
+                    rowKey={"id"}
+                  />
+                </>
+              ) : (
+                <Empty description="No Timesheet found" />
+              )}
             </>
-          ) : (
-            <Empty description="No Timesheet found" />
           )}
         </Card>
       </Col>
 
       {/* Right Card - Additional Content */}
       <Col span={8}>
-        <RecruiterVideoContainer canUpload={false} />
+        <RecruiterVideoContainer canUpload={false} user={recruiterDetail} />
         <Card loading={loading} style={{ marginTop: "10px" }}>
           <Flex gap={5}>
             <BriefcaseIcon />

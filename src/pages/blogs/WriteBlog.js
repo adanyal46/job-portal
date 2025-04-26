@@ -22,8 +22,6 @@ const WriteBlog = () => {
     }
     try {
       const response = await axiosInstance.post("/user/postblog", values);
-      console.log(response);
-
       if (response.data && response.status === 201) {
         navigate("/job-seeker/blogs");
       }
